@@ -160,6 +160,117 @@ yielding a posterior distribution that reflects both our prior beliefs and the o
 %  \label{fig:combined_bar_charts}
 %\end{figure}
 
+\subsection{Validation study}
+
+We used a reference dataset reported by  \citet{tuijnenburgNFKB12018} to build a validation model.
+In a whole‐genome sequencing study of 846 predominantly sporadic, unrelated primary immunodeficiency disease (PID) cases from the NIHR BioResource–Rare Diseases cohort, a novel Bayesian method identified \textit{NFKB1} as one of the genes most strongly associated with PID. Sixteen novel heterozygous variants—including truncating, missense, and gene deletion variants—in \textit{NFKB1} were found, accounting for 4\% of common variable immunodeficiency (CVID) cases (n = 390) in the cohort. Functional analyses, including structural protein evaluation, immunophenotyping, immunoblotting, and ex vivo lymphocyte stimulation, revealed that all carriers exhibit deficiencies in B-lymphocyte differentiation, particularly an increased CD21low B-cell population. These findings established heterozygous loss-of-function variants in \textit{NFKB1} as the most common monogenic cause of CVID, with significant prognostic implications.
+
+
+
+
+
+\section{Results}
+
+\subsection{Part 1 -- Initial Exploration in an Example Autosomal Dominant Gene: TNFAIP3}
+We first applied our framework to \textit{TNFAIP3}, an autosomal dominant gene associated with inflammatory disease, to estimate the prior probability of observing an individual carrying any given variant classified in ClinVar. Figure~\ref{fig:tnfaip3_clinvar_count} displays the count of known variant classifications for \textit{TNFAIP3} as reported in ClinVar. 
+
+Based on a conditional UK population of approximately 69 million, we calculated the expected number of cases (using our HWE-based model) for each ClinVar classification. These results are visualized in Figure~\ref{fig:tnfaip3_combined_bar_charts}, which presents:
+\begin{enumerate}
+    \item[(A)] \textbf{Total Expected Cases:} For example, our calculations predict that approximately 175,241 individuals in the UK population carry a variant classified as \textit{Uncertain Significance} for \textit{TNFAIP3}.
+    \item[(B)] \textbf{Overall Probabilities:} The same measurements are converted into probabilities of observing at least one affected case.
+\end{enumerate}
+
+Next, we focused on the classification “Uncertain Significance” for \textit{TNFAIP3} to complete an example calculation. In Figure~\ref{fig:tnfaip3_scatter_expected_prob}, panel (A) shows the relationship between allele frequency (as reported on gnomAD) and the expected number of cases; very low frequency variants (e.g., \(<1\times10^{-5}\)) yield near-zero expected cases, with counts increasing steadily as allele frequency increases. In panel (B), the plot of the probability of at least one case versus allele frequency indicates that a background allele frequency greater than approximately \(7\times10^{-6}\) is required to reach a probability near 1 for observing at least one individual with a variant in this class.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{../images/tnfaip3_clinvar_count.png}
+  \caption{Count of ClinVar variant classifications for \textit{TNFAIP3}.}
+  \label{fig:tnfaip3_clinvar_count}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../images/tnfaip3_combined_bar_charts.png}
+  \caption{(A) Total expected cases and (B) overall probability of an affected case by ClinVar classification for \textit{TNFAIP3} in a UK population of approximately 69 million.}
+  \label{fig:tnfaip3_combined_bar_charts}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{../images/tnfaip3_scatter_expected_prob.png}
+  \caption{Scatter plots of (A) Expected Cases vs. Allele Frequency and (B) Probability of ≥1 Case vs. Allele Frequency for variants in \textit{TNFAIP3} (classification "Uncertain Significance"). Dotted vertical lines indicate threshold allele frequencies corresponding to a probability of 1.}
+  \label{fig:tnfaip3_scatter_expected_prob}
+\end{figure}
+
+\subsection{Part 2 -- Validation Preparation of true known disease frequency with NFKB1}
+To validate our approach, we next applied the framework to \textit{NFKB1}, reported as one of the most common genetic causes of PID in the UK. In the clinical cohort study, 846 unrelated PID cases were analyzed, with 390 of these CVID cases attributed to \textit{NFKB1}. 
+
+Using the cohort data, the observed prevalence of \textit{NFKB1}-related CVID is:
+\[
+\text{Prevalence}_{\text{cohort}} = \frac{390}{846} \approx 0.461.
+\]
+Based on literature, CVID occurs in approximately 1 in 25,000 persons. For the UK population (approximately 69,433,632), the expected number of CVID cases is:
+\[
+\text{Expected CVID cases} \approx \frac{69,433,632}{25,000} \approx 2777.
+\]
+Extrapolating the cohort prevalence to the UK, the literature-based estimate of \textit{NFKB1}-related cases is:
+\[
+\text{Estimated } NFKB1 \text{ cases} \approx 2777 \times 0.461 \approx 1280 \quad (\text{95\% CI: } 1188 \text{ to } 1374).
+\]
+However, since the cohort is derived from a specialized clinical setting that likely captures most PID cases, we adopt a Bayesian adjustment. By using a weighted average (e.g., 90\% weight for the observed cohort count and 10\% for the literature extrapolation), we obtain a Bayesian mixture adjusted estimate:
+\[
+\text{Bayesian Adjusted Median} \approx 835 \quad (\text{95\% CI: } 789 \text{ to } 882).
+\]
+Thus, our final interpretation is that the expected number of \textit{NFKB1}-related cases in the UK lies between 390 (if the cohort fully captures the national burden) and 835 (Bayesian adjusted estimate).
+
+Figure~\ref{fig:nfkb1_case_est_distribution_combined_mixture} illustrates the distributions: the literature extrapolated distribution (median ≈ 1280) and the Bayesian mixture adjusted distribution (median ≈ 835), along with their 95\% confidence intervals.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{../images/nfkb1_case_est_distribution_combined_mixture.png}
+  \caption{Density distributions for the estimated number of \textit{NFKB1}-related CVID cases in the UK. The blue distribution represents the literature extrapolated estimates (median ≈ 1280), and the orange distribution shows the Bayesian mixture adjusted estimates (median ≈ 835, 95\% CI: [789, 882]).}
+  \label{fig:nfkb1_case_est_distribution_combined_mixture}
+\end{figure}
+
+\subsection{Part 3 -- Validation Confirmation with NFKB1}
+We then repeated the entire analysis process described in Part 1, this time focusing on \textit{NFKB1} instead of \textit{TNFAIP3}. The results are reproduced in a similar order:
+\begin{itemize}
+    \item Figure~\ref{fig:nfkb1_clinvar_count} shows the count of ClinVar variant classifications for \textit{NFKB1}.
+    \item Figure~\ref{fig:nfkb1_combined_bar_charts} presents the combined bar charts of total expected cases and overall probability by ClinVar classification for \textit{NFKB1}.
+    \item Figure~\ref{fig:nfkb1_scatterdense_expected_prob} displays the density plots and scatter plots of expected cases versus allele frequency and the corresponding probability of observing at least one case.
+\end{itemize}
+For example, in Figure~\ref{fig:nfkb1_scatterdense_expected_prob} panel (A), the density plot indicates that, for the UK population, we expect approximately 456 cases at certain allele frequencies, and panel (B) shows an overall probability of \(7 \times 10^{-6}\) for observing at least one case. These values are strikingly close to our final Bayesian adjusted estimate range of 390 to 835 cases (with the latter having a 95\% CI of [789, 882]).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{../images/nfkb1_clinvar_count.png}
+  \caption{Count of ClinVar variant classifications for \textit{NFKB1}.}
+  \label{fig:nfkb1_clinvar_count}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{../images/nfkb1_combined_bar_charts.png}
+  \caption{Combined bar charts of total expected cases and overall probability by ClinVar classification for \textit{NFKB1} in the UK population.}
+  \label{fig:nfkb1_combined_bar_charts}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/nfkb1_scatterdense_expected_prob.png}
+  \caption{Density and scatter plots for \textit{NFKB1}: (A) Expected Cases vs. Allele Frequency, and (B) Probability of ≥1 Case vs. Allele Frequency for the UK population.}
+  \label{fig:nfkb1_scatterdense_expected_prob}
+\end{figure}
+
+\subsection{Summary of Validation}
+Overall, our analyses yielded results that closely match the true reported values. The value derived from our validation model based on a previously reported disease cohort \cite{tuijnenburgNFKB12018} 
+produce a final expected range for \textit{NFKB1}-related CVID cases in the UK between 390 and 835, with the upper Bayesian adjusted range at 95\% CI: [789, 882] as show in Figure
+\ref{nfkb1_case_est_distribution_combined_mixture}. 
+Our estimated value of 456 cases, shown 
+\ref{nfkb1_scatterdense_expected_prob} (B), was exactly within this range.
+This validation confirms that our approach estimates variant classification probabilities, including pathogenicity, and can serve as a reference for further development of Bayesian methods in clinical genomics.
+
 
 \section{Discussion}
 Our study demonstrates that classical genetic estimation using HWE yields accurate, genome-wide probabilities of disease occurrence for SNVs. These estimates form robust priors for Bayesian models currently under development. The integration of variant interpretation guidelines, such as those provided by the ACMG \citep{richards2015standards} and complementary frameworks \citep{tavtigian2020fitting,li2017intervar}, ensures that our estimates are clinically relevant.
@@ -215,180 +326,61 @@ In future work, we will extend our current probabilistic estimates—derived fro
 \section{Conclusions}
 We have developed and validated a framework for estimating the probability of disease-causing variants by integrating allele frequency data with clinically curated gene lists. Using \textit{TNFAIP3} as a case study, a gene known to be implicated in primary immunodeficiency, we applied Hardy–Weinberg equilibrium principles to obtain precise estimates of the expected number of affected cases and the likelihood of observing at least one affected birth in a defined population. These results demonstrate the efficacy of our classical approach and provide a solid foundation for future Bayesian extensions, which will further refine these estimates by incorporating additional prior knowledge and new data. Ultimately, our methodology offers a reproducible and reliable reference for genetic risk estimation, with significant implications for clinical diagnostics and the interpretation of variant pathogenicity in PID.
 
-
-\section{Validation with NFKB1 in a PID Cohort}
-
-To validate our framework, we applied our calculations to the gene \textit{NFKB1}, which has been previously implicated in primary immunodeficiency (PID) through common variable immunodeficiency (CVID; MIM 607594). In a predominantly European study of sporadic PID cases (n = 846), a novel Bayesian method identified \textit{NFKB1} as one of the most strongly associated genes, with 16 novel heterozygous truncating, missense, and gene deletion variants accounting for 40\% of the CVID cases (n = 390) in the cohort.
-
-In our validation, we consider the following:
-\begin{enumerate}
-    \item The background incidence of CVID is approximately 1 in 25,000 persons in the general population. However, our analysis here is conditioned on a cohort of all PID cases.
-    \item In the cohort, there are 846 PID patients, of which 390 are diagnosed with CVID.
-    \item It is assumed that, among CVID cases, \textit{NFKB1} variants explain 40\% of the cases.
-\end{enumerate}
-
-Thus, the proportion of PID patients with CVID attributable to \textit{NFKB1} is calculated as:
-\[
-p_{\text{NFKB1}} = \left(\frac{390}{846}\right) \times 0.40.
-\]
-The expected number of \textit{NFKB1}-related CVID cases in the cohort is then:
-\[
-E = N \times p_{\text{NFKB1}},
-\]
-where \(N=846\) is the total number of PID patients in the cohort.
-
-For example, using our framework:
-\[
-p_{\text{NFKB1}} \approx \left(0.460\right) \times 0.40 \approx 0.184,
-\]
-and consequently,
-\[
-E \approx 846 \times 0.184 \approx 156.
-\]
-
-This estimate aligns closely with the previously reported finding of approximately 156 \textit{NFKB1}-related CVID cases, thereby validating our approach within a clinically relevant PID cohort.
-
-Below is an example R code snippet used for this validation:
-
-\begin{verbatim}
-# Number of PID patients in the cohort
-N_cohort <- 846
-
-# Number of CVID cases in the cohort
-n_CVID <- 390
-
-# Proportion of CVID cases attributable to NFKB1 (from previous study)
-prop_NFKB1 <- 0.40
-
-# Calculate the effective disease probability for NFKB1 within the cohort
-p_disease_NFKB1 <- (n_CVID / N_cohort) * prop_NFKB1
-
-# Calculate the expected number of NFKB1-related CVID cases
-E_NFKB1 <- N_cohort * p_disease_NFKB1
-
-cat("Expected number of NFKB1-related CVID cases:", round(E_NFKB1, 0), "\n")
-\end{verbatim}
-
-This validation demonstrates that our classical calculation framework, which is based on Hardy–Weinberg principles and conditioned on the gene being associated with PID under the correct inheritance model, yields results consistent with independent clinical findings. Such validation not only reinforces the utility of our current approach but also supports its extension into a Bayesian framework in future work.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\section{Results}
-
-\subsection{Part 1 -- Initial Exploration in an Example Autosomal Dominant Gene: TNFAIP3}
-We first applied our framework to \textit{TNFAIP3}, an autosomal dominant gene associated with inflammatory disease, to estimate the prior probability of observing an individual carrying any given variant classified in ClinVar. Figure~\ref{fig:tnfaip3_clinvar_count} displays the count of known variant classifications for \textit{TNFAIP3} as reported in ClinVar. 
-
-Based on a conditional UK population of approximately 69 million, we calculated the expected number of cases (using our HWE-based model) for each ClinVar classification. These results are visualized in Figure~\ref{fig:tnfaip3_combined_bar_charts}, which presents:
-\begin{enumerate}
-    \item[(A)] \textbf{Total Expected Cases:} For example, our calculations predict that approximately 175,241 individuals in the UK population carry a variant classified as \textit{Uncertain Significance} for \textit{TNFAIP3}.
-    \item[(B)] \textbf{Overall Probabilities:} The same measurements are converted into probabilities of observing at least one affected case.
-\end{enumerate}
-
-Next, we focused on the classification “Uncertain Significance” for \textit{TNFAIP3} to complete an example calculation. In Figure~\ref{fig:tnfaip3_scatter_expected_prob}, panel (A) shows the relationship between allele frequency (as reported on gnomAD) and the expected number of cases; very low frequency variants (e.g., \(<1\times10^{-5}\)) yield near-zero expected cases, with counts increasing steadily as allele frequency increases. In panel (B), the plot of the probability of at least one case versus allele frequency indicates that a background allele frequency greater than approximately \(7\times10^{-6}\) is required to reach a probability near 1 for observing at least one individual with a variant in this class.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{../images/tnfaip3_clinvar_count.png}
-  \caption{Count of ClinVar variant classifications for \textit{TNFAIP3}.}
-  \label{fig:tnfaip3_clinvar_count}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{../images/tnfaip3_combined_bar_charts.png}
-  \caption{(A) Total expected cases and (B) overall probability of an affected case by ClinVar classification for \textit{TNFAIP3} in a UK population of approximately 69 million.}
-  \label{fig:tnfaip3_combined_bar_charts}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{../images/tnfaip3_scatter_expected_prob.png}
-  \caption{Scatter plots of (A) Expected Cases vs. Allele Frequency and (B) Probability of ≥1 Case vs. Allele Frequency for variants in \textit{TNFAIP3} (classification "Uncertain Significance"). Dotted vertical lines indicate threshold allele frequencies corresponding to a probability of 1.}
-  \label{fig:tnfaip3_scatter_expected_prob}
-\end{figure}
-
-\subsection{Part 2 -- Validation Preparation with NFKB1}
-To validate our approach, we next applied the framework to \textit{NFKB1}, reported as one of the most common genetic causes of PID in the UK. In the clinical cohort study, 846 unrelated PID cases were analyzed, with 390 of these CVID cases attributed to \textit{NFKB1}. 
-
-Using the cohort data, the observed prevalence of \textit{NFKB1}-related CVID is:
-\[
-\text{Prevalence}_{\text{cohort}} = \frac{390}{846} \approx 0.461.
-\]
-Based on literature, CVID occurs in approximately 1 in 25,000 persons. For the UK population (approximately 69,433,632), the expected number of CVID cases is:
-\[
-\text{Expected CVID cases} \approx \frac{69,433,632}{25,000} \approx 2777.
-\]
-Extrapolating the cohort prevalence to the UK, the literature-based estimate of \textit{NFKB1}-related cases is:
-\[
-\text{Estimated } NFKB1 \text{ cases} \approx 2777 \times 0.461 \approx 1280 \quad (\text{95\% CI: } 1188 \text{ to } 1374).
-\]
-However, since the cohort is derived from a specialized clinical setting that likely captures most PID cases, we adopt a Bayesian adjustment. By using a weighted average (e.g., 90\% weight for the observed cohort count and 10\% for the literature extrapolation), we obtain a Bayesian mixture adjusted estimate:
-\[
-\text{Bayesian Adjusted Median} \approx 835 \quad (\text{95\% CI: } 789 \text{ to } 882).
-\]
-Thus, our final interpretation is that the expected number of \textit{NFKB1}-related cases in the UK lies between 390 (if the cohort fully captures the national burden) and 835 (Bayesian adjusted estimate).
-
-Figure~\ref{fig:nfkb1_case_est_distribution_combined_mixture} illustrates the distributions: the literature extrapolated distribution (median ≈ 1280) and the Bayesian mixture adjusted distribution (median ≈ 835), along with their 95\% confidence intervals.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{../images/nfkb1_case_est_distribution_combined_mixture.png}
-  \caption{Density distributions for the estimated number of \textit{NFKB1}-related CVID cases in the UK. The blue distribution represents the literature extrapolated estimates (median ≈ 1280), and the orange distribution shows the Bayesian mixture adjusted estimates (median ≈ 835, 95\% CI: [789, 882]).}
-  \label{fig:nfkb1_case_est_distribution_combined_mixture}
-\end{figure}
-
-\subsection{Part 3 -- Validation Confirmation with NFKB1}
-We then repeated the entire analysis process described in Part 1, this time focusing on \textit{NFKB1} instead of \textit{TNFAIP3}. The results are reproduced in a similar order:
-\begin{itemize}
-    \item Figure~\ref{fig:nfkb1_clinvar_count} shows the count of ClinVar variant classifications for \textit{NFKB1}.
-    \item Figure~\ref{fig:nfkb1_combined_bar_charts} presents the combined bar charts of total expected cases and overall probability by ClinVar classification for \textit{NFKB1}.
-    \item Figure~\ref{fig:nfkb1_scatterdense_expected_prob} displays the density plots and scatter plots of expected cases versus allele frequency and the corresponding probability of observing at least one case.
-\end{itemize}
-For example, in Figure~\ref{fig:nfkb1_scatterdense_expected_prob} panel (A), the density plot indicates that, for the UK population, we expect approximately 456 cases at certain allele frequencies, and panel (B) shows an overall probability of \(7 \times 10^{-6}\) for observing at least one case. These values are strikingly close to our final Bayesian adjusted estimate range of 390 to 835 cases (with the latter having a 95\% CI of [789, 882]).
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{../images/nfkb1_clinvar_count.png}
-  \caption{Count of ClinVar variant classifications for \textit{NFKB1}.}
-  \label{fig:nfkb1_clinvar_count}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{../images/nfkb1_combined_bar_charts.png}
-  \caption{Combined bar charts of total expected cases and overall probability by ClinVar classification for \textit{NFKB1} in the UK population.}
-  \label{fig:nfkb1_combined_bar_charts}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.99\textwidth]{../images/nfkb1_scatterdense_expected_prob.png}
-  \caption{Density and scatter plots for \textit{NFKB1}: (A) Expected Cases vs. Allele Frequency, and (B) Probability of ≥1 Case vs. Allele Frequency for the UK population.}
-  \label{fig:nfkb1_scatterdense_expected_prob}
-\end{figure}
-
-\subsection{Summary of Validation}
-Overall, our analyses yield results that closely match the true reported values. The estimates derived from our classical model, combined with Bayesian adjustment, produce a final expected range for \textit{NFKB1}-related CVID cases in the UK between 390 and 835, with the Bayesian adjusted median at approximately 835 cases (95\% CI: [789, 882]). This validation confirms that our approach reliably estimates variant pathogenicity probabilities and can serve as a robust reference for further development of Bayesian methods in clinical genomics.
-
-\clearpage
-
+%
+%\section{Validation with NFKB1 in a PID Cohort}
+%
+%To validate our framework, we applied our calculations to the gene \textit{NFKB1}, which has been previously implicated in primary immunodeficiency (PID) through common variable immunodeficiency (CVID; MIM 607594). In a predominantly European study of sporadic PID cases (n = 846), a novel Bayesian method identified \textit{NFKB1} as one of the most strongly associated genes, with 16 novel heterozygous truncating, missense, and gene deletion variants accounting for 40\% of the CVID cases (n = 390) in the cohort.
+%
+%In our validation, we consider the following:
+%\begin{enumerate}
+%    \item The background incidence of CVID is approximately 1 in 25,000 persons in the general population. However, our analysis here is conditioned on a cohort of all PID cases.
+%    \item In the cohort, there are 846 PID patients, of which 390 are diagnosed with CVID.
+%    \item It is assumed that, among CVID cases, \textit{NFKB1} variants explain 40\% of the cases.
+%\end{enumerate}
+%
+%Thus, the proportion of PID patients with CVID attributable to \textit{NFKB1} is calculated as:
+%\[
+%p_{\text{NFKB1}} = \left(\frac{390}{846}\right) \times 0.40.
+%\]
+%The expected number of \textit{NFKB1}-related CVID cases in the cohort is then:
+%\[
+%E = N \times p_{\text{NFKB1}},
+%\]
+%where \(N=846\) is the total number of PID patients in the cohort.
+%
+%For example, using our framework:
+%\[
+%p_{\text{NFKB1}} \approx \left(0.460\right) \times 0.40 \approx 0.184,
+%\]
+%and consequently,
+%\[
+%E \approx 846 \times 0.184 \approx 156.
+%\]
+%
+%This estimate aligns closely with the previously reported finding of approximately 156 \textit{NFKB1}-related CVID cases, thereby validating our approach within a clinically relevant PID cohort.
+%
+%Below is an example R code snippet used for this validation:
+%
+%\begin{verbatim}
+%# Number of PID patients in the cohort
+%N_cohort <- 846
+%
+%# Number of CVID cases in the cohort
+%n_CVID <- 390
+%
+%# Proportion of CVID cases attributable to NFKB1 (from previous study)
+%prop_NFKB1 <- 0.40
+%
+%# Calculate the effective disease probability for NFKB1 within the cohort
+%p_disease_NFKB1 <- (n_CVID / N_cohort) * prop_NFKB1
+%
+%# Calculate the expected number of NFKB1-related CVID cases
+%E_NFKB1 <- N_cohort * p_disease_NFKB1
+%
+%cat("Expected number of NFKB1-related CVID cases:", round(E_NFKB1, 0), "\n")
+%\end{verbatim}
+%
+%This validation demonstrates that our classical calculation framework, which is based on Hardy–Weinberg principles and conditioned on the gene being associated with PID under the correct inheritance model, yields results consistent with independent clinical findings. Such validation not only reinforces the utility of our current approach but also supports its extension into a Bayesian framework in future work.
 
 
 \section{Future Directions}
