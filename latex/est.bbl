@@ -1,4 +1,4 @@
-\begin{thebibliography}{16}
+\begin{thebibliography}{17}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -144,6 +144,20 @@ David~T Miller, Kristy Lee, Noura~S Abul-Husn, Laura~M Amendola, Kyle Brothers,
   exome and genome sequencing: a policy statement of the american college of
   medical genetics and genomics (acmg).
 \newblock \emph{Genetics in Medicine}, 25\penalty0 (8):\penalty0 100866, 2023.
+
+\bibitem[Tuijnenburg et~al.(2018)Tuijnenburg, Lango~Allen, Burns, Greene,
+  Jansen, and Others.]{tuijnenburgNFKB12018}
+Paul Tuijnenburg, Hana Lango~Allen, Siobhan~O. Burns, Daniel Greene, Machiel~H.
+  Jansen, and Others.
+\newblock Loss-of-function nuclear factor κ{B} subunit 1 ({NFKB1}) variants
+  are the most common monogenic cause of common variable immunodeficiency in
+  {Europeans}.
+\newblock \emph{Journal of Allergy and Clinical Immunology}, 142\penalty0
+  (4):\penalty0 1285--1296, October 2018.
+\newblock ISSN 00916749.
+\newblock \doi{10.1016/j.jaci.2018.01.039}.
+\newblock URL
+  \url{https://linkinghub.elsevier.com/retrieve/pii/S0091674918302860}.
 
 \bibitem[Li and Wang(2017)]{li2017intervar}
 Quan Li and Kai Wang.

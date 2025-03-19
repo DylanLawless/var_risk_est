@@ -11,12 +11,12 @@ population_size <- 69433632
 # DBNSFP Data Import and Filtering ----
 library(dplyr)
 
-header_line <- readLines("~/Desktop/dbnsfp/data/nfkb1_head", n = 1)
+header_line <- readLines("../data/nfkb1_head", n = 1)
 header_line <- sub("^#", "", header_line)
 header_fields <- strsplit(header_line, "\t")[[1]]
 rm(header_line)
 
-df <- read.table("~/Desktop/dbnsfp/data/nfkb1", 
+df <- read.table("../data/nfkb1", 
                  sep = "\t",
                  header = FALSE, 
                  stringsAsFactors = FALSE, 
@@ -170,11 +170,11 @@ p_density <- ggplot(df, aes(x = expected_cases, fill = clinvar_clnsig)) +
 print(p_density)
 # ggsave("../images/nfkb1_density_expected_cases.png", plot = p_density, width = 12, height = 5)
 
-p_scatter_dense <- (p_density + (p_scatter1_path / p_scatter2_path)) +
-  plot_layout(widths = c(4, 1), guides = 'collect', axis = "collect") +
+p_scatter_dense <- (p_density / (p_scatter1_path + p_scatter2_path)) +
+  plot_layout(widths = c(1, 1), guides = 'collect', axis = "collect") +
   plot_annotation(tag_levels = 'A')
 print(p_scatter_dense)
-ggsave("../images/nfkb1_scatterdense_expected_prob.png", plot = p_scatter_dense, width = 16, height = 5)
+ggsave("../images/nfkb1_scatterdense_expected_prob.png", plot = p_scatter_dense, width = 12, height = 6)
 
  # Tally by ClinVar Category ----
 df_calc <- df %>%

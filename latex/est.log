@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.7.19)  19 MAR 2025 16:17
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.7.19)  19 MAR 2025 16:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -808,38 +808,24 @@ n (e.g., \T1/lmr/m/it/12 Pathogenic\T1/lmr/m/n/12 , \T1/lmr/m/it/12 Likely_path
 ogenic\T1/lmr/m/n/12 ,
  []
 
-[3] [4]
-Missing character: There is no — in font ec-lmr12!
-Missing character: There is no — in font ec-lmr12!
- [5]
-Missing character: There is no — in font ec-lmr12!
-Missing character: There is no — in font ec-lmr12!
+[3]
+Missing character: There is no ‐ in font ec-lmr12!
 Missing character: There is no – in font ec-lmr12!
- [6]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 253.
-
- (/usr/local/texlive/2018/texmf-dist/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-[7]
-Overfull \hbox (16.33234pt too wide) in paragraph at lines 270--270
-[]\T1/lmtt/m/n/12 cat("Expected number of NFKB1-related CVID cases:", round(E_N
-FKB1, 0), "\n")[] 
- []
-
-Missing character: There is no – in font ec-lmr12!
+Missing character: There is no — in font ec-lmr12!
+Missing character: There is no — in font ec-lmr12!
+ [4]
 Missing character: There is no “ in font ec-lmr12!
 Missing character: There is no ” in font ec-lmr12!
 File: ../images/tnfaip3_clinvar_count.png Graphic file (type bmp)
 <../images/tnfaip3_clinvar_count.png>
-[8]
+ [5]
 File: ../images/tnfaip3_combined_bar_charts.png Graphic file (type bmp)
 <../images/tnfaip3_combined_bar_charts.png>
 File: ../images/tnfaip3_scatter_expected_prob.png Graphic file (type bmp)
 <../images/tnfaip3_scatter_expected_prob.png>
 Missing character: There is no ≥ in font ec-lmr12!
 Missing character: There is no ≥ in font ec-lmr12!
- [9] [10]
+ [6] [7]
 Missing character: There is no ≈ in font ec-lmr12!
 Missing character: There is no ≈ in font ec-lmr12!
 File: ../images/nfkb1_case_est_distribution_combined_mixture.png Graphic file (
@@ -849,41 +835,65 @@ Missing character: There is no ≈ in font ec-lmr12!
 Missing character: There is no ≈ in font ec-lmr12!
 Missing character: There is no ≈ in font ec-lmr12!
 Missing character: There is no ≈ in font ec-lmr12!
- [11]
+ [8]
 File: ../images/nfkb1_clinvar_count.png Graphic file (type bmp)
 <../images/nfkb1_clinvar_count.png>
- [12]
 File: ../images/nfkb1_combined_bar_charts.png Graphic file (type bmp)
 <../images/nfkb1_combined_bar_charts.png>
- [13]
+ [9]
 File: ../images/nfkb1_scatterdense_expected_prob.png Graphic file (type bmp)
 <../images/nfkb1_scatterdense_expected_prob.png>
 Missing character: There is no ≥ in font ec-lmr12!
 Missing character: There is no ≥ in font ec-lmr12!
- [14] [15]
+ [10]
+
+LaTeX Warning: Reference `nfkb1_case_est_distribution_combined_mixture' on page
+ 11 undefined on input line 269.
+
+
+LaTeX Warning: Reference `nfkb1_scatterdense_expected_prob' on page 11 undefine
+d on input line 271.
+
+[11]
+Missing character: There is no — in font ec-lmr12!
+Missing character: There is no — in font ec-lmr12!
+ [12]
+Missing character: There is no — in font ec-lmr12!
+Missing character: There is no — in font ec-lmr12!
+Missing character: There is no – in font ec-lmr12!
+ [13]
 Missing character: There is no ‘ in font ec-lmr12!
 Missing character: There is no ’ in font ec-lmr12!
- [16
-
-] (./est.bbl
+ [14] (./est.bbl
 Missing character: There is no – in font ec-lmr12!
- [17]) [18]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 413.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 413.
- (./est.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 413.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 413.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 16.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+) [15]
+Missing character: There is no κ in font ec-lmr12!
+ [16]) [17]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 405.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 405.
+
+(./est.aux)
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 405.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 405.
 Package rerunfilecheck Info: File `est.out' has not changed.
-(rerunfilecheck)             Checksum: 9DA7DAC952CDC2F736FC0F1BE424C7B5.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 413.
+(rerunfilecheck)             Checksum: 02D42E82A9AB2D17291BB9140F9A3FCB.
+
+
+LaTeX Warning: There were undefined references.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 405.
  ) 
 Here is how much of TeX's memory you used:
- 21518 strings out of 492970
- 380950 string characters out of 6133938
+ 21523 strings out of 492970
+ 381114 string characters out of 6133938
  439670 words of memory out of 5000000
- 25181 multiletter control sequences out of 15000+600000
+ 25186 multiletter control sequences out of 15000+600000
  70147 words of font info for 61 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  55i,16n,54p,1595b,623s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on est.pdf (18 pages).
+Output written on est.pdf (17 pages).
