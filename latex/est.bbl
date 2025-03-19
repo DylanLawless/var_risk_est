@@ -1,0 +1,155 @@
+\begin{thebibliography}{16}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Mayo(2008)]{MayoCentury2008}
+Oliver Mayo.
+\newblock A {Century} of {Hardy}–{Weinberg} {Equilibrium}.
+\newblock \emph{Twin Research and Human Genetics}, 11\penalty0 (3):\penalty0
+  249--256, June 2008.
+\newblock ISSN 1832-4274, 1839-2628.
+\newblock \doi{10.1375/twin.11.3.249}.
+\newblock URL
+  \url{https://www.cambridge.org/core/product/identifier/S1832427400009051/type/journal_article}.
+
+\bibitem[Abramovs et~al.(2020)Abramovs, Brass, and
+  Tassabehji]{AbramovsHardyWeinberg2020}
+Nikita Abramovs, Andrew Brass, and May Tassabehji.
+\newblock Hardy-{Weinberg} {Equilibrium} in the {Large} {Scale} {Genomic}
+  {Sequencing} {Era}.
+\newblock \emph{Frontiers in Genetics}, 11:\penalty0 210, March 2020.
+\newblock ISSN 1664-8021.
+\newblock \doi{10.3389/fgene.2020.00210}.
+\newblock URL
+  \url{https://www.frontiersin.org/article/10.3389/fgene.2020.00210/full}.
+
+\bibitem[Richards et~al.(2015)Richards, Aziz, Bale, Bick, Das, Gastier-Foster,
+  Grody, Hegde, Lyon, Spector, et~al.]{richards2015standards}
+Sue Richards, Nazneen Aziz, Sherri Bale, David Bick, Soma Das, Julie
+  Gastier-Foster, Wayne~W Grody, Madhuri Hegde, Elaine Lyon, Elaine Spector,
+  et~al.
+\newblock Standards and guidelines for the interpretation of sequence variants:
+  a joint consensus recommendation of the american college of medical genetics
+  and genomics and the association for molecular pathology.
+\newblock \emph{Genetics in medicine}, 17\penalty0 (5):\penalty0 405--423,
+  2015.
+
+\bibitem[Tavtigian et~al.(2020)Tavtigian, Harrison, Boucher, and
+  Biesecker]{tavtigian2020fitting}
+Sean~V Tavtigian, Steven~M Harrison, Kenneth~M Boucher, and Leslie~G Biesecker.
+\newblock Fitting a naturally scaled point system to the acmg/amp variant
+  classification guidelines.
+\newblock \emph{Human mutation}, 41\penalty0 (10):\penalty0 1734--1737, 2020.
+
+\bibitem[Pedersen et~al.(2021)Pedersen, Brown, Dashnow, Wallace, Velinder,
+  Tristani-Firouzi, Schiffman, Tvrdik, Mao, Best,
+  et~al.]{pedersen2021effective}
+Brent~S Pedersen, Joe~M Brown, Harriet Dashnow, Amelia~D Wallace, Matt
+  Velinder, Martin Tristani-Firouzi, Joshua~D Schiffman, Tatiana Tvrdik, Rong
+  Mao, D~Hunter Best, et~al.
+\newblock Effective variant filtering and expected candidate variant yield in
+  studies of rare human disease.
+\newblock \emph{NPJ Genomic Medicine}, 6\penalty0 (1):\penalty0 1--8, 2021.
+
+\bibitem[Anderson et~al.(2010)Anderson, Pettersson, Clarke, Cardon, Morris, and
+  Zondervan]{anderson2010data}
+Carl~A Anderson, Fredrik~H Pettersson, Geraldine~M Clarke, Lon~R Cardon,
+  Andrew~P Morris, and Krina~T Zondervan.
+\newblock Data quality control in genetic case-control association studies.
+\newblock \emph{Nature protocols}, 5\penalty0 (9):\penalty0 1564--1573, 2010.
+\newblock URL \url{https://doi.org/10.1038/nprot.2010.116}.
+
+\bibitem[Cirulli et~al.(2015)Cirulli, Lasseigne, Petrovski, Sapp, Dion,
+  Leblond, Couthouis, Lu, Wang, Krueger, et~al.]{cirulli2015exome}
+Elizabeth~T Cirulli, Brittany~N Lasseigne, Slav{\'e} Petrovski, Peter~C Sapp,
+  Patrick~A Dion, Claire~S Leblond, Julien Couthouis, Yi-Fan Lu, Quanli Wang,
+  Brian~J Krueger, et~al.
+\newblock Exome sequencing in amyotrophic lateral sclerosis identifies risk
+  genes and pathways.
+\newblock \emph{Science}, 347\penalty0 (6229):\penalty0 1436--1441, 2015.
+
+\bibitem[Povysil et~al.(2019)Povysil, Petrovski, Hostyk, Aggarwal, Allen, and
+  Goldstein]{Povysil2019rare}
+Gundula Povysil, Slav{\'e} Petrovski, Joseph Hostyk, Vimla Aggarwal, Andrew~S.
+  Allen, and David~B. Goldstein.
+\newblock Rare-variant collapsing analyses for complex traits: guidelines and
+  applications.
+\newblock \emph{Nature Reviews Genetics}, 20\penalty0 (12):\penalty0 747--759,
+  2019.
+\newblock \doi{10.1038/s41576-019-0177-4}.
+\newblock URL \url{https://doi.org/10.1038/s41576-019-0177-4}.
+
+\bibitem[Liu et~al.(2019)Liu, Chen, Li, Morrison, Boerwinkle, and
+  Lin]{liu2019acat}
+Yaowu Liu, Sixing Chen, Zilin Li, Alanna~C Morrison, Eric Boerwinkle, and
+  Xihong Lin.
+\newblock Acat: a fast and powerful p value combination method for rare-variant
+  analysis in sequencing studies.
+\newblock \emph{The American Journal of Human Genetics}, 104\penalty0
+  (3):\penalty0 410--421, 2019.
+
+\bibitem[Li et~al.(2020)Li, Li, Zhou, Gaynor, Liu, Chen, Sun, Dey, Arnett,
+  Aslibekyan, et~al.]{li2020dynamic}
+Xihao Li, Zilin Li, Hufeng Zhou, Sheila~M Gaynor, Yaowu Liu, Han Chen, Ryan
+  Sun, Rounak Dey, Donna~K Arnett, Stella Aslibekyan, et~al.
+\newblock Dynamic incorporation of multiple in silico functional annotations
+  empowers rare variant association analysis of large whole-genome sequencing
+  studies at scale.
+\newblock \emph{Nature genetics}, 52\penalty0 (9):\penalty0 969--983, 2020.
+
+\bibitem[Wu et~al.(2011)Wu, Lee, Cai, Li, Boehnke, and Lin]{wu2011rare}
+Michael~C Wu, Seunggeun Lee, Tianxi Cai, Yun Li, Michael Boehnke, and Xihong
+  Lin.
+\newblock Rare-variant association testing for sequencing data with the
+  sequence kernel association test.
+\newblock \emph{The American Journal of Human Genetics}, 89\penalty0
+  (1):\penalty0 82--93, 2011.
+
+\bibitem[Lee et~al.(2012)Lee, Emond, Bamshad, Barnes, Rieder, Nickerson,
+  Christiani, Wurfel, and Lin]{lee2012optimal}
+Seunggeun Lee, Mary~J Emond, Michael~J Bamshad, Kathleen~C Barnes, Mark~J
+  Rieder, Deborah~A Nickerson, David~C Christiani, Mark~M Wurfel, and Xihong
+  Lin.
+\newblock Optimal unified approach for rare-variant association testing with
+  application to small-sample case-control whole-exome sequencing studies.
+\newblock \emph{The American Journal of Human Genetics}, 91\penalty0
+  (2):\penalty0 224--237, 2012.
+
+\bibitem[Kong et~al.(2018)Kong, Thorleifsson, Frigge, Vilhjalmsson, Young,
+  Thorgeirsson, Benonisdottir, Oddsson, Halldorsson, Masson,
+  et~al.]{kong2018nature}
+Augustine Kong, Gudmar Thorleifsson, Michael~L Frigge, Bjarni~J Vilhjalmsson,
+  Alexander~I Young, Thorgeir~E Thorgeirsson, Stefania Benonisdottir, Asmundur
+  Oddsson, Bjarni~V Halldorsson, Gisli Masson, et~al.
+\newblock The nature of nurture: Effects of parental genotypes.
+\newblock \emph{Science}, 359\penalty0 (6374):\penalty0 424--428, 2018.
+
+\bibitem[Howe et~al.(2021)Howe, Nivard, Morris, Hansen, Rasheed, Cho, Chittoor,
+  Lind, Palviainen, van~der Zee, et~al.]{howe2021within}
+Laurence~J Howe, Michel~G Nivard, Tim~T Morris, Ailin~F Hansen, Humaira
+  Rasheed, Yoonsu Cho, Geetha Chittoor, Penelope~A Lind, Teemu Palviainen,
+  Matthijs~D van~der Zee, et~al.
+\newblock Within-sibship gwas improve estimates of direct genetic effects.
+\newblock \emph{BioRxiv}, pages 2021--03, 2021.
+
+\bibitem[Miller et~al.(2023)Miller, Lee, Abul-Husn, Amendola, Brothers, Chung,
+  Gollob, Gordon, Harrison, Hershberger, et~al.]{miller2023acmg}
+David~T Miller, Kristy Lee, Noura~S Abul-Husn, Laura~M Amendola, Kyle Brothers,
+  Wendy~K Chung, Michael~H Gollob, Adam~S Gordon, Steven~M Harrison, Ray~E
+  Hershberger, et~al.
+\newblock Acmg sf v3. 2 list for reporting of secondary findings in clinical
+  exome and genome sequencing: a policy statement of the american college of
+  medical genetics and genomics (acmg).
+\newblock \emph{Genetics in Medicine}, 25\penalty0 (8):\penalty0 100866, 2023.
+
+\bibitem[Li and Wang(2017)]{li2017intervar}
+Quan Li and Kai Wang.
+\newblock Intervar: clinical interpretation of genetic variants by the 2015
+  acmg-amp guidelines.
+\newblock \emph{The American Journal of Human Genetics}, 100\penalty0
+  (2):\penalty0 267--280, 2017.
+
+\end{thebibliography}
