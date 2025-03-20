@@ -1,27 +1,20 @@
-\documentclass[a4paper,12pt]{article}
-\usepackage{amsmath, amssymb}
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage{subcaption}
-\usepackage{hyperref}
-\usepackage{lmodern}
-\usepackage[T1]{fontenc}
-\usepackage{geometry}
-\geometry{margin=1in}
-\usepackage{setspace}
-\onehalfspacing
-\usepackage{natbib}
-\usepackage{acronym}
+\input{head.tex}
+\usepackage[printonlyused,withpage,nohyperlinks]{acronym}
 \usepackage{tikz}
 \usetikzlibrary{calc}
-
+\usepackage{amsmath, amssymb}
 
 \begin{document}
+\title{Quantifying the Genetics of Disease Inheritance With a Bayesian Perspective}
 
-\title{Quantifying the Genetics of Disease Inheritance: A Classical and Bayesian Perspective}
-\author{Your Name}
-\date{\today}
+\author[1]{Dylan Lawless\thanks{Addresses for correspondence: \href{mailto:Dylan.Lawless@kispi.uzh.ch}{Dylan.Lawless@kispi.uzh.ch}}}
+
+\affil[1]{Department of Intensive Care and Neonatology, University Children's Hospital Zürich, University of Zürich, Switzerland.}
+
 \maketitle
+\justify
+
+Word count: XXXX
 
 
 \begin{abstract}
@@ -182,21 +175,21 @@ Based on a conditional UK population of approximately 69 million, we calculated 
 
 Next, we focused on the classification “Uncertain Significance” for \textit{TNFAIP3} to complete an example calculation. In Figure~\ref{fig:tnfaip3_scatter_expected_prob}, panel (A) shows the relationship between allele frequency (as reported on gnomAD) and the expected number of cases; very low frequency variants (e.g., \(<1\times10^{-5}\)) yield near-zero expected cases, with counts increasing steadily as allele frequency increases. In panel (B), the plot of the probability of at least one case versus allele frequency indicates that a background allele frequency greater than approximately \(7\times10^{-6}\) is required to reach a probability near 1 for observing at least one individual with a variant in this class.
 
-\begin{figure}[H]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=0.75\textwidth]{../images/tnfaip3_clinvar_count.png}
   \caption{Count of ClinVar variant classifications for \textit{TNFAIP3}.}
   \label{fig:tnfaip3_clinvar_count}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=0.85\textwidth]{../images/tnfaip3_combined_bar_charts.png}
   \caption{(A) Total expected cases and (B) overall probability of an affected case by ClinVar classification for \textit{TNFAIP3} in a UK population of approximately 69 million.}
   \label{fig:tnfaip3_combined_bar_charts}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=0.75\textwidth]{../images/tnfaip3_scatter_expected_prob.png}
   \caption{Scatter plots of (A) Expected Cases vs. Allele Frequency and (B) Probability of ≥1 Case vs. Allele Frequency for variants in \textit{TNFAIP3} (classification "Uncertain Significance"). Dotted vertical lines indicate threshold allele frequencies corresponding to a probability of 1.}
@@ -226,7 +219,7 @@ Thus, our final interpretation is that the expected number of \textit{NFKB1}-rel
 
 Figure~\ref{fig:nfkb1_case_est_distribution_combined_mixture} illustrates the distributions: the literature extrapolated distribution (median ≈ 1280) and the Bayesian mixture adjusted distribution (median ≈ 835), along with their 95\% confidence intervals.
 
-\begin{figure}[H]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=0.75\textwidth]{../images/nfkb1_case_est_distribution_combined_mixture.png}
   \caption{Density distributions for the estimated number of \textit{NFKB1}-related CVID cases in the UK. The blue distribution represents the literature extrapolated estimates (median ≈ 1280), and the orange distribution shows the Bayesian mixture adjusted estimates (median ≈ 835, 95\% CI: [789, 882]).}
@@ -242,21 +235,21 @@ We then repeated the entire analysis process described in Part 1, this time focu
 \end{itemize}
 For example, in Figure~\ref{fig:nfkb1_scatterdense_expected_prob} panel (A), the density plot indicates that, for the UK population, we expect approximately 456 cases at certain allele frequencies, and panel (B) shows an overall probability of \(7 \times 10^{-6}\) for observing at least one case. These values are strikingly close to our final Bayesian adjusted estimate range of 390 to 835 cases (with the latter having a 95\% CI of [789, 882]).
 
-\begin{figure}[H]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=0.75\textwidth]{../images/nfkb1_clinvar_count.png}
   \caption{Count of ClinVar variant classifications for \textit{NFKB1}.}
   \label{fig:nfkb1_clinvar_count}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=0.75\textwidth]{../images/nfkb1_combined_bar_charts.png}
   \caption{Combined bar charts of total expected cases and overall probability by ClinVar classification for \textit{NFKB1} in the UK population.}
   \label{fig:nfkb1_combined_bar_charts}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=0.99\textwidth]{../images/nfkb1_scatterdense_expected_prob.png}
   \caption{Density and scatter plots for \textit{NFKB1}: (A) Expected Cases vs. Allele Frequency, and (B) Probability of ≥1 Case vs. Allele Frequency for the UK population.}
@@ -266,9 +259,9 @@ For example, in Figure~\ref{fig:nfkb1_scatterdense_expected_prob} panel (A), the
 \subsection{Summary of Validation}
 Overall, our analyses yielded results that closely match the true reported values. The value derived from our validation model based on a previously reported disease cohort \cite{tuijnenburgNFKB12018} 
 produce a final expected range for \textit{NFKB1}-related CVID cases in the UK between 390 and 835, with the upper Bayesian adjusted range at 95\% CI: [789, 882] as show in Figure
-\ref{nfkb1_case_est_distribution_combined_mixture}. 
+\ref{fig:nfkb1_case_est_distribution_combined_mixture}. 
 Our estimated value of 456 cases, shown 
-\ref{nfkb1_scatterdense_expected_prob} (B), was exactly within this range.
+\ref{fig:nfkb1_scatterdense_expected_prob} (B), was exactly within this range.
 This validation confirms that our approach estimates variant classification probabilities, including pathogenicity, and can serve as a reference for further development of Bayesian methods in clinical genomics.
 
 
