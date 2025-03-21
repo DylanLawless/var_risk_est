@@ -28,8 +28,11 @@ head(df, 1)
 df <- df %>% dplyr::filter(!clinvar_clnsig == ".")
 df |> count(clinvar_clnsig)
 
+
 # Bar plot: Count of ClinVar Clinical Significance
-p_count <- ggplot(df, aes(x = clinvar_clnsig, fill = clinvar_clnsig)) +
+p_count <- ggplot(df, aes(
+  x = stringr::str_wrap(paste0(gsub("_", " ", clinvar_clnsig)), width = 20), 
+  fill = clinvar_clnsig)) +
   geom_bar( 
     color = "black") +
   geom_text(stat = "count", aes(label = ..count..), vjust = -0.5) +
@@ -37,13 +40,14 @@ p_count <- ggplot(df, aes(x = clinvar_clnsig, fill = clinvar_clnsig)) +
   labs(x = "ClinVar Clinical Significance",
        y = "Count",
        title = "Count of ClinVar Clinical Significance NFKB1",
-       subtitle = paste0("Condition: population size " , population_size)) +
+       # subtitle = paste0("Condition: population size " , population_size)
+       ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   guides(fill = "none")
 
 p_count
-ggsave("../images/nfkb1_clinvar_count.png", plot = p_count, width = 6, height = 5)
+ggsave("../images/nfkb1_clinvar_count.png", plot = p_count, width = 5, height = 4)
 
 
 # Data Preparation for Population-Level Calculations ----
@@ -109,6 +113,11 @@ print(df[, c("gnomAD_genomes_AF", "Inheritance", "disease_prob",
 threshold_AF <- min(df$gnomAD_genomes_AF[df$prob_at_least_one >= 0.999])
 threshold_AF_label <- formatC(threshold_AF, format = "f", digits = 6)
 
+
+unique_labels <- df %>% 
+  filter(clinvar_clnsig == "Pathogenic") %>%
+  distinct(gnomAD_genomes_AF, expected_cases)
+
 p_scatter1_path <- 
   df |> filter(clinvar_clnsig == "Pathogenic") |>
   ggplot(aes(x = gnomAD_genomes_AF, y = expected_cases, color = clinvar_clnsig)) +
@@ -116,28 +125,49 @@ p_scatter1_path <-
   geom_line(aes(group = 1)) +
   # scale_x_log10() +
   ylim(0, 800) + # somthing sensible if only one value
-  geom_text(aes(x = gnomAD_genomes_AF, y = expected_cases, label = round(expected_cases)), 
-            vjust = -1, hjust = 0.5, color = "black", size = 3) +
+  geom_text(data = unique_labels, 
+            aes(x = gnomAD_genomes_AF, y = expected_cases, label = round(expected_cases)), 
+            vjust = -1, hjust = 0.5, colour = "black", size = 3) +
   labs(x = "Allele Frequency (gnomAD_genomes_AF, log scale)",
        y = "Expected Cases",
        title = "Expected Cases vs\nAllele Frequency NFKB1",
        subtitle = paste0("Condition: population size " , population_size))
 
+
+# p_scatter2_path <- 
+#   df |> filter(clinvar_clnsig == "Pathogenic") |>
+#   ggplot(aes(x = gnomAD_genomes_AF, y = prob_at_least_one, color = clinvar_clnsig)) +
+#   # geom_jitter( height = 0, size = 3) +
+#   geom_point( size = 3) +
+#   geom_line(aes(group = 1)) +
+#   # scale_x_log10() +
+#   labs(x = "Allele Frequency (gnomAD_genomes_AF, log scale)",
+#        y = "Probability of ≥1 Case",
+#        title = "Probability of At Least One\nCase vs Allele Frequency NFKB1",
+#        subtitle = paste0("Condition: population size " , population_size)) +
+#   geom_vline(xintercept = threshold_AF, linetype = "dotted", color = "black") +
+#   geom_text(aes(x = threshold_AF, y = 1, label = threshold_AF_label), 
+#             vjust = -1, hjust = 0.5, color = "black", size = 3) +
+#   ylim(0,1.2)
+#   
+vline_label <- tibble(threshold_AF = threshold_AF, 
+                      threshold_AF_label = threshold_AF_label)
+
 p_scatter2_path <- 
-  df |> filter(clinvar_clnsig == "Pathogenic") |>
-  ggplot(aes(x = gnomAD_genomes_AF, y = prob_at_least_one, color = clinvar_clnsig)) +
-  # geom_jitter( height = 0, size = 3) +
-  geom_point( size = 3) +
+  df %>% 
+  filter(clinvar_clnsig == "Pathogenic") %>% 
+  ggplot(aes(x = gnomAD_genomes_AF, y = prob_at_least_one, colour = clinvar_clnsig)) +
+  geom_point(size = 3) +
   geom_line(aes(group = 1)) +
-  # scale_x_log10() +
   labs(x = "Allele Frequency (gnomAD_genomes_AF, log scale)",
        y = "Probability of ≥1 Case",
        title = "Probability of At Least One\nCase vs Allele Frequency NFKB1",
-       subtitle = paste0("Condition: population size " , population_size)) +
-  geom_vline(xintercept = threshold_AF, linetype = "dotted", color = "black") +
-  geom_text(aes(x = threshold_AF, y = 1, label = threshold_AF_label), 
-            vjust = -1, hjust = 0.5, color = "black", size = 3) +
-  ylim(0,1.2)
+       subtitle = paste0("Condition: population size ", population_size)) +
+  geom_vline(xintercept = threshold_AF, linetype = "dotted", colour = "black") +
+  geom_text(data = vline_label, 
+            aes(x = threshold_AF, y = 1, label = threshold_AF_label), 
+            vjust = -1, hjust = 0.5, colour = "black", size = 3) +
+  ylim(0, 1.2)
 
 # To display the plots:
 p_scatter1_path
@@ -200,7 +230,9 @@ df_tally <- df_calc %>%
 print(df_tally)
 
 # Bar plot: Total Expected Cases by ClinVar Category
-p_bar <- ggplot(df_tally, aes(x = clinvar_clnsig, y = total_expected_cases, fill = clinvar_clnsig)) +
+p_bar <- ggplot(df_tally, aes(
+  x = stringr::str_wrap(paste0(gsub("_", " ", clinvar_clnsig)), width = 20), , 
+  y = total_expected_cases, fill = clinvar_clnsig)) +
   geom_bar(stat = "identity", color = "black") +
   geom_text(aes(label = formatC(round(total_expected_cases, 0), format = "d", big.mark = ",")), 
             vjust = -0.5, size = 3.5) +
@@ -216,7 +248,9 @@ p_bar
 # ggsave("../images/nfkb1_bar_expected_cases.png", plot = p_bar, width = 8, height = 6)
 
 # Bar plot: Overall Probability by ClinVar Category
-p_prob <- ggplot(df_tally, aes(x = clinvar_clnsig, y = overall_prob, fill = clinvar_clnsig)) +
+p_prob <- ggplot(df_tally, aes(
+  x = stringr::str_wrap(paste0(gsub("_", " ", clinvar_clnsig)), width = 20), , 
+  y = overall_prob, fill = clinvar_clnsig)) +
   geom_bar(stat = "identity", color = "black") +
   geom_text(aes(label = scales::percent(overall_prob, accuracy = 0.001)), vjust = -0.5, size = 3.5) +
   labs(x = "ClinVar Clinical Significance",
@@ -235,6 +269,93 @@ p_bar <- p_bar +
   theme(axis.title.x = element_blank(),
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank())
-p_bars <- (p_bar / p_prob) + plot_layout(guides = 'collect', axis = "collect")  + plot_annotation(tag_levels = 'A')
+p_bars <- (p_bar / p_prob) + plot_layout(guides = 'collect', axis = "collect")  + plot_annotation(tag_levels = 'A', title = "Dominant disease gene")
 print(p_bars)
-ggsave("../images/nfkb1_combined_bar_charts.png", plot = p_bars, width = 6, height = 7)
+ggsave("../images/nfkb1_combined_bar_charts.png", plot = p_bars, width = 6, height = 6)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# test ----
+# source("validate_nfkb1.R")
+# n_expected_cases <- df |> filter(clinvar_clnsig == "Pathogenic") |> select(expected_cases) |> unique()
+# n_expected_cases
+# n_NFKB1
+# median_mix
+# median_est
+# 
+# as.data.frame(c(n_expected_cases,
+#                 n_NFKB1,
+#                 median_mix,
+#                 median_est))
+# 
+# # # For this dominant gene, assume that the registry reports an observed count.
+# # n_NFKB1 <- 390  # e.g. observed number of NFKB1-related cases in the specialized cohort
+# 
+# summary_df <- data.frame(
+#   Category = c("Expected Heterozygous", 
+#                "Observed*",
+#                "Bayesian estimate",
+#                "Etrapolated estimate"),
+#   Count = c(n_expected_cases,
+#             n_NFKB1,
+#             median_mix,
+#             median_est)
+# )
+# 
+# 
+# # Preserve the specified order by setting Category as a factor with levels.
+# summary_df$Category <- factor(summary_df$Category, levels = c(
+#   "Expected\nHeterozygous", 
+#   "Observed*",
+#   "Bayesian estimate",
+#   "Etrapolated estimate"))
+# 
+# # Plot the summary as a bar chart with annotations and source.
+# p_var <- ggplot(summary_df, aes(x = Category, y = Count, fill = Category)) +
+#   geom_bar(stat = "identity", color = "black") +
+#   geom_text(aes(label = formatC(round(Count, 0), format = "d", big.mark = ",")),
+#             vjust = -0.5, size = 4) +
+#   labs(title = "Expected Genotype Counts for p.Arg117His in CFTR",
+#        subtitle = paste0("Population Size: ", population_size),
+#        # caption = source_text,
+#        x = "Genotype Category",
+#        y = "Count") +
+#   guides(fill = "none") +
+#   scale_y_continuous(expand = expansion(mult = c(0, 0.2))) 
+# 
+# p_var
+# ggsave("../images/cftr_validation_pArg117His.png", plot = p_var, width = 6, height = 6)
+# 
+# 

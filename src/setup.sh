@@ -13,3 +13,9 @@ wc -l nfkb1
 zcat  dbNSFP4.4a_variant.chr4.gz | head -n1 > nfkb1_head
 
 
+zcat  dbNSFP4.4a_variant.chr7.gz | grep CFTR > cftr
+wc -l cftr
+zcat  dbNSFP4.4a_variant.chr7.gz | head -n1 > cftr_head
+
+
+/project/home/lawless/data/db/dbnsfp/cftr* ../data/

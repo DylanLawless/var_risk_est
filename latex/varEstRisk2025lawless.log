@@ -1,9 +1,9 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.7.19)  20 MAR 2025 23:37
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.7.19)  21 MAR 2025 09:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**est.tex
-(./est.tex
+**varEstRisk2025lawless.tex
+(./varEstRisk2025lawless.tex
 LaTeX2e <2018-04-01> patch level 2
 Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
 (./head.tex (/usr/local/texlive/2018/texmf-dist/tex/latex/base/article.cls
@@ -1567,8 +1567,8 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 LaTeX Warning: Unused global option(s):
     [preprint].
 
-(./est.aux)
-\openout1 = `est.aux'.
+(./varEstRisk2025lawless.aux)
+\openout1 = `varEstRisk2025lawless.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
 LaTeX Font Info:    ... okay on input line 7.
@@ -1651,9 +1651,9 @@ Package hyperref Info: Link coloring ON on input line 7.
 LaTeX Info: Redefining \ref on input line 7.
 LaTeX Info: Redefining \pageref on input line 7.
 LaTeX Info: Redefining \nameref on input line 7.
- (./est.out) (./est.out)
+ (./varEstRisk2025lawless.out) (./varEstRisk2025lawless.out)
 \@outlinefile=\write7
-\openout7 = `est.out'.
+\openout7 = `varEstRisk2025lawless.out'.
 
 
 
@@ -1786,26 +1786,27 @@ File: ../images/nfkb1_scatterdense_expected_prob.png Graphic file (type bmp)
 <../images/nfkb1_scatterdense_expected_prob.png>
 Missing character: There is no ≥ in font [lmroman12-regular]:mapping=tex-text;!
 Missing character: There is no ≥ in font [lmroman12-regular]:mapping=tex-text;!
- [7] [8] [9] [10] (./est.bbl [11]
-Missing character: There is no κ in font [lmroman12-regular]:mapping=tex-text;!
-) [12]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 398.
- [13] [14] [15] [16]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 398.
+ [7] [8] [9] [10] [11] [12
 
-(./est.aux)
+] [13] [14]
+(./varEstRisk2025lawless.bbl [15]
+Missing character: There is no κ in font [lmroman12-regular]:mapping=tex-text;!
+) [16]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 398.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 398.
+ (./varEstRisk2025lawless.aux)
 Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 398.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 398.
-Package rerunfilecheck Info: File `est.out' has not changed.
+Package rerunfilecheck Info: File `varEstRisk2025lawless.out' has not changed.
 (rerunfilecheck)             Checksum: 02D42E82A9AB2D17291BB9140F9A3FCB.
  ) 
 Here is how much of TeX's memory you used:
  41067 strings out of 492970
- 855577 string characters out of 6133938
- 1006371 words of memory out of 5000000
+ 855847 string characters out of 6133938
+ 1003515 words of memory out of 5000000
  44437 multiletter control sequences out of 15000+600000
  541760 words of font info for 86 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 65i,16n,101p,10546b,892s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 65i,16n,101p,10564b,892s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on est.pdf (16 pages).
+Output written on varEstRisk2025lawless.pdf (16 pages).
