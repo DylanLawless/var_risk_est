@@ -148,11 +148,11 @@ p_combined <- ggplot() +
   scale_fill_manual(name = "Estimate Type", 
                     values = c("Literature Extrapolated" = "skyblue", 
                                "Bayesian Mixture Adjusted" = "orange")) +
-  labs(title = "Combined Density of NFKB1-related CVID Case Estimates",
+  labs(title = "Bayesian Adjusted Estimates for NFKB1-related\nCVID Case Genotype Counts",
        x = "Estimated Number of Cases",
        y = "Density") +
   # Extend y-axis by 1.2 times to allow space for annotations
-  scale_y_continuous(limits = c(0, max_y * 1.2)) +
+  scale_y_continuous(limits = c(0, max_y_mix * 1.2)) +
   xlim(200, 1500) +
   # Annotate literature extrapolated median and CI with a vertical dotted line in blue
   geom_vline(xintercept = median_est, linetype = "dotted", color = "blue", size = 1) +
@@ -163,8 +163,8 @@ p_combined <- ggplot() +
            color = "black", vjust = -0.5, size = 4) +
   # Annotate Bayesian adjusted median and CI with a vertical dotted line in orange
   geom_vline(xintercept = median_mix, linetype = "dotted", color = "orange", size = 1) +
-  annotate("text", x = median_mix, y = max_y * 0.9, 
-           label = paste("Bayes\nMedian =", formatC(median_mix, format = "f", digits = 0),
+  annotate("text", x = median_mix, y = max_y_mix * 0.8, 
+           label = paste("Bayesian\nMedian =", formatC(median_mix, format = "f", digits = 0),
                          "\n95% CI: [", formatC(ci_mix[1], format = "f", digits = 0), ",", 
                          formatC(ci_mix[2], format = "f", digits = 0), "]"), 
            color = "black", vjust = -0.5, size = 4) +
