@@ -1,16 +1,23 @@
 library(ggplot2); theme_set(theme_bw())
 library(patchwork)
+library(dplyr)
 
 # Ensure the output directory exists
 if(!dir.exists("../images/")) dir.create("../images/")
+
+# source PanelAppRex ----
+source("panelapprex_import.R")
+
+# Select our panel data ----
+df_par <- df_par |> dplyr::select(entity_name, panel_id, Inheritance, name)
+df_par <- df_par |> filter(panel_id == 398) # IUIS PID
+colnames(df_par)[colnames(df_par) == 'entity_name'] <- 'genename'
 
 # UK population
 population_size <- 69433632
 # population_size <- 83702  # births in 2023
 
 # DBNSFP Data Import and Filtering ----
-library(dplyr)
-
 header_line <- readLines("../data/nfkb1_head", n = 1)
 header_line <- sub("^#", "", header_line)
 header_fields <- strsplit(header_line, "\t")[[1]]
@@ -22,11 +29,31 @@ df <- read.table("../data/nfkb1",
                  stringsAsFactors = FALSE, 
                  fill = TRUE)
 colnames(df) <- header_fields
-head(df, 1)
+
+df <- df %>% select(genename, `pos(1-based)`, gnomAD_genomes_AN, gnomAD_genomes_AF, clinvar_clnsig, HGVSc_VEP, HGVSp_VEP)
+
+
+# Data Preparation for Population-Level Calculations ----
+df$gnomAD_genomes_AF[df$gnomAD_genomes_AF == "."] <- 0
+df$gnomAD_genomes_AN[df$gnomAD_genomes_AN == "."] <- 0
+df$gnomAD_genomes_AF <- as.numeric(df$gnomAD_genomes_AF)
 
 # Keep a copy and filter out rows with clinvar_clnsig == "."
 df <- df %>% dplyr::filter(!clinvar_clnsig == ".")
 df |> count(clinvar_clnsig)
+
+# keep just one transcript allele for simplicity
+df$HGVSc_VEP <- sapply(strsplit(df$HGVSc_VEP, ";"), `[`, 1)
+df$HGVSp_VEP <- sapply(strsplit(df$HGVSp_VEP, ";"), `[`, 1)
+df$genename <- sapply(strsplit(df$genename, ";"), `[`, 1)
+df  <- df |> filter(genename == "NFKB1")
+
+# get Inheritance from PanelAppRex
+df <- merge(df, df_par)
+
+# df$Inheritance <- "AD"  # setting inheritance to AD for demonstration
+
+head(df)
 
 # Bar plot: Count of ClinVar Clinical Significance
 p_count <- ggplot(df, aes(
@@ -40,7 +67,7 @@ p_count <- ggplot(df, aes(
        y = "Count",
        title = "Count of ClinVar Clinical Significance NFKB1",
        # subtitle = paste0("Condition: population size " , population_size)
-       ) +
+  ) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   guides(fill = "none")
@@ -48,21 +75,6 @@ p_count <- ggplot(df, aes(
 p_count
 ggsave("../images/nfkb1_clinvar_count.png", plot = p_count, width = 5, height = 4)
 
-
-# Data Preparation for Population-Level Calculations ----
-df$gnomAD_genomes_AF[df$gnomAD_genomes_AF == "."] <- 0
-df$gnomAD_genomes_AN[df$gnomAD_genomes_AN == "."] <- 0
-df$gnomAD_genomes_AF <- as.numeric(df$gnomAD_genomes_AF)
-df <- df %>% select(genename, `pos(1-based)`, gnomAD_genomes_AN, gnomAD_genomes_AF, clinvar_clnsig, HGVSc_VEP, HGVSp_VEP)
-
-# keep just one transcript allele for simplicity
-df$HGVSc_VEP <- sapply(strsplit(df$HGVSc_VEP, ";"), `[`, 1)
-df$HGVSp_VEP <- sapply(strsplit(df$HGVSp_VEP, ";"), `[`, 1)
-df$genename <- sapply(strsplit(df$genename, ";"), `[`, 1)
-df  <- df |> filter(genename == "NFKB1")
-df$Inheritance <- "AD"  # setting inheritance to AD for demonstration
-
-head(df)
 
 # Filter for a specific ClinVar category: Uncertain_significance (example)
 # df <- subset(df, clinvar_clnsig == "Pathogenic")
