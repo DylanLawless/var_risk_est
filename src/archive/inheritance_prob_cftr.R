@@ -1,124 +1,19 @@
-# library(ggplot2); theme_set(theme_bw())
-# library(patchwork)
-# library(dplyr)
-# library(tidyr)
-# library(stringr)
-# 
-# if(!dir.exists("../images/")) dir.create("../images/")
-# 
-# population_size <- 69433632
-# 
-# # Data Import and Filtering ----
-# header_line <- readLines("../data/cftr_head", n = 1)
-# header_line <- sub("^#", "", header_line)
-# header_fields <- strsplit(header_line, "\t")[[1]]
-# rm(header_line)
-# 
-# df <- read.table("../data/cftr", 
-#                  sep = "\t",
-#                  header = FALSE, 
-#                  stringsAsFactors = FALSE, 
-#                  fill = TRUE)
-# colnames(df) <- header_fields
-# 
-# # Use NFE allele frequency column as our AF and remove the original AF column
-# df <- df |> select(-gnomAD_genomes_AF)
-# colnames(df)[colnames(df) == 'gnomAD_genomes_NFE_AF'] <- 'gnomAD_genomes_AF'
-# 
-# df <- df %>% filter(!clinvar_clnsig == ".")
-# df$gnomAD_genomes_AF[df$gnomAD_genomes_AF == "."] <- 0
-# df$gnomAD_genomes_AN[df$gnomAD_genomes_AN == "."] <- 0
-# df$gnomAD_genomes_AF <- as.numeric(df$gnomAD_genomes_AF)
-# df$gnomAD_genomes_AN <- as.numeric(df$gnomAD_genomes_AN)
-# df <- df %>% select(genename, `pos(1-based)`, gnomAD_genomes_AN, gnomAD_genomes_AF, 
-#                     clinvar_clnsig, HGVSc_VEP, HGVSp_VEP)
-# df$HGVSc_VEP <- sapply(strsplit(df$HGVSc_VEP, ";"), `[`, 2)
-# df$HGVSp_VEP <- sapply(strsplit(df$HGVSp_VEP, ";"), `[`, 2)
-# df$genename <- sapply(strsplit(df$genename, ";"), `[`, 1)
-# df$Inheritance <- "AR"  # autosomal recessive
-# 
-# # Substitute zero AF with a minimal detectable value.
-# max_af <- max(df$gnomAD_genomes_AN, na.rm = TRUE)
-# df$gnomAD_genomes_AF <- ifelse(df$gnomAD_genomes_AF == 0,
-#                                1 / (max_af + 1),
-#                                df$gnomAD_genomes_AF)
-# 
-# # --- Compute Total Allele Frequency per Gene (for all variants) ---
-# # Here we do NOT filter by clinvar_clnsig; we use all variants with nonzero AN.
-# gene_totals <- df %>% 
-#   filter(genename == "CFTR", gnomAD_genomes_AN > 0) %>%
-#   group_by(genename) %>%
-#   summarise(total_AF = sum(gnomAD_genomes_AF, na.rm = TRUE), .groups = "drop")
-# 
-# # Merge gene totals into the main dataframe.
-# df <- df %>% left_join(gene_totals, by = "genename")
-# 
-# # # --- Calculate Occurrence Probability ---
-# # # For AR conditions, an event (i.e. having two pathogenic alleles) can occur via:
-# # #   - Homozygous: (p)^2
-# # #   - Compound heterozygous: 2 * p * (total_AF - p)
-# # df <- df %>% mutate(
-# #   other_AF = ifelse(Inheritance == "AR", total_AF - gnomAD_genomes_AF, 0),
-# #   occurrence_prob = ifelse(Inheritance %in% c("AD", "X-linked"),
-# #                            gnomAD_genomes_AF,
-# #                            pmax(gnomAD_genomes_AF^2 + 2 * gnomAD_genomes_AF * other_AF, 0))
-# # )
-# # 
-# # # Calculate expected cases and probability of at least one event.
-# # df <- df %>% mutate(
-# #   expected_cases = population_size * occurrence_prob,
-# #   prob_at_least_one = 1 - (1 - occurrence_prob)^population_size
-# # )
-# # View key results.
-# df |> head()
-# 
-# # --- Tally by ClinVar Category ---
-# clinvar_levels <- unique(df$clinvar_clnsig)
-# 
-# # Keep in mind that if there is overlap (non-independence) between variants (for example, if the same individual might carry two different variants), then this approach may overestimate the probability. But as an approximation under the assumption of independence, the code is correct for recessive disease.
-# df_tally <- df %>%
-#   group_by(clinvar_clnsig) %>%
-#   summarise(total_expected_cases = sum(expected_cases),
-#             overall_prob = 1 - prod(1 - occurrence_prob),
-#             .groups = "drop") %>%
-#   complete(clinvar_clnsig = clinvar_levels,
-#            fill = list(total_expected_cases = 0, overall_prob = 0))
-# print(df_tally)
 
 library(ggplot2); theme_set(theme_bw())
 library(patchwork)
 library(dplyr)
+library(tidyr)
+library(stringr)
 
-path_data <- "../data/"
+if(!dir.exists("../images/")) dir.create("../images/")
 
-# Ensure the output directory exists
-if (!dir.exists("../images/")) dir.create("../images/")
-
-# source PanelAppRex ----
-source("panelapprex_import.R")
-
-# Select our panel data ----
-df_par <- df_par |> dplyr::select(entity_name, panel_id, Inheritance, name)
-df_par <- df_par |> filter(panel_id == 398) # IUIS PID
-colnames(df_par)[colnames(df_par) == 'entity_name'] <- 'genename'
-
-# UK population
 population_size <- 69433632
-# population_size <- 83702  # births in 2023
 
-# Start import data ----
-header_line <- readLines("../data/nfkb1_head", n = 1)
+# Data Import and Filtering ----
+header_line <- readLines("../data/cftr_head", n = 1)
 header_line <- sub("^#", "", header_line)
 header_fields <- strsplit(header_line, "\t")[[1]]
 rm(header_line)
-
-df <- read.table("../data/nfkb1", 
-                 sep = "\t",
-                 header = FALSE, 
-                 stringsAsFactors = FALSE, 
-                 fill = TRUE)
-colnames(df) <- header_fields
-df_gene1 <- df 
 
 df <- read.table("../data/cftr", 
                  sep = "\t",
@@ -126,105 +21,71 @@ df <- read.table("../data/cftr",
                  stringsAsFactors = FALSE, 
                  fill = TRUE)
 colnames(df) <- header_fields
-df_gene2 <- df
 
-df <- rbind(df_gene1, df_gene2)
-# End import data ----
+# Use NFE allele frequency column as our AF and remove the original AF column
+df <- df |> select(-gnomAD_genomes_AF)
+colnames(df)[colnames(df) == 'gnomAD_genomes_NFE_AF'] <- 'gnomAD_genomes_AF'
 
-df <- df %>% select(genename, `pos(1-based)`, gnomAD_genomes_AN, gnomAD_genomes_AF, clinvar_clnsig, HGVSc_VEP, HGVSp_VEP)
-
-# Data Preparation for Population-Level Calculations ----
+df <- df %>% filter(!clinvar_clnsig == ".")
 df$gnomAD_genomes_AF[df$gnomAD_genomes_AF == "."] <- 0
 df$gnomAD_genomes_AN[df$gnomAD_genomes_AN == "."] <- 0
 df$gnomAD_genomes_AF <- as.numeric(df$gnomAD_genomes_AF)
-
-# Remove rows with missing clinvar_clnsig
-df <- df %>% dplyr::filter(clinvar_clnsig != ".")
-df |> count(clinvar_clnsig)
-
-# keep just one transcript allele for simplicity
+df$gnomAD_genomes_AN <- as.numeric(df$gnomAD_genomes_AN)
+df <- df %>% select(genename, `pos(1-based)`, gnomAD_genomes_AN, gnomAD_genomes_AF, 
+                    clinvar_clnsig, HGVSc_VEP, HGVSp_VEP)
 df$HGVSc_VEP <- sapply(strsplit(df$HGVSc_VEP, ";"), `[`, 2)
 df$HGVSp_VEP <- sapply(strsplit(df$HGVSp_VEP, ";"), `[`, 2)
 df$genename <- sapply(strsplit(df$genename, ";"), `[`, 1)
-# Remove gene filter to process all genes
-# df <- df |> filter(genename == "NFKB1")
+df$Inheritance <- "AR"  # autosomal recessive
 
-# get Inheritance from PanelAppRex
-df <- merge(df, df_par)
+# Substitute zero AF with a minimal detectable value.
+max_af <- max(df$gnomAD_genomes_AN, na.rm = TRUE)
+df$gnomAD_genomes_AF <- ifelse(df$gnomAD_genomes_AF == 0,
+                               1 / (max_af + 1),
+                               df$gnomAD_genomes_AF)
 
-# df$Inheritance <- "AD"  # setting inheritance to AD for demonstration
-
-head(df)
-
-# If no known variants per clinsig, consider a minimal risk with 1 de novo ----
-df <- df %>%
+# --- Compute Total Allele Frequency per Gene (for all variants) ---
+# Here we do NOT filter by clinvar_clnsig; we use all variants with nonzero AN.
+gene_totals <- df %>% 
+  filter(genename == "CFTR", gnomAD_genomes_AN > 0) %>%
   group_by(genename) %>%
-  mutate(
-    gnomAD_genomes_AF = as.numeric(gnomAD_genomes_AF),
-    gnomAD_genomes_AN = as.numeric(gnomAD_genomes_AN),
-    max_an = max(gnomAD_genomes_AN, na.rm = TRUE),
-    synth_flag = gnomAD_genomes_AF == 0,
-    gnomAD_genomes_AF = ifelse(synth_flag, 1 / (max_an + 1), gnomAD_genomes_AF)
-  ) %>%
-  ungroup()
+  summarise(total_AF = sum(gnomAD_genomes_AF, na.rm = TRUE), .groups = "drop")
 
+# Merge gene totals into the main dataframe.
+df <- df %>% left_join(gene_totals, by = "genename")
 
+# --- Calculate Occurrence Probability ---
+# For AR conditions, an event (i.e. having two pathogenic alleles) can occur via:
+#   - Homozygous: (p)^2
+#   - Compound heterozygous: 2 * p * (total_AF - p)
+df <- df %>% mutate(
+  other_AF = ifelse(Inheritance == "AR", total_AF - gnomAD_genomes_AF, 0),
+  occurrence_prob = ifelse(Inheritance %in% c("AD", "X-linked"),
+                           gnomAD_genomes_AF,
+                           pmax(gnomAD_genomes_AF^2 + 2 * gnomAD_genomes_AF * other_AF, 0))
+)
 
-df <- df %>%
-  group_by(genename, clinvar_clnsig) %>%
-  group_modify(~ {
-    # Always keep this comment as it is key to a subtle step.
-    # For each group defined by genename and clinvar_clnsig:
-    #   - If there is at least one row that is not synthetic (synth_flag == FALSE),
-    #     then keep only the non-synthetic rows.
-    #   - Otherwise, if all rows in the group are synthetic, keep only one synthetic row.
-    if (any(!.x$synth_flag)) {
-      .x %>% filter(!synth_flag)
-    } else {
-      .x %>% slice(1)
-    }
-  }) %>%
-  ungroup()
+# Calculate expected cases and probability of at least one event.
+df <- df %>% mutate(
+  expected_cases = population_size * occurrence_prob,
+  prob_at_least_one = 1 - (1 - occurrence_prob)^population_size
+)
 
-names(df)
+# View key results.
+df |> head()
 
-# Inheritance and expected cases ----
-# For AR calculations, compute the total allele frequency per gene
-df <- df %>%
-  group_by(genename) %>%
-  mutate(total_AF = sum(gnomAD_genomes_AF, na.rm = TRUE)) %>%
-  ungroup()
-
-# Always keep this comment as it is key to a subtle step.
-# Calculate occurrence probability based on Inheritance model:
-#   - For AD and X-linked: occurrence probability equals the allele frequency.
-#   - For AR: occurrence probability is the sum of the homozygous (p^2) and compound heterozygous (2 * p * (total_AF - p)) probabilities.
-df <- df %>%
-  mutate(
-    occurrence_prob = ifelse(Inheritance %in% c("AD", "X-linked"),
-                             gnomAD_genomes_AF,
-                             pmax(gnomAD_genomes_AF^2 + 2 * gnomAD_genomes_AF * (total_AF - gnomAD_genomes_AF), 0)),
-    expected_cases = population_size * occurrence_prob,
-    prob_at_least_one = 1 - (1 - occurrence_prob)^population_size
-  )
-
-# Tally by ClinVar Category and Gene
+# --- Tally by ClinVar Category ---
 clinvar_levels <- unique(df$clinvar_clnsig)
 
+# Keep in mind that if there is overlap (non-independence) between variants (for example, if the same individual might carry two different variants), then this approach may overestimate the probability. But as an approximation under the assumption of independence, the code is correct for recessive disease.
 df_tally <- df %>%
-  group_by(genename, clinvar_clnsig) %>%
-  summarise(
-    total_expected_cases = sum(expected_cases),
-    overall_prob = 1 - prod(1 - occurrence_prob),
-    .groups = "drop"
-  ) %>%
-  tidyr::complete(genename, clinvar_clnsig = clinvar_levels,
-                  fill = list(total_expected_cases = 0, overall_prob = 0))
-
+  group_by(clinvar_clnsig) %>%
+  summarise(total_expected_cases = sum(expected_cases),
+            overall_prob = 1 - prod(1 - occurrence_prob),
+            .groups = "drop") %>%
+  complete(clinvar_clnsig = clinvar_levels,
+           fill = list(total_expected_cases = 0, overall_prob = 0))
 print(df_tally)
-
-
-
 
 # --- Bar Plots ---
 # Total Expected Cases by ClinVar Category.

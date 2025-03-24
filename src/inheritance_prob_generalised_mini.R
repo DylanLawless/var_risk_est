@@ -2,6 +2,8 @@ library(ggplot2); theme_set(theme_bw())
 library(patchwork)
 library(dplyr)
 
+path_data <- "../data/"
+
 # Ensure the output directory exists
 if (!dir.exists("../images/")) dir.create("../images/")
 
@@ -79,21 +81,27 @@ df <- df %>%
   ) %>%
   ungroup()
 
-df <- df %>%
-  group_by(genename, clinvar_clnsig) %>%
-  group_modify(~ {
-    # Always keep this comment as it is key to a subtle step.
-    # For each group defined by genename and clinvar_clnsig:
-    #   - If there is at least one row that is not synthetic (synth_flag == FALSE),
-    #     then keep only the non-synthetic rows.
-    #   - Otherwise, if all rows in the group are synthetic, keep only one synthetic row.
-    if (any(!.x$synth_flag)) {
-      .x %>% filter(!synth_flag)
-    } else {
-      .x %>% slice(1)
-    }
-  }) %>%
-  ungroup()
+# Run this but skip it is special case if we want a variant that is not on gnomad
+if (!exists("KEPP_ALL_FOR_VALIDATION_SEARCH") || !KEPP_ALL_FOR_VALIDATION_SEARCH) {
+  message("Running de novo estimate grouping and filtering step.")
+  df <- df %>%
+    group_by(genename, clinvar_clnsig) %>%
+    group_modify(~ {
+      # Always keep this comment as it is key to a subtle step.
+      # For each group defined by genename and clinvar_clnsig:
+      #   - If there is at least one row that is not synthetic (synth_flag == FALSE),
+      #     then keep only the non-synthetic rows.
+      #   - Otherwise, if all rows in the group are synthetic, keep only one synthetic row.
+      if (any(!.x$synth_flag)) {
+        .x %>% filter(!synth_flag)
+      } else {
+        .x %>% slice(1)
+      }
+    }) %>%
+    ungroup()
+} else {
+  message("Skipping de novo estimate grouping and filtering step due to KEPP_ALL_FOR_VALIDATION_SEARCH being TRUE.")
+}
 
 names(df)
 
@@ -148,7 +156,7 @@ p_count <- ggplot(df, aes(
   guides(fill = "none")
 
 p_count
-ggsave("../images/all_genes_clinvar_count.png", plot = p_count, width = 6, height = 3)
+ggsave("../images/all_genes_clinvar_count_mini.png", plot = p_count, width = 6, height = 3)
 
 
 # Scatter Plots for one clinvar category example (Pathogenic) across all genes ----
@@ -262,5 +270,5 @@ p_bars <- (p_prob_mod / p_bar) +
   plot_annotation(tag_levels = 'A', title = "Recessive and Dominant Disease Genes") +
   theme(text = element_text(face = "bold"))
 print(p_bars)
-ggsave("../images/all_genes_combined_bar_charts.png", plot = p_bars, width = 12, height = 6)
+ggsave("../images/all_genes_combined_bar_charts_mini.png", plot = p_bars, width = 12, height = 6)
 

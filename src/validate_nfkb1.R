@@ -1,4 +1,15 @@
 library(ggplot2); theme_set(theme_bw())
+
+# Skip one of the confitions because it is special case where we want a variant that is not listed in the clinsig
+KEPP_ALL_FOR_VALIDATION_SEARCH <- FALSE #
+source("./inheritance_prob_generalised_mini.R")
+
+# For CFTR, restrict to known pathogenic variants using gnomAD_genomes_AF.
+nfkb1_patho <- df %>%
+  filter(genename == "NFKB1", clinvar_clnsig == "Pathogenic")
+
+expected_total_genotypes <- nfkb1_patho$expected_cases 
+
 # From the study of NFKB1: Given that PID is a heterogeneous disease, with overlap in phenotypes and genetic causes across different diagnostic categories, we decided to perform an unbiased genetic analysis of all 846 unrelated index cases. Whole-genome sequence data were additionally available for 63 affected and 345 unaffected relatives. Within a broad range of phenotypes, CVID is the most common disease category, comprising 46% of the NIHRBR-RD PID cohort (n = 390 index cases; range, 0-93 years of age).
 
 # Baseline ----
@@ -111,26 +122,26 @@ p_samples <- rbeta(nsamples, alpha, beta_param)
 estimated_samples <- expected_CVID_UK * p_samples  # estimated NFKB1-related cases from literature extrapolation
 
 # Bayesian adjusted estimates: weighted average of the cohort count and literature extrapolation
-w_new <- 0.5  # weight for the cohort data. We generate a mixture distribution (bayes_adjusted_mix) by setting the weight to 0.5, thereby allowing the final estimate to be influenced equally by the cohort data (constant 390) and the literature-based extrapolation (which is variable/conditional).
+w_new <- 0.5  # weight for the cohort data. We generate a mixture distribution (bayes_adjusted_mix_nfkb1) by setting the weight to 0.5, thereby allowing the final estimate to be influenced equally by the cohort data (constant 390) and the literature-based extrapolation (which is variable/conditional).
 # Adjust the weight to produce a mixture distribution that better reflects uncertainty 
 # from both the cohort and the literature-based extrapolation.
 
 
 # Recompute the Bayesian adjusted samples using the new weight:
-bayes_adjusted_mix <- w_new * n_NFKB1 + (1 - w_new) * estimated_samples
+bayes_adjusted_mix_nfkb1 <- w_new * n_NFKB1 + (1 - w_new) * estimated_samples
 
 # Create a data frame for plotting
-df_samples <- data.frame(
+df_samples_nfkb1 <- data.frame(
   Estimated = estimated_samples,
-  BayesianAdjusted = bayes_adjusted_mix
+  BayesianAdjusted = bayes_adjusted_mix_nfkb1
 )
 
 # Compute median and 95% CI for the Bayesian adjusted distribution
-median_mix <- median(bayes_adjusted_mix)
-ci_mix <- quantile(bayes_adjusted_mix, probs = c(0.025, 0.975))
+median_mix <- median(bayes_adjusted_mix_nfkb1)
+ci_mix <- quantile(bayes_adjusted_mix_nfkb1, probs = c(0.025, 0.975))
 cat("Bayesian mixture adjusted estimate (w = 0.5) median:", round(median_mix, 0), "\n")
 cat("95% CI for the Bayesian mixture adjusted estimate:", round(ci_mix[1], 0), "to", round(ci_mix[2], 0), "\n")
-density_mix <- density(bayes_adjusted_mix)
+density_mix <- density(bayes_adjusted_mix_nfkb1)
 max_y_mix <- max(density_mix$y)
 
 # Compute median and 95% CI for the literature extrapolated distribution (Estimated)
@@ -142,37 +153,47 @@ density_est <- density(estimated_samples)
 max_y_est <- max(density_est$y)
 
 # Create a combined density plot with vertical dotted lines and annotations for medians and 95% CI
-p_combined <- ggplot() +
-  geom_density(data = df_samples, aes(x = Estimated, fill = "Literature Extrapolated"), alpha = 0.5) +
-  geom_density(aes(x = bayes_adjusted_mix, fill = "Bayesian Mixture Adjusted"), alpha = 0.5) +
+p_nfkb1_bayes <- ggplot() +
+  geom_density(data = df_samples_nfkb1, aes(x = Estimated, fill = "Literature Extrapolated"), alpha = 0.5) +
+  geom_density(aes(x = bayes_adjusted_mix_nfkb1, fill = "Bayesian Mixture Adjusted"), alpha = 0.5) +
   scale_fill_manual(name = "Estimate Type", 
                     values = c("Literature Extrapolated" = "skyblue", 
                                "Bayesian Mixture Adjusted" = "orange")) +
-  labs(title = "Bayesian Adjusted Estimates for NFKB1-related\nCVID Case Genotype Counts",
+  # labs(title = "Bayesian Adjusted Estimates for NFKB1-related\nCVID Case Genotype Counts",
+  labs(title = "Autosomal Dominant: NFKB1-related all CVID Cases",
        x = "Estimated Number of Cases",
        y = "Density") +
   # Extend y-axis by 1.2 times to allow space for annotations
   scale_y_continuous(limits = c(0, max_y_mix * 1.2)) +
-  xlim(200, 1500) +
+  
   # Annotate literature extrapolated median and CI with a vertical dotted line in blue
   geom_vline(xintercept = median_est, linetype = "dotted", color = "blue", size = 1) +
-  annotate("text", x = median_est, y = max_y_est * 1.1, 
-           label = paste("Estimate\nMedian =", formatC(median_est, format = "f", digits = 0),
+  annotate("text", x = median_est *1.05, y = max_y_est * .8, 
+           label = paste("Estimate Max\nMedian =", formatC(median_est, format = "f", digits = 0),
                          "\n95% CI: [", formatC(ci_est[1], format = "f", digits = 0), ",", 
                          formatC(ci_est[2], format = "f", digits = 0), "]"), 
-           color = "black", vjust = -0.5, size = 4) +
+           color = "blue", vjust = 0, size = 4, hjust = 0) +
+  
   # Annotate Bayesian adjusted median and CI with a vertical dotted line in orange
   geom_vline(xintercept = median_mix, linetype = "dotted", color = "orange", size = 1) +
-  annotate("text", x = median_mix, y = max_y_mix * 0.8, 
+  annotate("text", x = median_mix *1.05, y = max_y_mix * 0.9, 
            label = paste("Bayesian\nMedian =", formatC(median_mix, format = "f", digits = 0),
                          "\n95% CI: [", formatC(ci_mix[1], format = "f", digits = 0), ",", 
                          formatC(ci_mix[2], format = "f", digits = 0), "]"), 
-           color = "black", vjust = -0.5, size = 4) +
+           color = "orange", vjust = 0, size = 4, hjust = 0) +
   
-  geom_vline(xintercept = n_NFKB1, linetype = "dotted", color = "red", size = 1) +
-  annotate("text", x = n_NFKB1, y = max_y_est * 1.1, 
+  geom_vline(xintercept = n_NFKB1 , linetype = "dotted", color = "red", size = 1) +
+  annotate("label", x = n_NFKB1  , y = max_y_est * 1.5, 
            label = paste("Reported\ncases =", formatC(n_NFKB1, format = "f", digits = 0)), 
-           color = "black", vjust = -0.5, size = 4) 
+           fill = scales::alpha("white", 0.5),  label.size = 0,
+           color = "red", vjust = 0, size = 4,  hjust = 0) +
+  
+  geom_vline(xintercept = expected_total_genotypes, linetype = "solid", color = "darkgreen", size = 1) +
+  annotate("label", x = expected_total_genotypes *1.1, y = max_y_est * 1,
+           label = paste0("Predicted\ntotal = ", round(expected_total_genotypes)),
+           fill = scales::alpha("white", 0.5),  label.size = 0,
+           color = "darkgreen", vjust = 0, size = 4, hjust = 0) +
+  xlim(200, 2200)
 
-print(p_combined)
-ggsave("../images/nfkb1_case_est_distribution_combined_mixture.png", plot = p_combined, width = 8, height = 4)
+print(p_nfkb1_bayes)
+ggsave("../images/nfkb1_case_est_distribution_combined_mixture.png", plot = p_nfkb1_bayes, width = 8, height = 4)
