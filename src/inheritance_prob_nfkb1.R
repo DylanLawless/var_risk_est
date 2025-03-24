@@ -28,7 +28,6 @@ head(df, 1)
 df <- df %>% dplyr::filter(!clinvar_clnsig == ".")
 df |> count(clinvar_clnsig)
 
-
 # Bar plot: Count of ClinVar Clinical Significance
 p_count <- ggplot(df, aes(
   x = stringr::str_wrap(paste0(gsub("_", " ", clinvar_clnsig)), width = 20), 
@@ -54,31 +53,40 @@ ggsave("../images/nfkb1_clinvar_count.png", plot = p_count, width = 5, height = 
 df$gnomAD_genomes_AF[df$gnomAD_genomes_AF == "."] <- 0
 df$gnomAD_genomes_AN[df$gnomAD_genomes_AN == "."] <- 0
 df$gnomAD_genomes_AF <- as.numeric(df$gnomAD_genomes_AF)
-df <- df %>% select(`pos(1-based)`, gnomAD_genomes_AN, gnomAD_genomes_AF, clinvar_clnsig, HGVSc_VEP, HGVSp_VEP)
+df <- df %>% select(genename, `pos(1-based)`, gnomAD_genomes_AN, gnomAD_genomes_AF, clinvar_clnsig, HGVSc_VEP, HGVSp_VEP)
 
 # keep just one transcript allele for simplicity
 df$HGVSc_VEP <- sapply(strsplit(df$HGVSc_VEP, ";"), `[`, 1)
 df$HGVSp_VEP <- sapply(strsplit(df$HGVSp_VEP, ";"), `[`, 1)
+df$genename <- sapply(strsplit(df$genename, ";"), `[`, 1)
+df  <- df |> filter(genename == "NFKB1")
 df$Inheritance <- "AD"  # setting inheritance to AD for demonstration
+
 head(df)
 
 # Filter for a specific ClinVar category: Uncertain_significance (example)
 # df <- subset(df, clinvar_clnsig == "Pathogenic")
 df$gnomAD_genomes_AF <- as.numeric(df$gnomAD_genomes_AF)
 
-# zeros? ----
-
+# zeros ----
 # Substitute zero allele frequency with a synthesized minimum allele frequency.
 # Here, we assume that if gnomAD_genomes_AF is 0, the minimum detectable AF is estimated as 1/(AN + 1),
 # which is a conservative proxy based on the allele number (AN). Otherwise we may have no pathogenic candidates and we are most interested in a safe conservative estimate.
 df$gnomAD_genomes_AN <- as.numeric(df$gnomAD_genomes_AN)
 df$gnomAD_genomes_AF <- as.numeric(df$gnomAD_genomes_AF)
 
-max_af <- max(df$gnomAD_genomes_AN) |> as.numeric()
+max_an <- max(df$gnomAD_genomes_AN) |> as.numeric()
 
-df$gnomAD_genomes_AF <- ifelse(df$gnomAD_genomes_AF == 0,
-                                          1 / (max_af + 1),
-                                          df$gnomAD_genomes_AF)
+df$synth_flag <- df$gnomAD_genomes_AF == 0
+df$gnomAD_genomes_AF <- ifelse(df$synth_flag,
+                               1 / (max_an + 1),
+                               df$gnomAD_genomes_AF)
+
+# We added synthetics to give the caution that no opbserved pathogenic variant could result in de novo variant, but we only want to count a minimal of 1 per category resulting in expected cases with 0+1 based on population AN ----
+if (all(df$synth_flag)) {
+  df <- df %>% distinct(clinvar_clnsig, gnomAD_genomes_AF, .keep_all = TRUE)
+}
+
 
 # Recalculate disease probability using the synthesized allele frequency
 df$disease_prob <- ifelse(df$Inheritance %in% c("AD", "X-linked"),
@@ -90,8 +98,7 @@ df$expected_cases <- population_size * df$disease_prob
 df$prob_at_least_one <- 1 - (1 - df$disease_prob)^population_size
 
 # View the recalculated key results
-print(df[, c("gnomAD_genomes_AF", "Inheritance", "disease_prob", 
-                  "expected_cases", "prob_at_least_one")]) |> head()
+df |> head()
 
 # populations ----
 # population_size <- 83702  
@@ -272,90 +279,3 @@ p_bar <- p_bar +
 p_bars <- (p_bar / p_prob) + plot_layout(guides = 'collect', axis = "collect")  + plot_annotation(tag_levels = 'A', title = "Dominant disease gene")
 print(p_bars)
 ggsave("../images/nfkb1_combined_bar_charts.png", plot = p_bars, width = 6, height = 6)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# test ----
-# source("validate_nfkb1.R")
-# n_expected_cases <- df |> filter(clinvar_clnsig == "Pathogenic") |> select(expected_cases) |> unique()
-# n_expected_cases
-# n_NFKB1
-# median_mix
-# median_est
-# 
-# as.data.frame(c(n_expected_cases,
-#                 n_NFKB1,
-#                 median_mix,
-#                 median_est))
-# 
-# # # For this dominant gene, assume that the registry reports an observed count.
-# # n_NFKB1 <- 390  # e.g. observed number of NFKB1-related cases in the specialized cohort
-# 
-# summary_df <- data.frame(
-#   Category = c("Expected Heterozygous", 
-#                "Observed*",
-#                "Bayesian estimate",
-#                "Etrapolated estimate"),
-#   Count = c(n_expected_cases,
-#             n_NFKB1,
-#             median_mix,
-#             median_est)
-# )
-# 
-# 
-# # Preserve the specified order by setting Category as a factor with levels.
-# summary_df$Category <- factor(summary_df$Category, levels = c(
-#   "Expected\nHeterozygous", 
-#   "Observed*",
-#   "Bayesian estimate",
-#   "Etrapolated estimate"))
-# 
-# # Plot the summary as a bar chart with annotations and source.
-# p_var <- ggplot(summary_df, aes(x = Category, y = Count, fill = Category)) +
-#   geom_bar(stat = "identity", color = "black") +
-#   geom_text(aes(label = formatC(round(Count, 0), format = "d", big.mark = ",")),
-#             vjust = -0.5, size = 4) +
-#   labs(title = "Expected Genotype Counts for p.Arg117His in CFTR",
-#        subtitle = paste0("Population Size: ", population_size),
-#        # caption = source_text,
-#        x = "Genotype Category",
-#        y = "Count") +
-#   guides(fill = "none") +
-#   scale_y_continuous(expand = expansion(mult = c(0, 0.2))) 
-# 
-# p_var
-# ggsave("../images/cftr_validation_pArg117His.png", plot = p_var, width = 6, height = 6)
-# 
-# 
