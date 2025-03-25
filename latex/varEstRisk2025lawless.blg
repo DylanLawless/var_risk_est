@@ -3,44 +3,48 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: varEstRisk2025lawless.aux
 The style file: unsrtnat.bst
 Database file #1: references.bib
-You've used 17 entries,
+Warning--I didn't find a database entry for "martin_panelapp_2019"
+Warning--I didn't find a database entry for "the_uniprot_consortium_uniprot_2025"
+Warning--empty journal in lawless_panelapprex_2025
+You've used 20 entries,
             2481 wiz_defined-function locations,
-            687 strings with 10093 characters,
-and the built_in function-call counts, 9195 in all, are:
-= -- 651
-> -- 805
-< -- 3
-+ -- 286
-- -- 252
-* -- 927
-:= -- 1604
-add.period$ -- 63
-call.type$ -- 17
-change.case$ -- 34
-chr.to.int$ -- 17
-cite$ -- 17
-duplicate$ -- 334
-empty$ -- 649
-format.name$ -- 271
-if$ -- 1822
+            713 strings with 11384 characters,
+and the built_in function-call counts, 10925 in all, are:
+= -- 764
+> -- 980
+< -- 4
++ -- 348
+- -- 308
+* -- 1115
+:= -- 1925
+add.period$ -- 80
+call.type$ -- 20
+change.case$ -- 40
+chr.to.int$ -- 20
+cite$ -- 21
+duplicate$ -- 390
+empty$ -- 753
+format.name$ -- 330
+if$ -- 2154
 int.to.chr$ -- 1
-int.to.str$ -- 18
-missing$ -- 17
-newline$ -- 105
-num.names$ -- 51
-pop$ -- 109
+int.to.str$ -- 21
+missing$ -- 20
+newline$ -- 128
+num.names$ -- 60
+pop$ -- 126
 preamble$ -- 1
-purify$ -- 17
+purify$ -- 20
 quote$ -- 0
-skip$ -- 186
+skip$ -- 214
 stack$ -- 0
-substring$ -- 451
-swap$ -- 48
+substring$ -- 503
+swap$ -- 56
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 119
-warning$ -- 0
-while$ -- 67
+type$ -- 140
+warning$ -- 1
+while$ -- 76
 width$ -- 0
-write$ -- 252
+write$ -- 305
+(There were 3 warnings)

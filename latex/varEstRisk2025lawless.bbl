@@ -1,4 +1,4 @@
-\begin{thebibliography}{17}
+\begin{thebibliography}{20}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -144,6 +144,42 @@ David~T Miller, Kristy Lee, Noura~S Abul-Husn, Laura~M Amendola, Kyle Brothers,
   exome and genome sequencing: a policy statement of the american college of
   medical genetics and genomics (acmg).
 \newblock \emph{Genetics in Medicine}, 25\penalty0 (8):\penalty0 100866, 2023.
+
+\bibitem[Lawless(2025)]{lawless_panelapprex_2025}
+Dylan Lawless.
+\newblock {PanelAppRex} aggregates disease gene panels and facilitates
+  sophisticated search.
+\newblock March 2025.
+\newblock \doi{10.1101/2025.03.20.25324319}.
+\newblock URL \url{http://medrxiv.org/lookup/doi/10.1101/2025.03.20.25324319}.
+
+\bibitem[Landrum et~al.(2018)Landrum, Lee, Benson, Brown, Chao, Chitipiralla,
+  Gu, Hart, Hoffman, Jang, Karapetyan, Katz, Liu, Maddipatla, Malheiro,
+  McDaniel, Ovetsky, Riley, Zhou, Holmes, Kattman, and
+  Maglott]{landrum_clinvar_2018}
+Melissa~J Landrum, Jennifer~M Lee, Mark Benson, Garth~R Brown, Chen Chao,
+  Shanmuga Chitipiralla, Baoshan Gu, Jennifer Hart, Douglas Hoffman, Wonhee
+  Jang, Karen Karapetyan, Kenneth Katz, Chunlei Liu, Zenith Maddipatla, Adriana
+  Malheiro, Kurt McDaniel, Michael Ovetsky, George Riley, George Zhou,
+  J~Bradley Holmes, Brandi~L Kattman, and Donna~R Maglott.
+\newblock {ClinVar}: improving access to variant interpretations and supporting
+  evidence.
+\newblock \emph{Nucleic Acids Research}, 46\penalty0 (D1):\penalty0
+  D1062--D1067, January 2018.
+\newblock ISSN 0305-1048, 1362-4962.
+\newblock \doi{10.1093/nar/gkx1153}.
+\newblock URL \url{http://academic.oup.com/nar/article/46/D1/D1062/4641904}.
+
+\bibitem[Liu et~al.(2020)Liu, Li, Mou, Dong, and Tu]{liu_dbnsfp_2020}
+Xiaoming Liu, Chang Li, Chengcheng Mou, Yibo Dong, and Yicheng Tu.
+\newblock {dbNSFP} v4: a comprehensive database of transcript-specific
+  functional predictions and annotations for human nonsynonymous and
+  splice-site {SNVs}.
+\newblock \emph{Genome Medicine}, 12\penalty0 (1):\penalty0 103, December 2020.
+\newblock ISSN 1756-994X.
+\newblock \doi{10.1186/s13073-020-00803-9}.
+\newblock URL
+  \url{https://genomemedicine.biomedcentral.com/articles/10.1186/s13073-020-00803-9}.
 
 \bibitem[Tuijnenburg et~al.(2018)Tuijnenburg, Lango~Allen, Burns, Greene,
   Jansen, and Others.]{tuijnenburgNFKB12018}

@@ -1,7 +1,8 @@
 library(ggplot2); theme_set(theme_bw())
 
 # Skip one of the confitions because it is special case where we want a variant that is not listed in the clinsig
-KEPP_ALL_FOR_VALIDATION_SEARCH <- FALSE #
+# KEPP_ALL_FOR_VALIDATION_SEARCH <- TRUE
+rm(KEPP_ALL_FOR_VALIDATION_SEARCH)
 source("./inheritance_prob_generalised_mini.R")
 
 # For CFTR, restrict to known pathogenic variants using gnomAD_genomes_AF.
