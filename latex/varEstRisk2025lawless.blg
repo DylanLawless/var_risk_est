@@ -3,42 +3,44 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: varEstRisk2025lawless.aux
 The style file: unsrtnat.bst
 Database file #1: references.bib
-Warning--I didn't find a database entry for "martin_panelapp_2019"
-Warning--I didn't find a database entry for "the_uniprot_consortium_uniprot_2025"
 Warning--empty journal in lawless_panelapprex_2025
+Name 8 in "{The UniProt Consortium} and Bateman, Alex and Martin, Maria-Jesus and Orchard, Sandra and Magrane, Michele and Adesina, Aduragbemi and Ahmad, Shadab and Bowler-Barnett, and Others." has a comma at the end for entry the_uniprot_consortium_uniprot_2025
+while executing---line 1315 of file unsrtnat.bst
+Name 8 in "{The UniProt Consortium} and Bateman, Alex and Martin, Maria-Jesus and Orchard, Sandra and Magrane, Michele and Adesina, Aduragbemi and Ahmad, Shadab and Bowler-Barnett, and Others." has a comma at the end for entry the_uniprot_consortium_uniprot_2025
+while executing---line 1315 of file unsrtnat.bst
 You've used 20 entries,
             2481 wiz_defined-function locations,
-            713 strings with 11384 characters,
-and the built_in function-call counts, 10925 in all, are:
-= -- 764
-> -- 980
+            711 strings with 11708 characters,
+and the built_in function-call counts, 11367 in all, are:
+= -- 778
+> -- 1064
 < -- 4
-+ -- 348
-- -- 308
-* -- 1115
-:= -- 1925
-add.period$ -- 80
++ -- 376
+- -- 336
+* -- 1185
+:= -- 2023
+add.period$ -- 84
 call.type$ -- 20
 change.case$ -- 40
 chr.to.int$ -- 20
 cite$ -- 21
 duplicate$ -- 390
-empty$ -- 753
-format.name$ -- 330
-if$ -- 2154
+empty$ -- 755
+format.name$ -- 358
+if$ -- 2226
 int.to.chr$ -- 1
 int.to.str$ -- 21
 missing$ -- 20
-newline$ -- 128
+newline$ -- 132
 num.names$ -- 60
-pop$ -- 126
+pop$ -- 122
 preamble$ -- 1
 purify$ -- 20
 quote$ -- 0
-skip$ -- 214
+skip$ -- 212
 stack$ -- 0
-substring$ -- 503
-swap$ -- 56
+substring$ -- 509
+swap$ -- 58
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
@@ -46,5 +48,5 @@ type$ -- 140
 warning$ -- 1
 while$ -- 76
 width$ -- 0
-write$ -- 305
-(There were 3 warnings)
+write$ -- 313
+(There were 2 error messages)

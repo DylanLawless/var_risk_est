@@ -5,17 +5,21 @@
 \usepackage{amsmath, amssymb}
 
 \begin{document}
-\title{Quantifying the Genetics of Disease Inheritance With a Bayesian Perspective}
+\title{Quantifying the Genetics of Disease Inheritance for Bayesian Application}
 
 \author[1]{Dylan Lawless\thanks{Addresses for correspondence: \href{mailto:Dylan.Lawless@kispi.uzh.ch}{Dylan.Lawless@kispi.uzh.ch}}}
 
 \affil[1]{Department of Intensive Care and Neonatology, University Children's Hospital Zürich, University of Zürich, Switzerland.}
-
 \maketitle
 \justify
 
 \begin{abstract}
 We developed an integrative framework to quantify the probability of observing disease-associated variants across the genome by analysing large-scale annotation databases and curated gene panels. By combining reference population allele frequencies, ClinVar variant classifications, and inheritance patterns through rigorous Hardy-Weinberg-based calculations, our method estimated observation probabilities for each single nucleotide variant (SNV) and aggregated these probabilities by gene and variant classification. To demonstrate, we applied our approach to a disease gene panel  associated with primary immunodeficiency and monogenic inflammatory bowel disease, resulting in 54,814 ClinVar variant classifications across 557 genes. Our results closely matched observed case counts in validation cohorts for both autosomal dominant (\textit{NFKB1}) and autosomal recessive (\textit{CFTR}) disorders, and provided robust priors for Bayesian models of variant and disease risk estimation. These findings demonstrated that integrating high-quality genomic annotations with classical genetic principles can enhance variant interpretation and support more precise clinical decision-making.
+\\[1ex]
+\noindent \textbf{Availability:} This data is integrated in public panels at  \url{https://switzerlandomics.ch/services/panelAppRexAi/} and 
+\url{https://iei-genetics.github.io}.
+The source code and data are accessible at \url{https://github.com/DylanLawless/var_risk_est}. VarRiskEst is available under the MIT licence. 
+The dataset is maintained for a minimum of two years following publication.
 \end{abstract}
 \clearpage
 
@@ -277,14 +281,26 @@ A variant may seem clinically significant simply because it occurs in a well-kno
 
 \FloatBarrier
 \section{Discussion}
-In this study we focused on reporting the probability of disease observation for the  disease gene panel (ID 398) primary immunodeficiency or monogenic inflammatory bowel disease. We report a total of 54814 ClinVar variant classifications in 557 genes. This thorough example of a query disease phenotype demonstrates how we can additionally run through all gene-disease combinations genome wide.
 
-Our study employs classical genetic estimation using HWE to yield accurate, genome-wide probabilities of disease occurrence for SNVs. These estimates form robust priors for Bayesian models. The integration of variant interpretation guidelines, such as those provided by the ACMG \citep{richards2015standards} and complementary frameworks \citep{tavtigian2020fitting,li2017intervar}, can be applied to generate clinically relevant outcomes.
+In this study, we focused on quantifying the probability of disease observation by integrating large-scale genomic annotation with classical genetic principles. Our analysis of 54,814 ClinVar variant classifications across 557 genes in PanelAppRex’s panel (ID 398) for primary immunodeficiency or monogenic inflammatory bowel disease exemplifies how genome-wide assessments of gene–disease combinations can be performed. By leveraging curated data sources—including population allele frequencies from gnomAD, variant classifications from ClinVar, and functional annotations from dbNSFP—and by rigorously applying Hardy–Weinberg equilibrium (HWE) calculations, we derived robust estimates of the likelihood of observing disease-associated variants. Our method accounts for the complexities of different inheritance modes; for instance, while autosomal dominant (AD) and X-linked (XL) disorders require only a single pathogenic allele, autosomal recessive (AR) conditions necessitate the consideration of both homozygous and compound heterozygous states.
 
-Standardised variant interpretation protocols that incorporate quality control and filtering criteria \citep{pedersen2021effective,anderson2010data} are essential for robust genomic analysis. 
-The concept of qualifying variants (QVs) \citep{cirulli2015exome,tavtigian2020fitting} plays a central role in filtering and interpreting SNVs, while statistical approaches such as ACAT and SKAT \citep{liu2019acat,li2020dynamic,wu2011rare,lee2012optimal} offer robust tools for aggregating variant effects in association studies. Moreover, multi-block data fusion techniques enable the integration of DNA, RNA, and proteomic data for comprehensive variant interpretation \citep{kong2018nature,howe2021within}. Standardised reporting for QV sets (e.g., using ACMG Secondary Finding v3.2) \citep{miller2023acmg} can be supplemented with the observation probabilities.
+The classical HWE-based estimates obtained here serve as robust priors for Bayesian models of variant and disease risk estimation—an approach that is frequently underutilized in clinical and statistical genetics. Our framework not only refines risk calculations by incorporating inheritance complexities but also enriches clinicians’ understanding of expected variant occurrences in a patient, thereby improving diagnostic precision. Moreover, the integration of established variant interpretation guidelines such as those provided by the ACMG \citep{richards2015standards} and complementary frameworks \citep{tavtigian2020fitting,li2017intervar}, alongside standardized quality control protocols \citep{pedersen2021effective,anderson2010data}, reinforces the clinical relevance of our estimates.
 
-We acknowledge that our current approach focuses solely on SNVs and does not incorporate complex variants or an accurate estimate for de novo events. Future studies will address these limitations by incorporating additional models and data sources. By integrating these classical-style estimates with prior knowledge we can update probabilities continuously, ultimately enhancing the precision of genetic diagnostics.
+Our study further demonstrates that statistical methods for aggregating variant effects (e.g., ACAT and SKAT \citep{liu2019acat,li2020dynamic,wu2011rare,lee2012optimal}) and multi-block data fusion techniques for integrating diverse omics layers \citep{kong2018nature,howe2021within} can be effectively supplemented by our observation probability framework. In addition, standardized reporting for qualifying variant sets, such as ACMG Secondary Findings v3.2 \citep{miller2023acmg}, provides further context for the integration of these probabilities into clinical decision-making.
+
+We acknowledge that our current approach is limited to single nucleotide variants (SNVs) and does not account for complex variants or de novo events. Future work will incorporate additional variant types and models to further refine these probability estimates. By continuously updating classical estimates with emerging data and prior knowledge, our framework promises to enhance the precision of genetic diagnostics and ultimately improve patient care.
+
+\section*{Acknowledgements}
+\noindent
+We acknowledge Genomics England for providing public access to the PanelApp data.
+The use of data from Genomics England panelapp was licensed under the Apache License 2.0.
+The use of data from UniProt was licensed under Creative Commons Attribution 4.0 International (CC BY 4.0).
+ClinVar asks its users who distribute or copy data to provide attribution to them as a data source in publications and websites \cite{landrum_clinvar_2018}.
+ dbNSFP version 5.1a is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+
+\section*{Competing interest}
+\noindent
+We declare no competing interest. 
 
 \newpage
 \bibliographystyle{unsrtnat}

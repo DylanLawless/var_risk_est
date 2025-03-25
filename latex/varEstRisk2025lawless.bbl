@@ -26,6 +26,87 @@ Nikita Abramovs, Andrew Brass, and May Tassabehji.
 \newblock URL
   \url{https://www.frontiersin.org/article/10.3389/fgene.2020.00210/full}.
 
+\bibitem[Lawless(2025)]{lawless_panelapprex_2025}
+Dylan Lawless.
+\newblock {PanelAppRex} aggregates disease gene panels and facilitates
+  sophisticated search.
+\newblock March 2025.
+\newblock \doi{10.1101/2025.03.20.25324319}.
+\newblock URL \url{http://medrxiv.org/lookup/doi/10.1101/2025.03.20.25324319}.
+
+\bibitem[Martin et~al.(2019)Martin, Williams, Foulger, Leigh, Daugherty,
+  Niblock, Leong, Smith, Gerasimenko, Haraldsdottir, Thomas, Scott, Baple,
+  Tucci, Brittain, De~Burca, Ibañez, Kasperaviciute, Smedley, Caulfield,
+  Rendon, and McDonagh]{martin_panelapp_2019}
+Antonio~Rueda Martin, Eleanor Williams, Rebecca~E. Foulger, Sarah Leigh,
+  Louise~C. Daugherty, Olivia Niblock, Ivone U.~S. Leong, Katherine~R. Smith,
+  Oleg Gerasimenko, Eik Haraldsdottir, Ellen Thomas, Richard~H. Scott, Emma
+  Baple, Arianna Tucci, Helen Brittain, Anna De~Burca, Kristina Ibañez, Dalia
+  Kasperaviciute, Damian Smedley, Mark Caulfield, Augusto Rendon, and Ellen~M.
+  McDonagh.
+\newblock {PanelApp} crowdsources expert knowledge to establish consensus
+  diagnostic gene panels.
+\newblock \emph{Nature Genetics}, 51\penalty0 (11):\penalty0 1560--1565,
+  November 2019.
+\newblock ISSN 1061-4036, 1546-1718.
+\newblock \doi{10.1038/s41588-019-0528-2}.
+\newblock URL \url{https://www.nature.com/articles/s41588-019-0528-2}.
+
+\bibitem[Landrum et~al.(2018)Landrum, Lee, Benson, Brown, Chao, Chitipiralla,
+  Gu, Hart, Hoffman, Jang, Karapetyan, Katz, Liu, Maddipatla, Malheiro,
+  McDaniel, Ovetsky, Riley, Zhou, Holmes, Kattman, and
+  Maglott]{landrum_clinvar_2018}
+Melissa~J Landrum, Jennifer~M Lee, Mark Benson, Garth~R Brown, Chen Chao,
+  Shanmuga Chitipiralla, Baoshan Gu, Jennifer Hart, Douglas Hoffman, Wonhee
+  Jang, Karen Karapetyan, Kenneth Katz, Chunlei Liu, Zenith Maddipatla, Adriana
+  Malheiro, Kurt McDaniel, Michael Ovetsky, George Riley, George Zhou,
+  J~Bradley Holmes, Brandi~L Kattman, and Donna~R Maglott.
+\newblock {ClinVar}: improving access to variant interpretations and supporting
+  evidence.
+\newblock \emph{Nucleic Acids Research}, 46\penalty0 (D1):\penalty0
+  D1062--D1067, January 2018.
+\newblock ISSN 0305-1048, 1362-4962.
+\newblock \doi{10.1093/nar/gkx1153}.
+\newblock URL \url{http://academic.oup.com/nar/article/46/D1/D1062/4641904}.
+
+\bibitem[{The UniProt Consortium} et~al.(2025){The UniProt Consortium},
+  Bateman, Martin, Orchard, Magrane, Adesina, Ahmad, Bowler-Barnett, and
+  Others.]{the_uniprot_consortium_uniprot_2025}
+{The UniProt Consortium}, Alex Bateman, Maria-Jesus Martin, Sandra Orchard,
+  Michele Magrane, Aduragbemi Adesina, Shadab Ahmad, Bowler-Barnett, and
+  Others.
+\newblock {UniProt}: the {Universal} {Protein} {Knowledgebase} in 2025.
+\newblock \emph{Nucleic Acids Research}, 53\penalty0 (D1):\penalty0 D609--D617,
+  January 2025.
+\newblock ISSN 0305-1048, 1362-4962.
+\newblock \doi{10.1093/nar/gkae1010}.
+\newblock URL \url{https://academic.oup.com/nar/article/53/D1/D609/7902999}.
+
+\bibitem[Liu et~al.(2020)Liu, Li, Mou, Dong, and Tu]{liu_dbnsfp_2020}
+Xiaoming Liu, Chang Li, Chengcheng Mou, Yibo Dong, and Yicheng Tu.
+\newblock {dbNSFP} v4: a comprehensive database of transcript-specific
+  functional predictions and annotations for human nonsynonymous and
+  splice-site {SNVs}.
+\newblock \emph{Genome Medicine}, 12\penalty0 (1):\penalty0 103, December 2020.
+\newblock ISSN 1756-994X.
+\newblock \doi{10.1186/s13073-020-00803-9}.
+\newblock URL
+  \url{https://genomemedicine.biomedcentral.com/articles/10.1186/s13073-020-00803-9}.
+
+\bibitem[Tuijnenburg et~al.(2018)Tuijnenburg, Lango~Allen, Burns, Greene,
+  Jansen, and Others.]{tuijnenburgNFKB12018}
+Paul Tuijnenburg, Hana Lango~Allen, Siobhan~O. Burns, Daniel Greene, Machiel~H.
+  Jansen, and Others.
+\newblock Loss-of-function nuclear factor κ{B} subunit 1 ({NFKB1}) variants
+  are the most common monogenic cause of common variable immunodeficiency in
+  {Europeans}.
+\newblock \emph{Journal of Allergy and Clinical Immunology}, 142\penalty0
+  (4):\penalty0 1285--1296, October 2018.
+\newblock ISSN 00916749.
+\newblock \doi{10.1016/j.jaci.2018.01.039}.
+\newblock URL
+  \url{https://linkinghub.elsevier.com/retrieve/pii/S0091674918302860}.
+
 \bibitem[Richards et~al.(2015)Richards, Aziz, Bale, Bick, Das, Gastier-Foster,
   Grody, Hegde, Lyon, Spector, et~al.]{richards2015standards}
 Sue Richards, Nazneen Aziz, Sherri Bale, David Bick, Soma Das, Julie
@@ -44,6 +125,13 @@ Sean~V Tavtigian, Steven~M Harrison, Kenneth~M Boucher, and Leslie~G Biesecker.
   classification guidelines.
 \newblock \emph{Human mutation}, 41\penalty0 (10):\penalty0 1734--1737, 2020.
 
+\bibitem[Li and Wang(2017)]{li2017intervar}
+Quan Li and Kai Wang.
+\newblock Intervar: clinical interpretation of genetic variants by the 2015
+  acmg-amp guidelines.
+\newblock \emph{The American Journal of Human Genetics}, 100\penalty0
+  (2):\penalty0 267--280, 2017.
+
 \bibitem[Pedersen et~al.(2021)Pedersen, Brown, Dashnow, Wallace, Velinder,
   Tristani-Firouzi, Schiffman, Tvrdik, Mao, Best,
   et~al.]{pedersen2021effective}
@@ -61,26 +149,6 @@ Carl~A Anderson, Fredrik~H Pettersson, Geraldine~M Clarke, Lon~R Cardon,
 \newblock Data quality control in genetic case-control association studies.
 \newblock \emph{Nature protocols}, 5\penalty0 (9):\penalty0 1564--1573, 2010.
 \newblock URL \url{https://doi.org/10.1038/nprot.2010.116}.
-
-\bibitem[Cirulli et~al.(2015)Cirulli, Lasseigne, Petrovski, Sapp, Dion,
-  Leblond, Couthouis, Lu, Wang, Krueger, et~al.]{cirulli2015exome}
-Elizabeth~T Cirulli, Brittany~N Lasseigne, Slav{\'e} Petrovski, Peter~C Sapp,
-  Patrick~A Dion, Claire~S Leblond, Julien Couthouis, Yi-Fan Lu, Quanli Wang,
-  Brian~J Krueger, et~al.
-\newblock Exome sequencing in amyotrophic lateral sclerosis identifies risk
-  genes and pathways.
-\newblock \emph{Science}, 347\penalty0 (6229):\penalty0 1436--1441, 2015.
-
-\bibitem[Povysil et~al.(2019)Povysil, Petrovski, Hostyk, Aggarwal, Allen, and
-  Goldstein]{Povysil2019rare}
-Gundula Povysil, Slav{\'e} Petrovski, Joseph Hostyk, Vimla Aggarwal, Andrew~S.
-  Allen, and David~B. Goldstein.
-\newblock Rare-variant collapsing analyses for complex traits: guidelines and
-  applications.
-\newblock \emph{Nature Reviews Genetics}, 20\penalty0 (12):\penalty0 747--759,
-  2019.
-\newblock \doi{10.1038/s41576-019-0177-4}.
-\newblock URL \url{https://doi.org/10.1038/s41576-019-0177-4}.
 
 \bibitem[Liu et~al.(2019)Liu, Chen, Li, Morrison, Boerwinkle, and
   Lin]{liu2019acat}
@@ -144,62 +212,5 @@ David~T Miller, Kristy Lee, Noura~S Abul-Husn, Laura~M Amendola, Kyle Brothers,
   exome and genome sequencing: a policy statement of the american college of
   medical genetics and genomics (acmg).
 \newblock \emph{Genetics in Medicine}, 25\penalty0 (8):\penalty0 100866, 2023.
-
-\bibitem[Lawless(2025)]{lawless_panelapprex_2025}
-Dylan Lawless.
-\newblock {PanelAppRex} aggregates disease gene panels and facilitates
-  sophisticated search.
-\newblock March 2025.
-\newblock \doi{10.1101/2025.03.20.25324319}.
-\newblock URL \url{http://medrxiv.org/lookup/doi/10.1101/2025.03.20.25324319}.
-
-\bibitem[Landrum et~al.(2018)Landrum, Lee, Benson, Brown, Chao, Chitipiralla,
-  Gu, Hart, Hoffman, Jang, Karapetyan, Katz, Liu, Maddipatla, Malheiro,
-  McDaniel, Ovetsky, Riley, Zhou, Holmes, Kattman, and
-  Maglott]{landrum_clinvar_2018}
-Melissa~J Landrum, Jennifer~M Lee, Mark Benson, Garth~R Brown, Chen Chao,
-  Shanmuga Chitipiralla, Baoshan Gu, Jennifer Hart, Douglas Hoffman, Wonhee
-  Jang, Karen Karapetyan, Kenneth Katz, Chunlei Liu, Zenith Maddipatla, Adriana
-  Malheiro, Kurt McDaniel, Michael Ovetsky, George Riley, George Zhou,
-  J~Bradley Holmes, Brandi~L Kattman, and Donna~R Maglott.
-\newblock {ClinVar}: improving access to variant interpretations and supporting
-  evidence.
-\newblock \emph{Nucleic Acids Research}, 46\penalty0 (D1):\penalty0
-  D1062--D1067, January 2018.
-\newblock ISSN 0305-1048, 1362-4962.
-\newblock \doi{10.1093/nar/gkx1153}.
-\newblock URL \url{http://academic.oup.com/nar/article/46/D1/D1062/4641904}.
-
-\bibitem[Liu et~al.(2020)Liu, Li, Mou, Dong, and Tu]{liu_dbnsfp_2020}
-Xiaoming Liu, Chang Li, Chengcheng Mou, Yibo Dong, and Yicheng Tu.
-\newblock {dbNSFP} v4: a comprehensive database of transcript-specific
-  functional predictions and annotations for human nonsynonymous and
-  splice-site {SNVs}.
-\newblock \emph{Genome Medicine}, 12\penalty0 (1):\penalty0 103, December 2020.
-\newblock ISSN 1756-994X.
-\newblock \doi{10.1186/s13073-020-00803-9}.
-\newblock URL
-  \url{https://genomemedicine.biomedcentral.com/articles/10.1186/s13073-020-00803-9}.
-
-\bibitem[Tuijnenburg et~al.(2018)Tuijnenburg, Lango~Allen, Burns, Greene,
-  Jansen, and Others.]{tuijnenburgNFKB12018}
-Paul Tuijnenburg, Hana Lango~Allen, Siobhan~O. Burns, Daniel Greene, Machiel~H.
-  Jansen, and Others.
-\newblock Loss-of-function nuclear factor κ{B} subunit 1 ({NFKB1}) variants
-  are the most common monogenic cause of common variable immunodeficiency in
-  {Europeans}.
-\newblock \emph{Journal of Allergy and Clinical Immunology}, 142\penalty0
-  (4):\penalty0 1285--1296, October 2018.
-\newblock ISSN 00916749.
-\newblock \doi{10.1016/j.jaci.2018.01.039}.
-\newblock URL
-  \url{https://linkinghub.elsevier.com/retrieve/pii/S0091674918302860}.
-
-\bibitem[Li and Wang(2017)]{li2017intervar}
-Quan Li and Kai Wang.
-\newblock Intervar: clinical interpretation of genetic variants by the 2015
-  acmg-amp guidelines.
-\newblock \emph{The American Journal of Human Genetics}, 100\penalty0
-  (2):\penalty0 267--280, 2017.
 
 \end{thebibliography}
