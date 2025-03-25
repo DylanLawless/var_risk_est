@@ -1,10 +1,46 @@
+# Validation ----
+
+# Expected values of pathogenic variants
+# https://www.cysticfibrosis.org.uk/sites/default/files/2024-10/CFT_2023_Annual_Data_Report_v9.pdf
+
+#Number of cases in 2023: 11318
+# Sec 1.47 CFTR variant combinations in the UK population
+# This tabulation shows the proportion(%) of patients with the most common CFTR variant combinations in their genotype. For example, 4.0% of the UK population have one copy of F508del and one copy of G551D.
+
+# print("Expected:\n
+# variant	proportion
+# R117H_het	5.2
+# G551D_het	4.4
+# R117H_hom	0.1
+# G551D_hom	0.2
+# R117H_G551D	0.2")
+# 
+# number_cases <- 11318
+# proportion_cases_hom_R117H <- 0.1
+# proportion_cases_het_R117H <-	5.2
+# number_hom_R117H <- number_cases * proportion_cases_hom_R117H
+# number_het_R117H <- number_cases * proportion_cases_het_R117H
+# 
+# print(population_size)
+# print(number_cases)
+# print(proportion_cases_hom_R117H)
+# print(number_hom_R117H)
+# print(number_het_R117H)
+
+# Appendix 3: Full list of CFTR variants in the UK CF population
+# The table below shows the number of people with CF who carry at least one of each variant.The groups are not mutually exclusive, as people with heterozygous variants appear twice in the table. Most common SNV: c.350G->A, p.Arg117His, 714, 6.3%
+
+
+
+
 # --- Bayesian Estimation for CFTR (p.Arg117His) Recessive Disease Example ---
 # source("./inheritance_prob_cftr.R")
 
-print("pos 117530975 == p.Arg117His in transcript 2, and transcript 1 (p.Arg36His), but week keep trans 1 for simplicity across whole genome." )
+print("pos 117530975 (GrCh38 7-117530975-G-A, ENST00000003084.11 MANE Select transcript for CFTR HGVSpp.Arg117His) == p.Arg117His in transcript 2, and transcript 1 (p.Arg36His), but week keep trans 1 for simplicity across whole genome." )
 
 # Skip one of the confitions because it is special case where we want a variant that is not listed in the clinsig
-KEPP_ALL_FOR_VALIDATION_SEARCH <- TRUE #
+# KEPP_ALL_FOR_VALIDATION_SEARCH <- TRUE
+rm(KEPP_ALL_FOR_VALIDATION_SEARCH)
 source("./inheritance_prob_generalised_mini.R")
 
 # For CFTR, restrict to known pathogenic variants using gnomAD_genomes_AF.
@@ -174,3 +210,93 @@ p_cftr_bayes <- ggplot() +
 print(p_cftr_bayes)
 
 ggsave("../images/cftr_bayesian_adjusted_estimates.png", plot = p_cftr_bayes, width = 8, height = 4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 
+# 
+# 
+# 
+# 
+# 
+# # Compute unique labels per gene for pathogenic entries
+# unique_labels <- cftr_patho %>%
+#   filter(clinvar_clnsig == "Pathogenic") %>%
+#   distinct(genename, gnomAD_genomes_AF, expected_cases)
+# 
+# p_scatter1_path <-
+#   cftr_patho %>%
+#   filter(clinvar_clnsig == "Pathogenic") %>%
+#   ggplot(aes(x = gnomAD_genomes_AF, y = expected_cases, color = clinvar_clnsig)) +
+#   geom_point(size = 3) +
+#   geom_line(aes(group = 1)) +
+#   ggrepel::geom_text_repel(data = unique_labels,
+#                            aes(x = gnomAD_genomes_AF, y = expected_cases, label = round(expected_cases)),
+#                            vjust = -1, hjust = 0.5, colour = "black", size = 3) +
+#   labs(x = "Allele Frequency (log scale)",
+#        y = "Expected Cases",
+#        title = "Expected Cases vs\nAllele Frequency CFTR",
+#        subtitle = paste0("Condition: population size ", population_size)) +
+#   facet_wrap(~ genename, scales = "free")
+# 
+# p_scatter1_path
+# 
+# # Compute threshold AF per gene for pathogenic entries
+# thresholds <- cftr_patho %>%
+#   filter(clinvar_clnsig == "Pathogenic") %>%
+#   group_by(genename) %>%
+#   summarise(threshold_AF = min(gnomAD_genomes_AF[prob_at_least_one >= 0.999], na.rm = TRUE),
+#             .groups = "drop") %>%
+#   mutate(threshold_AF_label = formatC(threshold_AF, format = "f", digits = 6))
+# 
+# p_scatter2_path <-
+#   cftr_patho %>%
+#   filter(clinvar_clnsig == "Pathogenic") %>%
+#   ggplot(aes(x = gnomAD_genomes_AF, y = prob_at_least_one, colour = clinvar_clnsig)) +
+#   geom_point(size = 3) +
+#   geom_line(aes(group = 1)) +
+#   labs(x = "Allele Frequency (log scale)",
+#        y = "Probability of ≥1 Event",
+#        title = "Probability of At Least One\nEvent vs Allele Frequency CFTR",
+#        subtitle = paste0("Condition: population size ", population_size)) +
+#   geom_vline(data = thresholds, aes(xintercept = threshold_AF),
+#              linetype = "dotted", colour = "black") +
+#   geom_text(data = thresholds,
+#             aes(x = threshold_AF, y = 1, label = threshold_AF_label),
+#             vjust = -1, hjust = 0.5, colour = "black", size = 3) +
+#   facet_wrap(~ genename, scales = "free")
+# 
+# p_scatter2_path
+# 
+# # Display the scatter plots.
+# p_scatter1_path
+# p_scatter2_path
+# # 

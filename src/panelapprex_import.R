@@ -14,4 +14,3 @@ df_par <- df_par %>%
     TRUE ~ "AR"
   ))
 
-

@@ -5,15 +5,19 @@ library(patchwork)
 library(stringr)
 library(ggplot2); theme_set(theme_bw())
 
+print("!!Note - Save an original table with all columns")
+
 # Ensure the output directory exists
 if (!dir.exists("../images/")) dir.create("../images/")
 
 # Source PanelAppRex (panel data)
 source("panelapprex_import.R")
 
+PanelAppRex_ID <- 398
+
 df_par <- df_par %>% 
   select(entity_name, panel_id, Inheritance, name) %>% 
-  filter(panel_id == 398)  # IUIS PID
+  filter(panel_id == PanelAppRex_ID)  # IUIS PID
 colnames(df_par)[colnames(df_par) == "entity_name"] <- "genename"
 
 # UK population
@@ -87,6 +91,7 @@ for(chr in chromosomes) {
 df <- bind_rows(accumulated)
 
 df <- df %>% select(genename, `pos(1-based)`, gnomAD_genomes_AN, gnomAD_genomes_AF, clinvar_clnsig, HGVSc_VEP, HGVSp_VEP)
+print("!!Note - Save an original table with all columns")
 
 # Data Preparation for Population-Level Calculations ----
 df$gnomAD_genomes_AF[df$gnomAD_genomes_AF == "."] <- 0
@@ -167,13 +172,6 @@ df_tally <- df %>%
   tidyr::complete(genename, clinvar_clnsig = clinvar_levels,
                   fill = list(count = 0, total_expected_cases = 0, overall_prob = 0))
 
-# print(df_tally)
-
-# save data ----
-saveRDS(file = "../data/panel_all_genes_df.Rds", df)
-saveRDS(file = "../data/panel_all_genes_df_tally.Rds", df_tally)
-print("Data saved")
-
 gene_count <- df$genename |> unique() |> length()
 
 # Bar plot: Count of ClinVar Clinical Significance (across all genes)
@@ -193,3 +191,24 @@ p_count <- df |>
 
 p_count
 ggsave("../images/genome_all_genes_clinvar_count.png", plot = p_count, width = 6, height = 3)
+
+# save data ----
+saveRDS(file = "../data/panel_all_genes_df.Rds", df)
+saveRDS(file = "../data/panel_all_genes_df_tally.Rds", df_tally)
+
+# Publication export ----
+# For publication is doesn't make sense to give expected cases in a UK population outside the manuscript. therefore, we drop these cols and rely on the probability to recalculate as desired.
+df <- df |> select(-expected_cases, -prob_at_least_one)
+df_tally <- df_tally |> select(-total_expected_cases)
+
+# Save TSV files
+write.table(df, file = paste0("../output/VarRiskEst_PanelAppRex_ID_", PanelAppRex_ID, "_gene_variants.tsv"), 
+            sep = "\t", quote = FALSE, row.names = FALSE, col.names = TRUE)
+write.table(df_tally, file = paste0("../output/VarRiskEst_PanelAppRex_ID_", PanelAppRex_ID, "_gene_tally.tsv"), 
+            sep = "\t", quote = FALSE, row.names = FALSE, col.names = TRUE)
+
+# Save RDS files
+saveRDS(df, file = paste0("../output/VarRiskEst_PanelAppRex_ID_", PanelAppRex_ID, "_gene_variants.Rds"))
+saveRDS(df_tally, file = paste0("../output/VarRiskEst_PanelAppRex_ID_", PanelAppRex_ID, "_gene_tally.Rds"))
+
+print("Data saved")

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.7.19)  21 MAR 2025 09:23
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.7.19)  25 MAR 2025 11:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1751,62 +1751,93 @@ File: se-ascii-print.def 2016/05/16 v1.11 stringenc: Printable ASCII characters
 )
 [1
 
-] [2]
-Overfull \hbox (26.63046pt too wide) in paragraph at lines 103--105
-\TU/lmr/m/n/12 These calculations yield, for each ClinVar classification (e.g.,
- \TU/lmr/m/it/12 Pathogenic\TU/lmr/m/n/12 , \TU/lmr/m/it/12 Likely_pathogenic\T
-U/lmr/m/n/12 ,
+]
+
+Package natbib Warning: Citation `martin_panelapp_2019' on page 2 undefined on 
+input line 30.
+
+
+Package natbib Warning: Citation `the_uniprot_consortium_uniprot_2025' on page 
+2 undefined on input line 30.
+
+
+Overfull \hbox (1.56007pt too wide) in paragraph at lines 42--43
+\TU/lmr/m/n/12 Our computational pipeline estimated the probability of observin
+g a disease-associated
  []
 
-[3] [4]
-File: ../images/tnfaip3_clinvar_count.png Graphic file (type bmp)
-<../images/tnfaip3_clinvar_count.png>
-File: ../images/tnfaip3_combined_bar_charts.png Graphic file (type bmp)
-<../images/tnfaip3_combined_bar_charts.png>
-File: ../images/tnfaip3_scatter_expected_prob.png Graphic file (type bmp)
-<../images/tnfaip3_scatter_expected_prob.png>
-Missing character: There is no ≥ in font [lmroman12-regular]:mapping=tex-text;!
-Missing character: There is no ≥ in font [lmroman12-regular]:mapping=tex-text;!
- [5]
-Missing character: There is no ≈ in font [lmroman12-regular]:mapping=tex-text;!
-Missing character: There is no ≈ in font [lmroman12-regular]:mapping=tex-text;!
-File: ../images/nfkb1_case_est_distribution_combined_mixture.png Graphic file (
-type bmp)
-<../images/nfkb1_case_est_distribution_combined_mixture.png>
-Missing character: There is no ≈ in font [lmroman12-regular]:mapping=tex-text;!
-Missing character: There is no ≈ in font [lmroman12-regular]:mapping=tex-text;!
-Missing character: There is no ≈ in font [lmroman12-regular]:mapping=tex-text;!
-Missing character: There is no ≈ in font [lmroman12-regular]:mapping=tex-text;!
- [6]
-File: ../images/nfkb1_clinvar_count.png Graphic file (type bmp)
-<../images/nfkb1_clinvar_count.png>
-File: ../images/nfkb1_combined_bar_charts.png Graphic file (type bmp)
-<../images/nfkb1_combined_bar_charts.png>
-File: ../images/nfkb1_scatterdense_expected_prob.png Graphic file (type bmp)
-<../images/nfkb1_scatterdense_expected_prob.png>
-Missing character: There is no ≥ in font [lmroman12-regular]:mapping=tex-text;!
-Missing character: There is no ≥ in font [lmroman12-regular]:mapping=tex-text;!
- [7] [8] [9] [10] [11] [12
+[2]
+Overfull \hbox (14.67554pt too wide) in paragraph at lines 61--62
+[]\TU/lmr/m/n/12 For \TU/lmr/bx/n/12 autosomal recessive (AR) \TU/lmr/m/n/12 va
+riants, disease manifested when two pathogenic
+ []
 
-] [13] [14]
-(./varEstRisk2025lawless.bbl [15]
+[3]
+Overfull \hbox (19.97987pt too wide) in paragraph at lines 94--94
+[]\TU/lmr/bx/n/14.4 Validation of Autosomal Dominant Estimates Using \TU/lmr/bx
+/it/14.4 NFKB1 
+ []
+
+[4] [5]
+Overfull \hbox (10.84848pt too wide) in paragraph at lines 136--136
+[]\TU/lmr/bx/n/14.4 Validation Study for Autosomal Recessive CF Using CFTR 
+ []
+
+
+Overfull \hbox (16.60118pt too wide) in paragraph at lines 143--144
+ []\TU/lmr/bx/n/12 1. Expected Genotype Counts.[] \TU/lmr/m/n/12 Let $\OML/cmm/
+m/it/12 p$ \TU/lmr/m/n/12 denote the allele frequency of the p.Arg117His
+ []
+
+
+Overfull \hbox (59.3572pt too wide) detected at line 154
+ $\OML/cmm/m/it/12 f[] \OT1/cmr/m/n/12 = 2\OML/cmm/m/it/12 p q []:$ 
+ []
+
+[6] [7] [8]
+File: ../images/validation_studies_bayesian_adjusted_estimates.png Graphic file
+ (type bmp)
+<../images/validation_studies_bayesian_adjusted_estimates.png>
+File: ../images/validation_studies_scatterdense_expected_prob.png Graphic file 
+(type bmp)
+<../images/validation_studies_scatterdense_expected_prob.png>
+ [9]
+File: ../images/all_genes_combined_bar_charts_mini.png Graphic file (type bmp)
+<../images/all_genes_combined_bar_charts_mini.png>
+ [10] [11] [12] [13
+
+] (./varEstRisk2025lawless.bbl [14] [15]
+Underfull \hbox (badness 1354) in paragraph at lines 174--183
+[][][][] [] [][][][][][][][][][][][][][][][][][][][][]$\TU/lmr/m/n/12 .  URL []
+[]$[][][][][] [] [] [] [][][][][][][][][][][][][][] [] [][][][][][][][][][][][]
+[] []
+ []
+
 Missing character: There is no κ in font [lmroman12-regular]:mapping=tex-text;!
-) [16]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 398.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 398.
+)
+
+Package natbib Warning: There were undefined citations.
+
+[16]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 292.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 292.
  (./varEstRisk2025lawless.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 398.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 398.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 292.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 292.
 Package rerunfilecheck Info: File `varEstRisk2025lawless.out' has not changed.
-(rerunfilecheck)             Checksum: 02D42E82A9AB2D17291BB9140F9A3FCB.
+(rerunfilecheck)             Checksum: 5D3CDF8B3B8444322D22961FDE7F0997.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 41067 strings out of 492970
- 855847 string characters out of 6133938
- 1003515 words of memory out of 5000000
- 44437 multiletter control sequences out of 15000+600000
- 541760 words of font info for 86 fonts, out of 8000000 for 9000
+ 40977 strings out of 492970
+ 853764 string characters out of 6133938
+ 1008177 words of memory out of 5000000
+ 44349 multiletter control sequences out of 15000+600000
+ 541768 words of font info for 87 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 65i,16n,101p,10564b,892s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 65i,9n,101p,10564b,908s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on varEstRisk2025lawless.pdf (16 pages).

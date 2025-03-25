@@ -167,6 +167,104 @@ unique_labels <- df %>%
   filter(clinvar_clnsig == "Pathogenic") %>%
   distinct(gnomAD_genomes_AF, expected_cases)
 
+
+
+
+
+# Scatter Plots: Expected Cases and Probability vs Allele Frequency ----
+
+# 
+# # Compute unique labels per gene for pathogenic entries
+# unique_labels <- df %>%
+#   filter(clinvar_clnsig == "Pathogenic") %>%
+#   distinct(genename, gnomAD_genomes_AF, expected_cases)
+# 
+# p_scatter1_path <-
+#   df %>%
+#   filter(clinvar_clnsig == "Pathogenic") %>%
+#   ggplot(aes(x = gnomAD_genomes_AF, y = expected_cases, color = clinvar_clnsig)) +
+#   geom_point(size = 3) +
+#   geom_line(aes(group = 1)) +
+#   ggrepel::geom_text_repel(data = unique_labels,
+#                            aes(x = gnomAD_genomes_AF, y = expected_cases, label = round(expected_cases)),
+#                            vjust = -1, hjust = 0.5, colour = "black", size = 3) +
+#   labs(x = "Allele Frequency (log scale)",
+#        y = "Expected Cases",
+#        title = "Expected Cases vs\nAllele Frequency CFTR",
+#        subtitle = paste0("Condition: population size ", population_size)) +
+#   facet_wrap(~ genename, scales = "free")
+# 
+# p_scatter1_path
+# 
+# # Compute threshold AF per gene for pathogenic entries
+# thresholds <- df %>%
+#   filter(clinvar_clnsig == "Pathogenic") %>%
+#   group_by(genename) %>%
+#   summarise(threshold_AF = min(gnomAD_genomes_AF[prob_at_least_one >= 0.999], na.rm = TRUE),
+#             .groups = "drop") %>%
+#   mutate(threshold_AF_label = formatC(threshold_AF, format = "f", digits = 6))
+# 
+# p_scatter2_path <-
+#   df %>%
+#   filter(clinvar_clnsig == "Pathogenic") %>%
+#   ggplot(aes(x = gnomAD_genomes_AF, y = prob_at_least_one, colour = clinvar_clnsig)) +
+#   geom_point(size = 3) +
+#   geom_line(aes(group = 1)) +
+#   labs(x = "Allele Frequency (log scale)",
+#        y = "Probability of ≥1 Event",
+#        title = "Probability of At Least One\nEvent vs Allele Frequency CFTR",
+#        subtitle = paste0("Condition: population size ", population_size)) +
+#   geom_vline(data = thresholds, aes(xintercept = threshold_AF),
+#              linetype = "dotted", colour = "black") +
+#   geom_text(data = thresholds,
+#             aes(x = threshold_AF, y = 1, label = threshold_AF_label),
+#             vjust = -1, hjust = 0.5, colour = "black", size = 3) +
+#   facet_wrap(~ genename, scales = "free")
+# 
+# p_scatter2_path
+# 
+# # Display the scatter plots.
+# p_scatter1_path
+# p_scatter2_path
+# # 
+# # Combine and save scatter plots vertically.
+# # p_scatter1_path <- p_scatter1_path + 
+#   # theme(axis.title.x = element_blank(),
+#         # axis.text.x = element_blank(),
+#         # axis.ticks.x = element_blank())
+# 
+# p_scatter <- p_scatter1_path / p_scatter2_path + 
+#   plot_layout(guides = 'collect', axis = "collect")  + 
+#   plot_annotation(tag_levels = 'A')
+# print(p_scatter)
+# 
+# # Density histograms for Expected Cases by ClinVar Clinical Significance.
+# p_density <- ggplot(df, aes(x = expected_cases, fill = clinvar_clnsig)) +
+#   geom_density(alpha = 0.5) +
+#   facet_wrap(~ clinvar_clnsig, scales = "free", ncol = 4) +
+#   scale_x_continuous(labels = function(x) format(round(x, 0), big.mark = ",")) +
+#   guides(fill = "none") +
+#   labs(x = "Expected Cases", 
+#        y = "Density",
+#        title = "Density of Expected Cases by ClinVar Clinical Significance",
+#        subtitle = paste0("Condition: population size ", population_size)) 
+# 
+# print(p_density)
+# 
+# p_scatter_dense <- (p_density / (p_scatter1_path + p_scatter2_path)) +
+#   plot_layout(widths = c(1, 1), guides = 'collect', axis = "collect") +
+#   plot_annotation(tag_levels = 'A')
+# print(p_scatter_dense)
+# 
+# ggsave("../images/cftr_scatterdense_expected_prob.png", plot = p_scatter_dense, width = 10, height = 8)
+# 
+
+
+
+
+
+
+
 p_scatter1_path <- 
   df |> filter(clinvar_clnsig == "Pathogenic") |>
   ggplot(aes(x = gnomAD_genomes_AF, y = expected_cases, colour = clinvar_clnsig)) +
