@@ -204,7 +204,8 @@ Thus, the expected number of \textit{CFTR}-related CF cases derived from our gen
 Our study demonstrated that by integrating large-scale annotation databases -such as gnomAD, ClinVar, (or alternatively dbNSFP) - with disease gene panels from PanelAppRex, we could systematically scan every disease-gene panel according to inheritance mode. By combining reference population allele frequencies with reported ClinVar clinical significance classifications, we calculated an expected ``observation probability'' for each single nucleotide variant (SNV). This probability represented the likelihood of encountering a variant of a given pathogenicity class for a specific phenotype.
 
 In practice, our approach computed a simple observation probability for every SNV across the genome and was applicable to any disease-gene panel. Here, we focused on panels related to Primary Immunodeficiency or Monogenic Inflammatory Bowel Disease, using PanelAppRex panel ID 398 as a case study.
-We report the probability of disease observation for a total of 54,814 ClinVar variant classifications in 557 genes.
+We report the probability of disease observation for a total of 54,814 ClinVar variant classifications in 557 genes. 
+\textbf{Figure \ref{fig:p_varRisEst_summary_scores}} displays all reported ClinVar  variant classifications. A natural scaling system was applied to account for the frequently encountered combinations of classification labels.
 
 The results summarized in \textbf{Table \ref{tab:head_result_table}} illustrated that our method yielded a robust estimation of the probability of observing a variant with a particular ClinVar classification. This integrated framework enabled comprehensive analyses across the entire genome, paving the way for rapid assessment of variant significance in diverse disease contexts.
 
@@ -228,6 +229,15 @@ ABI3 & 398 & Uncertain significance & 49220257 & c.733C>G & p.Pro245Ala & AR & 0
 \bottomrule
 \end{tabular}}
 \end{table}
+
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/p_varRisEst_summary_scores.pdf}
+  \caption{Summary of ClinVar clinical significance classifications in the PID gene panel. (A) Shows the numeric score coding for each classification. Panels (B) and (C) display the tally of classifications per gene as absolute counts and as percentages, respectively. (D) Highlights the top 15 genes with the highest number of reported pathogenic classifications (score 5).}
+  \label{fig:p_varRisEst_summary_scores}
+\end{figure}
+
 
 \subsection{Validation of Dominant Disease Occurrence with \textit{NFKB1}}
 
