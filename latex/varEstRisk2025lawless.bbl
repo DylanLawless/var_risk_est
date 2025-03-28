@@ -1,4 +1,4 @@
-\begin{thebibliography}{21}
+\begin{thebibliography}{22}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -25,6 +25,17 @@ Nikita Abramovs, Andrew Brass, and May Tassabehji.
 \newblock \doi{10.3389/fgene.2020.00210}.
 \newblock URL
   \url{https://www.frontiersin.org/article/10.3389/fgene.2020.00210/full}.
+
+\bibitem[Zschocke et~al.(2023)Zschocke, Byers, and
+  Wilkie]{zschocke_mendelian_2023}
+Johannes Zschocke, Peter~H. Byers, and Andrew O.~M. Wilkie.
+\newblock Mendelian inheritance revisited: dominance and recessiveness in
+  medical genetics.
+\newblock \emph{Nature Reviews Genetics}, 24\penalty0 (7):\penalty0 442--463,
+  July 2023.
+\newblock ISSN 1471-0056, 1471-0064.
+\newblock \doi{10.1038/s41576-023-00574-0}.
+\newblock URL \url{https://www.nature.com/articles/s41576-023-00574-0}.
 
 \bibitem[Lawless(2025)]{lawless_panelapprex_2025}
 Dylan Lawless.
