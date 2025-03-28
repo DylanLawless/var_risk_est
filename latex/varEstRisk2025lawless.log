@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.7.19)  27 MAR 2025 20:24
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.7.19)  28 MAR 2025 15:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1792,47 +1792,50 @@ Overfull \hbox (59.3572pt too wide) detected at line 168
  $\OML/cmm/m/it/12 f[] \OT1/cmr/m/n/12 = 2\OML/cmm/m/it/12 p q []:$ 
  []
 
-[7] [8] [9]
+[7]
+File: ../images/p_varRisEst_summary_scores.pdf Graphic file (type pdf)
+<use ../images/p_varRisEst_summary_scores.pdf>
+ [8] [9]
 File: ../images/validation_studies_bayesian_adjusted_estimates.png Graphic file
  (type bmp)
 <../images/validation_studies_bayesian_adjusted_estimates.png>
 File: ../images/validation_studies_scatterdense_expected_prob.png Graphic file 
 (type bmp)
 <../images/validation_studies_scatterdense_expected_prob.png>
- [10]
+ [10] [11]
 File: ../images/all_genes_combined_bar_charts_mini.png Graphic file (type bmp)
 <../images/all_genes_combined_bar_charts_mini.png>
- [11]
-Overfull \hbox (7.36403pt too wide) in paragraph at lines 297--298
+ [12]
+Overfull \hbox (7.36403pt too wide) in paragraph at lines 307--308
 []\TU/lmr/m/n/12 The classical HWE-based estimates obtained here serve as robus
 t priors for Bayesian
  []
 
-[12] [13] (./varEstRisk2025lawless.bbl
+[13] [14] (./varEstRisk2025lawless.bbl
 Underfull \hbox (badness 1354) in paragraph at lines 96--105
 [][][][] [] [][][][][][][][][][][][][][][][][][][][][]$\TU/lmr/m/n/12 .  URL []
 []$[][][][][] [] [] [] [][][][][][][][][][][][][][] [] [][][][][][][][][][][][]
 [] []
  []
 
-[14]
+[15]
 Missing character: There is no κ in font [lmroman12-regular]:mapping=tex-text;!
- [15]) [16]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 322.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 322.
+ [16]) [17]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 332.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 332.
  (./varEstRisk2025lawless.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 322.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 322.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 332.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 332.
 Package rerunfilecheck Info: File `varEstRisk2025lawless.out' has not changed.
 (rerunfilecheck)             Checksum: B731D8CC7F43B389055D5EDA6968CCD6.
  ) 
 Here is how much of TeX's memory you used:
- 40998 strings out of 492970
- 854329 string characters out of 6133938
- 1009566 words of memory out of 5000000
- 44368 multiletter control sequences out of 15000+600000
+ 41003 strings out of 492970
+ 854540 string characters out of 6133938
+ 1009951 words of memory out of 5000000
+ 44372 multiletter control sequences out of 15000+600000
  543332 words of font info for 95 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  65i,9n,101p,10564b,906s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on varEstRisk2025lawless.pdf (16 pages).
+Output written on varEstRisk2025lawless.pdf (17 pages).
