@@ -1,4 +1,4 @@
-\begin{thebibliography}{22}
+\begin{thebibliography}{29}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -128,48 +128,55 @@ Paul Tuijnenburg, Hana Lango~Allen, Siobhan~O. Burns, Daniel Greene, Machiel~H.
 \newblock URL
   \url{https://linkinghub.elsevier.com/retrieve/pii/S0091674918302860}.
 
-\bibitem[Richards et~al.(2015)Richards, Aziz, Bale, Bick, Das, Gastier-Foster,
-  Grody, Hegde, Lyon, Spector, et~al.]{richards2015standards}
-Sue Richards, Nazneen Aziz, Sherri Bale, David Bick, Soma Das, Julie
-  Gastier-Foster, Wayne~W Grody, Madhuri Hegde, Elaine Lyon, Elaine Spector,
+\bibitem[Group et~al.(1997)]{who1997primary}
+WHO~Scientific Group et~al.
+\newblock Primary immunodeficiency diseases: report of a who scientific group.
+\newblock \emph{Clin. Exp. Immunol.}, 109\penalty0 (1):\penalty0 1--28, 1997.
+
+\bibitem[Cunningham-Rundles and Bodian(1999)]{cunningham1999common}
+Charlotte Cunningham-Rundles and Carol Bodian.
+\newblock Common variable immunodeficiency: clinical and immunological features
+  of 248 patients.
+\newblock \emph{Clinical immunology}, 92\penalty0 (1):\penalty0 34--48, 1999.
+
+\bibitem[Oksenhendler et~al.(2008)Oksenhendler, G{\'e}rard, Fieschi,
+  Malphettes, Mouillot, Jaussaud, Viallard, Gardembas, Galicier, Schleinitz,
+  et~al.]{oksenhendler2008infections}
+Eric Oksenhendler, Laurence G{\'e}rard, Claire Fieschi, Marion Malphettes, Gael
+  Mouillot, Roland Jaussaud, Jean-Fran{\c{c}}ois Viallard, Martine Gardembas,
+  Lionel Galicier, Nicolas Schleinitz, et~al.
+\newblock Infections in 252 patients with common variable immunodeficiency.
+\newblock \emph{Clinical Infectious Diseases}, 46\penalty0 (10):\penalty0
+  1547--1554, 2008.
+
+\bibitem[Naito et~al.(2023)Naito, Adams, Charman, Duckers, Davies, and
+  Clarke]{naito2023uk}
+Y~Naito, F~Adams, S~Charman, J~Duckers, G~Davies, and S~Clarke.
+\newblock Uk cystic fibrosis registry 2023 annual data report.
+\newblock \emph{London: Cystric Fibrosis Trust}, 2023.
+
+\bibitem[Castellani et~al.(2013)Castellani, team, et~al.]{castellani2013cftr2}
+Carlo Castellani, CFTR2 team, et~al.
+\newblock Cftr2: how will it help care?
+\newblock \emph{Paediatric respiratory reviews}, 14:\penalty0 2--5, 2013.
+
+\bibitem[Grasemann and Ratjen(2023)]{Grasemann2023cftr}
+Hartmut Grasemann and Felix Ratjen.
+\newblock Cystic fibrosis.
+\newblock \emph{New England Journal of Medicine}, 389\penalty0 (18):\penalty0
+  1693--1707, 2023.
+\newblock \doi{10.1056/NEJMra2216474}.
+\newblock URL \url{https://www.nejm.org/doi/full/10.1056/NEJMra2216474}.
+
+\bibitem[Szklarczyk et~al.(2025)Szklarczyk, Nastou, Koutrouli, Kirsch,
+  Mehryary, Hachilif, Hu, Peluso, Huang, Fang, et~al.]{szklarczyk2025string}
+Damian Szklarczyk, Katerina Nastou, Mikaela Koutrouli, Rebecca Kirsch, Farrokh
+  Mehryary, Radja Hachilif, Dewei Hu, Matteo~E Peluso, Qingyao Huang, Tao Fang,
   et~al.
-\newblock Standards and guidelines for the interpretation of sequence variants:
-  a joint consensus recommendation of the american college of medical genetics
-  and genomics and the association for molecular pathology.
-\newblock \emph{Genetics in medicine}, 17\penalty0 (5):\penalty0 405--423,
-  2015.
-
-\bibitem[Tavtigian et~al.(2020)Tavtigian, Harrison, Boucher, and
-  Biesecker]{tavtigian2020fitting}
-Sean~V Tavtigian, Steven~M Harrison, Kenneth~M Boucher, and Leslie~G Biesecker.
-\newblock Fitting a naturally scaled point system to the acmg/amp variant
-  classification guidelines.
-\newblock \emph{Human mutation}, 41\penalty0 (10):\penalty0 1734--1737, 2020.
-
-\bibitem[Li and Wang(2017)]{li2017intervar}
-Quan Li and Kai Wang.
-\newblock Intervar: clinical interpretation of genetic variants by the 2015
-  acmg-amp guidelines.
-\newblock \emph{The American Journal of Human Genetics}, 100\penalty0
-  (2):\penalty0 267--280, 2017.
-
-\bibitem[Pedersen et~al.(2021)Pedersen, Brown, Dashnow, Wallace, Velinder,
-  Tristani-Firouzi, Schiffman, Tvrdik, Mao, Best,
-  et~al.]{pedersen2021effective}
-Brent~S Pedersen, Joe~M Brown, Harriet Dashnow, Amelia~D Wallace, Matt
-  Velinder, Martin Tristani-Firouzi, Joshua~D Schiffman, Tatiana Tvrdik, Rong
-  Mao, D~Hunter Best, et~al.
-\newblock Effective variant filtering and expected candidate variant yield in
-  studies of rare human disease.
-\newblock \emph{NPJ Genomic Medicine}, 6\penalty0 (1):\penalty0 1--8, 2021.
-
-\bibitem[Anderson et~al.(2010)Anderson, Pettersson, Clarke, Cardon, Morris, and
-  Zondervan]{anderson2010data}
-Carl~A Anderson, Fredrik~H Pettersson, Geraldine~M Clarke, Lon~R Cardon,
-  Andrew~P Morris, and Krina~T Zondervan.
-\newblock Data quality control in genetic case-control association studies.
-\newblock \emph{Nature protocols}, 5\penalty0 (9):\penalty0 1564--1573, 2010.
-\newblock URL \url{https://doi.org/10.1038/nprot.2010.116}.
+\newblock The string database in 2025: protein networks with directionality of
+  regulation.
+\newblock \emph{Nucleic Acids Research}, 53\penalty0 (D1):\penalty0 D730--D737,
+  2025.
 
 \bibitem[Liu et~al.(2019)Liu, Chen, Li, Morrison, Boerwinkle, and
   Lin]{liu2019acat}
@@ -223,6 +230,49 @@ Laurence~J Howe, Michel~G Nivard, Tim~T Morris, Ailin~F Hansen, Humaira
   Matthijs~D van~der Zee, et~al.
 \newblock Within-sibship gwas improve estimates of direct genetic effects.
 \newblock \emph{BioRxiv}, pages 2021--03, 2021.
+
+\bibitem[Richards et~al.(2015)Richards, Aziz, Bale, Bick, Das, Gastier-Foster,
+  Grody, Hegde, Lyon, Spector, et~al.]{richards2015standards}
+Sue Richards, Nazneen Aziz, Sherri Bale, David Bick, Soma Das, Julie
+  Gastier-Foster, Wayne~W Grody, Madhuri Hegde, Elaine Lyon, Elaine Spector,
+  et~al.
+\newblock Standards and guidelines for the interpretation of sequence variants:
+  a joint consensus recommendation of the american college of medical genetics
+  and genomics and the association for molecular pathology.
+\newblock \emph{Genetics in medicine}, 17\penalty0 (5):\penalty0 405--423,
+  2015.
+
+\bibitem[Tavtigian et~al.(2020)Tavtigian, Harrison, Boucher, and
+  Biesecker]{tavtigian2020fitting}
+Sean~V Tavtigian, Steven~M Harrison, Kenneth~M Boucher, and Leslie~G Biesecker.
+\newblock Fitting a naturally scaled point system to the acmg/amp variant
+  classification guidelines.
+\newblock \emph{Human mutation}, 41\penalty0 (10):\penalty0 1734--1737, 2020.
+
+\bibitem[Li and Wang(2017)]{li2017intervar}
+Quan Li and Kai Wang.
+\newblock Intervar: clinical interpretation of genetic variants by the 2015
+  acmg-amp guidelines.
+\newblock \emph{The American Journal of Human Genetics}, 100\penalty0
+  (2):\penalty0 267--280, 2017.
+
+\bibitem[Pedersen et~al.(2021)Pedersen, Brown, Dashnow, Wallace, Velinder,
+  Tristani-Firouzi, Schiffman, Tvrdik, Mao, Best,
+  et~al.]{pedersen2021effective}
+Brent~S Pedersen, Joe~M Brown, Harriet Dashnow, Amelia~D Wallace, Matt
+  Velinder, Martin Tristani-Firouzi, Joshua~D Schiffman, Tatiana Tvrdik, Rong
+  Mao, D~Hunter Best, et~al.
+\newblock Effective variant filtering and expected candidate variant yield in
+  studies of rare human disease.
+\newblock \emph{NPJ Genomic Medicine}, 6\penalty0 (1):\penalty0 1--8, 2021.
+
+\bibitem[Anderson et~al.(2010)Anderson, Pettersson, Clarke, Cardon, Morris, and
+  Zondervan]{anderson2010data}
+Carl~A Anderson, Fredrik~H Pettersson, Geraldine~M Clarke, Lon~R Cardon,
+  Andrew~P Morris, and Krina~T Zondervan.
+\newblock Data quality control in genetic case-control association studies.
+\newblock \emph{Nature protocols}, 5\penalty0 (9):\penalty0 1564--1573, 2010.
+\newblock URL \url{https://doi.org/10.1038/nprot.2010.116}.
 
 \bibitem[Miller et~al.(2023)Miller, Lee, Abul-Husn, Amendola, Brothers, Chung,
   Gollob, Gordon, Harrison, Hershberger, et~al.]{miller2023acmg}
