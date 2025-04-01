@@ -6,7 +6,9 @@
 
 \begin{document}
 % \title{Quantifying the Genetics of Disease Inheritance for Bayesian Application}
-\title{Quantifying the Genetics of Disease Inheritance in Primary Immunodeficiency}
+% \title{Quantifying the Genetics of Disease Inheritance in Primary Immunodeficiency}
+\title{Quantitative prior probabilities for disease-causing variants reveal the top genetic contributors in inborn errors of immunity}
+
 
 \author[1]{Dylan Lawless\thanks{Addresses for correspondence: \href{mailto:Dylan.Lawless@kispi.uzh.ch}{Dylan.Lawless@kispi.uzh.ch}}}
 
@@ -19,7 +21,7 @@
 
 
 \begin{abstract}
-We present a novel framework for quantifying the prior probability of observing disease‐associated variants in any gene for a given phenotype. By integrating large‐scale genomic annotations, including population allele frequencies and ClinVar variant classifications, with Hardy-Weinberg-based calculations, our method estimates per-variant observation probabilities under autosomal dominant, autosomal recessive, and X-linked modes of inheritance. Applied to 557 genes implicated in primary immunodeficiency and inflammatory disease, our approach generated 54,814 variant probabilities. First, these detailed, pre-calculated results provide robust priors for any gene-disease combination. 
+We present a novel framework for quantifying the prior probability of observing disease‐associated variants in any gene for a given phenotype. By integrating large‐scale genomic annotations, including population allele frequencies and ClinVar variant classifications, with Hardy-Weinberg-based calculations, our method estimates per-variant observation probabilities under autosomal dominant (AD), autosomal recessive (AR), and X-linked modes of inheritance. Applied to 557 genes implicated in primary immunodeficiency and inflammatory disease, our approach generated 54,814 variant probabilities. First, these detailed, pre-calculated results provide robust priors for any gene-disease combination. 
 Second, a score positive total metric summarises the aggregate pathogenic burden, serving as an indicator of the likelihood of observing a patient with the disease and reflecting genetic constraint. Validation in \textit{NFKB1} (AD) and \textit{CFTR} (AR) disorders confirmed close concordance between predicted and observed case counts. The resulting datasets, available in both machine-readable and human-friendly formats, support Bayesian variant interpretation and clinical decision-making.
 \footnote{
 \noindent \textbf{Availability:} This data is integrated in public panels at 
@@ -104,6 +106,10 @@ The dataset also holds value for AI and reinforcement learning applications, pro
 
 We introduced PanelAppRex to aggregate gene panel data from multiple sources, including \ac{ge} PanelApp, ClinVar, and \ac{uniprot}, thereby enabling advanced natural searches for clinical and research applications \cite{lawless_panelapprex_2025, martin_panelapp_2019, landrum_clinvar_2018, the_uniprot_consortium_uniprot_2025}. It automatically retrieves expert-curated panels, such as those from the NHS National Genomic Test Directory and the 100,000 Genomes Project, and converts them into machine-readable formats for rapid variant discovery and interpretation. We used PanelAppRex to label disease-associated variants.
 We also integrate key statistical genomic resources. The gnomAD v4 dataset compiles data from 807,162 individuals, encompassing over 786 million \ac{snv}s and 122 million \ac{indel}s with detailed population-specific allele frequencies \cite{karczewski2020mutational}. \ac{dbnsfp} provides functional predictions for over 120 million potential non-synonymous and splicing-site SNVs, aggregating scores from 33 sources alongside allele frequencies from major populations \cite{liu_dbnsfp_2020}. ClinVar offers curated variant classifications such as ``Pathogenic'', ''Likely pathogenic'' and ``Benign'' mapped to HGVS standards and incorporating expert reviews \cite{landrum_clinvar_2018}.
+
+To cite: \url{https://doi.org/10.1016/j.gimo.2024.101881}
+\url{https://doi.org/10.1016/j.gim.2024.101284} and some from Eric's
+\url{https://www.cureffi.org/2019/06/05/using-genetic-data-to-estimate-disease-prevalence/}.
 
 \section{Methods}
 \subsection{Dataset}
