@@ -1,7 +1,0 @@
-genename	clinvar_clnsig	count	total_expected_cases	overall_prob
-SNAP29	Benign/Likely_benign	3	38655.9908573357	0.00038651954017388
-SNAP29	Conflicting_interpretations_of_pathogenicity	1	2171.81472553979	2.17181472553785e-05
-SNAP29	Likely_benign	1	5005.54086598954	5.0055408659877e-05
-SNAP29	Likely_pathogenic	1	22.5665198069904	2.25665198083647e-07
-SNAP29	Pathogenic	2	45.1514008420227	4.51513957444583e-07
-SNAP29	Uncertain_significance	24	3813.06392995606	3.81300652476657e-05

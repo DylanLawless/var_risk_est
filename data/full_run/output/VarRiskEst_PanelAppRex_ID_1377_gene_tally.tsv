@@ -1,9 +1,0 @@
-genename	clinvar_clnsig	count	total_expected_cases	overall_prob
-STK11	Benign/Likely_benign	3	402528.453	0.00402502401971061
-STK11	Conflicting_interpretations_of_pathogenicity	65	333145.065	0.0033265456467767
-STK11	Likely_benign	2	29562.083	0.000295618931266506
-STK11	Likely_pathogenic	1	656.72386731551	6.56723867320519e-06
-STK11	not_provided	1	656.72386731551	6.56723867320519e-06
-STK11	Pathogenic	1	656.935	6.56934999998526e-06
-STK11	Pathogenic/Likely_pathogenic	1	656.72386731551	6.56723867320519e-06
-STK11	Uncertain_significance	88	88745.348	0.000887066175232154

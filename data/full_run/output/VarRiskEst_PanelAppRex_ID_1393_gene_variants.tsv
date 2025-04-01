@@ -1,9 +1,0 @@
-genename	clinvar_clnsig	pos(1-based)	gnomAD_genomes_AN	gnomAD_genomes_AF	HGVSc_VEP	HGVSp_VEP	panel_id	Inheritance	name	max_an	synth_flag	total_AF	occurrence_prob	expected_cases	prob_at_least_one
-SMN1	Conflicting_interpretations_of_pathogenicity	70942503	0	6.5781251027832e-06	c.419A>T	p.Asp140Val	1393	AR	Spinal muscular atrophy type 1 rare mutation testing	152018	TRUE	0.00478247773530835	6.28762019583994e-08	6.28762019583994	0.998140821190175
-SMN1	Likely_pathogenic	70925108	0	6.5781251027832e-06	c.5C>T	p.Ala2Val	1393	AR	Spinal muscular atrophy type 1 rare mutation testing	152018	TRUE	0.00478247773530835	6.28762019583994e-08	6.28762019583994	0.998140821190175
-SMN1	Pathogenic	70925108	1760	0.00454545	c.5C>G	p.Ala2Gly	1393	AR	Spinal muscular atrophy type 1 rare mutation testing	152018	FALSE	0.00478247773530835	2.28159111414147e-05	2281.59111414147	1
-SMN1	Pathogenic/Likely_pathogenic	70946127	0	6.5781251027832e-06	c.689G>T	p.Ser230Ile	1393	AR	Spinal muscular atrophy type 1 rare mutation testing	152018	TRUE	0.00478247773530835	6.28762019583994e-08	6.28762019583994	0.998140821190175
-SMN1	Uncertain_significance	70951946	151932	6.58189e-06	c.744C>G	p.Phe248Leu	1393	AR	Spinal muscular atrophy type 1 rare mutation testing	152018	FALSE	0.00478247773530835	6.29121634865253e-08	6.29121634865252	0.998147495081566
-SMN1	Uncertain_significance	70951968	152018	6.57817e-06	c.766A>G	p.Arg256Gly	1393	AR	Spinal muscular atrophy type 1 rare mutation testing	152018	FALSE	0.00478247773530835	6.28766308075978e-08	6.28766308075978	0.998140900924773
-SMN1	Uncertain_significance	70951970	151770	0.000125189	c.768G>T	p.Arg256Ser	1393	AR	Spinal muscular atrophy type 1 rare mutation testing	152018	FALSE	0.00478247773530835	1.18175492469003e-06	118.175492469003	1
-SMN1	Uncertain_significance	70951971	152006	7.89443e-05	c.769T>A	p.Cys257Ser	1393	AR	Spinal muscular atrophy type 1 rare mutation testing	152018	FALSE	0.00478247773530835	7.48866511656516e-07	74.8866511656516	1

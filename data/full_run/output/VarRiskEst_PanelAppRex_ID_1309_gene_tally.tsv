@@ -1,8 +1,0 @@
-genename	clinvar_clnsig	count	total_expected_cases	overall_prob
-CDKN1C	Benign/Likely_benign	1	7890.17	7.89017000000225e-05
-CDKN1C	Conflicting_interpretations_of_pathogenicity	2	21168.6	0.000211675923801447
-CDKN1C	Likely_benign	16	50169.063	0.000501579278108788
-CDKN1C	Likely_pathogenic	1	656.784252940751	6.56784252939246e-06
-CDKN1C	not_provided	1	656.784252940751	6.56784252939246e-06
-CDKN1C	Pathogenic	1	656.784252940751	6.56784252939246e-06
-CDKN1C	Uncertain_significance	95	198506.291	0.00198317743078724

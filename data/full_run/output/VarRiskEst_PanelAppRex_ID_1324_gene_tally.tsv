@@ -1,8 +1,0 @@
-genename	clinvar_clnsig	count	total_expected_cases	overall_prob
-SMCHD1	Benign	4	105886530.3	0.807651317114232
-SMCHD1	Benign/Likely_benign	2	295205.1	0.00295161035457725
-SMCHD1	Conflicting_interpretations_of_pathogenicity	7	174813.49	0.00174722623267665
-SMCHD1	Likely_benign	2	19708.97	0.000197081542781863
-SMCHD1	Likely_pathogenic	1	656.766998771846	6.56766998774483e-06
-SMCHD1	Pathogenic	2	1315.41	1.31540567422928e-05
-SMCHD1	Uncertain_significance	190	650768.879	0.00648694807940742

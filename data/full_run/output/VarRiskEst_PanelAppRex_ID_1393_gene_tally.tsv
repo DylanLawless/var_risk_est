@@ -1,6 +1,0 @@
-genename	clinvar_clnsig	count	total_expected_cases	overall_prob
-SMN1	Conflicting_interpretations_of_pathogenicity	1	6.28762019583994	6.28762019116991e-08
-SMN1	Likely_pathogenic	1	6.28762019583994	6.28762019116991e-08
-SMN1	Pathogenic	1	2281.59111414147	2.28159111413939e-05
-SMN1	Pathogenic/Likely_pathogenic	1	6.28762019583994	6.28762019116991e-08
-SMN1	Uncertain_significance	4	205.641023064067	2.05640909889393e-06
