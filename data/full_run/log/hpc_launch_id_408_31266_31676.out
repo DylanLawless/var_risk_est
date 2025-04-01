@@ -1,0 +1,26 @@
+START AT Thu Mar 27 06:29:28 PM CET 2025
+Now running panel ID: 1374
+[1] "Now running panel ID: 1374"
+[1] "Running on all chromosomes for panel ID: 1374"
+[1] "Bidning all rows complete for panel ID: 1374"
+[1] "Saving an original table with all columns"
+# A tibble: 57 × 2
+   clinvar_clnsig                                   n
+   <chr>                                        <int>
+ 1 Affects                                         51
+ 2 Benign                                       15638
+ 3 Benign/Likely_benign                          4957
+ 4 Benign/Likely_benign|other                       5
+ 5 Benign/Likely_benign|risk_factor                 1
+ 6 Benign|association                               1
+ 7 Benign|confers_sensitivity                       1
+ 8 Benign|other                                     2
+ 9 Benign|risk_factor                               1
+10 Conflicting_interpretations_of_pathogenicity 29719
+# ℹ 47 more rows
+[1] "Inheritance for panel ID: 1374"
+[1] "Tally panel ID: 1374"
+[1] "Plot panel ID: 1374"
+[1] "Data saved"
+[1] "Complete in R for panel ID: 1374"
+FINISH AT Fri Mar 28 01:05:31 AM CET 2025

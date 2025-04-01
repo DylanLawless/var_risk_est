@@ -1,0 +1,7 @@
+genename	clinvar_clnsig	count	total_expected_cases	overall_prob
+SHOX	Benign/Likely_benign	1	406.116728005253	4.06116728002281e-06
+SHOX	Conflicting_interpretations_of_pathogenicity	4	34237.1269830067	0.000342346924540049
+SHOX	Likely_pathogenic	2	42.8916668090072	4.28916622108311e-07
+SHOX	Pathogenic	3	64.3380712308994	6.43380574372188e-07
+SHOX	Pathogenic/Likely_pathogenic	1	21.4344292826053	2.14344292870372e-07
+SHOX	Uncertain_significance	24	3332.09808564249	3.332053407612e-05

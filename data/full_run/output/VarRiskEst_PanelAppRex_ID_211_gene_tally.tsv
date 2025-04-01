@@ -1,0 +1,6 @@
+genename	clinvar_clnsig	count	total_expected_cases	overall_prob
+TRAPPC2	Benign	1	0.624640060456033	6.24640061896997e-09
+TRAPPC2	Conflicting_interpretations_of_pathogenicity	1	12.635164014439	1.26351640150624e-07
+TRAPPC2	Likely_pathogenic	1	0.62806645344389	6.28066454400056e-09
+TRAPPC2	Pathogenic	1	0.624634912417295	6.24634910462163e-09
+TRAPPC2	Uncertain_significance	1	0.628414081984622	6.28414087433526e-09

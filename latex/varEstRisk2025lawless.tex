@@ -100,7 +100,11 @@ to validate our approach and demonstrate its clinical relevance. This applicatio
 Quantifying the risk that a newborn inherits a disease-causing variant is a fundamental challenge in genomics. Classical statistical approaches grounded in \ac{hwe} \cite{MayoCentury2008, AbramovsHardyWeinberg2020} have long been used to calculate genetic \ac{moi} probabilities for \ac{snv}s. However, applying these methods becomes more complex when accounting for different \ac{moi}, such as \ac{ar} versus \ac{ad} or \ac{xl} disorders. In AR conditions, for example, the occurrence probability must incorporate both the homozygous state and compound heterozygosity, whereas for \ac{ad} and \ac{xl} disorders, a single pathogenic allele is sufficient to cause disease. 
 Advances in genetic research have revealed that \ac{moi} can be even more complex \cite{zschocke_mendelian_2023}. Mechanisms such as dominant negative effects, haploinsufficiency, mosaicism, and digenic or epistatic interactions can further modulate disease risk and clinical presentation, underscoring the need for nuanced approaches in risk estimation.
 \citet{karczewski2020mutational} made significant advances; however, the remaining challenge lay in applying the necessary statistical genomics data across all MOI for any gene-disease combination 
+Similar approaches have been reported for disease such Wilson disease, Mucopolysaccharidoses,  Primary ciliary dyskinesia, and treatable metabolic diseasse, 
+\cite{bick_estimating_2025, evans_estimating_2021}, 
+as reviewed by \citet{hannah_using_2024}.
 
+To our knowledge all approaches to date have been limited to single \ac{moi}, specific to the given disease, or restricted to a small number of genes.
 We argue that our integrated approach is highly powerful because the resulting probabilities can serve as informative priors in a Bayesian framework for variant and disease probability estimation; a perspective that is often overlooked in clinical and statistical genetics. Such a framework not only refines classical \ac{hwe}-based risk estimates but also has the potential to enrich clinicians’ understanding of what to expect in a patient and to enhance the analytical models employed by bioinformaticians.
 The dataset also holds value for AI and reinforcement learning applications, providing an enriched version of the data underpinning frameworks such as AlphaFold \cite{jumper_highly_2021} and AlphaMissense \cite{cheng_accurate_2023}.
 
@@ -488,7 +492,7 @@ We integrated the computed prior probabilities for observing variants in all kno
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.99\textwidth]{../images/var_risk_est_iei_genetics.png}
+  \includegraphics[width=1\textwidth]{../images/var_risk_est_iei_genetics.png}
   \caption{
     \textbf{Integration of variant probabilities into the \ac{iei} genetics framework.}
     The interface summarises the condensed variant data, with pre-calculated summary statistics and dynamic links to external databases. This integration enables immediate access to detailed variant classifications and prior probabilities for each gene.
@@ -499,15 +503,53 @@ We integrated the computed prior probabilities for observing variants in all kno
 \FloatBarrier
 \section{Discussion}
 
-Our study presents, to our knowledge, the first comprehensive framework for calculating prior probabilities of observing disease-associated variants across all \ac{moi} for any gene-disease combination. By integrating large-scale genomic annotations, including population allele frequencies from \ac{gnomad} \cite{karczewski2020mutational}, variant classifications from ClinVar \cite{landrum_clinvar_2018}, and functional annotations from resources such as \ac{dbnsfp}, with classical Hardy-Weinberg-based calculations, we derived robust estimates for 54,814 ClinVar variant classifications across 557 \ac{iei} genes implicated in \ac{pid} and monogenic inflammatory bowel disease \cite{lawless_panelapprex_2025, tangye_human_2022}.
+Our study presents, to our knowledge, the first comprehensive framework for calculating prior probabilities of observing disease-associated variants. By integrating large-scale genomic annotations, including population allele frequencies from \ac{gnomad} \cite{karczewski2020mutational}, variant classifications from ClinVar \cite{landrum_clinvar_2018}, and functional annotations from resources such as \ac{dbnsfp}, with classical Hardy-Weinberg-based calculations, we derived robust estimates for 54,814 ClinVar variant classifications across 557 \ac{iei} genes implicated in \ac{pid} and monogenic inflammatory bowel disease \cite{lawless_panelapprex_2025, tangye_human_2022}.
 
-First, our detailed, per-variant pre-calculated results provide prior probabilities of observing disease-associated variants across all \ac{moi} for any gene-disease combination. Second, the score positive total metric effectively summarises the aggregate pathogenic burden across genes, serving as a robust indicator of genetic constraint and highlighting those with elevated disease relevance.
+Our approach yielded two key results. First, our detailed, per-variant pre-calculated results provide prior probabilities of observing disease-associated variants across all \ac{moi} for any gene-disease combination. Second, the score positive total metric effectively summarises the aggregate pathogenic burden across genes, serving as a robust indicator of genetic constraint and highlighting those with elevated disease relevance.
 
-Our genome-wide approach accommodates the distinct \ac{moi} patterns of \ac{ad}, \ac{ar}, and \ac{xl} disorders. Whereas \ac{ad} and \ac{xl} conditions require only a single pathogenic allele, AR disorders necessitate the consideration of both homozygous and compound heterozygous states. These classical \ac{hwe}-based estimates provide an informative baseline for predicting variant occurrence and serve as robust priors for Bayesian models of variant and disease risk estimation. This is an approach that has been underutilised in clinical and statistical genetics. As such, our framework refines risk calculations by incorporating \ac{moi} complexities and enhances clinicians’ understanding of expected variant occurrences, thereby improving diagnostic precision.
+Estimating disease risk in genetic studies is complicated by uncertainties in key parameters such as variant penetrance and the fraction of cases attributable to specific variants \cite{zschocke_mendelian_2023}. 
+In the simplest model, where a single, fully penetrant variant causes disease, the lifetime risk \(P(D)\) is equivalent to the genotype frequency \(P(G)\). 
+For an allele with frequency \(p\), this translates to:
+\[
+\begin{aligned}
+\text{Recessive:} \quad P(D) &= p^2, \\
+\text{Dominant:} \quad P(D) &= 2p(1-p) \approx 2p.
+\end{aligned}
+\]
+When penetrance is incomplete, defined as \(P(D\mid G)\), the risk becomes:
+\[
+P(D) = P(G)\,P(D\mid G).
+\]
+In more realistic scenarios where multiple variants contribute to disease, \(P(G\mid D)\) denotes the fraction of cases attributable to a given variant. This leads to:
+\[
+P(D) = \frac{P(G)\,P(D\mid G)}{P(G\mid D)}.
+\]
+Because both penetrance and \(P(G\mid D)\) are often uncertain, solving this equation systematically poses a major challenge.
+
+Our framework addresses this challenge by combining variant classifications, population allele frequencies, and curated gene-disease associations. 
+%Although variant classifications are not perfect on an individual level, rigorous filtering based on empirical evidence ensures that only variants with confirmed pathogenicity—and thus more predictable penetrance—are included. 
+While imperfect on an individual level, these sources exhibit predictable aggregate behaviour, supported by James-Stein estimation principles \cite{efron_steins_1973}.
+% Keep this thought here: Stein's Estimation Rule and its competitors, as discussed by Efron and Morris (1973), demonstrate that shrinkage estimators—such as the James–Stein estimator—can outperform traditional maximum likelihood methods by “borrowing strength” across multiple parameters. In essence, even if individual estimates are noisy or imprecise, shrinking them towards a common value (or mean) improves the overall risk (mean squared error) of the estimates. This empirical Bayes approach shows that aggregate estimates tend to be well-calibrated, a principle we leverage in our work: although individual ClinVar variant classifications may be uncertain, their collective behaviour yields robust and reliable prior probabilities when combined with population allele frequencies and curated gene–disease associations.
+Curated gene-disease associations help identify genes that explainable for most disease cases, allowing us to approximate \(P(G\mid D)\) close to one. In this way, we obtain robust estimates of \(P(G)\) (the frequency of disease-associated genotypes), even when exact values of penetrance and case attribution remain uncertain.
+
+This approach allows us to pre-calculate priors and summarise the overall pathogenic burden using our \emph{score positive total} metric. By focusing on a subset \(\mathcal{V}\) of variants that pass stringent filtering, where each \(P(G_i \mid D)\) is the probability that a case of disease \(D\) is attributable to variant \(i\), we assume that, in aggregate,
+\[
+\sum_{i\in\mathcal{V}} P(G_i\mid D) \approx 1.
+\]
+% Definitions:
+% \(\mathcal{V}\): the set of variants that pass our stringent filtering criteria based on empirical evidence.
+% \(P(G_i \mid D)\): the probability that a disease case harbours the disease‐causing genotype corresponding to variant \(i\), given that the disease \(D\) is observed.
+% \(D\): the disease state or condition.
+% The expression \(\sum_{i\in\mathcal{V}} P(G_i\mid D) \approx 1\) implies that, in aggregate, the selected variants in \(\mathcal{V}\) account for nearly all cases of the disease.
+Even if the cumulative contribution is slightly less than one, the resultant risk estimates remain robust within the broad confidence intervals typical of epidemiological studies. By incorporating these pre-calculated priors into a Bayesian framework, our method refines risk estimates and enhances clinical decision-making despite inherent uncertainties.
+
+Our results focused on \ac{iei}, but the genome-wide approach accommodates the distinct \ac{moi} patterns of \ac{ad}, \ac{ar}, and \ac{xl} disorders. Whereas \ac{ad} and \ac{xl} conditions require only a single pathogenic allele, \ac{ar} disorders necessitate the consideration of both homozygous and compound heterozygous states. These classical \ac{hwe}-based estimates provide an informative baseline for predicting variant occurrence and serve as robust priors for Bayesian models of variant and disease risk estimation. This is an approach that has been underutilised in clinical and statistical genetics. As such, our framework refines risk calculations by incorporating \ac{moi} complexities and enhances clinicians’ understanding of expected variant occurrences, thereby improving diagnostic precision.
 
 Moreover, our method complements existing statistical approaches for aggregating variant effects with methods like \ac{skat} and \ac{acat} \cite{liu2019acat,li2020dynamic,wu2011rare,lee2012optimal}) and multi-omics integration techniques \cite{kong2018nature,howe2021within}, while remaining consistent with established variant interpretation guidelines from the \ac{acmg} \cite{richards2015standards} and complementary frameworks \cite{tavtigian2020fitting,li2017intervar}, as well as quality control protocols \cite{pedersen2021effective,anderson2010data}. Standardised reporting for qualifying variant sets, such as \ac{acmg} Secondary Findings v3.2 \cite{miller2023acmg}, further contextualises the integration of these probabilities into clinical decision-making.
 
-We acknowledge that our current approach is limited to \ac{snv} and does not account for other complexities of genetic disease, including complex variants, de novo events, hypomorphic phenotypes, overdominance, penetrance, tissue-specific transcription, and pleiotropy \cite{zschocke_mendelian_2023}. Future work will incorporate additional variant types and models to further refine these probability estimates. By continuously updating classical estimates with emerging data and prior knowledge, we aim to enhance the precision of genetic diagnostics and ultimately improve patient care.
+We acknowledge that our current framework is restricted to \ac{snv}s and does not incorporate numerous other complexities of genetic disease, such as structural variants, de novo variants, hypomorphic alleles, overdominance, variable penetrance, tissue-specific expression, the Wahlund effect, pleiotropy, and others \cite{zschocke_mendelian_2023}. In certain applications, more refined estimates would benefit from including factors such as embryonic lethality, condition-specific penetrance, and age of onset \cite{hannah_using_2024}. Our analysis also relies on simplifying assumptions of random mating, an effectively infinite population, and the absence of migration, novel mutations, or natural selection.
+
+Future work will incorporate additional variant types and models to further refine these probability estimates. By continuously updating classical estimates with emerging data and prior knowledge, we aim to enhance the precision of genetic diagnostics and ultimately improve patient care.
 
 \section{Conclusion}
 Our work generates prior probabilities for observing any variant classification in \ac{iei} genetic disease, providing a quantitative resource to enhance Bayesian variant interpretation and clinical decision-making.

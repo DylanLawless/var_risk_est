@@ -1,4 +1,4 @@
-\begin{thebibliography}{33}
+\begin{thebibliography}{37}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -47,6 +47,44 @@ Antonio~Rueda Martin, Eleanor Williams, Rebecca~E. Foulger, Sarah Leigh,
 \newblock ISSN 1061-4036, 1546-1718.
 \newblock \doi{10.1038/s41588-019-0528-2}.
 \newblock URL \url{https://www.nature.com/articles/s41588-019-0528-2}.
+
+\bibitem[Bick et~al.(2025)Bick, Nathan, Park, Green, Wojcik, and
+  Gold]{bick_estimating_2025}
+Sarah~L. Bick, Aparna Nathan, Hannah Park, Robert~C. Green, Monica~H. Wojcik,
+  and Nina~B. Gold.
+\newblock Estimating the sensitivity of genomic newborn screening for treatable
+  inherited metabolic disorders.
+\newblock \emph{Genetics in Medicine}, 27\penalty0 (1):\penalty0 101284,
+  January 2025.
+\newblock ISSN 10983600.
+\newblock \doi{10.1016/j.gim.2024.101284}.
+\newblock URL
+  \url{https://linkinghub.elsevier.com/retrieve/pii/S1098360024002181}.
+
+\bibitem[Evans et~al.(2021)Evans, Słowiński, Hattersley, Jones, Sharp,
+  Kimmitt, Weedon, Oram, Tsaneva-Atanasova, and Thomas]{evans_estimating_2021}
+Benjamin~D. Evans, Piotr Słowiński, Andrew~T. Hattersley, Samuel~E. Jones,
+  Seth Sharp, Robert~A. Kimmitt, Michael~N. Weedon, Richard~A. Oram, Krasimira
+  Tsaneva-Atanasova, and Nicholas~J. Thomas.
+\newblock Estimating disease prevalence in large datasets using genetic risk
+  scores.
+\newblock \emph{Nature Communications}, 12\penalty0 (1):\penalty0 6441,
+  November 2021.
+\newblock ISSN 2041-1723.
+\newblock \doi{10.1038/s41467-021-26501-7}.
+\newblock URL \url{https://www.nature.com/articles/s41467-021-26501-7}.
+
+\bibitem[Hannah et~al.(2024)Hannah, Drumm, Nykamp, Pramparo, Steiner, and
+  Schrodi]{hannah_using_2024}
+William~B. Hannah, Mitchell~L. Drumm, Keith Nykamp, Tiziano Pramparo, Robert~D.
+  Steiner, and Steven~J. Schrodi.
+\newblock Using genomic databases to determine the frequency and
+  population-based heterogeneity of autosomal recessive conditions.
+\newblock \emph{Genetics in Medicine Open}, 2:\penalty0 101881, 2024.
+\newblock ISSN 29497744.
+\newblock \doi{10.1016/j.gimo.2024.101881}.
+\newblock URL
+  \url{https://linkinghub.elsevier.com/retrieve/pii/S2949774424010276}.
 
 \bibitem[Mayo(2008)]{MayoCentury2008}
 Oliver Mayo.
@@ -236,6 +274,16 @@ Dylan Lawless.
 \newblock March 2025{\natexlab{b}}.
 \newblock \doi{10.5281/zenodo.15111584}.
 \newblock URL \url{https://doi.org/10.5281/zenodo.15111584}.
+
+\bibitem[Efron and Morris(1973)]{efron_steins_1973}
+Bradley Efron and Carl Morris.
+\newblock Stein's {Estimation} {Rule} and {Its} {Competitors}--{An} {Empirical}
+  {Bayes} {Approach}.
+\newblock \emph{Journal of the American Statistical Association}, 68\penalty0
+  (341):\penalty0 117, March 1973.
+\newblock ISSN 01621459.
+\newblock \doi{10.2307/2284155}.
+\newblock URL \url{https://www.jstor.org/stable/2284155?origin=crossref}.
 
 \bibitem[Liu et~al.(2019)Liu, Chen, Li, Morrison, Boerwinkle, and
   Lin]{liu2019acat}

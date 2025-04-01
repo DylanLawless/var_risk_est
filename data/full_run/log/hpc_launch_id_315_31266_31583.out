@@ -1,0 +1,26 @@
+START AT Thu Mar 27 04:36:05 PM CET 2025
+Now running panel ID: 931
+[1] "Now running panel ID: 931"
+[1] "Running on all chromosomes for panel ID: 931"
+[1] "Bidning all rows complete for panel ID: 931"
+[1] "Saving an original table with all columns"
+# A tibble: 32 × 2
+   clinvar_clnsig                                                     n
+   <chr>                                                          <int>
+ 1 0                                                                  1
+ 2 Affects                                                           16
+ 3 Benign                                                          5672
+ 4 Benign/Likely_benign                                            1557
+ 5 Benign/Likely_benign|other                                         3
+ 6 Benign|other                                                       1
+ 7 Conflicting_interpretations_of_pathogenicity                    8673
+ 8 Conflicting_interpretations_of_pathogenicity|association           2
+ 9 Conflicting_interpretations_of_pathogenicity|other                 7
+10 Conflicting_interpretations_of_pathogenicity|other|risk_factor     2
+# ℹ 22 more rows
+[1] "Inheritance for panel ID: 931"
+[1] "Tally panel ID: 931"
+[1] "Plot panel ID: 931"
+[1] "Data saved"
+[1] "Complete in R for panel ID: 931"
+FINISH AT Thu Mar 27 10:26:12 PM CET 2025

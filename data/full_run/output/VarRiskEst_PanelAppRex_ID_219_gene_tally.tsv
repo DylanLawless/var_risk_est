@@ -1,0 +1,13 @@
+genename	clinvar_clnsig	count	total_expected_cases	overall_prob
+QDPR	Conflicting_interpretations_of_pathogenicity	2	258.889563424846	2.58889544335617e-06
+QDPR	Likely_benign	3	15.2035985560303	1.52035978251419e-07
+QDPR	Likely_pathogenic	4	18.9855395687578	1.89855382637383e-07
+QDPR	Pathogenic	3	30.300836592904	3.03008337310118e-07
+QDPR	Pathogenic/Likely_pathogenic	2	22.772466680975	2.2772465957388e-07
+QDPR	Uncertain_significance	45	1242.32936880613	1.24232252014522e-05
+SLC6A3	Conflicting_interpretations_of_pathogenicity	4	1331.3696617887	1.33136414653956e-05
+SLC6A3	Likely_benign	5	723.483945755446	7.23481963516015e-06
+SLC6A3	Likely_pathogenic	1	6.68790421826115	6.68790421931575e-08
+SLC6A3	Pathogenic	1	6.6887891610288	6.68878915588422e-08
+SLC6A3	Pathogenic/Likely_pathogenic	0	0	0
+SLC6A3	Uncertain_significance	64	2970.97099253228	2.9709297637015e-05

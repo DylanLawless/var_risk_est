@@ -1,0 +1,38 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Processing chromosome: 1
+
+── Column specification ────────────────────────────────────────────────────────
+cols(
+  .default = col_character(),
+  X1 = col_double(),
+  X2 = col_double(),
+  X128 = col_double(),
+  X129 = col_double(),
+  X130 = col_double(),
+  X168 = col_double(),
+  X169 = col_double(),
+  X172 = col_double(),
+  X173 = col_double(),
+  X174 = col_double(),
+  X175 = col_double(),
+  X178 = col_double(),
+  X179 = col_double(),
+  X183 = col_double(),
+  X184 = col_double()
+)
+ℹ Use `spec()` for the full column specifications.
+
+
+ *** caught bus error ***
+address 0x14d707752c47, cause 'non-existent physical address'
+/var/spool/slurmd/job31690/slurm_script: line 20:  5243 Bus error               (core dumped) Rscript inheritance_prob_generalised_hpc.R $PanelAppRex_ID

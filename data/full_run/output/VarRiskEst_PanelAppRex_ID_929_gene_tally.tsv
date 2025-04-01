@@ -1,0 +1,10 @@
+genename	clinvar_clnsig	count	total_expected_cases	overall_prob
+BRCA2	Benign	121	149275875.833	0.9888031011892
+BRCA2	Benign/Likely_benign	16	826825.8	0.0082398116115473
+BRCA2	Conflicting_interpretations_of_pathogenicity	767	2510436.571	0.0248032322562105
+BRCA2	Likely_benign	6	14457.241	0.000144564809792413
+BRCA2	Likely_pathogenic	1	657.592	6.57591999997376e-06
+BRCA2	not_provided	1	656.715241704045	6.56715241709183e-06
+BRCA2	Pathogenic	44	44699.491	0.000446899341667972
+BRCA2	Pathogenic/Likely_pathogenic	6	4601.967	4.60188056943256e-05
+BRCA2	Uncertain_significance	242	223438.777	0.00223190893982661

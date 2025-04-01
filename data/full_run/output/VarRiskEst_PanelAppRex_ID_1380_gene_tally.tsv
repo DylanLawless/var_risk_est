@@ -1,0 +1,8 @@
+genename	clinvar_clnsig	count	total_expected_cases	overall_prob
+KCNJ5	Benign	1	98811100	0.988111
+KCNJ5	Benign/Likely_benign	1	285117	0.00285117000000001
+KCNJ5	Conflicting_interpretations_of_pathogenicity	10	79513.861	0.000794877481434919
+KCNJ5	Likely_benign	2	17741.84	0.000177414428407574
+KCNJ5	Likely_pathogenic	1	657.073	6.57072999998842e-06
+KCNJ5	Pathogenic	1	656.81876399845	6.56818763999922e-06
+KCNJ5	Uncertain_significance	65	131430.106	0.0013134645309848

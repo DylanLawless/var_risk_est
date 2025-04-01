@@ -9,45 +9,45 @@ while executing---line 1315 of file unsrtnat.bst
 Name 8 in "{The UniProt Consortium} and Bateman, Alex and Martin, Maria-Jesus and Orchard, Sandra and Magrane, Michele and Adesina, Aduragbemi and Ahmad, Shadab and Bowler-Barnett, and Others." has a comma at the end for entry the_uniprot_consortium_uniprot_2025
 while executing---line 1315 of file unsrtnat.bst
 Warning--empty journal in lawless_2025_15111584
-You've used 33 entries,
+You've used 37 entries,
             2481 wiz_defined-function locations,
-            807 strings with 16168 characters,
-and the built_in function-call counts, 18845 in all, are:
-= -- 1263
-> -- 1821
-< -- 8
-+ -- 643
-- -- 576
-* -- 1978
-:= -- 3379
-add.period$ -- 139
-call.type$ -- 33
-change.case$ -- 66
-chr.to.int$ -- 32
-cite$ -- 35
-duplicate$ -- 635
-empty$ -- 1228
-format.name$ -- 616
-if$ -- 3675
+            843 strings with 17597 characters,
+and the built_in function-call counts, 20843 in all, are:
+= -- 1419
+> -- 1977
+< -- 9
++ -- 699
+- -- 624
+* -- 2182
+:= -- 3734
+add.period$ -- 163
+call.type$ -- 37
+change.case$ -- 74
+chr.to.int$ -- 36
+cite$ -- 39
+duplicate$ -- 711
+empty$ -- 1370
+format.name$ -- 670
+if$ -- 4078
 int.to.chr$ -- 2
-int.to.str$ -- 34
-missing$ -- 33
-newline$ -- 213
-num.names$ -- 99
-pop$ -- 203
+int.to.str$ -- 38
+missing$ -- 37
+newline$ -- 245
+num.names$ -- 111
+pop$ -- 219
 preamble$ -- 1
-purify$ -- 33
+purify$ -- 37
 quote$ -- 0
-skip$ -- 341
+skip$ -- 380
 stack$ -- 0
-substring$ -- 802
-swap$ -- 90
+substring$ -- 867
+swap$ -- 101
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 231
+type$ -- 259
 warning$ -- 2
-while$ -- 122
+while$ -- 134
 width$ -- 0
-write$ -- 511
+write$ -- 587
 (There were 2 error messages)

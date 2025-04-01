@@ -1,0 +1,11 @@
+genename	clinvar_clnsig	count	total_expected_cases	overall_prob
+NF1	Benign	1	56608900	0.566089
+NF1	Benign/Likely_benign	9	555520.172	0.00554388331586819
+NF1	Conflicting_interpretations_of_pathogenicity	130	1084660.484	0.0107973983471015
+NF1	Likely_benign	13	21027.137	0.00021025267441932
+NF1	Likely_pathogenic	2	1321.613	1.32160863348663e-05
+NF1	not_provided	1	656.792880365177	6.56792880360246e-06
+NF1	Pathogenic	20	16445.432	0.000164441598172971
+NF1	Pathogenic/Likely_pathogenic	7	5259.927	5.25981028576261e-05
+NF1	risk_factor	1	656.792880365177	6.56792880360246e-06
+NF1	Uncertain_significance	325	287261.827	0.00286851331672955

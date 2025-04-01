@@ -1,0 +1,13 @@
+genename	clinvar_clnsig	count	total_expected_cases	overall_prob
+GLA	Benign	1	12.6052334132796	1.26052334126214e-07
+GLA	Benign/Likely_benign	1	200.412132531844	2.00412132533856e-06
+GLA	Conflicting_interpretations_of_pathogenicity	25	4029.85976621345	4.02979074182186e-05
+GLA	Conflicting_interpretations_of_pathogenicity|other	1	3488.04912546978	3.4880491254663e-05
+GLA	Likely_benign	2	363.216655795387	3.63216532373034e-06
+GLA	Likely_pathogenic	2	25.3324441838555	2.53324425769641e-07
+GLA	Likely_pathogenic|drug_response	1	12.6052334132796	1.26052334126214e-07
+GLA	Pathogenic	3	38.0901210456583	3.80901162055913e-07
+GLA	Pathogenic/Likely_pathogenic	2	37.9368718738841	3.79368686687087e-07
+GLA	Pathogenic|drug_response	1	12.6052334132796	1.26052334126214e-07
+GLA	Uncertain_significance	28	772.43330980028	7.72430527984369e-06
+GLA	Uncertain_significance|drug_response	1	12.6052334132796	1.26052334126214e-07

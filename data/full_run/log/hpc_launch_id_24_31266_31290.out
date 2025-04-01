@@ -1,0 +1,26 @@
+START AT Thu Mar 27 11:23:16 AM CET 2025
+Now running panel ID: 39
+[1] "Now running panel ID: 39"
+[1] "Running on all chromosomes for panel ID: 39"
+[1] "Bidning all rows complete for panel ID: 39"
+[1] "Saving an original table with all columns"
+# A tibble: 72 × 2
+   clinvar_clnsig                               n
+   <chr>                                    <int>
+ 1 Affects                                     93
+ 2 Affects|association                          1
+ 3 Affects|risk_factor                          1
+ 4 Benign                                   24656
+ 5 Benign/Likely_benign                      8262
+ 6 Benign/Likely_benign|association             1
+ 7 Benign/Likely_benign|drug_response           2
+ 8 Benign/Likely_benign|drug_response|other     1
+ 9 Benign/Likely_benign|other                   6
+10 Benign/Likely_benign|other|risk_factor       1
+# ℹ 62 more rows
+[1] "Inheritance for panel ID: 39"
+[1] "Tally panel ID: 39"
+[1] "Plot panel ID: 39"
+[1] "Data saved"
+[1] "Complete in R for panel ID: 39"
+FINISH AT Thu Mar 27 08:20:02 PM CET 2025

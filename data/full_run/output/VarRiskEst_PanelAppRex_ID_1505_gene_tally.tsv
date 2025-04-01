@@ -1,0 +1,8 @@
+genename	clinvar_clnsig	count	total_expected_cases	overall_prob
+GCDH	Benign/Likely_benign	1	11766.8723641089	0.000117668723641051
+GCDH	Conflicting_interpretations_of_pathogenicity	17	3672.68426815734	3.67263495978376e-05
+GCDH	Likely_benign	5	19303.6812798941	0.000193035515879347
+GCDH	Likely_pathogenic	11	400.673117855462	4.00672423994664e-06
+GCDH	Pathogenic	30	4374.25415568065	4.37416916900801e-05
+GCDH	Pathogenic/Likely_pathogenic	21	2270.62839812314	2.2706060007982e-05
+GCDH	Uncertain_significance	25	1977.82352238961	1.97780567809946e-05
