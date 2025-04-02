@@ -67,6 +67,7 @@ VarRiskEst is available under the MIT licence.}
  \acro{hwe}[HWE]{Hardy-Weinberg Equilibrium}
  \acro{iei}[IEI]{Inborn Errors of Immunity}
  \acro{indel}[InDel]{Insertion/Deletion}
+ \acro{ld}[LD]{Linkage Disequilibrium}
  \acro{loeuf}[LOEUF]{Loss-Of-function Observed/Expected Upper bound Fraction}
   \acro{lof}[LOF]{Loss-of-Function}
  \acro{moi}[MOI]{Mode of Inheritance}
@@ -499,6 +500,23 @@ We integrated the computed prior probabilities for observing variants in all kno
   }
   \label{fig:var_risk_est_iei_genetics}
 \end{figure}
+
+
+
+\subsection{Genome-wide Gene Distribution and Locus-specific Variant Occurrence}
+
+\textbf{Figure \ref{fig:karyo_locusplot_merged} (A)} shows a genome-wide karyoplot of all \ac{iei} panel genes across GRCh38, with colour-coding based on \ac{moi}. Figures \textbf{(B)} and \textbf{(C)} display zoomed-in locus plots for \textit{NFKB1} and \textit{CFTR}, respectively. 
+In \textbf{Figure \ref{fig:karyo_locusplot_merged} (B)}, the probability of observing variants with known classifications is high only for variants such as p.Ala475Gly, which are considered benign in the \ac{ad} \textit{NFKB1} gene that is intolerant to \ac{lof}. 
+In \textbf{Figure \ref{fig:karyo_locusplot_merged} (C)}, high probabilities of observing patients with pathogenic variants in \textit{CFTR} are evident, reproducing this well-established phenomenon. Furthermore, the analysis of \ac{ld} using $\text{R}^2$ shows that high LD regions can be modelled effectively, allowing independent variant signals to be distinguished.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/karyo_locusplot_merged.pdf}
+  \caption{Genome-wide \ac{iei}, variant occurance probability and \ac{ld} by $\text{R}^2$. (A) Genome-wide karyoplot of all \ac{iei} panel genes mapped to GRCh38, with colours indicating \ac{moi}. (B) Zoomed-in locus plot for \textit{NFKB1} showing variant observation probabilities; only benign variants such exhibit high probabilities in this \ac{ad} gene intolerant to \ac{lof}. (C) Locus plot for \textit{CFTR} displaying high probabilities for pathogenic variants; due to the dense clustering of pathogenic variants, score filter >0 was applied. Top five variant are labelled per gene.}
+  \label{fig:karyo_locusplot_merged}
+\end{figure}
+
+
 
 \FloatBarrier
 \section{Discussion}

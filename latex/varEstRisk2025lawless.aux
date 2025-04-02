@@ -41,6 +41,7 @@
 \newacro{hwe}[\AC@hyperlink{hwe}{HWE}]{Hardy-Weinberg Equilibrium}
 \newacro{iei}[\AC@hyperlink{iei}{IEI}]{Inborn Errors of Immunity}
 \newacro{indel}[\AC@hyperlink{indel}{InDel}]{Insertion/Deletion}
+\newacro{ld}[\AC@hyperlink{ld}{LD}]{Linkage Disequilibrium}
 \newacro{loeuf}[\AC@hyperlink{loeuf}{LOEUF}]{Loss-Of-function Observed/Expected Upper bound Fraction}
 \newacro{lof}[\AC@hyperlink{lof}{LOF}]{Loss-of-Function}
 \newacro{moi}[\AC@hyperlink{moi}{MOI}]{Mode of Inheritance}
@@ -433,6 +434,17 @@
 \AC@undonewlabel{acro:omim}
 \newlabel{acro:omim}{{3.5.6}{20}{Integration of Variant Probabilities into IEI Genetics Data}{subsubsection.3.5.6}{}}
 \acronymused{omim}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces  \textbf  {Integration of variant probabilities into the \ac {iei} genetics framework.} The interface summarises the condensed variant data, with pre-calculated summary statistics and dynamic links to external databases. This integration enables immediate access to detailed variant classifications and prior probabilities for each gene. }}{21}{figure.7}}
+\acronymused{iei}
+\newlabel{fig:var_risk_est_iei_genetics}{{7}{21}{\textbf {Integration of variant probabilities into the \ac {iei} genetics framework.} The interface summarises the condensed variant data, with pre-calculated summary statistics and dynamic links to external databases. This integration enables immediate access to detailed variant classifications and prior probabilities for each gene}{figure.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6}Genome-wide Gene Distribution and Locus-specific Variant Occurrence}{21}{subsection.3.6}}
+\acronymused{iei}
+\acronymused{moi}
+\acronymused{ad}
+\acronymused{lof}
+\AC@undonewlabel{acro:ld}
+\newlabel{acro:ld}{{3.6}{21}{Genome-wide Gene Distribution and Locus-specific Variant Occurrence}{subsection.3.6}{}}
+\acronymused{ld}
 \citation{karczewski2020mutational}
 \citation{karczewski2020mutational}
 \citation{landrum_clinvar_2018}
@@ -440,19 +452,31 @@
 \citation{lawless_panelapprex_2025,tangye_human_2022}
 \citation{tangye_human_2022}
 \citation{lawless_panelapprex_2025}
-\citation{zschocke_mendelian_2023}
-\citation{zschocke_mendelian_2023}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces  \textbf  {Integration of variant probabilities into the \ac {iei} genetics framework.} The interface summarises the condensed variant data, with pre-calculated summary statistics and dynamic links to external databases. This integration enables immediate access to detailed variant classifications and prior probabilities for each gene. }}{21}{figure.7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Genome-wide \ac {iei}, variant occurance probability and \ac {ld} by $\text  {R}^2$. (A) Genome-wide karyoplot of all \ac {iei} panel genes mapped to GRCh38, with colours indicating \ac {moi}. (B) Zoomed-in locus plot for \textit  {NFKB1} showing variant observation probabilities; only benign variants such exhibit high probabilities in this \ac {ad} gene intolerant to \ac {lof}. (C) Locus plot for \textit  {CFTR} displaying high probabilities for pathogenic variants; due to the dense clustering of pathogenic variants, score filter >0 was applied. Top five variant are labelled per gene.}}{22}{figure.8}}
 \acronymused{iei}
-\newlabel{fig:var_risk_est_iei_genetics}{{7}{21}{\textbf {Integration of variant probabilities into the \ac {iei} genetics framework.} The interface summarises the condensed variant data, with pre-calculated summary statistics and dynamic links to external databases. This integration enables immediate access to detailed variant classifications and prior probabilities for each gene}{figure.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Discussion}{21}{section.4}}
+\acronymused{ld}
+\acronymused{iei}
+\acronymused{moi}
+\acronymused{ad}
+\acronymused{lof}
+\newlabel{fig:karyo_locusplot_merged}{{8}{22}{Genome-wide \ac {iei}, variant occurance probability and \ac {ld} by $\text {R}^2$. (A) Genome-wide karyoplot of all \ac {iei} panel genes mapped to GRCh38, with colours indicating \ac {moi}. (B) Zoomed-in locus plot for \textit {NFKB1} showing variant observation probabilities; only benign variants such exhibit high probabilities in this \ac {ad} gene intolerant to \ac {lof}. (C) Locus plot for \textit {CFTR} displaying high probabilities for pathogenic variants; due to the dense clustering of pathogenic variants, score filter >0 was applied. Top five variant are labelled per gene}{figure.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Discussion}{22}{section.4}}
 \acronymused{gnomad}
 \acronymused{dbnsfp}
 \acronymused{iei}
 \acronymused{pid}
 \acronymused{moi}
+\citation{zschocke_mendelian_2023}
+\citation{zschocke_mendelian_2023}
 \citation{efron_steins_1973}
 \citation{efron_steins_1973}
+\acronymused{iei}
+\acronymused{moi}
+\acronymused{ad}
+\acronymused{ar}
+\acronymused{xl}
+\acronymused{ad}
+\acronymused{xl}
 \citation{liu2019acat,li2020dynamic,wu2011rare,lee2012optimal}
 \citation{liu2019acat}
 \citation{li2020dynamic}
@@ -471,48 +495,41 @@
 \citation{anderson2010data}
 \citation{miller2023acmg}
 \citation{miller2023acmg}
-\acronymused{iei}
-\acronymused{moi}
-\acronymused{ad}
-\acronymused{ar}
-\acronymused{xl}
-\acronymused{ad}
-\acronymused{xl}
+\citation{zschocke_mendelian_2023}
+\citation{zschocke_mendelian_2023}
+\citation{hannah_using_2024}
+\citation{hannah_using_2024}
+\citation{landrum_clinvar_2018}
+\citation{landrum_clinvar_2018}
+\citation{karczewski2020mutational}
+\citation{karczewski2020mutational}
 \acronymused{ar}
 \acronymused{hwe}
 \acronymused{moi}
 \AC@undonewlabel{acro:skat}
-\newlabel{acro:skat}{{4}{22}{Discussion}{section.4}{}}
+\newlabel{acro:skat}{{4}{24}{Discussion}{section.4}{}}
 \acronymused{skat}
 \AC@undonewlabel{acro:acat}
-\newlabel{acro:acat}{{4}{22}{Discussion}{section.4}{}}
+\newlabel{acro:acat}{{4}{24}{Discussion}{section.4}{}}
 \acronymused{acat}
 \AC@undonewlabel{acro:acmg}
-\newlabel{acro:acmg}{{4}{22}{Discussion}{section.4}{}}
+\newlabel{acro:acmg}{{4}{24}{Discussion}{section.4}{}}
 \acronymused{acmg}
-\citation{zschocke_mendelian_2023}
-\citation{zschocke_mendelian_2023}
-\citation{hannah_using_2024}
-\citation{hannah_using_2024}
-\citation{landrum_clinvar_2018}
-\citation{landrum_clinvar_2018}
-\citation{karczewski2020mutational}
-\citation{karczewski2020mutational}
 \acronymused{acmg}
 \acronymused{snv}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusion}{23}{section.5}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusion}{24}{section.5}}
 \acronymused{iei}
 \acronymused{uniprot}
-\acronymused{dbnsfp}
-\acronymused{gnomad}
-\acronymused{gnomad}
-\acronymused{gnomad}
 \bibstyle{unsrtnat}
 \bibdata{references}
 \bibcite{tangye_human_2022}{{1}{2022}{{Tangye et~al.}}{{Tangye, Al-Herz, Bousfiha, Cunningham-Rundles, Franco, Holland, Klein, Morio, Oksenhendler, Picard, Puel, Puck, Seppänen, Somech, Su, Sullivan, Torgerson, and Meyts}}}
 \bibcite{lawless_panelapprex_2025}{{2}{2025{}}{{Lawless}}{{}}}
 \bibcite{martin_panelapp_2019}{{3}{2019}{{Martin et~al.}}{{Martin, Williams, Foulger, Leigh, Daugherty, Niblock, Leong, Smith, Gerasimenko, Haraldsdottir, Thomas, Scott, Baple, Tucci, Brittain, De~Burca, Ibañez, Kasperaviciute, Smedley, Caulfield, Rendon, and McDonagh}}}
 \bibcite{bick_estimating_2025}{{4}{2025}{{Bick et~al.}}{{Bick, Nathan, Park, Green, Wojcik, and Gold}}}
+\acronymused{dbnsfp}
+\acronymused{gnomad}
+\acronymused{gnomad}
+\acronymused{gnomad}
 \bibcite{evans_estimating_2021}{{5}{2021}{{Evans et~al.}}{{Evans, Słowiński, Hattersley, Jones, Sharp, Kimmitt, Weedon, Oram, Tsaneva-Atanasova, and Thomas}}}
 \bibcite{hannah_using_2024}{{6}{2024}{{Hannah et~al.}}{{Hannah, Drumm, Nykamp, Pramparo, Steiner, and Schrodi}}}
 \bibcite{MayoCentury2008}{{7}{2008}{{Mayo}}{{}}}
@@ -546,21 +563,21 @@
 \bibcite{pedersen2021effective}{{35}{2021}{{Pedersen et~al.}}{{Pedersen, Brown, Dashnow, Wallace, Velinder, Tristani-Firouzi, Schiffman, Tvrdik, Mao, Best, et~al.}}}
 \bibcite{anderson2010data}{{36}{2010}{{Anderson et~al.}}{{Anderson, Pettersson, Clarke, Cardon, Morris, and Zondervan}}}
 \bibcite{miller2023acmg}{{37}{2023}{{Miller et~al.}}{{Miller, Lee, Abul-Husn, Amendola, Brothers, Chung, Gollob, Gordon, Harrison, Hershberger, et~al.}}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Supplemental}{29}{section.6}}
-\newlabel{Supplemental_text}{{6}{29}{Supplemental}{section.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {S1}{\ignorespaces \textbf  {Interpretation of probability of observing a variant classification.} The result from the chosen validation genes \ac {cftr} and \ac {nfkb1} are shown. Case counts are dependant on the population size and phenotype. (A) The density plots of expected observations by ClinVar clinical significance. We then highlight the values for pathogenic variants specifically showing; (B) the allele frequency versus expected cases in this population size and (C) the probability of observing at least one event in this population size.}}{29}{figure.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Supplemental}{30}{section.6}}
+\newlabel{Supplemental_text}{{6}{30}{Supplemental}{section.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {S1}{\ignorespaces \textbf  {Interpretation of probability of observing a variant classification.} The result from the chosen validation genes \ac {cftr} and \ac {nfkb1} are shown. Case counts are dependant on the population size and phenotype. (A) The density plots of expected observations by ClinVar clinical significance. We then highlight the values for pathogenic variants specifically showing; (B) the allele frequency versus expected cases in this population size and (C) the probability of observing at least one event in this population size.}}{30}{figure.1}}
 \acronymused{cftr}
 \acronymused{nfkb1}
-\newlabel{fig:validation_scatter_dense}{{S1}{29}{\textbf {Interpretation of probability of observing a variant classification.} The result from the chosen validation genes \ac {cftr} and \ac {nfkb1} are shown. Case counts are dependant on the population size and phenotype. (A) The density plots of expected observations by ClinVar clinical significance. We then highlight the values for pathogenic variants specifically showing; (B) the allele frequency versus expected cases in this population size and (C) the probability of observing at least one event in this population size}{figure.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {S2}{\ignorespaces  Hierarchical clustering of enrichment scores. The heatmap displays standardised residuals for major disease categories (x-axis) across network clusters (y-axis). A dendrogram groups similar disease categories, and the bar plot shows the maximum absolute residual per category. (8) \ac {cd} and (9)\ac {bmf} show the highest vales, indicating significant enrichment or depletion (residuals > |2|). Definitions in \textbf  {Box \ref  {box:definitions}}. }}{30}{figure.2}}
+\newlabel{fig:validation_scatter_dense}{{S1}{30}{\textbf {Interpretation of probability of observing a variant classification.} The result from the chosen validation genes \ac {cftr} and \ac {nfkb1} are shown. Case counts are dependant on the population size and phenotype. (A) The density plots of expected observations by ClinVar clinical significance. We then highlight the values for pathogenic variants specifically showing; (B) the allele frequency versus expected cases in this population size and (C) the probability of observing at least one event in this population size}{figure.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {S2}{\ignorespaces  Hierarchical clustering of enrichment scores. The heatmap displays standardised residuals for major disease categories (x-axis) across network clusters (y-axis). A dendrogram groups similar disease categories, and the bar plot shows the maximum absolute residual per category. (8) \ac {cd} and (9)\ac {bmf} show the highest vales, indicating significant enrichment or depletion (residuals > |2|). Definitions in \textbf  {Box \ref  {box:definitions}}. }}{31}{figure.2}}
 \acronymused{cd}
 \acronymused{bmf}
-\newlabel{fig:patch2}{{S2}{30}{Hierarchical clustering of enrichment scores. The heatmap displays standardised residuals for major disease categories (x-axis) across network clusters (y-axis). A dendrogram groups similar disease categories, and the bar plot shows the maximum absolute residual per category. (8) \ac {cd} and (9)\ac {bmf} show the highest vales, indicating significant enrichment or depletion (residuals > |2|). Definitions in \textbf {Box \ref {box:definitions}}}{figure.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {S3}{\ignorespaces  Supplementary analysis of \ac {ppi} degree versus \ac {loeuf} upper rank with \ac {umap} embedding of the \ac {ppi} network. The relationship between \ac {ppi} degree (size) and \ac {loeuf} upper rank (color) across gene clusters. No clear patterns are evident. }}{30}{figure.3}}
+\newlabel{fig:patch2}{{S2}{31}{Hierarchical clustering of enrichment scores. The heatmap displays standardised residuals for major disease categories (x-axis) across network clusters (y-axis). A dendrogram groups similar disease categories, and the bar plot shows the maximum absolute residual per category. (8) \ac {cd} and (9)\ac {bmf} show the highest vales, indicating significant enrichment or depletion (residuals > |2|). Definitions in \textbf {Box \ref {box:definitions}}}{figure.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {S3}{\ignorespaces  Supplementary analysis of \ac {ppi} degree versus \ac {loeuf} upper rank with \ac {umap} embedding of the \ac {ppi} network. The relationship between \ac {ppi} degree (size) and \ac {loeuf} upper rank (color) across gene clusters. No clear patterns are evident. }}{31}{figure.3}}
 \acronymused{ppi}
 \acronymused{loeuf}
 \acronymused{umap}
 \acronymused{ppi}
 \acronymused{ppi}
 \acronymused{loeuf}
-\newlabel{fig:p_umap_const}{{S3}{30}{Supplementary analysis of \ac {ppi} degree versus \ac {loeuf} upper rank with \ac {umap} embedding of the \ac {ppi} network. The relationship between \ac {ppi} degree (size) and \ac {loeuf} upper rank (color) across gene clusters. No clear patterns are evident}{figure.3}{}}
+\newlabel{fig:p_umap_const}{{S3}{31}{Supplementary analysis of \ac {ppi} degree versus \ac {loeuf} upper rank with \ac {umap} embedding of the \ac {ppi} network. The relationship between \ac {ppi} degree (size) and \ac {loeuf} upper rank (color) across gene clusters. No clear patterns are evident}{figure.3}{}}
