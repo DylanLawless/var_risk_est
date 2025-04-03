@@ -161,8 +161,6 @@ loc_cftr <- locus(
 # saveRDS(loc_cftr, file="../output/VarRiskEst_PanelAppRex_ID_398_cftr_loc.Rds")
 loc_cftr <- readRDS( file="../output/VarRiskEst_PanelAppRex_ID_398_cftr_loc.Rds")
 
-
-
 cftr_df <- cftr_df %>%
   mutate(
     size = log10(score + 1) * 2,

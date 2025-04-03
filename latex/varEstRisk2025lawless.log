@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.7.19)  2 APR 2025 22:57
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.7.19)  3 APR 2025 18:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1778,34 +1778,34 @@ File: se-ascii-print.def 2016/05/16 v1.11 stringenc: Printable ASCII characters
 
 ]
 Package acronym Info: Label `acro:moi' newly defined as it shall be overridden
-although it is yet undefined on input line 95.
+although it is yet undefined on input line 96.
 Package acronym Info: Label `acro:hwe' newly defined as it shall be overridden
-although it is yet undefined on input line 95.
+although it is yet undefined on input line 96.
 Package acronym Info: Label `acro:iei' newly defined as it shall be overridden
-although it is yet undefined on input line 98.
+although it is yet undefined on input line 99.
 Package acronym Info: Label `acro:pid' newly defined as it shall be overridden
-although it is yet undefined on input line 98.
+although it is yet undefined on input line 99.
 Package acronym Info: Label `acro:snv' newly defined as it shall be overridden
-although it is yet undefined on input line 101.
+although it is yet undefined on input line 102.
 Package acronym Info: Label `acro:ar' newly defined as it shall be overridden
-although it is yet undefined on input line 101.
+although it is yet undefined on input line 102.
 Package acronym Info: Label `acro:ad' newly defined as it shall be overridden
-although it is yet undefined on input line 101.
+although it is yet undefined on input line 102.
 Package acronym Info: Label `acro:xl' newly defined as it shall be overridden
-although it is yet undefined on input line 101.
+although it is yet undefined on input line 102.
 Package acronym Info: Label `acro:ge' newly defined as it shall be overridden
-although it is yet undefined on input line 112.
+although it is yet undefined on input line 113.
 Package acronym Info: Label `acro:uniprot' newly defined as it shall be overrid
 den
-although it is yet undefined on input line 112.
+although it is yet undefined on input line 113.
 Package acronym Info: Label `acro:indel' newly defined as it shall be overridde
 n
-although it is yet undefined on input line 113.
+although it is yet undefined on input line 114.
 Package acronym Info: Label `acro:dbnsfp' newly defined as it shall be overridd
 en
-although it is yet undefined on input line 113.
+although it is yet undefined on input line 114.
  [4]
-Overfull \hbox (1.72758pt too wide) in paragraph at lines 115--118
+Overfull \hbox (1.72758pt too wide) in paragraph at lines 116--119
 []\TU/lmr/m/n/12 To cite: [][]$[][][][][] [] [] [] [][][] [] [][][] [] [][] [] 
 [][][][] [] [] [] [][][][] [] [][][][] [] [][][][][][]$[][] [][]$[][][][][] [] 
 [] [] [][][] [] [][][] [] [][] []
@@ -1813,84 +1813,88 @@ Overfull \hbox (1.72758pt too wide) in paragraph at lines 115--118
 
 Package acronym Info: Label `acro:gnomad' newly defined as it shall be overridd
 en
-although it is yet undefined on input line 122.
+although it is yet undefined on input line 123.
 Package acronym Info: Label `acro:ppi' newly defined as it shall be overridden
-although it is yet undefined on input line 126.
+although it is yet undefined on input line 127.
 Package acronym Info: Label `acro:stringdb' newly defined as it shall be overri
 dden
-although it is yet undefined on input line 126.
+although it is yet undefined on input line 127.
 Package acronym Info: Label `acro:hgvs' newly defined as it shall be overridden
 
-although it is yet undefined on input line 127.
+although it is yet undefined on input line 128.
 Package acronym Info: Label `acro:vep' newly defined as it shall be overridden
-although it is yet undefined on input line 127.
+although it is yet undefined on input line 128.
 Package acronym Info: Label `acro:nfkb1' newly defined as it shall be overridde
 n
-although it is yet undefined on input line 128.
+although it is yet undefined on input line 129.
 Package acronym Info: Label `acro:cftr' newly defined as it shall be overridden
 
-although it is yet undefined on input line 133.
+although it is yet undefined on input line 134.
+Package acronym Info: Label `acro:iuis' newly defined as it shall be overridden
+
+although it is yet undefined on input line 137.
 [5]
-Overfull \hbox (19.56007pt too wide) in paragraph at lines 158--159
+Overfull \hbox (19.56007pt too wide) in paragraph at lines 159--160
 []\TU/lmr/m/n/12 Our computational pipeline estimated the probability of observ
 ing a disease-associated
  []
 
 [6]
 Package acronym Info: Label `acro:hpc' newly defined as it shall be overridden
-although it is yet undefined on input line 204.
+although it is yet undefined on input line 205.
  [7]
-Overfull \hbox (19.97987pt too wide) in paragraph at lines 210--210
+Overfull \hbox (19.97987pt too wide) in paragraph at lines 211--211
 []\TU/lmr/bx/n/14.4 Validation of Autosomal Dominant Estimates Using \TU/lmr/bx
 /it/14.4 NFKB1 
  []
 
 Package acronym Info: Label `acro:cvid' newly defined as it shall be overridden
 
-although it is yet undefined on input line 212.
+although it is yet undefined on input line 213.
 [8]
-Overfull \hbox (10.84848pt too wide) in paragraph at lines 257--257
+Overfull \hbox (10.84848pt too wide) in paragraph at lines 258--258
 []\TU/lmr/bx/n/14.4 Validation Study for Autosomal Recessive CF Using CFTR 
  []
 
 Package acronym Info: Label `acro:cf' newly defined as it shall be overridden
-although it is yet undefined on input line 259.
+although it is yet undefined on input line 260.
 [9]
-Overfull \hbox (16.60118pt too wide) in paragraph at lines 265--266
+Overfull \hbox (16.60118pt too wide) in paragraph at lines 266--267
  []\TU/lmr/bx/n/12 1. Expected Genotype Counts.[] \TU/lmr/m/n/12 Let $\OML/cmm/
 m/it/12 p$ \TU/lmr/m/n/12 denote the allele frequency of the p.Arg117His
  []
 
 
-Overfull \hbox (59.3572pt too wide) detected at line 276
+Overfull \hbox (59.3572pt too wide) detected at line 277
  $\OML/cmm/m/it/12 f[] \OT1/cmr/m/n/12 = 2\OML/cmm/m/it/12 p q []:$ 
  []
 
 [10]
 Package acronym Info: Label `acro:anova' newly defined as it shall be overridde
 n
-although it is yet undefined on input line 312.
+although it is yet undefined on input line 313.
 Package acronym Info: Label `acro:hsd' newly defined as it shall be overridden
-although it is yet undefined on input line 312.
+although it is yet undefined on input line 313.
 Package acronym Info: Label `acro:loeuf' newly defined as it shall be overridde
 n
-although it is yet undefined on input line 314.
+although it is yet undefined on input line 315.
+Missing character: There is no   in font [lmroman12-regular]:mapping=tex-text;!
  [11]
 File: ../images/p_varRisEst_summary_scores.pdf Graphic file (type pdf)
 <use ../images/p_varRisEst_summary_scores.pdf>
 Package acronym Info: Label `acro:ci' newly defined as it shall be overridden
-although it is yet undefined on input line 365.
-
-Overfull \hbox (16.33607pt too wide) in paragraph at lines 371--372
+although it is yet undefined on input line 371.
+ [12]
+Overfull \hbox (16.33607pt too wide) in paragraph at lines 377--378
 \TU/lmr/m/n/12 Our analysis predicted the number of [][] cases attributable to 
 carriage of the p.Arg117His
  []
 
-[12]
+[13]
 File: ../images/validation_studies_bayesian_adjusted_estimates.png Graphic file
  (type bmp)
 <../images/validation_studies_bayesian_adjusted_estimates.png>
- [13] [14] [15]
+ [14] [15]
 File: ../images/all_genes_combined_bar_charts_mini.png Graphic file (type bmp)
 <../images/all_genes_combined_bar_charts_mini.png>
  [16
@@ -1899,9 +1903,9 @@ File: ../images/all_genes_combined_bar_charts_mini.png Graphic file (type bmp)
 File: ../images/untangleR_ppi_network_assoc_patch1.jpg Graphic file (type bmp)
 <../images/untangleR_ppi_network_assoc_patch1.jpg>
 Package acronym Info: Label `acro:bmf' newly defined as it shall be overridden
-although it is yet undefined on input line 437.
+although it is yet undefined on input line 443.
 
-Overfull \hbox (5.40863pt too wide) in paragraph at lines 434--440
+Overfull \hbox (5.40863pt too wide) in paragraph at lines 440--446
 [][] \TU/lmr/m/n/12 revealed an effect of major disease category on score posit
 ive total ($\OML/cmm/m/it/12 F\OT1/cmr/m/n/12 (8\OML/cmm/m/it/12 ; \OT1/cmr/m/n
 /12 500) =
@@ -1910,36 +1914,36 @@ ive total ($\OML/cmm/m/it/12 F\OT1/cmr/m/n/12 (8\OML/cmm/m/it/12 ; \OT1/cmr/m/n
 [17]
 Package acronym Info: Label `acro:umap' newly defined as it shall be overridden
 
-although it is yet undefined on input line 443.
+although it is yet undefined on input line 449.
 Package acronym Info: Label `acro:lof' newly defined as it shall be overridden
-although it is yet undefined on input line 443.
+although it is yet undefined on input line 450.
 File: ../images/untangleR_ppi_network_umap.pdf Graphic file (type pdf)
 <use ../images/untangleR_ppi_network_umap.pdf>
  [18]
 Package acronym Info: Label `acro:cd' newly defined as it shall be overridden
-although it is yet undefined on input line 458.
+although it is yet undefined on input line 465.
 File: ../images/untangleR_ppi_network_p_cor_spear_rho_sig_clust_patch3.pdf Grap
 hic file (type pdf)
 <use ../images/untangleR_ppi_network_p_cor_spear_rho_sig_clust_patch3.pdf>
- [19]
-Package acronym Info: Label `acro:omim' newly defined as it shall be overridden
-
-although it is yet undefined on input line 492.
-File: ../images/var_risk_est_iei_genetics.png Graphic file (type bmp)
-<../images/var_risk_est_iei_genetics.png>
- [20]
+ [19] [20]
 Package acronym Info: Label `acro:ld' newly defined as it shall be overridden
-although it is yet undefined on input line 510.
+although it is yet undefined on input line 505.
 File: ../images/karyo_locusplot_merged.pdf Graphic file (type pdf)
 <use ../images/karyo_locusplot_merged.pdf>
  [21]
-Overfull \hbox (5.57898pt too wide) in paragraph at lines 526--527
+Package acronym Info: Label `acro:omim' newly defined as it shall be overridden
+
+although it is yet undefined on input line 528.
+File: ../images/var_risk_est_iei_genetics.png Graphic file (type bmp)
+<../images/var_risk_est_iei_genetics.png>
+ [22]
+Overfull \hbox (5.57898pt too wide) in paragraph at lines 586--587
 []\TU/lmr/m/n/12 Our approach yielded two key results. First, our detailed, per
 -variant pre-calculated
  []
 
-[22]
-Overfull \hbox (8.79204pt too wide) in paragraph at lines 553--554
+
+Overfull \hbox (8.79204pt too wide) in paragraph at lines 613--614
 []\TU/lmr/m/n/12 This approach allows us to pre-calculate priors and summarise 
 the overall pathogenic
  []
@@ -1947,13 +1951,13 @@ the overall pathogenic
 [23]
 Package acronym Info: Label `acro:skat' newly defined as it shall be overridden
 
-although it is yet undefined on input line 566.
+although it is yet undefined on input line 626.
 Package acronym Info: Label `acro:acat' newly defined as it shall be overridden
 
-although it is yet undefined on input line 566.
+although it is yet undefined on input line 626.
 Package acronym Info: Label `acro:acmg' newly defined as it shall be overridden
 
-although it is yet undefined on input line 566.
+although it is yet undefined on input line 626.
  [24] (./varEstRisk2025lawless.bbl [25] [26]
 Underfull \hbox (badness 1354) in paragraph at lines 197--206
 [][][][] [] [][][][][][][][][][][][][][][][][][][][][]$\TU/lmr/m/n/12 .  URL []
@@ -1961,8 +1965,9 @@ Underfull \hbox (badness 1354) in paragraph at lines 197--206
 [] []
  []
 
+[27]
 Missing character: There is no κ in font [lmroman12-regular]:mapping=tex-text;!
-[27] [28]) [29]
+ [28] [29]) [30]
 File: ../images/validation_studies_scatterdense_expected_prob.png Graphic file 
 (type bmp)
 <../images/validation_studies_scatterdense_expected_prob.png>
@@ -1970,29 +1975,40 @@ File: ../images/untangleR_ppi_network_patch2_cator.pdf Graphic file (type pdf)
 <use ../images/untangleR_ppi_network_patch2_cator.pdf>
 File: ../images/untangleR_ppi_network_p_umap_const.pdf Graphic file (type pdf)
 <use ../images/untangleR_ppi_network_p_umap_const.pdf>
- [30
+File: ../images/fuma_merge.pdf Graphic file (type pdf)
+<use ../images/fuma_merge.pdf>
+File: ../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_2.png Graphic file
+ (type bmp)
+<../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_2.png>
+File: ../images/expHeat_FUMA_jobs604403_var_risk_est_cluster_4.png Graphic file
+ (type bmp)
+<../images/expHeat_FUMA_jobs604403_var_risk_est_cluster_4.png>
+ [31
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 633.
- [31]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 633.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 709.
+ [32] [33] [34]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 709.
  (./varEstRisk2025lawless.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 633.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 633.
-Package rerunfilecheck Info: File `varEstRisk2025lawless.out' has not changed.
-(rerunfilecheck)             Checksum: 8C403F1AD01E921D726B6D7FAC9A64EB.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 709.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 709.
 
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+Package rerunfilecheck Warning: File `varEstRisk2025lawless.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
 
+Package rerunfilecheck Info: Checksums for `varEstRisk2025lawless.out':
+(rerunfilecheck)             Before: 3CC1EDED6C40DFD39E0A55642D288263
+(rerunfilecheck)             After:  63098DA4A872D68D1B44ADE60BE88367.
  ) 
 Here is how much of TeX's memory you used:
- 41530 strings out of 492970
- 863018 string characters out of 6133938
- 1022024 words of memory out of 5000000
- 44858 multiletter control sequences out of 15000+600000
+ 41555 strings out of 492970
+ 863888 string characters out of 6133938
+ 1023255 words of memory out of 5000000
+ 44880 multiletter control sequences out of 15000+600000
  552161 words of font info for 124 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 65i,11n,101p,10564b,945s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 65i,11n,101p,10564b,957s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on varEstRisk2025lawless.pdf (31 pages).
+Output written on varEstRisk2025lawless.pdf (34 pages).

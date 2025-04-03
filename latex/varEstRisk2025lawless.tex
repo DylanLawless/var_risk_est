@@ -67,6 +67,7 @@ VarRiskEst is available under the MIT licence.}
  \acro{hwe}[HWE]{Hardy-Weinberg Equilibrium}
  \acro{iei}[IEI]{Inborn Errors of Immunity}
  \acro{indel}[InDel]{Insertion/Deletion}
+ \acro{iuis}[IUIS]{International Union of Immunological Societies}
  \acro{ld}[LD]{Linkage Disequilibrium}
  \acro{loeuf}[LOEUF]{Loss-Of-function Observed/Expected Upper bound Fraction}
   \acro{lof}[LOF]{Loss-of-Function}
@@ -133,7 +134,7 @@ oksenhendler2008infections}
 and \ac{cftr} 
 \cite{naito2023uk, castellani2013cftr2, Grasemann2023cftr}
 to demonstrate applications in \ac{ad} and \ac{ar} disease genes, respectively.
-\textbf{Box \ref{box:definitions}} list the definitions for the major disease categories used throughout this study.
+\textbf{Box \ref{box:definitions}} list the definitions from the \ac{iuis} \ac{iei} for the major disease categories used throughout this study \cite{tangye_human_2022}.
 
 \begin{tcolorbox}[colback=black!01, colframe=black!70, title=Box \ref{box:definitions} Definitions for IEI Major Disease Categories, label=box:definitions]
 \textbf{Major Category} \hspace{4em} \textbf{Description}\\[5pt]
@@ -313,6 +314,10 @@ Node attributes were derived from log-transformed score-positive-total values, w
 GnomAD v4.1 constraint metrics data was used for the \ac{ppi} analysis and was sourced from \citet{karczewski2020mutational}.
 This provided transcript-level metrics, such as observed/expected ratios, \ac{loeuf}, pLI, and Z-scores, quantifying loss-of-function and missense intolerance, along with confidence intervals and related annotations for 211,523 observations.
 
+\subsection{Gene Set Enrichment Test}
+
+To test for overrepresentation of biological functions, the prioritised genes were compared against gene sets from MsigDB (including hallmark, positional, curated, motif, computational, GO, oncogenic, and immunologic signatures) and WikiPathways using hypergeometric tests with FUMA \cite{watanabe_functional_2017, liberzon_molecular_2011}. The background set consisted of 24,304 genes. Multiple testing correction was applied per data source using the Benjamini-Hochberg method, and gene sets with an adjusted P-value $\le$ 0.05 and more than one overlapping gene are reported.
+
 
 
 \section{Results}
@@ -356,7 +361,8 @@ ABI3 & 398 & Uncertain significance & 49220257 & c.733C>G & p.Pro245Ala & AR & 0
   \label{fig:p_varRisEst_summary_scores}
 \end{figure}
 
-\subsection{Validation of Dominant Disease Occurrence with \textit{NFKB1}}
+\subsection{Validation studies}
+\subsubsection{Validation of Dominant Disease Occurrence with \textit{NFKB1}}
 
 To validate our genome-wide probability estimates for \ac{ad} disorders, we focused on \ac{nfkb1}. We used a reference dataset from \citet{tuijnenburgNFKB12018}, in which whole‐genome sequencing of 846 \ac{pid} patients identified \ac{nfkb1} as one of the genes most strongly associated with the disease, with 390 \ac{cvid} cases attributed to heterozygous variants. Our goal was to compare the predicted number of \ac{nfkb1}-related \ac{cvid} cases with the reported count in this well-characterised national-scale cohort.
 
@@ -366,7 +372,7 @@ We used an extrapolated national \ac{cvid} prevalence to yield an upper bound ma
 \textbf{Figure \ref{fig:validation_studies_bayesian_adjusted_estimates} (A)}
 illustrates that our predicted value of 456 lies within these ranges and is closer to the observed count, thereby supporting the validity of our integrated probability estimation framework for \ac{ad} disorders.
 
-\subsection{Validation of Recessive Disease Occurrence with \textit{CFTR}}
+\subsubsection{Validation of Recessive Disease Occurrence with \textit{CFTR}}
 
 Our analysis predicted the number of \ac{cf} cases attributable to carriage of the p.Arg117His variant (either as homozygous or as compound heterozygous with another pathogenic allele) in the UK. Based on \ac{hwe} calculations and mortality adjustments, we predicted approximately 648 cases arising from biallelic variants and 160 cases from homozygous variants, resulting in a total of 808 expected cases.
 
@@ -391,7 +397,7 @@ The blue curve represents maximum extrapolated count of 740, and the orange curv
 \textbf{Figure \ref{fig:validation_scatter_dense}} shows the final values for these genes of interest in a given population size and phenotype. It reveals that an allele frequency threshold of approximately 0.000007 is required to observe a single heterozygous disease-causing variant carrier in the UK population for both genes. However, owing to the \ac{ar} \ac{moi} pattern of \ac{cftr}, this threshold translates into more than 100,000 heterozygous carriers, compared to only 456 carriers for the \ac{ad} gene \ac{nfkb1}. Note that this allele frequency threshold, being derived from the current reference population, represents a lower bound that can become more precise as public datasets continue to grow. This marked difference underscores the significant impact of \ac{moi} patterns on population carrier frequencies and the observed disease prevalence.
 
 \FloatBarrier
-\subsection{Interpretation of ClinVar Variant Observations}
+\subsubsection{Interpretation of ClinVar Variant Observations}
 
 \textbf{Figure~\ref{fig:all_genes_combined_bar_charts_mini}} shows  the two validation study \ac{pid} genes, representing \ac{ar} and dominant \ac{moi}. \textbf{Figure~\ref{fig:all_genes_combined_bar_charts_mini} (A)}   illustrates the overall probability of an affected birth by ClinVar variant classification, whereas \textbf{Figure~\ref{fig:all_genes_combined_bar_charts_mini}  (B)}  depicts the total expected number of cases per classification for an example population, here the UK, of approximately 69.4 million. 
 
@@ -440,7 +446,8 @@ showed that all pairwise differences had 95\% confidence intervals overlapping z
 
 \FloatBarrier
 \subsubsection{UMAP Embedding of the PPI  Network}
-To address the density of the \ac{ppi} network for the \ac{iei} gene panel, we applied \ac{umap} (\textbf{Figure \ref{fig:p_umap}}). Node sizes reflect interaction degree, a measure of evidence-supported connectivity \cite{szklarczyk2025string}. We tested for a correlation between interaction degree and score positive total. In \textbf{Figure \ref{fig:p_umap}}, gene names with degrees above the 95th percentile are labelled in blue, while the top 15 genes by score positive total are labelled in yellow (as per \textbf{Figure \ref{fig:p_varRisEst_summary_scores}}). Notably, genes with high pathogenic variant loads segregated from highly connected nodes, suggesting that \ac{lof} in hub genes is selectively constrained, whereas damaging variants in lower-degree genes yield more specific effects. This observation was subsequently tested empirically.
+To address the density of the \ac{ppi} network for the \ac{iei} gene panel, we applied \ac{umap} (\textbf{Figure \ref{fig:p_umap}}). 
+Node sizes reflect interaction degree, a measure of evidence-supported connectivity \cite{szklarczyk2025string}. We tested for a correlation between interaction degree and score positive total. In \textbf{Figure \ref{fig:p_umap}}, gene names with degrees above the 95th percentile are labelled in blue, while the top 15 genes by score positive total are labelled in yellow (as per \textbf{Figure \ref{fig:p_varRisEst_summary_scores}}). Notably, genes with high pathogenic variant loads segregated from highly connected nodes, suggesting that \ac{lof} in hub genes is selectively constrained, whereas damaging variants in lower-degree genes yield more specific effects. This observation was subsequently tested empirically.
 
 \begin{figure}[ht]
   \centering
@@ -485,6 +492,35 @@ This indicated that shared mechanisms within pathway clusters may underpin genet
 % \subsubsection{Network Analysis of Enriched Significant Clusters Based on \ac{gnomad} Constraint}
 \textbf{Figure \ref{fig:p_cor_spear_rho_sig_clust_patch3} (C, D)} shows the re-plotted \ac{ppi} networks for clusters with significant correlations between \ac{ppi} degree and \ac{loeuf} upper rank. In these networks, node size is scaled by a normalised variant score, while node colour reflects the variant score according to a predefined palette.
 
+\subsection{New Insight from Functional Enrichment}
+To interpret the functional relevance of our prioritised \ac{iei} gene sets with the highest load of damaging variants (i.e. clusters 2 and 4 in \textbf{Figure \ref{fig:p_cor_spear_rho_sig_clust_patch3}}), we performed functional enrichment analysis for known disease associations using MsigDB with FUMA (i.e. GWAScatalog and Immunologic Signatures) \cite{watanabe_functional_2017}. Composite enrichment profiles (\textbf{Figure \ref{fig:fuma_merge}}) reveal that our enriched \ac{ppi} clusters were associated with distinct disease-related phenotypes, providing functional insights beyond traditional \ac{iuis} \ac{iei} groupings \cite{tangye_human_2022}. The gene expression profiles shown in \textbf{Figure \ref{fig:expHeatmaps}} (GTEx v8 54 tissue types) offer the tissue-specific context for these associations. Together, these results enable the annotation of \ac{iei} gene sets with established disease phenotypes, supporting a data-driven classification of \ac{iei}.
+
+Based on these independent sources of interpretation, we observed that genes from cluster 2 were independently associated with specific inflammatory phenotypes, including ankylosing spondylitis, psoriasis, inflammatory bowel disease, and rheumatoid arthritis, as well as quantitative immune traits such as lymphocyte and neutrophil percentages and serum protein levels.
+In contrast, genes from Cluster 4 were linked to ocular and complement-related phenotypes, notably various forms of age-related macular degeneration (e.g. geographic atrophy and choroidal neovascularisation) and biomarkers of the complement system (e.g. C3, C4, and factor H-related proteins), with additional associations to nephropathy and pulmonary function metrics.
+
+\subsection{Genome-wide Gene Distribution and Locus-specific Variant Occurrence}
+
+\textbf{Figure \ref{fig:karyo_locusplot_merged} (A)} shows a genome-wide karyoplot of all \ac{iei} panel genes across GRCh38, with colour-coding based on \ac{moi}. Figures \textbf{(B)} and \textbf{(C)} display zoomed-in locus plots for \textit{NFKB1} and \textit{CFTR}, respectively. 
+In \textbf{Figure \ref{fig:karyo_locusplot_merged} (B)}, the probability of observing variants with known classifications is high only for variants such as p.Ala475Gly, which are considered benign in the \ac{ad} \textit{NFKB1} gene that is intolerant to \ac{lof}. 
+In \textbf{Figure \ref{fig:karyo_locusplot_merged} (C)}, high probabilities of observing patients with pathogenic variants in \textit{CFTR} are evident, reproducing this well-established phenomenon. Furthermore, the analysis of \ac{ld} using $\text{R}^2$ shows that high LD regions can be modelled effectively, allowing independent variant signals to be distinguished.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/karyo_locusplot_merged.pdf}
+  \caption{Genome-wide \ac{iei}, variant occurance probability and \ac{ld} by $\text{R}^2$. (A) Genome-wide karyoplot of all \ac{iei} panel genes mapped to GRCh38, with colours indicating \ac{moi}. (B) Zoomed-in locus plot for \textit{NFKB1} showing variant observation probabilities; only benign variants such exhibit high probabilities in this \ac{ad} gene intolerant to \ac{lof}. (C) Locus plot for \textit{CFTR} displaying high probabilities for pathogenic variants; due to the dense clustering of pathogenic variants, score filter >0 was applied. Top five variant are labelled per gene.}
+  \label{fig:karyo_locusplot_merged}
+\end{figure}
+
+
+\subsection{Deriving new IEI classifications and insight}
+
+This section looks at the current 9 major IEI classes, and ~45 subclasses.
+These were designed over last few decades based on phenotype observation and subjective decisions.
+We can use the new information be potentially define better, new data-based classifications: clustering by PPI, severity/probability, and markers (T, B, NK, Ig), phenotype CVID, etc. 
+Potential but maybe it will be too noisy. 
+From the previous section, cross compare the clusters from PPI with the IUIS categories.
+This section will be complete by 2025-04-07.
+
 \FloatBarrier
 \subsubsection{Integration of Variant Probabilities into IEI Genetics Data}
 We integrated the computed prior probabilities for observing variants in all known genes associated with a given phenotype \cite{tangye_human_2022}, across \ac{ad}, \ac{ar}, and \ac{xl} \ac{moi}, into our \ac{iei} genetics framework. These calculations, derived from gene panels in PanelAppRex, have yielded novel insights for the \ac{iei} disease panel. The final result comprised of machine- and human-readable datasets, including the table of variant classifications and priors available via a the linked repository \cite{lawless_2025_15111584}, and a user-friendly web interface that incorporates these new metrics.
@@ -503,18 +539,42 @@ We integrated the computed prior probabilities for observing variants in all kno
 
 
 
-\subsection{Genome-wide Gene Distribution and Locus-specific Variant Occurrence}
+%Our integrated analysis of IEI gene sets, derived from FUMA’s GENE2FUNC module, revealed distinct enrichment patterns between two PPI-based clusters. In the \textbf{GWAScatalog} category, Cluster 2 gene sets exhibited higher proportions of overlapping genes and lower adjusted p-values than those in Cluster 4. Similarly, in the \textbf{Immunologic Signatures} category, the enrichment metrics differed markedly between clusters, indicating that Cluster 2 harbours gene sets with a higher burden of pathogenic variants. These differences suggest that the underlying biological processes captured by the two clusters may be linked to distinct disease mechanisms.
+%
+%By leveraging FUMA’s annotation of prioritized genes in biological context—using both GWAS catalogue and immunological signatures—we systematically profiled the gene sets. The composite plots (Figure~\ref{fig:final_plot}) display horizontal bar charts in which the left panels report the proportion of overlapping genes and the right panels show the \(-\log_{10}\) adjusted p-values. To avoid redundancy and ensure clear interpretation, duplicate gene set entries were resolved by retaining only the instance with the largest \(N_{\text{genes}}\); further, gene set labels were standardised and truncated to 30 characters, guaranteeing unique, non-overlapping identifiers on the y-axis.
+%
+%In addition, gene expression heatmaps were generated for the IEI gene panels using GTEx v8 data (54 tissue types). These heatmaps (Figure~\ref{fig:expHeatmaps}) display the average expression per tissue label, log\(_2\) transformed, and provide a complementary perspective on the biological context of the enriched gene sets across the two clusters.
+%
+%Collectively, these results demonstrate that the integration of FUMA-derived enrichment metrics with PPI clustering can delineate subgroups of IEI gene sets with distinct pathogenic profiles. This strategy not only enhances our understanding of the genetic architecture of inborn errors of immunity but also lays the groundwork for future efforts to identify novel disease-associated gene sets based on their known GWAS and immunological signatures.
+%
+%\begin{figure}[ht]
+%\centering
+%\includegraphics[width=0.99\textwidth]{../images/fuma_merge.pdf}
+%\caption{\textbf{Composite Enrichment Profiles for \ac{iei} Gene Sets.} 
+%We selected the top two enriched clusters (as per \textbf{Figure \ref{fig:p_cor_spear_rho_sig_clust_patch3}}) and performed functional enrichment analysis derived from known disease associations. For each gene set, the left panel displays the proportion of input genes overlapping with a curated gene set, and the right panel shows the \(-\log_{10}\) adjusted p-value from hypergeometric testing. These profiles, stratified by cluster (Cluster 2 and Cluster 4) and gene set category (GWAScatalog and Immunologic Signatures), highlight distinct enrichment patterns that reflect differential pathogenic variant loads in the  \ac{iei}  gene panels.}
+%\label{fig:fuma_merge}
+%\end{figure}
+%
+%\begin{figure}[ht]
+%\centering
+%\includegraphics[width=0.75\textwidth]{../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_2.png}
+%\includegraphics[width=0.75\textwidth]{../images/expHeat_FUMA_jobs604403_var_risk_est_cluster_4.png}
+%\caption{\textbf{Gene Expression Heatmaps for IEI Genes.} GTEx v8 data with 54 tissue types display the average expression per label (log\(_2\) transformed) for the IEI gene panels. Top: Cluster 2; Bottom: Cluster 4.}
+%\label{fig:expHeatmaps}
+%\end{figure}
+%
+%
 
-\textbf{Figure \ref{fig:karyo_locusplot_merged} (A)} shows a genome-wide karyoplot of all \ac{iei} panel genes across GRCh38, with colour-coding based on \ac{moi}. Figures \textbf{(B)} and \textbf{(C)} display zoomed-in locus plots for \textit{NFKB1} and \textit{CFTR}, respectively. 
-In \textbf{Figure \ref{fig:karyo_locusplot_merged} (B)}, the probability of observing variants with known classifications is high only for variants such as p.Ala475Gly, which are considered benign in the \ac{ad} \textit{NFKB1} gene that is intolerant to \ac{lof}. 
-In \textbf{Figure \ref{fig:karyo_locusplot_merged} (C)}, high probabilities of observing patients with pathogenic variants in \textit{CFTR} are evident, reproducing this well-established phenomenon. Furthermore, the analysis of \ac{ld} using $\text{R}^2$ shows that high LD regions can be modelled effectively, allowing independent variant signals to be distinguished.
 
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.99\textwidth]{../images/karyo_locusplot_merged.pdf}
-  \caption{Genome-wide \ac{iei}, variant occurance probability and \ac{ld} by $\text{R}^2$. (A) Genome-wide karyoplot of all \ac{iei} panel genes mapped to GRCh38, with colours indicating \ac{moi}. (B) Zoomed-in locus plot for \textit{NFKB1} showing variant observation probabilities; only benign variants such exhibit high probabilities in this \ac{ad} gene intolerant to \ac{lof}. (C) Locus plot for \textit{CFTR} displaying high probabilities for pathogenic variants; due to the dense clustering of pathogenic variants, score filter >0 was applied. Top five variant are labelled per gene.}
-  \label{fig:karyo_locusplot_merged}
-\end{figure}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -627,6 +687,22 @@ We then highlight the values for pathogenic variants specifically showing;
     The relationship between \ac{ppi} degree (size) and \ac{loeuf} upper rank (color) across gene clusters. No clear patterns are evident.
   }
   \label{fig:p_umap_const}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.99\textwidth]{../images/fuma_merge.pdf}
+\caption{\textbf{Composite Enrichment Profiles for \ac{iei} Gene Sets.} 
+We selected the top two enriched clusters (as per \textbf{Figure \ref{fig:p_cor_spear_rho_sig_clust_patch3}}) and performed functional enrichment analysis derived from known disease associations. For each gene set, the left panel displays the proportion of input genes overlapping with a curated gene set, and the right panel shows the \(-\log_{10}\) adjusted p-value from hypergeometric testing. These profiles, stratified by cluster (Cluster 2 and Cluster 4) and by gene set category (GWAScatalog and Immunologic Signatures), highlight distinct enrichment patterns that reflect differential pathogenic variant loads in the \ac{iei} gene panels.}
+\label{fig:fuma_merge}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.75\textwidth]{../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_2.png}
+\includegraphics[width=0.75\textwidth]{../images/expHeat_FUMA_jobs604403_var_risk_est_cluster_4.png}
+\caption{\textbf{Gene Expression Heatmaps for IEI Genes.} GTEx v8 data from 54 tissue types display the average expression per tissue label (log\(_2\) transformed) for the IEI gene panels. Top: Cluster 2; Bottom: Cluster 4.}
+\label{fig:expHeatmaps}
 \end{figure}
 
 

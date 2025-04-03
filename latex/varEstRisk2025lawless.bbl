@@ -1,4 +1,4 @@
-\begin{thebibliography}{37}
+\begin{thebibliography}{39}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -48,44 +48,6 @@ Antonio~Rueda Martin, Eleanor Williams, Rebecca~E. Foulger, Sarah Leigh,
 \newblock \doi{10.1038/s41588-019-0528-2}.
 \newblock URL \url{https://www.nature.com/articles/s41588-019-0528-2}.
 
-\bibitem[Bick et~al.(2025)Bick, Nathan, Park, Green, Wojcik, and
-  Gold]{bick_estimating_2025}
-Sarah~L. Bick, Aparna Nathan, Hannah Park, Robert~C. Green, Monica~H. Wojcik,
-  and Nina~B. Gold.
-\newblock Estimating the sensitivity of genomic newborn screening for treatable
-  inherited metabolic disorders.
-\newblock \emph{Genetics in Medicine}, 27\penalty0 (1):\penalty0 101284,
-  January 2025.
-\newblock ISSN 10983600.
-\newblock \doi{10.1016/j.gim.2024.101284}.
-\newblock URL
-  \url{https://linkinghub.elsevier.com/retrieve/pii/S1098360024002181}.
-
-\bibitem[Evans et~al.(2021)Evans, Słowiński, Hattersley, Jones, Sharp,
-  Kimmitt, Weedon, Oram, Tsaneva-Atanasova, and Thomas]{evans_estimating_2021}
-Benjamin~D. Evans, Piotr Słowiński, Andrew~T. Hattersley, Samuel~E. Jones,
-  Seth Sharp, Robert~A. Kimmitt, Michael~N. Weedon, Richard~A. Oram, Krasimira
-  Tsaneva-Atanasova, and Nicholas~J. Thomas.
-\newblock Estimating disease prevalence in large datasets using genetic risk
-  scores.
-\newblock \emph{Nature Communications}, 12\penalty0 (1):\penalty0 6441,
-  November 2021.
-\newblock ISSN 2041-1723.
-\newblock \doi{10.1038/s41467-021-26501-7}.
-\newblock URL \url{https://www.nature.com/articles/s41467-021-26501-7}.
-
-\bibitem[Hannah et~al.(2024)Hannah, Drumm, Nykamp, Pramparo, Steiner, and
-  Schrodi]{hannah_using_2024}
-William~B. Hannah, Mitchell~L. Drumm, Keith Nykamp, Tiziano Pramparo, Robert~D.
-  Steiner, and Steven~J. Schrodi.
-\newblock Using genomic databases to determine the frequency and
-  population-based heterogeneity of autosomal recessive conditions.
-\newblock \emph{Genetics in Medicine Open}, 2:\penalty0 101881, 2024.
-\newblock ISSN 29497744.
-\newblock \doi{10.1016/j.gimo.2024.101881}.
-\newblock URL
-  \url{https://linkinghub.elsevier.com/retrieve/pii/S2949774424010276}.
-
 \bibitem[Mayo(2008)]{MayoCentury2008}
 Oliver Mayo.
 \newblock A {Century} of {Hardy}–{Weinberg} {Equilibrium}.
@@ -127,6 +89,44 @@ Konrad~J Karczewski, Laurent~C Francioli, Grace Tiao, Beryl~B Cummings, Jessica
 \newblock The mutational constraint spectrum quantified from variation in
   141,456 humans.
 \newblock \emph{Nature}, 581\penalty0 (7809):\penalty0 434--443, 2020.
+
+\bibitem[Bick et~al.(2025)Bick, Nathan, Park, Green, Wojcik, and
+  Gold]{bick_estimating_2025}
+Sarah~L. Bick, Aparna Nathan, Hannah Park, Robert~C. Green, Monica~H. Wojcik,
+  and Nina~B. Gold.
+\newblock Estimating the sensitivity of genomic newborn screening for treatable
+  inherited metabolic disorders.
+\newblock \emph{Genetics in Medicine}, 27\penalty0 (1):\penalty0 101284,
+  January 2025.
+\newblock ISSN 10983600.
+\newblock \doi{10.1016/j.gim.2024.101284}.
+\newblock URL
+  \url{https://linkinghub.elsevier.com/retrieve/pii/S1098360024002181}.
+
+\bibitem[Evans et~al.(2021)Evans, Słowiński, Hattersley, Jones, Sharp,
+  Kimmitt, Weedon, Oram, Tsaneva-Atanasova, and Thomas]{evans_estimating_2021}
+Benjamin~D. Evans, Piotr Słowiński, Andrew~T. Hattersley, Samuel~E. Jones,
+  Seth Sharp, Robert~A. Kimmitt, Michael~N. Weedon, Richard~A. Oram, Krasimira
+  Tsaneva-Atanasova, and Nicholas~J. Thomas.
+\newblock Estimating disease prevalence in large datasets using genetic risk
+  scores.
+\newblock \emph{Nature Communications}, 12\penalty0 (1):\penalty0 6441,
+  November 2021.
+\newblock ISSN 2041-1723.
+\newblock \doi{10.1038/s41467-021-26501-7}.
+\newblock URL \url{https://www.nature.com/articles/s41467-021-26501-7}.
+
+\bibitem[Hannah et~al.(2024)Hannah, Drumm, Nykamp, Pramparo, Steiner, and
+  Schrodi]{hannah_using_2024}
+William~B. Hannah, Mitchell~L. Drumm, Keith Nykamp, Tiziano Pramparo, Robert~D.
+  Steiner, and Steven~J. Schrodi.
+\newblock Using genomic databases to determine the frequency and
+  population-based heterogeneity of autosomal recessive conditions.
+\newblock \emph{Genetics in Medicine Open}, 2:\penalty0 101881, 2024.
+\newblock ISSN 29497744.
+\newblock \doi{10.1016/j.gimo.2024.101881}.
+\newblock URL
+  \url{https://linkinghub.elsevier.com/retrieve/pii/S2949774424010276}.
 
 \bibitem[Jumper et~al.(2021)Jumper, Evans, Pritzel, Green, Figurnov,
   Ronneberger, Tunyasuvunakool, Bates, Žídek, Potapenko, Bridgland, Meyer,
@@ -267,6 +267,29 @@ Hartmut Grasemann and Felix Ratjen.
   1693--1707, 2023.
 \newblock \doi{10.1056/NEJMra2216474}.
 \newblock URL \url{https://www.nejm.org/doi/full/10.1056/NEJMra2216474}.
+
+\bibitem[Watanabe et~al.(2017)Watanabe, Taskesen, Van~Bochoven, and
+  Posthuma]{watanabe_functional_2017}
+Kyoko Watanabe, Erdogan Taskesen, Arjen Van~Bochoven, and Danielle Posthuma.
+\newblock Functional mapping and annotation of genetic associations with
+  {FUMA}.
+\newblock \emph{Nature Communications}, 8\penalty0 (1):\penalty0 1826, November
+  2017.
+\newblock ISSN 2041-1723.
+\newblock \doi{10.1038/s41467-017-01261-5}.
+\newblock URL \url{https://www.nature.com/articles/s41467-017-01261-5}.
+
+\bibitem[Liberzon et~al.(2011)Liberzon, Subramanian, Pinchback,
+  Thorvaldsdóttir, Tamayo, and Mesirov]{liberzon_molecular_2011}
+Arthur Liberzon, Aravind Subramanian, Reid Pinchback, Helga Thorvaldsdóttir,
+  Pablo Tamayo, and Jill~P. Mesirov.
+\newblock Molecular signatures database ({MSigDB}) 3.0.
+\newblock \emph{Bioinformatics}, 27\penalty0 (12):\penalty0 1739--1740, June
+  2011.
+\newblock ISSN 1367-4811, 1367-4803.
+\newblock \doi{10.1093/bioinformatics/btr260}.
+\newblock URL
+  \url{https://academic.oup.com/bioinformatics/article/27/12/1739/257711}.
 
 \bibitem[Lawless(2025{\natexlab{b}})]{lawless_2025_15111584}
 Dylan Lawless.
