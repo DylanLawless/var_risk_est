@@ -11,6 +11,14 @@ nfkb1_patho <- df %>%
 
 expected_total_genotypes <- nfkb1_patho$expected_cases 
 
+# Set expected_total_genotypes_true based on synth_flag
+# tehcnically this has to be 0 but lets do it properly anyway.
+if(nfkb1_patho$synth_flag == TRUE){
+  expected_total_genotypes_true <- 0
+} else {
+  expected_total_genotypes_true <- expected_total_genotypes
+}
+
 # From the study of NFKB1: Given that PID is a heterogeneous disease, with overlap in phenotypes and genetic causes across different diagnostic categories, we decided to perform an unbiased genetic analysis of all 846 unrelated index cases. Whole-genome sequence data were additionally available for 63 affected and 345 unaffected relatives. Within a broad range of phenotypes, CVID is the most common disease category, comprising 46% of the NIHRBR-RD PID cohort (n = 390 index cases; range, 0-93 years of age).
 
 # Baseline ----
@@ -18,7 +26,7 @@ expected_total_genotypes <- nfkb1_patho$expected_cases
 
 # # Cohort data from a specialized clinical setting (assumed to represent nearly all national PID cases)
 # N_cohort <- 846       # Total number of PID patients in the cohort
-# n_NFKB1  <- 390       # Number of NFKB1-related CVID cases observed in the cohort
+# n_NFKB1  <- 390       # Number of CVID cases observed in the cohort
 # 
 # # Calculate the observed prevalence of NFKB1-related CVID among PID patients in the cohort
 # prevalence_cohort <- n_NFKB1 / N_cohort
@@ -53,13 +61,15 @@ library(dplyr)
 
 # Given values from the cohort study
 N_cohort <- 846      # Total number of PID patients in the cohort
-n_NFKB1  <- 390     # Number of NFKB1-related CVID cases observed in the cohort
+n_cvid  <- 390     # Number of CVID cases observed in the cohort
+n_NFKB1  <- 16     # Number of CVID cases observed in the cohort
+
 
 # Calculate the observed prevalence and its 95% confidence interval using Wilson's method
-conf_int <- binom.confint(n_NFKB1, N_cohort, methods = "wilson")
-p_point   <- conf_int$mean      # Point estimate (≈0.461)
-p_lower   <- conf_int$lower     # Lower bound (≈0.4277)
-p_upper   <- conf_int$upper     # Upper bound (≈0.4947)
+conf_int <- binom.confint(n_NFKB1, n_cvid, methods = "wilson")
+p_point   <- conf_int$mean      # Point estimate 
+p_lower   <- conf_int$lower     # Lower bound
+p_upper   <- conf_int$upper     # Upper bound
 
 cat("95% CI for cohort prevalence: (", round(p_lower, 4), ",", round(p_upper, 4), ")\n")
 
@@ -90,16 +100,11 @@ cat("95% CI for estimated NFKB1-related cases in the UK:",
 # We assume that 90% of the information comes from the specialized cohort and 10% from the literature-based extrapolation.
 
 w <- 0.9  # weight for the cohort data
-# The literature extrapolation point estimate and CI (from previous calculations):
-# expected_CVID_UK = 2777 (approx)
-# p_point, p_lower, p_upper from the cohort's Wilson CI
-# previously calculated:
-# p_point ≈ 0.4610, p_lower ≈ 0.4277, p_upper ≈ 0.4947
 
 # Extrapolated estimates based on literature:
-estimated_NFKB1_UK <- expected_CVID_UK * p_point  # ~1280 cases (point estimate)
-lower_estimate <- expected_CVID_UK * p_lower       # ~1188 cases
-upper_estimate <- expected_CVID_UK * p_upper       # ~1374 cases
+estimated_NFKB1_UK <- expected_CVID_UK * p_point  #  (point estimate)
+lower_estimate <- expected_CVID_UK * p_lower      
+upper_estimate <- expected_CVID_UK * p_upper      
 
 # Bayesian adjusted estimate: weighted average of cohort count (n_NFKB1) and literature extrapolation
 adjusted_estimate <- w * n_NFKB1 + (1 - w) * estimated_NFKB1_UK
@@ -115,8 +120,8 @@ cat("95% Bayesian adjusted CI: (", round(adjusted_lower), ",", round(adjusted_up
 # Bayesian posterior sampling for cohort prevalence
 set.seed(123)
 nsamples <- 10000
-alpha <- n_NFKB1 + 1       # 390 + 1 = 391
-beta_param <- N_cohort - n_NFKB1 + 1  # 846 - 390 + 1 = 457
+alpha <- n_NFKB1 + 1     
+beta_param <- n_cvid - n_NFKB1 + 1  
 p_samples <- rbeta(nsamples, alpha, beta_param)
 
 # Literature extrapolated estimates: using expected total CVID cases in the UK (≈2777)
@@ -167,34 +172,40 @@ p_nfkb1_bayes <- ggplot() +
   # Extend y-axis by 1.2 times to allow space for annotations
   scale_y_continuous(limits = c(0, max_y_mix * 1.2)) +
   
-  # Annotate literature extrapolated median and CI with a vertical dotted line in blue
-  geom_vline(xintercept = median_est, linetype = "dotted", color = "blue", size = 1) +
-  annotate("text", x = median_est *1.05, y = max_y_est * .8, 
-           label = paste("Estimate Max\nMedian =", formatC(median_est, format = "f", digits = 0),
-                         "\n95% CI: [", formatC(ci_est[1], format = "f", digits = 0), ",", 
-                         formatC(ci_est[2], format = "f", digits = 0), "]"), 
-           color = "blue", vjust = 0, size = 4, hjust = 0) +
+  # Predicted total genotypes (or 0 if synth_flag is TRUE)
+  geom_vline(xintercept = expected_total_genotypes_true, linetype = "solid", color = "darkgreen", size = 1) +
+  annotate("label", x = expected_total_genotypes_true, max_y_est * 2.2, 
+           label = paste0("Predicted total = ", round(expected_total_genotypes_true)), 
+           fill = scales::alpha("white", 0.5), label.size = 0,
+           color = "darkgreen", vjust = 0, size = 4, hjust = 0) +
+
+  geom_vline(xintercept = n_NFKB1 , linetype = "dotted", color = "red", size = 1) +
+  annotate("label", x = median_est *1 , y = max_y_est * 1.7, 
+           label = paste("Reported\ncases =", formatC(n_NFKB1, format = "f", digits = 0)), 
+           fill = scales::alpha("white", 0.5),  label.size = 0,
+           color = "red", vjust = 0, size = 4,  hjust = 0) +
   
-  # Annotate Bayesian adjusted median and CI with a vertical dotted line in orange
   geom_vline(xintercept = median_mix, linetype = "dotted", color = "orange", size = 1) +
-  annotate("text", x = median_mix *1.05, y = max_y_mix * 0.9, 
+  annotate("text", x = median_est *1.4, y = max_y_est * 1, 
            label = paste("Bayesian\nMedian =", formatC(median_mix, format = "f", digits = 0),
                          "\n95% CI: [", formatC(ci_mix[1], format = "f", digits = 0), ",", 
                          formatC(ci_mix[2], format = "f", digits = 0), "]"), 
            color = "orange", vjust = 0, size = 4, hjust = 0) +
   
-  geom_vline(xintercept = n_NFKB1 , linetype = "dotted", color = "red", size = 1) +
-  annotate("label", x = n_NFKB1  , y = max_y_est * 1.5, 
-           label = paste("Reported\ncases =", formatC(n_NFKB1, format = "f", digits = 0)), 
-           fill = scales::alpha("white", 0.5),  label.size = 0,
-           color = "red", vjust = 0, size = 4,  hjust = 0) +
+  geom_vline(xintercept = median_est, linetype = "dotted", color = "blue", size = 1) +
+  annotate("text", x = median_est *1.6, y = max_y_est * .2, 
+           label = paste("Estimate Max\nMedian =", formatC(median_est, format = "f", digits = 0),
+                         "\n95% CI: [", formatC(ci_est[1], format = "f", digits = 0), ",", 
+                         formatC(ci_est[2], format = "f", digits = 0), "]"), 
+           color = "blue", vjust = 0, size = 4, hjust = 0) +
   
   geom_vline(xintercept = expected_total_genotypes, linetype = "solid", color = "darkgreen", size = 1) +
-  annotate("label", x = expected_total_genotypes *1.1, y = max_y_est * 1,
-           label = paste0("Predicted\ntotal = ", round(expected_total_genotypes)),
+  annotate("label", x = expected_total_genotypes *0.75, y = max_y_est * .1,
+           label = paste0("Predicted\ntotal\nsynthetic = ", round(expected_total_genotypes)),
            fill = scales::alpha("white", 0.5),  label.size = 0,
-           color = "darkgreen", vjust = 0, size = 4, hjust = 0) +
-  xlim(200, 2200)
+           color = "darkgreen", vjust = 0, size = 4, hjust = 0)
+  #xlim(200, 2200)
 
-print(p_nfkb1_bayes)
-ggsave("../images/nfkb1_case_est_distribution_combined_mixture.png", plot = p_nfkb1_bayes, width = 8, height = 4)
+# print(p_nfkb1_bayes)
+ggsave("../images/nfkb1_case_est_distribution_combined_mixture.png", plot = p_nfkb1_bayes, width = 9, height = 3)
+
