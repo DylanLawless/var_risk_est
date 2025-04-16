@@ -1,4 +1,4 @@
-\begin{thebibliography}{39}
+\begin{thebibliography}{40}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -148,9 +148,9 @@ John Jumper, Richard Evans, Alexander Pritzel, Tim Green, Michael Figurnov,
 \newblock \doi{10.1038/s41586-021-03819-2}.
 \newblock URL \url{https://www.nature.com/articles/s41586-021-03819-2}.
 
-\bibitem[Cheng et~al.(2023)Cheng, Novati, Pan, Bycroft, Žemgulytė, Applebaum,
-  Pritzel, Wong, Zielinski, Sargeant, Schneider, Senior, Jumper, Hassabis,
-  Kohli, and Avsec]{cheng_accurate_2023}
+\bibitem[Cheng et~al.(2023{\natexlab{a}})Cheng, Novati, Pan, Bycroft,
+  Žemgulytė, Applebaum, Pritzel, Wong, Zielinski, Sargeant, Schneider,
+  Senior, Jumper, Hassabis, Kohli, and Avsec]{cheng_accurate_2023}
 Jun Cheng, Guido Novati, Joshua Pan, Clare Bycroft, Akvilė Žemgulytė, Taylor
   Applebaum, Alexander Pritzel, Lai~Hong Wong, Michal Zielinski, Tobias
   Sargeant, Rosalia~G. Schneider, Andrew~W. Senior, John Jumper, Demis
@@ -158,7 +158,7 @@ Jun Cheng, Guido Novati, Joshua Pan, Clare Bycroft, Akvilė Žemgulytė, Taylor
 \newblock Accurate proteome-wide missense variant effect prediction with
   {AlphaMissense}.
 \newblock \emph{Science}, 381\penalty0 (6664):\penalty0 eadg7492, September
-  2023.
+  2023{\natexlab{a}}.
 \newblock ISSN 0036-8075, 1095-9203.
 \newblock \doi{10.1126/science.adg7492}.
 \newblock URL \url{https://www.science.org/doi/10.1126/science.adg7492}.
@@ -290,6 +290,16 @@ Arthur Liberzon, Aravind Subramanian, Reid Pinchback, Helga Thorvaldsdóttir,
 \newblock \doi{10.1093/bioinformatics/btr260}.
 \newblock URL
   \url{https://academic.oup.com/bioinformatics/article/27/12/1739/257711}.
+
+\bibitem[Cheng et~al.(2023{\natexlab{b}})Cheng, Novati, Pan, Bycroft,
+  Žemgulytė, Applebaum, Pritzel, Wong, Zielinski, Sargeant, Schneider,
+  Senior, Jumper, Hassabis, Kohli, and Žiga Avsec]{jun_cheng_2023_8208688}
+Jun Cheng, Guido Novati, Joshua Pan, Clare Bycroft, Akvilė Žemgulytė, Taylor
+  Applebaum, Alexander Pritzel, Lai~Hong Wong, Michal Zielinski, Tobias
+  Sargeant, Rosalia~G. Schneider, Andrew~W. Senior, John Jumper, Demis
+  Hassabis, Pushmeet Kohli, and Žiga Avsec.
+\newblock Predictions for alphamissense, September 2023{\natexlab{b}}.
+\newblock URL \url{https://doi.org/10.5281/zenodo.8208688}.
 
 \bibitem[Lawless(2025{\natexlab{b}})]{lawless_2025_15111584}
 Dylan Lawless.

@@ -209,3 +209,13 @@ p_nfkb1_bayes <- ggplot() +
 # print(p_nfkb1_bayes)
 ggsave("../images/nfkb1_case_est_distribution_combined_mixture.png", plot = p_nfkb1_bayes, width = 9, height = 3)
 
+cat("Predicted total genotypes (adjusted for synth_flag):", round(expected_total_genotypes_true), "\n")
+cat("Predicted total synthetic genotype count:", round(expected_total_genotypes), "\n")
+cat("Reported NFKB1-related CVID cases (n_NFKB1):", n_NFKB1, "\n")
+cat("Literature extrapolated estimate median:", round(median_est, 0), "\n")
+cat("95% CI for literature extrapolated estimate: [", round(ci_est[1], 0), ",", round(ci_est[2], 0), "]\n")
+cat("Bayesian mixture adjusted estimate (w = 0.5) median:", round(median_mix, 0), "\n")
+cat("95% CI for Bayesian mixture adjusted estimate: [", round(ci_mix[1], 0), ",", round(ci_mix[2], 0), "]\n")
+cat("Bayesian adjusted estimated number of NFKB1-related CVID cases (w = 0.9):", round(adjusted_estimate), "\n")
+cat("95% Bayesian adjusted CI (w = 0.9): [", round(adjusted_lower), ",", round(adjusted_upper), "]\n")
+

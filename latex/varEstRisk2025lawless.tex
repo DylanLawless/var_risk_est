@@ -132,6 +132,7 @@ oksenhendler2008infections}
 and \ac{cftr} 
 \cite{naito2023uk, castellani2013cftr2, Grasemann2023cftr}
 to demonstrate applications in \ac{ad} and \ac{ar} disease genes, respectively.
+AlphaMissense includes pathogenicity prediction classifications for 71 million variants in 19 thousand human genes \cite{cheng_accurate_2023, jun_cheng_2023_8208688}. We used these scores to compared against the probability of observing the same given variants.
 \textbf{Box \ref{box:definitions}} list the definitions from the \ac{iuis} \ac{iei} for the major disease categories used throughout this study \cite{tangye_human_2022}.
 
 \begin{tcolorbox}[colback=black!01, colframe=black!70, title=Box \ref{box:definitions} Definitions for IEI Major Disease Categories, label=box:definitions]
@@ -326,6 +327,27 @@ E_{\text{Bayes}} = 0.5 \times (\text{Observed Count}) + 0.5 \times E_{\text{adj}
 \paragraph{5. Validation test.}
 Thus, the expected number of \ac{cftr}-related \ac{cf} cases derived from our genome-wide probability estimates was compared with the observed counts from the UK-based \ac{cf} registry. This comparison validated our framework for estimating disease incidence in \ac{ad} disorders.
 
+
+\subsection{Validation of SCID-specific Estimates Using PID–SCID Genes}
+
+To validate our genome-wide probability estimates for diagnosing a genetic variant in a patient with a PID phenotype, we focused on a subset of genes implicated in Severe Combined Immunodeficiency (SCID). Given that the overall panel corresponds to PID, but SCID represents a rarer subset, the probabilities were converted to values per million PID cases.
+
+\paragraph{1. Incidence Conversion.}
+Based on literature, PID occurs in approximately 1 in 1,000 births, whereas SCID occurs in approximately 1 in 100,000 births. Consequently, in a population of 1,000,000 births there are about 1,000 PID cases and 10 SCID cases. To express SCID-related variant counts on a per-million PID scale, the observed SCID counts were multiplied by 100. For example, if a gene is expected to cause SCID in 10 cases within the total PID population, then on a per-million PID basis the count is 10 × 100 = 1,000 cases (across all relevant genes).
+
+\paragraph{2. Prevalence Calculation and Data Adjustment.}
+For each SCID-associated gene (e.g. \textit{IL2RG}, \textit{RAG1}, \textit{DCLRE1C}), the observed variant counts in the dataset were adjusted by multiplying by 100 so that the probabilities reflect the expected number of cases per 1,000,000 PID. In this manner, our estimates are directly comparable to known counts from SCID cohorts, rather than to national population counts as in previous validation studies.
+
+\paragraph{3. Integration with Prior Probability Estimates.}
+The predicted genotype occurrence probabilities were derived from our framework across the PID gene panel. These probabilities were then converted to expected case counts per million PID cases by multiplying by 1,000,000. For instance, if the probability of observing a pathogenic variant in \textit{IL2RG} is \(p\), the expected SCID-related count becomes \(p \times 10^6\). Similar conversions are applied for all relevant SCID genes.
+
+\paragraph{4. Bayesian Uncertainty and Comparison with Observed Data.}
+To address uncertainty in the SCID-specific estimates, a Bayesian uncertainty simulation was performed for each gene to generate a distribution of predicted case counts on a per-million PID scale. The resulting median estimates and 95\% credible intervals were then compared against known national SCID counts compiled from independent registries. This comparison permited a direct evaluation of our framework’s accuracy in predicting the occurrence of SCID-associated variants within a PID cohort.
+
+\paragraph{5. Validation Test.}
+Thus, by converting the overall probability estimates to a per-million PID scale, our framework was directly validated against observed counts for SCID. %This procedure confirms that our probability estimation approach can be effectively adapted to specific subphenotypes within a broader disease spectrum, ensuring robust application for both global PID and SCID diagnostics.
+
+
 \subsection{Protein Network and Genetic Constraint Interpretation}
 A \ac{ppi} network was constructed using protein interaction data from \ac{stringdb} \cite{szklarczyk2025string}. We previously prepared and reported 
 on this dataset consisting of 19,566 proteins and 505,968 interactions 
@@ -338,7 +360,15 @@ This provided transcript-level metrics, such as observed/expected ratios, \ac{lo
 
 To test for overrepresentation of biological functions, the prioritised genes were compared against gene sets from MsigDB (including hallmark, positional, curated, motif, computational, GO, oncogenic, and immunologic signatures) and WikiPathways using hypergeometric tests with FUMA \cite{watanabe_functional_2017, liberzon_molecular_2011}. The background set consisted of 24,304 genes. Multiple testing correction was applied per data source using the Benjamini-Hochberg method, and gene sets with an adjusted P-value $\le$ 0.05 and more than one overlapping gene are reported.
 
+\subsection{Deriving novel PID classifications by genetic PPI and clinical features}
+Immunophenotypic data were extracted from the IUIS IEI dataset, systematically cleaned (see database link) and simplified by binarising clinical features (T cell, B cell, Ig, Neutrophil) into normal and not normal categories. The \ac{ppi} network embeddings from STRINGdb were reused for assigning each gene to its \ac{ppi} cluster. Associations between \ac{ppi} clusters and the binarised clinical features were quantified using chi-square tests. %(see \textbf{Figure \ref{fig:chi_heatmaps}}). 
+A decision tree model was subsequently constructed to predict \ac{ppi} clusters based on the clinical features. Hyperparameters (complexity parameter, minimum split and bucket sizes, and maximum tree depth) were optimised by 5-fold cross validation using \texttt{caret} with \texttt{rpart}. Terminal node assignments from the resulting tree defined novel \ac{pid} classification groups, which were relabelled according to the predominant abnormal feature within each group.
 
+\subsection{Probability of observing AlphaMissense pathogenicity}
+We obtained the subset pathogenicity predictions from AlphaMissense via the AlphaFold database and whole genome data from the studies data repository\cite{cheng_accurate_2023, jun_cheng_2023_8208688}. 
+The AlphaMissense data (genome‐aligned and amino acid substitutions) were merged with the panel variants based on genomic coordinate and HGVSc annotation. 
+Occurrence probabilities were log-transformed and adjusted (y-axis displaying log10(occurrence prob + 1e-5) + 5)), to visualise the distribution of pathogenicity scores across the residue sequence. 
+A Kruskal-Wallis test was used to compare the observed disease probability across clinical classification groups.
 
 \section{Results}
 
@@ -410,33 +440,23 @@ In contrast, the nationally reported number of \ac{cf} cases was 714, as recorde
 \cite{naito2023uk}. To account for factors such as reduced penetrance and the mortality-adjusted expected genotype, we derived a Bayesian-adjusted estimate via posterior simulation. Our Bayesian approach yielded a median estimate of 740 cases (95\% \ac{ci}: 696, 786) and a mixture-based estimate of 727 cases (95\% \ac{ci}: 705, 750).
 \textbf{Figure \ref{fig:validation_studies_bayesian_adjusted_estimates} (B)} illustrates the close concordance between the predicted values, the Bayesian-adjusted estimates, and the national report supports the validity of our approach for estimating disease.
 
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.99\textwidth]{../images/validation_studies_bayesian_adjusted_estimates.png}
-  \caption{\textbf{Prior probabilities compared to validation disease cohort metrics.}
-  (A) Density distributions for the number of \ac{nfkb1}-related \ac{cvid} cases in the UK. 
-  Our model (green) predicted 456 cases, which falls between the observed cohort count (red) of 390 and the upper extrapolated values.
-  The blue curve represents maximum count of 1280, and the orange curve shows the Bayesian-adjusted mixture estimate of 835. 
-(B) Density distributions for \ac{cftr}-related p.Arg117His \ac{cf} cases. 
-Our model (green) predicted 648 biallelic cases and 808 total cases.
-The nationally reported case count (red) was 714.
-The blue curve represents maximum extrapolated count of 740, and the orange curve shows the Bayesian-adjusted mixture estimate of 727. We observed close agreement among the reported disease cases and our integrated probability estimation framework.}
-  \label{fig:validation_studies_bayesian_adjusted_estimates}
-\end{figure}
 
 \textbf{Figure \ref{fig:validation_scatter_dense}} shows the final values for these genes of interest in a given population size and phenotype. It reveals that an allele frequency threshold of approximately 0.000007 is required to observe a single heterozygous disease-causing variant carrier in the UK population for both genes. However, owing to the \ac{ar} \ac{moi} pattern of \ac{cftr}, this threshold translates into more than 100,000 heterozygous carriers, compared to only 456 carriers for the \ac{ad} gene \ac{nfkb1}. Note that this allele frequency threshold, being derived from the current reference population, represents a lower bound that can become more precise as public datasets continue to grow. This marked difference underscores the significant impact of \ac{moi} patterns on population carrier frequencies and the observed disease prevalence.
+
+
+
 
 \FloatBarrier
 \subsubsection{Interpretation of ClinVar Variant Observations}
 
 \textbf{Figure~\ref{fig:all_genes_combined_bar_charts_mini}} shows  the two validation study \ac{pid} genes, representing \ac{ar} and dominant \ac{moi}. \textbf{Figure~\ref{fig:all_genes_combined_bar_charts_mini} (A)}   illustrates the overall probability of an affected birth by ClinVar variant classification, whereas \textbf{Figure~\ref{fig:all_genes_combined_bar_charts_mini}  (B)}  depicts the total expected number of cases per classification for an example population, here the UK, of approximately 69.4 million. 
 
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.99\textwidth]{../images/all_genes_combined_bar_charts_mini.png}
-  \caption{\textbf{Combined bar charts summarizing the genome-wide analysis of ClinVar clinical significance for the \ac{pid} gene panel}. Panel (A) shows the overall probability of an affected birth by variant classification, and (B) displays the total expected number of cases per classification, both stratified by gene. These integrated results illustrate the variability in variant observations across genes and underpin our validation of the probability estimation framework.}
-  \label{fig:all_genes_combined_bar_charts_mini}
-\end{figure}
+\subsubsection{Validation of SCID-specific Disease Occurrence}
+
+Given that SCID is a subset of PID, our probability estimates reflect the likelihood of observing a genetic variant as a diagnosis when the phenotype is PID. However, we additionally tested our results against SCID cohorts in 
+ \textbf{Figure \ref{fig:scid_combined}}.
+ The summarised raw cohort data for SCID-specific gene counts are summarised and compared across countries in \textbf{Figure \ref{fig:scid_gene_comparison}}.
+True counts for \textit{IL2RG} and \textit{DCLRE1C} from ten distinct locations yielded 95\% confidence intervals surrounding our predicted values. For \textit{IL2RG}, the prediction was low (approximately 1 case per 1,000,000 PID), as expected since loss-of-function variants in this X-linked gene are highly deleterious and rarely observed in gnomAD. In contrast, the predicted value for \textit{RAG1} was substantially higher (553 cases per 1,000,000 PID) than the observed counts (ranging from 0 to 200). We attributed this discrepancy to the lower penetrance and higher background frequency of \textit{RAG1} variants in recessive inheritance, whereby reference studies may underreport the true national incidence. Overall, we argued that agreement within an order of magnitude was tolerable given the inherent uncertainties from reference studies arising from variable penetrance and allele frequencies.
 
 \FloatBarrier
 \subsection{Genetic constraint in high-impact protein networks}
@@ -463,6 +483,10 @@ The top 15 genes with the highest total prior probabilities of being observed wi
   }
   \label{fig:ppi_network_assoc}
 \end{figure}
+
+
+
+
 
 \FloatBarrier
 \subsubsection{Association Analysis of Score-Positive-Total across IEI Categories} 
@@ -491,19 +515,19 @@ Node sizes reflect interaction degree, a measure of evidence-supported connectiv
 
 \FloatBarrier
 \subsubsection{Hierarchical Clustering of Enrichment Scores for Major Disease Categories}
-\textbf{Figure \ref{fig:patch2}} presents a heatmap of standardised residuals for major disease categories across network clusters, as per \textbf{Figure \ref{fig:p_umap}}. A dendrogram clusters similar disease categories, while the accompanying bar plot displays the maximum absolute standardised residual for each category.
+\textbf{Figure \ref{fig:patch2}} presents a heatmap of standardised residuals for major disease categories across network clusters, as per \textbf{Figure \ref{fig:p_umap}}. 
+A dendrogram clusters similar disease categories, while the accompanying bar plot displays the maximum absolute standardised residual for each category.
 Notably, (8) \ac{cd} shows the highest maximum enrichment, followed by 
-(9) \ac{bmf}. While all maximum values exceed 2, the threshold for significance, this likely reflects the presence of protein clusters with strong damaging variant scores rather than uniform significance across all categories (i.e. genes from cluster 4 in 8 \ac{cd}).
+(9) \ac{bmf}. 
+While all maximum values exceed 2, the threshold for significance, this likely reflects the presence of protein clusters with strong damaging variant scores rather than uniform significance across all categories (i.e. genes from cluster 4 in 8 \ac{cd}).
 
 
 \subsubsection{PPI Connectivity, LOEUF Constraint and Enriched Network Cluster Analysis}
 
 Based on the preliminary insight from \textbf{Figure \ref{fig:patch2}} ,
-we evaluated the relationship between network connectivity (\ac{ppi} degree) and \ac{lof} constraint (\ac{loeuf} upper rank) \citet{karczewski2020mutational} 
-using Spearman’s rank correlation .
+we evaluated the relationship between network connectivity (\ac{ppi} degree) and \ac{lof} constraint (\ac{loeuf} upper rank) \citet{karczewski2020mutational} using Spearman’s rank correlation.
 Overall, there was a weak but significant negative correlation ($\rho = -0.181$, $p = 0.00024$) at the global scale, indicating that highly connected genes tend to be more constrained. 
-A supplementary analysis 
-(see \textbf{Figure \ref{fig:p_cor_spear_rho_sig_clust_patch3}}
+A supplementary analysis (\textbf{Figure \ref{fig:p_umap_const}})
 did not reveal distinct visual associations between network clusters and constraint metrics, likely due to the high network density. 
 However once stratified by gene clusters, the natural biological scenario based on quantitative \ac{ppi} evidence \cite{szklarczyk2025string},
 some groups showed strong correlations; for instance, cluster 2 ($\rho = -0.375$, $p = 0.000994$) and cluster 4 ($\rho = -0.800$, $p < 0.000001$), while others did not.
@@ -537,17 +561,40 @@ In \textbf{Figure \ref{fig:karyo_locusplot_merged} (C)}, high probabilities of o
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.99\textwidth]{../images/karyo_locusplot_merged.pdf}
-  \caption{Genome-wide \ac{iei}, variant occurance probability and \ac{ld} by $\text{R}^2$. (A) Genome-wide karyoplot of all \ac{iei} panel genes mapped to GRCh38, with colours indicating \ac{moi}. (B) Zoomed-in locus plot for \textit{NFKB1} showing variant observation probabilities; only benign variants such exhibit high probabilities in this \ac{ad} gene intolerant to \ac{lof}. (C) Locus plot for \textit{CFTR} displaying high probabilities for pathogenic variants; due to the dense clustering of pathogenic variants, score filter >0 was applied. Top five variant are labelled per gene.}
+  \caption{\textbf{Genome-wide \ac{iei}, variant occurance probability and \ac{ld} by $\text{R}^2$.} (A) Genome-wide karyoplot of all \ac{iei} panel genes mapped to GRCh38, with colours indicating \ac{moi}. (B) Zoomed-in locus plot for \textit{NFKB1} showing variant observation probabilities; only benign variants such exhibit high probabilities in this \ac{ad} gene intolerant to \ac{lof}. (C) Locus plot for \textit{CFTR} displaying high probabilities for pathogenic variants; due to the dense clustering of pathogenic variants, score filter >0 was applied. Top five variant are labelled per gene.}
   \label{fig:karyo_locusplot_merged}
 \end{figure}
 
-%\subsection{Deriving new IEI classifications and insight}
+\subsection{Novel PID classifications derived from genetic PPI and clinical features}
 %This section looks at the current 9 major IEI classes, and ~45 subclasses.
 %These were designed over last few decades based on phenotype observation and subjective decisions.
 %We can use the new information be potentially define better, new data-based classifications: clustering by PPI, severity/probability, and markers (T, B, NK, Ig), phenotype CVID, etc. 
-%Potential but maybe it will be too noisy. 
-%From the previous section, cross compare the clusters from PPI with the IUIS categories.
-%This section will be complete by 2025-04-07.
+We recategorised 315 immunophenotypic features from the original IUIS IEI annotations, reducing detailed descriptions (e.g. ``decreased cd8, normal or decreased cd4''), first to 
+minimal labels (e.g.``low''), and second to binary outcomes (normal vs. not-normal) for T cells, B cells, neutrophils, and immunoglobulins (\textbf{Figure \ref{fig:immunophenotype_before_after}}). 
+These simplified profiles were integrated with \ac{ppi} network clustering from STRINGdb to refine \ac{pid} gene groupings. 
+Chi-square analyses confirmed significant associations between specific clinical abnormalities and \ac{ppi} clusters (\textbf{Figure \ref{fig:chi_heatmaps}}). 
+A decision tree classifier, with hyperparameters optimised via 5-fold cross validation, demonstrated high sensitivity and specificity, as shown in the confusion matrices and variable importance metrics (\textbf{Figure \ref{fig:confusion_matrix}}). 
+The resulting novel \ac{pid} classifications, illustrated by the decision tree and gene group distributions (\textbf{Figure \ref{fig:pid_class_tree_distribution}}), provide a more coherent and data-driven framework for categorising \ac{pid} genes.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/plot_patch1.pdf}
+ %   \includegraphics[width=0.7\textwidth]{../images/plot_patch_1_v2.pdf}
+  \caption{ \textbf{Distribution of immunophenotypic features before and after recategorisation.}
+  The original IUIS IEI descriptions contain information such as T cell-related
+  ``decreased cd8, normal or decreased cd4 cells'' which we recategorise as ``low''.
+  The bar plot shows the count of unique labels for each status (normal, not\_normal) across the T cell, B cell, Ig, and Neutrophil features.}
+  \label{fig:immunophenotype_before_after}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/p_new_classification_finetune_tree.pdf}       
+  \includegraphics[width=0.99\textwidth]{../images/plot_new_pid_classifications_genetic.pdf}
+  \caption{\textbf{ Fine-tuned model for PID classification.} 
+  (Top) In each terminal node, the top block indicates the number of genes in the node; the middle block shows the fitted class probabilities (which sum to 1); and the bottom block displays the percentage of the total sample in that node. These metrics summarise the model's assignment based on immunophenotypic and PPI features. (Bottom) Bar plot presenting the distribution of novel PID classifications, where group labels denote the predominant abnormal clinical feature(s) (e.g. T cell, B cell, Ig, Neutrophil) characterising each group.}  
+  \label{fig:pid_class_tree_distribution}
+\end{figure}
 
 \FloatBarrier
 \subsubsection{Integration of Variant Probabilities into IEI Genetics Data}
@@ -565,9 +612,21 @@ We integrated the computed prior probabilities for observing variants in all kno
   \label{fig:var_risk_est_iei_genetics}
 \end{figure}
 
-
-
-
+\subsection{Probability of observing AlphaMissense pathogenicity}
+AlphaMissense provides pathogenicity scores for all possible amino acid substitutions; however, our results in \textbf{Figure \ref{fig:alphamissense}} show that the most probable observations in patients occur predominantly for benign or unknown variants. This finding places the likelihood of disease-associated substitutions into perspective and offers a data-driven foundation for future improvements in variant prediction. The values in 
+\textbf{Figure \ref{fig:alphamissense} (A)} can be directly compared to 
+\textbf{Figure \ref{fig:p_varRisEst_summary_scores} (D)} to view the distribution of classifications.
+A Kruskal-Wallis test was used to compare the observed disease probability across clinical classification groups and no significant differences were detected. In general, most variants in patients are classified as benign or unknown, indicating limited discriminative power in the current classification, such that pathogenicity prediction does not infer observation prediction (\textbf{Figure \ref{fig:alphamissense_kw}}).
+  
+\begin{figure}[ht]
+\begin{center}
+%    \includegraphics[width=0.99\textwidth]{../images/p_alphamissense_RAG1.pdf}
+    \includegraphics[width=0.85\textwidth]{../images/p_alphamissense_NFKB1.pdf}
+    \includegraphics[width=0.85\textwidth]{../images/p_alphamissense_CFTR.pdf}
+\end{center}
+\caption{\textbf{(A) Probabilities of observing a patient with (B) AlphaMissense-derived pathogenicity scores.} Although AlphaMissense provides scores for every possible amino acid substitution, the most frequently observed variants in patients tend to be classified as benign or of unknown significance. This juxtaposition contextualises the likelihood of disease-associated substitutions and underlines prospects for refining predictive models. *Axis scaled for visibility near zero. Higher point indicates higher probability.}
+ \label{fig:alphamissense}
+\end{figure}
 
 \FloatBarrier
 \section{Discussion}
@@ -633,6 +692,7 @@ ClinVar asks its users who distribute or copy data to provide attribution to the
 GnomAD is licensed under  Creative Commons  Zero Public Domain Dedication (CC0 1.0 Universal).
 GnomAD request that usages cites the \ac{gnomad} flagship paper \cite{karczewski2020mutational}
 and any online resources that include the data set provide a link to the browser, and note that tool includes data from the \ac{gnomad} v4.1 release.
+AlphaMissense asks to cite \citet{cheng_accurate_2023} for usage in research, with data available from \citet{jun_cheng_2023_8208688}.
 
 \section*{Competing interest}
 \noindent
@@ -646,6 +706,22 @@ We declare no competing interest.
 %\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 \beginsupplement
 \section{Supplemental} \label{Supplemental_text}
+
+\subsection{Validation studies}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/validation_studies_bayesian_adjusted_estimates.png}
+  \caption{\textbf{Prior probabilities compared to validation disease cohort metrics.}
+  (A) Density distributions for the number of \ac{nfkb1}-related \ac{cvid} cases in the UK. 
+  Our model (green) predicted 456 cases, which falls between the observed cohort count (red) of 390 and the upper extrapolated values.
+  The blue curve represents maximum count of 1280, and the orange curve shows the Bayesian-adjusted mixture estimate of 835. 
+(B) Density distributions for \ac{cftr}-related p.Arg117His \ac{cf} cases. 
+Our model (green) predicted 648 biallelic cases and 808 total cases.
+The nationally reported case count (red) was 714.
+The blue curve represents maximum extrapolated count of 740, and the orange curve shows the Bayesian-adjusted mixture estimate of 727. We observed close agreement among the reported disease cases and our integrated probability estimation framework.}
+  \label{fig:validation_studies_bayesian_adjusted_estimates}
+\end{figure}
 
 \begin{figure}[ht]
   \centering
@@ -662,9 +738,28 @@ We then highlight the values for pathogenic variants specifically showing;
 
 \begin{figure}[ht]
   \centering
+  \includegraphics[width=.75\textwidth]{../images/validation_studies_scid_gene_comparison.pdf}
+  \caption{\textbf{SCID-specific gene comparison across regions.} The bar plot shows the prevalence of SCID-related cases (count divided by population) for each gene and country (or region), with numbers printed above the bars representing the actual counts in the original cohort (ranging from 0 to 11 per region and gene).}
+  \label{fig:scid_gene_comparison}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=.75\textwidth]{../images/validation_studies_scid_combined_plot.pdf}
+  \caption{\textbf{Combined SCID-specific Predictions and Observed Rates per 1,000,000 PID.}
+    The figure presents density distributions for the predicted SCID case counts (per 1,000,000 PID) for three genes: \textit{IL2RG}, \textit{RAG1}, and \textit{DCLRE1C}. Country-specific rates (displayed as dotted vertical lines) are overlaid with the overall predicted distributions for pathogenic and likely pathogenic variants (solid lines with annotated medians). For \textit{IL2RG}, the low predicted value is consistent with the high deleteriousness of loss-of-function variants in this X-linked gene, while \textit{RAG1} exhibits considerably higher predicted counts, reflecting its lower penetrance in an autosomal recessive context.}
+  \label{fig:scid_combined}
+\end{figure}
+
+
+
+\FloatBarrier
+\subsection{Hierarchical Clustering of Enrichment Scores for Major Disease Categories}
+\begin{figure}[ht]
+  \centering
   \includegraphics[width=0.99\textwidth]{../images/untangleR_ppi_network_patch2_cator.pdf}
   \caption{
-    Hierarchical clustering of enrichment scores.
+   \textbf{Hierarchical clustering of enrichment scores.}
     The heatmap displays standardised residuals for major disease categories (x-axis) across network clusters (y-axis). A dendrogram groups similar disease categories, and the bar plot shows the maximum absolute residual per category.  (8) \ac{cd} and (9)\ac{bmf} show the highest vales, indicating significant enrichment or depletion (residuals > |2|). Definitions in \textbf{Box \ref{box:definitions}}.
   }
   \label{fig:patch2}
@@ -674,7 +769,7 @@ We then highlight the values for pathogenic variants specifically showing;
   \centering
   \includegraphics[width=0.99\textwidth]{../images/untangleR_ppi_network_p_umap_const.pdf}
   \caption{
-   Supplementary analysis of \ac{ppi} degree versus \ac{loeuf} upper rank with \ac{umap} embedding of the \ac{ppi} network.
+   \textbf{Analysis of \ac{ppi} degree versus \ac{loeuf} upper rank with \ac{umap} embedding of the \ac{ppi} network.}
     The relationship between \ac{ppi} degree (size) and \ac{loeuf} upper rank (color) across gene clusters. No clear patterns are evident.
   }
   \label{fig:p_umap_const}
@@ -696,6 +791,47 @@ We selected the top two enriched clusters (as per \textbf{Figure \ref{fig:p_cor_
 \label{fig:expHeatmaps}
 \end{figure}
 
+\FloatBarrier
+\subsection{Interpretation of ClinVar Variant Observations}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/all_genes_combined_bar_charts_mini.png}
+  \caption{\textbf{Combined bar charts summarizing the genome-wide analysis of ClinVar clinical significance for the \ac{pid} gene panel}. Panel (A) shows the overall probability of an affected birth by variant classification, and (B) displays the total expected number of cases per classification, both stratified by gene. These integrated results illustrate the variability in variant observations across genes and underpin our validation of the probability estimation framework.}
+  \label{fig:all_genes_combined_bar_charts_mini}
+\end{figure}
+
+
+\FloatBarrier
+\subsection{Novel PID classifications}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/plot_patch_3_clust_chi.pdf}
+  \caption{\textbf{Heatmaps of clinical feature distributions by PPI cluster.} The heatmaps display the count of observations for each clinical feature (T cell, B cell, Ig, Neutrophil) in relation to the PPI clusters, with p-values from chi-square tests annotated in the titles.}
+  \label{fig:chi_heatmaps}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/plot_combined_model_interpret_fine.pdf}
+  % \caption{Model performance for fine-tuned PID classification. (A) Confusion matrix heatmap of observed versus predicted clusters. (B) Variable importance plot, and (C) per-class sensitivity and specificity bar plots derived from the decision tree model.}
+  \caption{\textbf{Model performance for fine-tuned \ac{pid} classification.} (A) Confusion matrix heatmap comparing observed and predicted \ac{ppi} clusters. (B) Variable importance plot ranking immunophenotypic features contributing to the classifier. (C) Per-class sensitivity and (D) per-class specificity bar plots. These panels collectively demonstrate the performance of the decision tree classifier in stratifying \ac{pid} genes based on immunophenotypic and \ac{ppi} features.}
+  
+  \label{fig:confusion_matrix}
+\end{figure}
+
+\FloatBarrier
+\subsection{Probability of observing AlphaMissense pathogenicity}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/p_alphamissense_kw.pdf}
+  \caption{\textbf{Observed Disease Probability by Clinical Classification with AlphaMissense.} The figure displays the Kruskal-Wallis test results for NFKB1 and CFTR, showing no significant differences.}
+  \label{fig:alphamissense_kw}
+\end{figure}
+
+\FloatBarrier
 \clearpage
 \section{Clinical Genetics Application}
 

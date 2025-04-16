@@ -1,6 +1,9 @@
-library(ggplot2); theme_set(theme_bw())
-library(patchwork)
+# HPC large import ----
+library(readr)
 library(dplyr)
+library(patchwork)
+library(stringr)
+library(ggplot2); theme_set(theme_bw())
 
 path_data <- "../data/"
 
@@ -10,14 +13,20 @@ if (!dir.exists("../images/")) dir.create("../images/")
 # source PanelAppRex ----
 source("panelapprex_import.R")
 
+PanelAppRex_ID <- as.numeric(398) # args[1] on HPC from launch script
+print(paste("Now running panel ID:", PanelAppRex_ID))
+
 # Select our panel data ----
 df_par <- df_par |> dplyr::select(entity_name, panel_id, Inheritance, name)
-df_par <- df_par |> filter(panel_id == 398) # IUIS PID
+df_par <- df_par |> filter(panel_id == PanelAppRex_ID) # IUIS PID
 colnames(df_par)[colnames(df_par) == 'entity_name'] <- 'genename'
 
 # UK population
 population_size <- 69433632
 # population_size <- 83702  # births in 2023
+
+# Define chromosomes to loop over
+chromosomes <- c("")
 
 # Start import data ----
 header_line <- readLines("../data/nfkb1_head", n = 1)
@@ -25,49 +34,169 @@ header_line <- sub("^#", "", header_line)
 header_fields <- strsplit(header_line, "\t")[[1]]
 rm(header_line)
 
-df <- read.table("../data/nfkb1", 
-                 sep = "\t",
-                 header = FALSE, 
-                 stringsAsFactors = FALSE, 
-                 fill = TRUE)
-colnames(df) <- header_fields
+# Function to process each chunk of dbNSFP data.
+# (Note: All cleaning steps below will only be performed once per chunk.)
+process_db_chunk <- function(chunk, pos) {
+  # Assign column names from header_fields
+  colnames(chunk) <- header_fields
+  
+  # Select relevant columns
+  chunk <- chunk %>% select(genename, `pos(1-based)`, gnomAD_genomes_AN, gnomAD_genomes_AF, 
+                            clinvar_clnsig, HGVSc_VEP, HGVSp_VEP)
+  
+  # Replace missing values and convert allele frequency and number to numeric
+  chunk$gnomAD_genomes_AF[chunk$gnomAD_genomes_AF == "."] <- 0
+  chunk$gnomAD_genomes_AN[chunk$gnomAD_genomes_AN == "."] <- 0
+  chunk$gnomAD_genomes_AF <- as.numeric(chunk$gnomAD_genomes_AF)
+  
+  # Remove rows with missing clinvar_clnsig
+  chunk <- chunk %>% filter(clinvar_clnsig != ".")
+  
+  # Copy original columns to new ones with "_all" appended
+  chunk$HGVSc_VEP_all <- chunk$HGVSc_VEP
+  chunk$HGVSp_VEP_all <- chunk$HGVSp_VEP
+  chunk$genename_all  <- chunk$genename
+  
+  # Keep only the first transcript allele for simplicity
+  chunk$HGVSc_VEP <- sapply(strsplit(as.character(chunk$HGVSc_VEP), ";"), `[`, 1)
+  chunk$HGVSp_VEP <- sapply(strsplit(as.character(chunk$HGVSp_VEP), ";"), `[`, 1)
+  chunk$genename   <- sapply(strsplit(as.character(chunk$genename), ";"), `[`, 1)
+  
+  # Ensure character vector
+  chunk$HGVSc_VEP <- as.character(chunk$HGVSc_VEP)
+  chunk$HGVSp_VEP <- as.character(chunk$HGVSp_VEP)
+  chunk$genename <- as.character(chunk$genename)
+  
+  return(chunk)
+}
+
+# List to accumulate results from all chromosomes
+accumulated <- list()
+
+# Define chunk callback that appends processed chunks to the global list
+chunk_callback <- function(x, pos) {
+  accumulated[[length(accumulated) + 1]] <<- process_db_chunk(x, pos)
+}
+
+print(paste("Running on all chromosomes for panel ID:", PanelAppRex_ID))
+for(chr in chromosomes) {
+  data_file <- sprintf("../data/nfkb1%s", chr) # mimics the chromosome-split version on HPC
+  message("Processing chromosome: ", chr)
+  
+  read_delim_chunked(
+    file = data_file,
+    delim = "\t",
+    col_names = FALSE,  # header will be set in process_db_chunk
+    skip = 1,           # skip header in the main file
+    chunk_size = 100000,
+    callback = DataFrameCallback$new(chunk_callback)
+  )
+}
+
+# Combine all processed chunks into one data frame
+df <- bind_rows(accumulated)
+print(paste("Binding all rows complete for panel ID:", PanelAppRex_ID))
+
+# Save the original processed table for future reference
+# saveRDS(df, file = paste0(large_data, "/VarRiskEst_PanelAppRex_ID_", PanelAppRex_ID, "_gene_variants_large.Rds"))
+
+# simple version gene 1
+# df <- read.table("../data/nfkb1", 
+#                  sep = "\t",
+#                  header = FALSE, 
+#                  stringsAsFactors = FALSE, 
+#                  fill = TRUE)
+# colnames(df) <- header_fields
 df_gene1 <- df 
 
-df <- read.table("../data/cftr", 
-                 sep = "\t",
-                 header = FALSE, 
-                 stringsAsFactors = FALSE, 
-                 fill = TRUE)
-colnames(df) <- header_fields
+# simple version gene 2
+# df <- read.table("../data/cftr", 
+#                  sep = "\t",
+#                  header = FALSE, 
+#                  stringsAsFactors = FALSE, 
+#                  fill = TRUE)
+
+print(paste("Running on all chromosomes for panel ID:", PanelAppRex_ID))
+for(chr in chromosomes) {
+  data_file <- sprintf("../data/cftr%s", chr) # mimics the chromosome-split version on HPC
+  message("Processing chromosome: ", chr)
+  
+  read_delim_chunked(
+    file = data_file,
+    delim = "\t",
+    col_names = FALSE,  # header will be set in process_db_chunk
+    skip = 1,           # skip header in the main file
+    chunk_size = 100000,
+    callback = DataFrameCallback$new(chunk_callback)
+  )
+}
+
+# Combine all processed chunks into one data frame
+df <- bind_rows(accumulated)
+print(paste("Binding all rows complete for panel ID:", PanelAppRex_ID))
+
+# colnames(df) <- header_fields
 df_gene2 <- df
 
 df <- rbind(df_gene1, df_gene2)
+
+# print("Debug check for CFTR size")
+# df |> filter(genename == "CFTR") |> dim()
+
+
+# 2594
 # End import data ----
 
-df <- df %>% select(genename, `pos(1-based)`, gnomAD_genomes_AN, gnomAD_genomes_AF, clinvar_clnsig, HGVSc_VEP, HGVSp_VEP)
+# # simple version ----
+# 
+# 
+# # simple version gene 1
+# df <- read.table("../data/nfkb1",
+#                  sep = "\t",
+#                  header = FALSE,
+#                  stringsAsFactors = FALSE,
+#                  fill = TRUE)
+# colnames(df) <- header_fields
+# df_gene1 <- df
+# 
+# # simple version gene 2
+# df <- read.table("../data/cftr",
+#                  sep = "\t",
+#                  header = FALSE,
+#                  stringsAsFactors = FALSE,
+#                  fill = TRUE)
+# 
+# colnames(df) <- header_fields
+# df_gene2 <- df
+# 
+# df <- rbind(df_gene1, df_gene2)
 
-# Data Preparation for Population-Level Calculations ----
-df$gnomAD_genomes_AF[df$gnomAD_genomes_AF == "."] <- 0
-df$gnomAD_genomes_AN[df$gnomAD_genomes_AN == "."] <- 0
-df$gnomAD_genomes_AF <- as.numeric(df$gnomAD_genomes_AF)
+# names(df)
 
-# Remove rows with missing clinvar_clnsig
-df <- df %>% dplyr::filter(clinvar_clnsig != ".")
-df |> count(clinvar_clnsig)
-
-# keep just one transcript allele for simplicity
-df$HGVSc_VEP <- sapply(strsplit(df$HGVSc_VEP, ";"), `[`, 1)
-df$HGVSp_VEP <- sapply(strsplit(df$HGVSp_VEP, ";"), `[`, 1)
-df$genename <- sapply(strsplit(df$genename, ";"), `[`, 1)
-# Remove gene filter to process all genes
-# df <- df |> filter(genename == "NFKB1")
+# df <- df %>% select(genename, `pos(1-based)`, gnomAD_genomes_AN, gnomAD_genomes_AF, clinvar_clnsig, HGVSc_VEP, HGVSp_VEP)
+# 
+# # Data Preparation for Population-Level Calculations ----
+# df$gnomAD_genomes_AF[df$gnomAD_genomes_AF == "."] <- 0
+# df$gnomAD_genomes_AN[df$gnomAD_genomes_AN == "."] <- 0
+# df$gnomAD_genomes_AF <- as.numeric(df$gnomAD_genomes_AF)
+# 
+# # Remove rows with missing clinvar_clnsig
+# df <- df %>% dplyr::filter(clinvar_clnsig != ".")
+# df |> count(clinvar_clnsig)
+# 
+# # keep just one transcript allele for simplicity
+# df$HGVSc_VEP <- sapply(strsplit(df$HGVSc_VEP, ";"), `[`, 1)
+# df$HGVSp_VEP <- sapply(strsplit(df$HGVSp_VEP, ";"), `[`, 1)
+# df$genename <- sapply(strsplit(df$genename, ";"), `[`, 1)
+# # Remove gene filter to process all genes
+# # df <- df |> filter(genename == "NFKB1")
 
 # get Inheritance from PanelAppRex
-df <- merge(df, df_par)
+dfx <- merge(df, df_par)
+dfx <- merge(df, df_par, by = "genename")
 
 # df$Inheritance <- "AD"  # setting inheritance to AD for demonstration
-
-head(df)
+# head(df)
 
 # If no known variants per clinsig, consider a minimal risk with 1 de novo ----
 df <- df %>%
@@ -112,20 +241,87 @@ df <- df %>%
   mutate(total_AF = sum(gnomAD_genomes_AF, na.rm = TRUE)) %>%
   ungroup()
 
-# Always keep this comment as it is key to a subtle step.
-# Calculate occurrence probability based on Inheritance model:
-#   - For AD and X-linked: occurrence probability equals the allele frequency.
-#   - For AR: occurrence probability is the sum of the homozygous (p^2) and compound heterozygous (2 * p * (total_AF - p)) probabilities.
+# # Always keep this comment as it is key to a subtle step.
+# # Calculate occurrence probability based on Inheritance model:
+# #   - For AD and X-linked: occurrence probability equals the allele frequency.
+# #   - For AR: occurrence probability is the sum of the homozygous (p^2) and compound heterozygous (2 * p * (total_AF - p)) probabilities.
+# df <- df %>%
+#   mutate(
+#     occurrence_prob = ifelse(Inheritance %in% c("AD", "X-linked"),
+#                              gnomAD_genomes_AF,
+#                              pmax(gnomAD_genomes_AF^2 + 2 * gnomAD_genomes_AF * (total_AF - gnomAD_genomes_AF), 0)),
+#     expected_cases = population_size * occurrence_prob,
+#     prob_at_least_one = 1 - (1 - occurrence_prob)^population_size
+#   )
+# 
+# head(df)
+
+
+# Inheritance and expected cases ----
+# For AR (autosomal recessive) cases, we first calculate the overall gene-level pathogenic
+# allele frequency: total_AF = sum of all gnomAD_genomes_AF values for that gene.
+# Under Hardy–Weinberg equilibrium, the probability that an individual is affected (by any
+# combination of pathogenic variants in that gene) is (total_AF)^2. This accounts for both:
+#   - homozygous variants (p_i^2 for each individual variant with frequency p_i), and 
+#   - compound heterozygotes (2 * p_i * p_j for two different variants).
+#
+# The original per-variant calculation computed for each variant:
+#     p_i^2 + 2 * p_i * (total_AF - p_i)
+# This expression sums to: 2 * p_i * total_AF - p_i^2.
+# If you sum this over all variants, the compound heterozygous events are double counted.
+#
+# To attribute the overall gene-level AR risk (total_AF^2) to each variant without double counting,
+# we allocate the risk in proportion to the variant's allele frequency.
+#
+# The proportional per-variant risk is calculated as:
+#     occurrence_prob for variant i = p_i * total_AF
+#
+# With this strategy, when you sum occurrence_prob over all variants in a gene, you get:
+#     sum(p_i * total_AF) = total_AF * (sum(p_i)) = total_AF^2,
+# which exactly equals the overall gene-level probability.
+#
+# Thus, for AR diseases, each variant's occurrence_prob reflects its share of the overall risk 
+# that an affected individual carries that particular variant (either in homozygosity or as one 
+# of two variants in a compound heterozygous genotype).
+#
+# version 2: We update occurrence_prob per variant accordingly.
 df <- df %>%
   mutate(
-    occurrence_prob = ifelse(Inheritance %in% c("AD", "X-linked"),
-                             gnomAD_genomes_AF,
-                             pmax(gnomAD_genomes_AF^2 + 2 * gnomAD_genomes_AF * (total_AF - gnomAD_genomes_AF), 0)),
+    # For AD (autosomal dominant) and X-linked, the probability remains the allele frequency.
+    # For AR, we assign the per-variant risk as the product of its allele frequency and the total
+    # allele frequency for that gene (i.e. p_i * total_AF), which partitions the gene-level (total_AF)^2
+    # risk among the variants.
+    occurrence_prob = ifelse(
+      Inheritance %in% c("AD", "X-linked"),
+      gnomAD_genomes_AF,
+      gnomAD_genomes_AF * total_AF
+    ),
+    # Multiply the per-variant probability by the population size to estimate the number of expected
+    # cases attributable to that variant.
     expected_cases = population_size * occurrence_prob,
+    # The probability of observing at least one event (case) in the population, given the occurrence
+    # probability per individual.
     prob_at_least_one = 1 - (1 - occurrence_prob)^population_size
   )
 
-head(df)
+
+# test
+df |> filter(genename == "CFTR") |> filter(clinvar_clnsig  == "Pathogenic") |> filter(HGVSp_VEP == "p.Arg36His") |> select(occurrence_prob)
+# A tibble: 1 × 1
+
+
+# > # test recessive calc ----
+# >  df_v1 |> filter(genename == "CFTR") |> filter(clinvar_clnsig  == "Pathogenic") |> filter(HGVSp_VEP == "p.Arg36His") |> select(occurrence_prob)
+# # A tibble: 1 × 1
+# occurrence_prob
+# <dbl>
+#   1         0.00195
+# > 
+#   > df_v2 |> filter(genename == "CFTR") |> filter(clinvar_clnsig  == "Pathogenic") |> filter(HGVSp_VEP == "p.Arg36His") |> select(occurrence_prob)
+# # A tibble: 1 × 1
+# occurrence_prob
+# <dbl>
+#   1        0.000975
 
 # Tally by ClinVar Category and Gene
 clinvar_levels <- unique(df$clinvar_clnsig)
@@ -341,8 +537,8 @@ p_prob <- ggplot(df_tally, aes(
   geom_bar(stat = "identity", color = "black") +
   geom_text(aes(label = scales::percent(overall_prob, accuracy = 0.01)),
             vjust = -0.5, size = 3.5) +
-# geom_text(aes(label = scales::percent(overall_prob, accuracy = 0.01)), 
-#           hjust = -.2,size = 3.5, angle = 90) +
+  # geom_text(aes(label = scales::percent(overall_prob, accuracy = 0.01)), 
+  #           hjust = -.2,size = 3.5, angle = 90) +
   labs(x = "ClinVar Clinical Significance",
        y = "Overall\nProbability",
        title = "Overall Probability of an Affected Birth by ClinVar Category") +
@@ -360,8 +556,8 @@ p_prob
 #                            axis.text.x = element_blank(),
 #                            axis.ticks.x = element_blank())
 p_prob_mod <- p_prob + theme( axis.title.x = element_blank(),
-                           axis.text.x = element_blank(),
-                           axis.ticks.x = element_blank())
+                              axis.text.x = element_blank(),
+                              axis.ticks.x = element_blank())
 
 p_bars <- (p_prob_mod / p_bar) + 
   plot_layout(guides = 'collect', axis = "collect") + 

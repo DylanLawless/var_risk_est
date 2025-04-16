@@ -42,6 +42,7 @@ print("pos 117530975 (GrCh38 7-117530975-G-A, ENST00000003084.11 MANE Select tra
 # KEPP_ALL_FOR_VALIDATION_SEARCH <- TRUE
 rm(KEPP_ALL_FOR_VALIDATION_SEARCH)
 source("./inheritance_prob_generalised_mini.R")
+# source("./inheritance_prob_generalised_mini_v2.R")
 
 # For CFTR, restrict to known pathogenic variants using gnomAD_genomes_AF.
 cftr_patho <- df %>%
@@ -60,10 +61,58 @@ df_arg117his <- cftr_patho %>%
 p <- df_arg117his$gnomAD_genomes_AF
 q <- total_AF - p
 
+# Sanity check for p.Arg117His genotype expectations:
+#
+# For p.Arg117His, let:
+#   p = allele frequency for p.Arg117His, and
+#   q = sum of allele frequencies for all other pathogenic variants (q = total_AF - p).
+#
+# Under Hardy–Weinberg equilibrium, the full genotype probability for individuals carrying
+# at least one copy of p.Arg117His is computed as:
+#
+#   p^2      -> probability of being homozygous for p.Arg117His, and
+#   2 * p * q -> probability of being compound heterozygous (one copy is p.Arg117His and the other
+#               is one of the other pathogenic variants).
+#
+# Thus, the total expected genotype probability becomes:
+#
+#   p^2 + 2 * p * q
+#
+# Multiplying this probability by the population size yields the expected number of individuals
+# with any genotype involving p.Arg117His.
+#
+# Note: This full Hardy–Weinberg calculation (p^2 + 2 * p * q) is distinct from the partitioning
+# strategy used to assign each variant an occurrence probability of p * total_AF (which equals p^2 + p*q).
+# The partitioned value avoids double counting compound heterozygotes when summing across variants.
+# However, for comparing with known disease cohort counts, the full genotype expectation (p^2 + 2*p*q)
+# provides the appropriate theoretical estimate.
+
 # Expected genotype counts in the general population using Hardy–Weinberg:
 expected_hom <- population_size * p^2             # homozygous for p.Arg117His
 expected_comphet <- population_size * 2 * p * q      # compound heterozygotes carrying p.Arg117His with any other pathogenic allele
 expected_total_genotypes <- expected_hom + expected_comphet
+
+# Note: Our population_size here is the total UK population, but the occurrence_prob value was 
+# computed conditional on a patient having a specific phenotype (PID-related features). In this case, 
+# the occurrence_prob of 0.00097506 represents the risk for a variant in that context.
+#
+# The sanity test compares the final reported occurrence_prob (conditioned on phenotype) 
+# with the full Hardy–Weinberg (HW) expectation. Remember that our full HW calculation (p^2 + 2*p*q)
+# would be calculated assuming the entire population is at risk.
+#
+# For p.Arg117His:
+#   - p: allele frequency for p.Arg117His.
+#   - q: contribution from all other pathogenic variants (q = total_AF - p).
+#
+# Under full HW expectations, the risk would be:
+#   p^2         -> risk of being homozygous for p.Arg117His,
+#   2 * p * q   -> risk of being compound heterozygous, where one allele is p.Arg117His.
+#
+# Multiplying this by population_size gives a full expected count based on the entire UK population.
+#
+# However, because our occurrence_prob value (here ~0.00097506) already incorporates a phenotype 
+# restriction (i.e. a given patient has PID-related features), its corresponding expected count 
+# should not be directly compared to the full HW expected count calculated for the whole population.
 
 # Mortality adjustment using an exponential survival model:
 # Annual mortality among CF patients ~0.4% (0.004) and median age is 22.
@@ -78,15 +127,7 @@ adjusted_expected_after_mortality <- expected_total_genotypes * survival_factor
 observed_R117 <- 714
 source_text <- "Source: UK Cystic Fibrosis Registry 2023 Annual Data Report, October 2024\nObserved: p.Arg117His in 714/11318 (~6.3%)"
 
-
-
-
-
-
 # plot ----
-
-
-
 
 expected_after_mortality_simple <- expected_total_genotypes * (1 - annual_mortality_rate)
 

@@ -1,93 +1,3 @@
-# test ----
-we are missing gens from the full run.
-running v2
-
-
-library(readr)
-library(dplyr)
-
-# Define a simple processing function for each chunk.
-# For testing, we simply add a new column to indicate the chunk's starting position.
-process_db_chunk <- function(chunk, pos) {
-  chunk <- mutate(chunk, chunk_pos = pos)
-  return(chunk)
-}
-
-# Initialize an empty list to accumulate chunks.
-accumulated <- list()
-
-# Define a callback function that appends the processed chunk to the global list.
-chunk_callback <- function(x, pos) {
-  accumulated[[length(accumulated) + 1]] <<- process_db_chunk(x, pos)
-}
-
-# File to read (using a single file for testing).
-data_file <- "../output/scid_datasets.tsv"
-message("Processing file: ", data_file)
-
-# Read the file in chunks using read_delim_chunked.
-read_delim_chunked(
-  file = data_file,
-  delim = "\t",
-  col_names = TRUE,    # Use header from the file.
-  chunk_size = 2,      # Set a small chunk size for testing.
-  callback = DataFrameCallback$new(chunk_callback)
-)
-
-# Combine all accumulated chunks into one data frame.
-result <- bind_rows(accumulated)
-print(result)
-
-
-
-
-
-
-
-
-
-
-library(tidyr)
-
-# Convert the dataset from wide to long by pivoting the genetic defect columns
-df_long <- pivot_longer(
-  df,
-  cols = c("SCID", "IL2RG", "RAG1", "Artemis"),
-  names_to = "genetic_defect",
-  values_to = "count"
-)
-
-df_long <- df_long |> filter(!Country == "Israel")
-
-library(dplyr)
-library(ggplot2)
-library(tidyr)
-
-# Summarise counts per Country and genetic defect, and calculate prevalence
-df_summary <- df_long %>%
-  group_by(Country, genetic_defect, Population) %>%
-  summarise(total_count = sum(count), .groups = "drop") %>%
-  mutate(prevalence = total_count / Population)
-
-# Create a bar plot to compare the four genetic defects across populations
-p_comparison <- ggplot(df_summary, aes(x = Country, y = prevalence, fill = genetic_defect)) +
-  geom_bar(stat = "identity", position = "dodge", colour = "black") +
-  labs(title = "Prevalence of Genetic Defects Across Populations",
-       x = "Country",
-       y = "Prevalence (Count / Population)") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        legend.title = element_blank())
-
-print(p_comparison)
-# ggsave("../images/genetic_defects_comparison.png", plot = p_comparison, width = 8, height = 6)
-
-
-
-
-
-
-# x ----
-
 library(dplyr)
 library(stringr)
 library(purrr)
@@ -96,6 +6,104 @@ library(stringr)
 library(patchwork)
 library(ggplot2);theme_set(theme_bw())
 
+print("PID is in ~1 per 1,000 births")
+print("SCID is in ~1 per 100,000 births")
+print("For a patient with a PID-like phenotype we provide the probabilities of observing the causal genetic determinant")
+print("In these SCID we should take the observed number and x100 to give the observed count if we had 1,000,000 cases, rather than all PID")
+
+print("In a global populaiton of 1,000,000/1000 (1 PID per 1000) we have 10,000 PID.")
+print("In a global populaiton of 1,000,000/100,000 (1 SCID per 100000) we have 100 SCID.")
+
+print("In 1,000,000 PID we have 100,000 SCID.")
+print("In 1,000,000 PID we have 10,000 per SCID gene. (We have around 10 genes)")
+print("So for each gene we expect up to 1000.")
+
+# New ----
+
+# File to read (using a single file for testing).
+data_file <- "../output/scid_datasets.tsv"
+df_scid <- read.table(data_file, header = TRUE)
+
+library(tidyr)
+
+# Convert the dataset from wide to long by pivoting the genetic defect columns
+df_scid <- pivot_longer(
+  df_scid,
+  cols = c( "IL2RG", "RAG1", "DCLRE1C"),
+  names_to = "genetic_defect",
+  values_to = "count"
+)
+
+# df_scid <- df_scid |> filter(!Country == "Israel")
+
+head(df_scid)
+
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+# Summarise counts per Country and genetic defect, and calculate prevalence
+df_summary <- df_scid %>%
+  group_by(Country, genetic_defect, Population) %>%
+  summarise(total_count = sum(count), .groups = "drop") %>%
+  mutate(prevalence = total_count / Population)
+
+p_comparison <- ggplot(df_summary, aes(x = Country, y = prevalence, fill = genetic_defect)) +
+  geom_bar(stat = "identity", position = "dodge", colour = "black") +
+  geom_text(aes(label = total_count, y = prevalence + 1e-6),
+            position = position_dodge(width = 0.9),
+            size = 4) +
+  labs(x = "Country",
+       y = "Prevalence (Count / Population)") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.title = element_blank())
+
+print(p_comparison)
+
+ggsave("../images/validation_studies_scid_gene_comparison.pdf", plot = p_comparison, width = 6, height = 4)
+
+
+df_summary
+
+# test ----
+library(dplyr)
+library(ggplot2)
+library(binom)
+library(purrr)
+library(tidyr)
+
+library(dplyr)
+library(ggplot2)
+library(binom)
+
+
+# prep the count for SCID only rather than all PID.
+df_scid$count <- (df_scid$count*100)
+
+df_il2rg_all <- df_scid %>% 
+  filter(genetic_defect == "IL2RG") %>% 
+  mutate(rate_per_million = (count / Population) * 1e6)
+
+p_lines <- ggplot() +
+  geom_vline(data = df_il2rg_all, 
+             aes(xintercept = rate_per_million, colour = Country), 
+             linetype = "dotted", size = 1) +
+  geom_text(data = df_il2rg_all, 
+            aes(x = rate_per_million, y = 0, label = paste(Country, ":", count)),
+            angle = 90, vjust = -0.5, hjust = 0, size = 4, show.legend = FALSE) +
+  labs(title = "IL2RG-related SCID Cases per 1,000,000 Population",
+       x = "Cases per 1,000,000",
+       y = "") 
+  # theme_bw() #+
+  # # theme(axis.text.y = element_blank(),
+  #       axis.ticks.y = element_blank())
+
+
+p_lines
+# ggsave("../images/il2rg_scid_cases_per_million.png", plot = p_lines, width = 9, height = 3)
+
+# varestrisk ----
 PANEL <- 398
 
 # PanelAppRex ----
@@ -103,21 +111,17 @@ PANEL <- 398
 path_data <- "~/web/PanelAppRex/data"
 path_PanelAppData_genes_combined_Rds <- paste0(path_data, "/path_PanelAppData_genes_combined_Rds")
 df_core <- readRDS(file= path_PanelAppData_genes_combined_Rds)
-colnames(df_core)[colnames(df_core) == 'entity_name'] <- 'Genetic defect'  
+colnames(df_core)[colnames(df_core) == 'entity_name'] <- 'Genetic defect'
 df_core <- df_core |> filter(panel_id == PANEL)
 
 # VarRiskEst ----
 # source("panelapprex_import.R")
 
 # Load gene tally and variant data for the specified panel using the PANEL variable
-varRisEst_gene <- readRDS(file = paste0("~/web/var_risk_est/data/full_run/output/VarRiskEst_PanelAppRex_ID_", PANEL, "_gene_tally.Rds"))
-varRisEst_var  <- readRDS(file = paste0("~/web/var_risk_est/data/full_run/output/VarRiskEst_PanelAppRex_ID_", PANEL, "_gene_variants.Rds"))
+varRisEst_gene <- readRDS(file = paste0("../output/VarRiskEst_PanelAppRex_ID_", PANEL, "_gene_tally.Rds"))
+varRisEst_var  <- readRDS(file = paste0("../output/VarRiskEst_PanelAppRex_ID_", PANEL, "_gene_variants.Rds"))
 
-
-
-varRisEst_large  <- readRDS(file = paste0("~/web/var_risk_est/data/full_run/var_risk_est_large/VarRiskEst_PanelAppRex_ID_", PANEL, "_gene_variants_large.Rds"))
-
-
+# varRisEst_large  <- readRDS(file = paste0("~/web/var_risk_est/data/full_run/var_risk_est_large/VarRiskEst_PanelAppRex_ID_", PANEL, "_gene_variants_large.Rds"))
 
 
 score_map <- c(
@@ -149,22 +153,12 @@ score_df <- tibble(
   # mutate(classification_wrapped = str_wrap(classification, width = 20))
   mutate(
     classification_wrapped = str_wrap(
-      str_trunc(classification, width = 37, side = "right", ellipsis = "..."), 
+      str_trunc(classification, width = 37, side = "right", ellipsis = "..."),
       width = 20
     )
   )
 
 score_df$score <- score_df$score + 0.05
-p_score <- ggplot(score_df, aes(x = score, y = reorder(classification_wrapped, score), fill = score )) +
-  geom_col(color = "black") +
-  scale_fill_gradient2(low = "navy", mid = "lightblue", high = "red", midpoint = 0) +
-  labs(
-    x = "Score",
-    y = "Classification"
-  ) +
-  guides(fill = "none") 
-
-p_score
 
 get_score <- function(clinvar) {
   # standardise the term: replace underscores with spaces
@@ -181,168 +175,164 @@ get_score <- function(clinvar) {
 varRisEst_gene_scored <- varRisEst_gene %>%
   mutate(score = map_dbl(clinvar_clnsig, get_score))
 
-# Compute total count per gene and reorder gene names by descending total count
-gene_totals <- varRisEst_gene_scored %>%
-  group_by(genename) %>%
-  summarise(total_count = sum(count))
-
-varRisEst_gene_scored <- varRisEst_gene_scored %>%
-  left_join(gene_totals, by = "genename") %>%
-  mutate(genename = reorder(genename, -total_count))
-
-# Order stacking within each gene by increasing score
-varRisEst_gene_scored <- varRisEst_gene_scored %>%
-  group_by(genename) %>%
-  arrange(score) %>%
-  mutate(score_factor = factor(score, levels = unique(score))) %>%
-  ungroup()
-
-# Create horizontal stacked bar chart with segments ordered by score
-p1 <- ggplot(varRisEst_gene_scored, aes(x = count, y = genename, fill = score, ,group = score_factor)) +
-  geom_bar(stat = "identity", position = "stack") +
-  scale_fill_gradient2(low = "navy", mid = "lightblue", high = "red", midpoint = 0) +
-  scale_y_discrete(breaks = function(x) x[seq(1, length(x), 20)]) +
-  labs(
-    # x = "Classifications per gene (count)",
-    y = "Gene name\n(every 20th)",
-    fill = "Score"
-  )
-
-p1
-
-# Create a numeric index for gene names
-# varRisEst_gene_scored <- varRisEst_gene_scored %>%
-# mutate(gene_index = as.numeric(genename))
-
-p2 <- ggplot(varRisEst_gene_scored, aes(x = count, y = genename, fill = score, group = score_factor)) +
-  geom_bar(stat = "identity", position = "fill") +
-  scale_fill_gradient2(low = "navy", mid = "lightblue", high = "red", midpoint = 0) +
-  scale_x_continuous(labels = percent_format()) +
-  scale_y_discrete(breaks = function(x) x[seq(1, length(x), 20)]) +
-  labs(
-    # x = " Classifications per gene (%)",
-    y = "Gene name\n(every 20th)",
-    fill = "Score"
-  )
-
-p1 + p2 +
-  plot_annotation(tag_levels = 'A') +
-  plot_layout(guides = 'collect') + 
-  plot_layout(axis_titles = "collect")
 
 
-# Filter for rows with score > 0, then tally counts per gene
-varRisEst_gene_scored_positive <- varRisEst_gene_scored %>%
-  filter(score > 0) %>%
-  group_by(genename) %>%
-  summarise(score_positive_total = sum(count), .groups = "drop") %>%
-  arrange(desc(score_positive_total))
-# slice_head(n = 15)
+# 
+# library(dplyr)
+# library(ggplot2)
+# 
+df_scid$genetic_defect |> unique()
+# [1] "IL2RG"   "RAG1"    "DCLRE1C"
+# 
+# gene <- "IL2RG"
+# 
 
-# Filter for rows with score > 0, then tally counts per gene
-top_ranks <- varRisEst_gene_scored_positive %>%
-  arrange(desc(score_positive_total)) %>%
-  slice_head(n = 15)
-
-# Filter the data to include only the top 10 genes and set the factor levels
-top_ranks <- varRisEst_gene_scored %>%
-  semi_join(top_ranks, by = "genename") %>%
-  mutate(genename = factor(genename, levels = top_ranks$genename))
-
-# Plot horizontal stacked bar chart for the top 10 genes
-p3 <- ggplot(top_ranks, aes(x = count, y = genename, fill = score, group = score_factor)) +
-  geom_bar(stat = "identity", position = "stack", color = "black") +
-  scale_fill_gradient2(low = "navy", mid = "lightblue", high = "red", midpoint = 0) +
-  labs(
-    # x = "Classifications per gene (count)",
-    y = "Gene name\n(Top 15 pathogenic count)",
-    fill = "Score"
-  )
-
-p3
-
-# Complex layouts can be created with the `design` argument
-design <- "
-  123
-  144
-"
-patch1 <- 
-  p_score + p1 + p2 + p3 + plot_layout(design = design)  +
-  plot_annotation(tag_levels = 'A',) +
-  plot_layout(guides = 'collect', axis_titles = "collect")
-
-ggsave(patch1, file = paste0("../output/VarRiskEst_PanelAppRex_ID_", PANEL, "_p_varRisEst_summary_scores.pdf"), height = 6, width = 10)
-
-names(varRisEst_gene_scored)
-
-gene_summary <- varRisEst_gene_scored %>%
-  group_by(genename) %>%
-  summarise(
-    # 0-1,2-3,4,5,
-    score5 = sum(if_else(score == 5, count, 0L)),
-    score4 = sum(if_else(score >=3 & score <= 4, count, 0L)),
-    score2 = sum(if_else(score >= 0 & score <= 2, count, 0L)),
-    score0 = sum(if_else(score >= -5 & score <= -1, count, 0L)),
-  ) %>%
-  ungroup() %>%
-  mutate(VariantCounts = paste(score5, score4, score2,score0, sep = " / "))
-
-
-max_pathogenic <- max(gene_summary$Pathogenic, na.rm = TRUE)
-max_total <- max(gene_summary$Pathogenic + gene_summary$Other, na.rm = TRUE)
-
-varRisEst_summary <- merge(gene_summary, varRisEst_gene_scored_positive)
-names(varRisEst_summary)
-colnames(varRisEst_summary)[colnames(varRisEst_summary) == 'genename'] <- 'Genetic defect'
-colnames(varRisEst_summary)[colnames(varRisEst_summary) == 'score5'] <- 'score5.VRE'
-colnames(varRisEst_summary)[colnames(varRisEst_summary) == 'score4'] <- 'score4.VRE'
-colnames(varRisEst_summary)[colnames(varRisEst_summary) == 'score2'] <- 'score2.VRE'
-colnames(varRisEst_summary)[colnames(varRisEst_summary) == 'score0'] <- 'score0.VRE'
-colnames(varRisEst_summary)[colnames(varRisEst_summary) == 'VariantCounts'] <- 'VariantCounts.VRE'
-
-# Calculate a score for each row
-varRisEst_var_scored <- varRisEst_var %>%
-  mutate(score = map_dbl(clinvar_clnsig, get_score))
-
-varRisEst_var_path <- varRisEst_var_scored |> filter(score >= 4)
-
-# Calculate min, max, Q1, Q3 for probabilities
-varRisEst_var_path_summary <- varRisEst_var_path %>%
-  ungroup() %>%
-  group_by(genename) %>%
-  summarise(probabilities = list(occurrence_prob), .groups = "drop") %>%
-  mutate(
-    min_prob = sapply(probabilities, min, na.rm = TRUE),
-    q1_prob = sapply(probabilities, function(x) quantile(x, 0.25, na.rm = TRUE)),
-    median_prob = sapply(probabilities, median, na.rm = TRUE),
-    q3_prob = sapply(probabilities, function(x) quantile(x, 0.75, na.rm = TRUE)),
-    max_prob = sapply(probabilities, max, na.rm = TRUE)
-  )
-
-colnames(varRisEst_var_path_summary)[colnames(varRisEst_var_path_summary) == 'genename'] <- 'Genetic defect'# 
-
-# Merge summary into the main dataframe and handle NA values
-# df <- merge(df, varRisEst_var_path_summary, by = "Genetic defect", all.x = TRUE)
-df <- merge(df_core, varRisEst_var_path_summary, by= "Genetic defect", all.x = TRUE )
-
-
-# df1 <- merge(df, varRisEst_var_path_summary)
+# figure ----
+library(dplyr)
+library(ggplot2)
+library(patchwork)
 
 
 
-names(df)
-
-library(tidyr)
-
-df <- df %>%
-  mutate(
-    probabilities = map(probabilities, ~ if(all(is.na(.))) rep(0, 5) else replace_na(., 0)),
-    min_prob = replace_na(min_prob, 0),
-    q1_prob = replace_na(q1_prob, 0),
-    median_prob = replace_na(median_prob, 0),
-    q3_prob = replace_na(q3_prob, 0),
-    max_prob = replace_na(max_prob, 0)
-  )
 
 
+plot_gene_scid <- function(gene) {
+  # Filter dataset and calculate adjusted counts and rate per million using expected SCID incidence (1 per 100,000)
+  df_gene <- df_scid %>% 
+    filter(genetic_defect == gene) %>% 
+    mutate(expected_SCID = Population / 100000,
+           ratio = if_else(SCID > 0, expected_SCID / SCID, NA_real_),
+           adjusted_count = if_else(SCID > 0, count * ratio, NA_real_),
+           rate_per_million = (adjusted_count / Population) * 1e6)
+  
+  # Get overall predicted values from varRisEst_gene_scored for the two score groups
+  overall_pathogenic <- varRisEst_gene_scored %>% 
+    filter(genename == gene, score == 5) %>% 
+    pull(overall_prob) * 1e6
+  
+  overall_likely <- varRisEst_gene_scored %>% 
+    filter(genename == gene, score > 2) %>% 
+    summarise(total_prob = sum(overall_prob)) %>% 
+    pull(total_prob) * 1e6
+  
+  # Summarise to get one vline per country for the legend (avoiding duplicates)
+  df_countries <- df_gene %>% 
+    group_by(Country) %>% 
+    summarise(rate_per_million = mean(rate_per_million), .groups = "drop")
+  
+  # Base plot with vlines for each country and overall predictions 
+  p <- ggplot() +
+    # Country-specific vlines (mapped to country names)
+    geom_vline(data = df_countries,
+               aes(xintercept = rate_per_million, colour = Country),
+               linetype = "dotted", size = 1) +
+    # Overall predicted vlines mapped to dummy groups to force them into the legend
+    geom_vline(aes(xintercept = overall_pathogenic, colour = "Predicted median"),
+               linetype = "solid", size = 1) +
+    geom_vline(aes(xintercept = overall_likely, colour = "Predicted incl LP"),
+               linetype = "solid", size = 1) +
+    annotate("text", x = overall_pathogenic, y = Inf,
+             label = paste("Predicted\ntotal:", round(overall_pathogenic, 2)),
+             vjust = 2, colour = "darkgreen") +
+    annotate("text", x = overall_likely, y = Inf,
+             label = paste("Predicted including\nLP:", round(overall_likely, 2)),
+             vjust = 4, colour = "navy") +
+    labs(title = paste0(gene, " - related SCID"),
+         x = "Cases SCID per 1,000,000 PID",
+         y = "") 
+    # theme_bw() #+
+    # theme(axis.text.y = element_blank(),
+          # axis.ticks.y = element_blank())
+  
+  # Observed distribution based on adjusted rate per million (normal approximation)
+  nsamples <- 10000
+  mean_rate <- mean(df_gene$rate_per_million, na.rm = TRUE)
+  sd_rate <- sd(df_gene$rate_per_million, na.rm = TRUE)
+  norm_samples <- rnorm(nsamples, mean = mean_rate, sd = sd_rate)
+  median_norm <- median(norm_samples)
+  ci_norm <- quantile(norm_samples, probs = c(0.025, 0.975))
+  
+  p <- p +
+    geom_density(data = data.frame(norm_samples = norm_samples),
+                 aes(x = norm_samples, y = ..scaled..),
+                 fill = "orange", alpha = 0.5) +
+    geom_vline(xintercept = median_norm, linetype = "dotted", colour = "black", size = 1) +
+    geom_vline(xintercept = ci_norm[1], linetype = "dotted", colour = "black", size = 1) +
+    geom_vline(xintercept = ci_norm[2], linetype = "dotted", colour = "black", size = 1) +
+    annotate("text", x = median_norm, y = Inf,
+             label = paste("normal median:", round(median_norm, 2)),
+             colour = "red", vjust = 0)
+  
+  # Predicted distributions for each score group and combine them into a single set of samples
+  set.seed(666)
+  nsamples_exp <- 10000
+  
+  sd_pathogenic <- overall_pathogenic * 0.1
+  expected_pathogenic_samples <- rnorm(nsamples_exp, mean = overall_pathogenic, sd = sd_pathogenic)
+  
+  sd_likely <- overall_likely * 0.1
+  expected_likely_samples <- rnorm(nsamples_exp, mean = overall_likely, sd = sd_likely)
+  
+  overall_expected_samples <- c(expected_pathogenic_samples, expected_likely_samples)
+  median_overall_expected <- median(overall_expected_samples)
+  ci_overall_expected <- quantile(overall_expected_samples, probs = c(0.025, 0.975))
+  
+  p <- p +
+    geom_density(data = data.frame(overall_expected_samples = overall_expected_samples),
+                 aes(x = overall_expected_samples, y = ..scaled..),
+                 fill = "lightgreen", alpha = 0.5)
+  
+  # Annotate the normal distribution median if it is greater than zero
+  if(median_overall_expected > 0) {
+    p <- p + 
+      geom_vline(xintercept = median_overall_expected, linetype = "dotdash", colour = "darkgreen", size = 1) +
+      annotate("text", x = median_overall_expected, y = Inf,
+               label = paste("Median:", round(median_overall_expected, 2)),
+               colour = "darkgreen", vjust = 8)
+  }
+  
+  # Build a custom colour mapping that includes each unique country plus the two predicted groups
+  country_levels <- sort(unique(df_countries$Country))
+  legend_levels <- c(country_levels, "Predicted median", "Predicted incl LP")
+  # Set all countries to orange and the two predicted groups to darkgreen and navy respectively
+  legend_colors <- c(rep("orange", length(country_levels)), "darkgreen", "navy")
+  
+  p <- p + scale_colour_manual(name = "Legend",
+                               breaks = legend_levels,
+                               values = setNames(legend_colors, legend_levels))
+  
+  
+  
+  # Build a custom colour mapping that includes each unique country plus the two predicted groups
+  country_levels <- sort(unique(df_countries$Country))
+  legend_levels <- c(country_levels, "Predicted median", "Predicted incl LP")
+  # Set all countries to orange and the two predicted groups to darkgreen and navy respectively
+  legend_colors <- c(rep("orange", length(country_levels)), "darkgreen", "navy")
+  
+  p <- p + scale_colour_manual(name = "Legend",
+                               breaks = legend_levels,
+                               values = setNames(legend_colors, legend_levels),
+                               guide = guide_legend(
+                                 override.aes = list(linetype = "solid",
+                                                     shape = NA,
+                                                     size = 5,
+                                                     keywidth = 2)
+                               ))
+  
+  return(p)
+}
 
+# Generate plots for each gene
+p_il2rg   <- plot_gene_scid("IL2RG")
+p_rag1    <- plot_gene_scid("RAG1")
+p_dclre1c <- plot_gene_scid("DCLRE1C")
+
+# Combine plots using patchwork (stack vertically)
+combined_plot <- p_il2rg / p_rag1 / p_dclre1c +
+  plot_layout(guides = 'collect', axis = "collect") +
+  plot_annotation(tag_levels = 'A')
+
+combined_plot
+
+# Save the combined plot
+ggsave("../images/validation_studies_scid_combined_plot.pdf", plot = combined_plot, width = 8, height = 7)

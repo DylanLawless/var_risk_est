@@ -3,7 +3,7 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: varEstRisk2025lawless.aux
 The style file: unsrtnat.bst
 Database file #1: references.bib
-Repeated entry---line 499 of file references.bib
+Repeated entry---line 525 of file references.bib
  : @article{tangye_human_2022
  :                           ,
 I'm skipping whatever remains of this entry
@@ -13,45 +13,45 @@ while executing---line 1315 of file unsrtnat.bst
 Name 8 in "{The UniProt Consortium} and Bateman, Alex and Martin, Maria-Jesus and Orchard, Sandra and Magrane, Michele and Adesina, Aduragbemi and Ahmad, Shadab and Bowler-Barnett, and Others." has a comma at the end for entry the_uniprot_consortium_uniprot_2025
 while executing---line 1315 of file unsrtnat.bst
 Warning--empty journal in lawless_2025_15111584
-You've used 39 entries,
+You've used 40 entries,
             2481 wiz_defined-function locations,
-            857 strings with 18187 characters,
-and the built_in function-call counts, 21835 in all, are:
-= -- 1504
-> -- 2043
+            862 strings with 18599 characters,
+and the built_in function-call counts, 22497 in all, are:
+= -- 1528
+> -- 2142
 < -- 9
-+ -- 723
-- -- 644
-* -- 2284
-:= -- 3904
-add.period$ -- 175
-call.type$ -- 39
-change.case$ -- 78
++ -- 758
+- -- 676
+* -- 2365
+:= -- 4033
+add.period$ -- 178
+call.type$ -- 40
+change.case$ -- 80
 chr.to.int$ -- 38
-cite$ -- 41
-duplicate$ -- 749
-empty$ -- 1445
-format.name$ -- 692
-if$ -- 4280
-int.to.chr$ -- 2
-int.to.str$ -- 40
+cite$ -- 42
+duplicate$ -- 763
+empty$ -- 1475
+format.name$ -- 725
+if$ -- 4400
+int.to.chr$ -- 3
+int.to.str$ -- 41
 missing$ -- 39
-newline$ -- 261
-num.names$ -- 117
-pop$ -- 227
+newline$ -- 266
+num.names$ -- 120
+pop$ -- 239
 preamble$ -- 1
-purify$ -- 39
+purify$ -- 40
 quote$ -- 0
-skip$ -- 398
+skip$ -- 405
 stack$ -- 0
-substring$ -- 914
-swap$ -- 107
+substring$ -- 916
+swap$ -- 112
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 273
+type$ -- 280
 warning$ -- 2
-while$ -- 141
+while$ -- 143
 width$ -- 0
-write$ -- 625
+write$ -- 637
 (There were 3 error messages)
