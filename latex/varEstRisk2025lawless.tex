@@ -66,6 +66,7 @@ VarRiskEst is available under the MIT licence.}
  \acro{hpc}[HPC]{High-Performance Computing}
  \acro{hwe}[HWE]{Hardy-Weinberg Equilibrium}
  \acro{iei}[IEI]{Inborn Errors of Immunity}
+  \acro{ig}[Ig]{Immunoglobulin}
  \acro{indel}[InDel]{Insertion/Deletion}
  \acro{iuis}[IUIS]{International Union of Immunological Societies}
  \acro{ld}[LD]{Linkage Disequilibrium}
@@ -361,8 +362,11 @@ This provided transcript-level metrics, such as observed/expected ratios, \ac{lo
 To test for overrepresentation of biological functions, the prioritised genes were compared against gene sets from MsigDB (including hallmark, positional, curated, motif, computational, GO, oncogenic, and immunologic signatures) and WikiPathways using hypergeometric tests with FUMA \cite{watanabe_functional_2017, liberzon_molecular_2011}. The background set consisted of 24,304 genes. Multiple testing correction was applied per data source using the Benjamini-Hochberg method, and gene sets with an adjusted P-value $\le$ 0.05 and more than one overlapping gene are reported.
 
 \subsection{Deriving novel PID classifications by genetic PPI and clinical features}
-Immunophenotypic data were extracted from the IUIS IEI dataset, systematically cleaned (see database link) and simplified by binarising clinical features (T cell, B cell, Ig, Neutrophil) into normal and not normal categories. The \ac{ppi} network embeddings from STRINGdb were reused for assigning each gene to its \ac{ppi} cluster. Associations between \ac{ppi} clusters and the binarised clinical features were quantified using chi-square tests. %(see \textbf{Figure \ref{fig:chi_heatmaps}}). 
-A decision tree model was subsequently constructed to predict \ac{ppi} clusters based on the clinical features. Hyperparameters (complexity parameter, minimum split and bucket sizes, and maximum tree depth) were optimised by 5-fold cross validation using \texttt{caret} with \texttt{rpart}. Terminal node assignments from the resulting tree defined novel \ac{pid} classification groups, which were relabelled according to the predominant abnormal feature within each group.
+We recategorised 315 immunophenotypic features from the original \ac{iuis} \ac{iei} annotations, reducing the original multi‐level descriptors (e.g. ``decreased cd8, normal or decreased cd4'') first to 
+minimal labels (e.g.``low'') and second to binary outcomes (normal vs. not-normal) for T cells, B cells, neutrophils, and immunoglobulins %(\textbf{Figure \ref{fig:immunophenotype_before_after}}). 
+Each gene was mapped to its \ac{ppi} cluster derived from STRINGdb and UMAP embeddings from previous steps. 
+We first tested for non‐random associations between these four binary immunophenotypes and PPI clusters using $\chi^2$ tests. %(see Figure \ref{fig:multicat_patch_3_clust_chi}). 
+To generate a data‐driven PID classification, we trained a decision tree (rpart) to predict PPI cluster membership from the four immunophenotypic features plus the traditional IUIS Major and Subcategory labels. Hyperparameters (complexity parameter = 0.001, minimum split = 10, minimum bucket = 5, maximum depth = 30) were optimised via five‐fold cross validation using the \texttt{caret} framework. Terminal node assignments were then relabelled according to each group’s predominant abnormal feature profile.
 
 \subsection{Probability of observing AlphaMissense pathogenicity}
 We obtained the subset pathogenicity predictions from AlphaMissense via the AlphaFold database and whole genome data from the studies data repository\cite{cheng_accurate_2023, jun_cheng_2023_8208688}. 
@@ -569,30 +573,80 @@ In \textbf{Figure \ref{fig:karyo_locusplot_merged} (C)}, high probabilities of o
 %This section looks at the current 9 major IEI classes, and ~45 subclasses.
 %These were designed over last few decades based on phenotype observation and subjective decisions.
 %We can use the new information be potentially define better, new data-based classifications: clustering by PPI, severity/probability, and markers (T, B, NK, Ig), phenotype CVID, etc. 
-We recategorised 315 immunophenotypic features from the original IUIS IEI annotations, reducing detailed descriptions (e.g. ``decreased cd8, normal or decreased cd4''), first to 
+We recategorised 315 immunophenotypic features from the original \ac{iuis} \ac{iei} annotations, reducing detailed descriptions (e.g. ``decreased cd8, normal or decreased cd4''), first to 
 minimal labels (e.g.``low''), and second to binary outcomes (normal vs. not-normal) for T cells, B cells, neutrophils, and immunoglobulins (\textbf{Figure \ref{fig:immunophenotype_before_after}}). 
 These simplified profiles were integrated with \ac{ppi} network clustering from STRINGdb to refine \ac{pid} gene groupings. 
 Chi-square analyses confirmed significant associations between specific clinical abnormalities and \ac{ppi} clusters (\textbf{Figure \ref{fig:chi_heatmaps}}). 
 A decision tree classifier, with hyperparameters optimised via 5-fold cross validation, demonstrated high sensitivity and specificity, as shown in the confusion matrices and variable importance metrics (\textbf{Figure \ref{fig:confusion_matrix}}). 
 The resulting novel \ac{pid} classifications, illustrated by the decision tree and gene group distributions (\textbf{Figure \ref{fig:pid_class_tree_distribution}}), provide a more coherent and data-driven framework for categorising \ac{pid} genes.
 
+
+\subsection{Novel PID classifications derived from genetic PPI and clinical features}
+We recategorised 315 immunophenotypic features from the original \ac{iuis} \ac{iei} annotations, reducing detailed descriptions (e.g.\ “decreased CD8, normal or decreased CD4”) to minimal labels (e.g.\ “low”) and then binarising them (normal vs.\ not-normal) for T cells, B cells, \ac{ig} and neutrophils 
+(\textbf{Figure \ref{fig:immunophenotype_before_after}}). 
+These simplified profiles were mapped onto STRINGdb PPI clusters, revealing non‑random distributions ($\chi^2 < 1e‑13$; 
+\textbf{Figure \ref{fig:plot_multicat_patch_3_clust_chi}}), indicating that network context captures key immunophenotypic variation.
+
+We next compared four classifiers under 5‑fold cross‑validation to determine which features predicted PPI clustering.
+As shown in \textbf{Figure \ref{fig:multicat_performance_combined}}, the fully combined model achieved the highest accuracy among the four:
+(i) phenotypes only (33 \%) (i.e. T cell, B cell, \ac{ig}, Neutrophil);
+(ii) phenotypes + IUIS major category (50 \%) (e.g. CID. See \textbf{Box \ref{box:definitions}} for more);
+(iii) IUIS major + subcategory only (59 \%) (e.g. CID, T-B+ SCID); and
+(iv) phenotypes + IUIS major + subcategory  (61 \%).
+This demonstrated that incorporating both traditional IUIS classifications and core immunophenotypic markers into the PPI‑based framework yielded the most robust discrimination of PID gene clusters.
+Variable importance analysis highlighted abnormality status for \ac{ig} and T cells
+were among the top ten features in addition to the other IUIS major and sub categories. 
+Per‑class specificity remained uniform across the classes while sensitivity dropped.
+
+The PPI  and  immunophenotype model yielded 17 data‑driven PID groups, whereas incorporating the full complement of IUIS categories expanded this to 33 groups. 
+For clarity, we only demonstrate the decision tree from the smaller 17‑group model in 
+\textbf{Figure \ref{fig:pid_class_tree_distribution}}.
+% full model: plot_multicat_combined_classification_tree.pdf
+Each terminal node is annotated by its predominant immunophenotypic signature (for example, ``group 65 with abnormal T cell and B cell features''), and the full resulting gene counts per 33 class are plotted in 
+% \textbf{Figure \ref{fig:multicat_new_pid_classes_combined}}. 
+\textbf{Figure \ref{fig:pid_class_tree_distribution}}.
+Although, less user-friendly, this data‑driven taxonomy 
+both aligns with and refines traditional \ac{iuis} \ac{iei} classifications
+%Although, less user-friendly, 
+to provide a scaffold for large‑scale computational analyses.
+Because this framework is fully reproducible, alternative PPI embeddings or incorporate additional molecular annotations can readily swapped to continue building on these PID classification schemes.
+
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.99\textwidth]{../images/plot_patch1.pdf}
  %   \includegraphics[width=0.7\textwidth]{../images/plot_patch_1_v2.pdf}
   \caption{ \textbf{Distribution of immunophenotypic features before and after recategorisation.}
-  The original IUIS IEI descriptions contain information such as T cell-related
+  The original \ac{iuis} \ac{iei} descriptions contain information such as T cell-related
   ``decreased cd8, normal or decreased cd4 cells'' which we recategorise as ``low''.
-  The bar plot shows the count of unique labels for each status (normal, not\_normal) across the T cell, B cell, Ig, and Neutrophil features.}
+  The bar plot shows the count of unique labels for each status (normal, not\_normal) across the T cell, B cell, \ac{ig}, and Neutrophil features.}
   \label{fig:immunophenotype_before_after}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/plot_multicat_patch_3_clust_chi.pdf}
+  \caption{\textbf{Heatmaps of clinical feature distributions by PPI cluster.} The heatmaps display the count of observations for abnormality of each clinical feature (A) T cell, (B) B cell, (C) Immunoglobulin, (D) Neutrophil, in relation to the PPI clusters, with p-values from chi-square tests annotated in the titles.}
+  \label{fig:plot_multicat_patch_3_clust_chi}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/plot_multicat_performance_combined.pdf}
+  \caption{\textbf{Performance comparison of PID classifiers.} Classification predicting PPI cluster membership from IUIS major category, subcategory, and immunological features. (A) Overall accuracy for four rpart models
+used to predict \ac{ppi} clustering. The combined model achieves 61.4 \% accuracy, exceeding all simpler approaches. 
+Nodes were split to minimize Gini impurity, pruned by cost-complexity (cp = 0.001), and validated via 5‑fold cross‑validation. %Terminal leaves display the assigned cluster and the proportion of genes falling into each group. 
+(B-E) The summary statistics from the top model are detailed.  
+}
+  \label{fig:multicat_performance_combined}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.99\textwidth]{../images/p_new_classification_finetune_tree.pdf}       
   \includegraphics[width=0.99\textwidth]{../images/plot_new_pid_classifications_genetic.pdf}
+  \includegraphics[width=0.99\textwidth]{../images/plot_multicat_new_pid_classes_combined.pdf}
   \caption{\textbf{ Fine-tuned model for PID classification.} 
-  (Top) In each terminal node, the top block indicates the number of genes in the node; the middle block shows the fitted class probabilities (which sum to 1); and the bottom block displays the percentage of the total sample in that node. These metrics summarise the model's assignment based on immunophenotypic and PPI features. (Bottom) Bar plot presenting the distribution of novel PID classifications, where group labels denote the predominant abnormal clinical feature(s) (e.g. T cell, B cell, Ig, Neutrophil) characterising each group.}  
+  (Top) In each terminal node, the top block indicates the number of genes in the node; the middle block shows the fitted class probabilities (which sum to 1); and the bottom block displays the percentage of the total sample in that node. These metrics summarise the model's assignment based on immunophenotypic and PPI features. (Middle) Bar plot presenting the distribution of novel PID classifications, where group labels denote the predominant abnormal clinical feature(s) (e.g. T cell, B cell, Ig, Neutrophil) characterising each group. (Bottom) The complete model including the traditional \ac{iuis} \ac{iei} categories.}  
   \label{fig:pid_class_tree_distribution}
 \end{figure}
 
@@ -805,12 +859,7 @@ We selected the top two enriched clusters (as per \textbf{Figure \ref{fig:p_cor_
 \FloatBarrier
 \subsection{Novel PID classifications}
 
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.99\textwidth]{../images/plot_patch_3_clust_chi.pdf}
-  \caption{\textbf{Heatmaps of clinical feature distributions by PPI cluster.} The heatmaps display the count of observations for each clinical feature (T cell, B cell, Ig, Neutrophil) in relation to the PPI clusters, with p-values from chi-square tests annotated in the titles.}
-  \label{fig:chi_heatmaps}
-\end{figure}
+
 
 \begin{figure}[ht]
   \centering
@@ -967,11 +1016,6 @@ Clinical Interpretation             & Top causal variant confirmed; no evidence 
 \bottomrule
 \end{tabular}}
 \end{table}
-
-
-
-
-
 
 
 \FloatBarrier
