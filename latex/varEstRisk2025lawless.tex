@@ -154,49 +154,58 @@ As a starting point, we considered the classical \ac{hwe} for a biallelic locus:
 \[
 p^2 + 2pq + q^2 = 1,
 \]
-where \(p\) is the allele frequency, \(q = 1 - p\), \(p^2\) represents the homozygous dominant, \(2pq\) the heterozygous, and \(q^2\) the homozygous recessive genotype frequencies. For disease phenotypes, particularly under \ac{ar} \ac{moi}, the risk is traditionally linked to the homozygous state (\(p^2\)); however, to account for compound heterozygosity across multiple variants, we extend this by incorporating the contribution from other pathogenic alleles.
+where \(p\) is the allele frequency, \(q = 1 - p\), \(p^2\) represents the homozygous dominant, \(2pq\) the heterozygous, and \(q^2\) the homozygous recessive genotype frequencies. For disease phenotypes, particularly under \ac{ar} \ac{moi}, the risk is traditionally linked to the homozygous state (\(p^2\)); however, to account for compound heterozygosity across multiple variants, %we extend this by incorporating the contribution from other pathogenic alleles.
+we allocated the overall gene‐level risk proportionally among variants.
 
 Our computational pipeline estimated the probability of observing a disease-associated genotype for each variant and aggregated these probabilities by gene and ClinVar classification. This approach included all variant classifications, not limited solely to those deemed ``pathogenic'', and explicitly conditioned the classification on the given phenotype, recognising that a variant could only be considered pathogenic relative to a defined clinical context. The core calculations proceeded as follows:
 
-\paragraph{1. Allele Frequency and Total Variant Frequency.} \label{sec:min_risk}
+\paragraph{1. Allele Frequency and Total Variant Frequency.} 
+\label{sec:min_risk}
 For each variant \(i\) in a gene, the allele frequency was denoted as \(p_i\). For each gene, we defined the total variant frequency (summing across all reported variants in that gene) as:
-\[
-P_{\text{tot}} = \sum_{i \in \text{gene}} p_i.
-\]
+
+\[P_{\text{tot}} = \sum_{i \in \text{gene}} p_i.\]
+
 If any of the possible \ac{snv}  had no observed allele (\(p_i = 0\)), we assigned a minimal risk:
-\[
-p_i = \frac{1}{\max(AN) + 1},
-\]
+
+\[p_i = \frac{1}{\max(AN) + 1}\]
+
 where \(\max(AN)\) was the maximum allele number observed for that gene. This adjustment ensured that a nonzero risk was incorporated even in the absence of observed variants.
+
 \paragraph{2. Occurrence Probability Based on \ac{moi}.}
-The probability that an individual was affected by a variant depended on the mode of \ac{moi} relative to a specific phenotype. Specifically, we calculated the occurrence probability \(p_{\text{disease},i}\) for each variant as follows:
+The probability that an individual was affected by a variant depended on the \ac{moi} relative to a specific phenotype. Specifically, we calculated the occurrence probability \(p_{\text{disease},i}\) for each variant as follows:
 \begin{itemize}
     \item For \textbf{\ac{ad}} and \textbf{\ac{xl}} variants, a single copy was sufficient, so
     \[
     p_{\text{disease},i} = p_i.
     \]
-    \item For \textbf{\ac{ar}} variants, disease manifested when two pathogenic alleles were present. In this case, we accounted for both the homozygous state and the possibility of compound heterozygosity:
-    \[
-    p_{\text{disease},i} = p_i^2 + 2\,p_i\bigl(P_{\text{tot}} - p_i\bigr).
-    \]
+    \item For \textbf{\ac{ar}} variants, disease is expected to manifest when two pathogenic alleles were present. In this case, we accounted for both the homozygous state and the possibility of compound heterozygosity.
+     We allocated the overall gene‐level risk ($P_{\text{tot}}^2$) proportionally by variant allele frequency:
+% version 1 is wrong because it counted het variants twice: \[ p_{\text{disease},i} = p_i^2 + 2\,p_i\bigl(P_{\text{tot}} - p_i\bigr). \]
+    \[p_{\text{disease},i} = p_i \; P_{\text{tot}}.\] % version 2
 \end{itemize}
 
 \paragraph{3. Expected Case Numbers and Case Detection Probability.}
 Given a population with \(N\) births (e.g. as seen in our validation studies, \(N = 69\,433\,632\)), the expected number of cases attributable to variant \(i\) was calculated as:
+
 \[
 E_i = N \cdot p_{\text{disease},i}.
 \]
+
 The probability of detecting at least one affected individual for that variant was computed as:
+
 \[
 P(\geq 1)_i = 1 - \bigl(1 - p_{\text{disease},i}\bigr)^N.
 \]
 
 \paragraph{4. Aggregation by Gene and ClinVar Classification.}
-For each gene and for each ClinVar classification (e.g. “Pathogenic”, “Likely pathogenic”, “Uncertain significance”, etc.), we aggregated the results across all variants. The total expected cases for a given group was:
+For each gene and for each ClinVar classification (e.g. ``Pathogenic'', ``Likely pathogenic'', ``Uncertain significance'', etc.), we aggregated the results across all variants. The total expected cases for a given group was:
+
 \[
 E_{\text{group}} = \sum_{i \in \text{group}} E_i,
 \]
+
 and the overall probability of observing at least one case within the group was calculated as:
+
 \[
 P_{\text{group}} = 1 - \prod_{i \in \text{group}} \left(1 - p_{\text{disease},i}\right).
 \]
