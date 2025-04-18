@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.7.19)  18 APR 2025 10:10
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.7.19)  19 APR 2025 00:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2068,27 +2068,37 @@ File: ../images/p_alphamissense_kw.pdf Graphic file (type pdf)
 [48
 
 ] [49] [50] [51]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1031.
- [52]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1031.
+File: ../images/plot_quant_uncert_ci.pdf Graphic file (type pdf)
+<use ../images/plot_quant_uncert_ci.pdf>
+ [52] [53] [54]
+Overfull \hbox (0.8992pt too wide) in paragraph at lines 1219--1227
+\OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 300$\TU/lmr/m/n/12 –$\OT1/cm
+r/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 655$\TU/lmr/m/n/12 ; Fig.3E). Of th
+is, $\OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 245$ \TU/lmr/m/n/12 (51
+.7%) was assigned to the observed \TU/lmr/m/it/12 p.Ser237Ter
+ []
+
+[55]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1238.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1238.
  (./varEstRisk2025lawless.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1031.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1031.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1238.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1238.
 
 Package rerunfilecheck Info: File `varEstRisk2025lawless.out' has not changed.
-(rerunfilecheck)             Checksum: 8E8CD3E48D2AC822BDBC73B7D6D4692A.
+(rerunfilecheck)             Checksum: F752617643FADFCD1B84263B12889078.
 
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 41633 strings out of 492970
- 866856 string characters out of 6133938
- 1028482 words of memory out of 5000000
- 44942 multiletter control sequences out of 15000+600000
- 552177 words of font info for 126 fonts, out of 8000000 for 9000
+ 41646 strings out of 492970
+ 867252 string characters out of 6133938
+ 1030141 words of memory out of 5000000
+ 44951 multiletter control sequences out of 15000+600000
+ 552193 words of font info for 128 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  65i,11n,101p,10564b,957s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on varEstRisk2025lawless.pdf (52 pages).
+Output written on varEstRisk2025lawless.pdf (55 pages).

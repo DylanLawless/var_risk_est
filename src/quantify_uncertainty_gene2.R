@@ -837,9 +837,94 @@ ggplot(ci_all,
 
 
 
+library(dplyr)
+library(stringr)
+library(purrr)
+library(scales)
+library(stringr)
+library(patchwork)
+library(ggplot2);theme_set(theme_bw())
+
+# varestrisk ----
+PANEL <- 398
+
+# PanelAppRex ----
+# Rds format
+path_data <- "~/web/PanelAppRex/data"
+path_PanelAppData_genes_combined_Rds <- paste0(path_data, "/path_PanelAppData_genes_combined_Rds")
+df_core <- readRDS(file= path_PanelAppData_genes_combined_Rds)
+colnames(df_core)[colnames(df_core) == 'entity_name'] <- 'Genetic defect'
+df_core <- df_core |> filter(panel_id == PANEL)
+
+# VarRiskEst ----
+# source("panelapprex_import.R")
+
+# Load gene tally and variant data for the specified panel using the PANEL variable
+varRisEst_gene <- readRDS(file = paste0("../output/VarRiskEst_PanelAppRex_ID_", PANEL, "_gene_tally.Rds"))
+varRisEst_var  <- readRDS(file = paste0("../output/VarRiskEst_PanelAppRex_ID_", PANEL, "_gene_variants.Rds"))
+
+# set example gene ----
+genetic_defect <- "NFKB1"
+varRisEst_gene <- varRisEst_gene |> filter(genename == genetic_defect)
+varRisEst_var <- varRisEst_var |> filter(genename == genetic_defect)
+
+# score classifications ----
+score_map <- c(
+  "Pathogenic" = 5,
+  "Likely pathogenic" = 4,
+  "Pathogenic, low penetrance" = 3,
+  "likely pathogenic, low penetrance" = 3,
+  "Conflicting classifications of pathogenicity" = 2,
+  "risk factor" = 1,
+  "association" = 1,
+  "likely risk allele" = 1,
+  "drug response" = 0,
+  "Uncertain significance" = 0,
+  "no classification for the single variant" = 0,
+  "no classifications from unflagged records" = 0,
+  "Affects" = 0,
+  "other" = 0,
+  "not provided" = 0,
+  "uncertain risk allele" = 0,
+  "protective" = -3,
+  "Likely benign" = -4,
+  "Benign" = -5
+)
+
+score_df <- tibble(
+  classification = names(score_map),
+  score = as.numeric(score_map)
+) %>%
+  # mutate(classification_wrapped = str_wrap(classification, width = 20))
+  mutate(
+    classification_wrapped = str_wrap(
+      str_trunc(classification, width = 37, side = "right", ellipsis = "..."),
+      width = 20
+    )
+  )
+
+score_df$score <- score_df$score + 0.05
+
+get_score <- function(clinvar) {
+  # standardise the term: replace underscores with spaces
+  clinvar <- str_replace_all(clinvar, "_", " ")
+  # split on "/" or "|" (or both)
+  terms <- str_split(clinvar, "[/|]", simplify = TRUE)
+  terms <- str_trim(terms)
+  # get scores for each term; if term not found, assume 0
+  scores <- sapply(terms, function(x) if (x %in% names(score_map)) score_map[[x]] else 0)
+  mean(scores)
+}
+
+# Calculate a score for each row
+varRisEst_gene_scored <- varRisEst_gene %>%
+  mutate(score = map_dbl(clinvar_clnsig, get_score))
+
+varRisEst_var_scored <- varRisEst_var %>%
+  mutate(score = map_dbl(clinvar_clnsig, get_score))
 
 
-# multiple causal -----
+# multiple causal variants to assess -----
 # ----------------------------------------------------------------------------- 
 # COMPLETE SCRIPT — handles multiple present causal variants (score > 3)
 # ----------------------------------------------------------------------------- 
@@ -856,21 +941,21 @@ set.seed(666)
 prior_weight   <- function(s) ifelse(s > 0, s + 1, 1)
 posterior_mean <- function(a, b) a / (a + b)
 
-# ----------------------------------------------------------------- patient_data
-patient_data <- varRisEst_var_scored |>
-  filter(genename == "NFKB1") |>
-  mutate(
-    known_var_observed = case_when(
-      HGVSp_VEP == "p.Ser237Ter"   ~ 1L,  # pathogenic
-      HGVSc_VEP == "c.159+1G>A"    ~ 1L,  # likely pathogenic
-      HGVSp_VEP == "p.Val236Ile"   ~ -9L, # missing
-      HGVSp_VEP == "p.Thr567Ile"   ~ -9L, # missing
-      TRUE                         ~ 0L
-    ),
-    pathogenic_weight   = rescale(score, to = c(0, 1), from = c(-5, 5)),
-    adj_occurrence_prob = occurrence_prob * pathogenic_weight,
-    prior_w             = prior_weight(score)
-  )
+# # ----------------------------------------------------------------- patient_data
+# patient_data <- varRisEst_var_scored |>
+#   filter(genename == "NFKB1") |>
+#   mutate(
+#     known_var_observed = case_when(
+#       HGVSp_VEP == "p.Ser237Ter"   ~ 1L,  # pathogenic
+#       HGVSc_VEP == "c.159+1G>A"    ~ 1L,  # likely pathogenic
+#       HGVSp_VEP == "p.Val236Ile"   ~ -9L, # missing
+#       HGVSp_VEP == "p.Thr567Ile"   ~ -9L, # missing
+#       TRUE                         ~ 0L
+#     ),
+#     pathogenic_weight   = rescale(score, to = c(0, 1), from = c(-5, 5)),
+#     adj_occurrence_prob = occurrence_prob * pathogenic_weight,
+#     prior_w             = prior_weight(score)
+#   )
 
 
 # ----------------------------------------------------------------- patient_data
@@ -880,6 +965,8 @@ patient_data <- varRisEst_var_scored |>
     known_var_observed = case_when(
       HGVSp_VEP == "p.Ser237Ter"   ~ 1L,  # pathogenic
       HGVSc_VEP == "c.159+1G>A"    ~ -9L,  # likely pathogenic missing
+      HGVSp_VEP == "p.Arg231His"    ~ 1L,  # benign
+      HGVSp_VEP == "p.Gly650Arg"    ~ 1L,  # benign
       HGVSp_VEP == "p.Val236Ile"   ~ -9L, # benign missing
       HGVSp_VEP == "p.Thr567Ile"   ~ -9L, # benign missing
       TRUE                         ~ 0L
@@ -901,7 +988,7 @@ patient_data <- varRisEst_var_scored |>
 
 # --------------------------------------------------------------- risk_variants
 risk_variants <- patient_data %>% 
-  filter((known_var_observed == 1 & score > 3) | known_var_observed == -9) %>% 
+  filter((known_var_observed == 1 & score >= 0) | known_var_observed == -9) %>% 
   mutate(
     flag = if_else(known_var_observed == -9, "missing", "present"),
     variant_id = if_else(HGVSp_VEP == ".", HGVSc_VEP, HGVSp_VEP),
@@ -966,14 +1053,31 @@ kable(variant_table, digits = 9,
       caption = "candidate causal and missing variants (detailed)")
 
 # --------------------------------------------------------------------------- plot
-ggplot(plot_df,
-       aes(x = median, xmin = lower, xmax = upper,
-           y = var_plot, colour = flag, shape = flag)) +
-  geom_pointrange(size = 0.8) +
+ggplot(
+  plot_df,
+  aes(
+    x     = median,
+    xmin  = lower,
+    xmax  = upper,
+    y     = var_plot,
+    fill  = score
+  )
+) +
+  geom_pointrange(
+    shape  = 21,          # solid circle with outline
+    colour = "black",
+    size   = 0.8,
+    stroke = 0.3
+  ) +
   facet_grid(flag ~ ., scales = "free_y", space = "free_y") +
-  scale_colour_manual(values = c(present = "steelblue", missing = "grey40")) +
-  scale_shape_manual(values  = c(present = 17,          missing = 16)) +
+  scale_fill_gradientn(
+    colours  = c("navy", "lightblue", "red"),
+    # limits   = c(0, 1),
+    breaks   = c(-5, 0, 5),
+    labels   = c("Benign", "Unknown", "Pathogenic"),
+    na.value = "grey80"
+  ) +
   scale_y_reordered() +
-  labs(x = "probability", y = NULL, colour = NULL, shape = NULL) +
+  labs(x = "probability", y = NULL, fill = NULL) +
   theme_bw()
 

@@ -29,3 +29,10 @@
 \BOOKMARK [1][-]{section.7}{Clinical\040Genetics\040Application}{}% 29
 \BOOKMARK [2][-]{subsection.7.1}{Methods}{section.7}% 30
 \BOOKMARK [2][-]{subsection.7.2}{Results}{section.7}% 31
+\BOOKMARK [2][-]{subsection.7.3}{New\040version}{section.7}% 32
+\BOOKMARK [1][-]{section.8}{Bayesian assessment of per‑patient variant risk}{}% 33
+\BOOKMARK [2][-]{subsection.8.1}{Data\040preprocessing}{section.8}% 34
+\BOOKMARK [2][-]{subsection.8.2}{Pathogenicity\040scoring}{section.8}% 35
+\BOOKMARK [2][-]{subsection.8.3}{Posterior\040simulation}{section.8}% 36
+\BOOKMARK [2][-]{subsection.8.4}{Present\040versus\040missing\040contribution}{section.8}% 37
+\BOOKMARK [1][-]{section.9}{Results\040for\040the\040NFKB1\040proband}{}% 38
