@@ -1031,7 +1031,6 @@ Clinical Interpretation             & Top causal variant confirmed; no evidence 
 
 \subsection{New version}
 
-\textbf{Figure \ref{fig:plot_quant_uncert_ci}} shows the ...
 
 
 \paragraph{Results.}
@@ -1073,14 +1072,6 @@ missing other & p.Val236Ile & 0.0 & 0.005 & 0.005 & 0.005 & 0.070 & 0.000\\
 \end{tabular}}
 \end{table} 
 
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.99\textwidth]{../images/plot_quant_uncert_ci.pdf}
-  \caption{
-   \textbf{cap}
-  }
-  \label{fig:plot_quant_uncert_ci}
-\end{figure}
 
 
 
@@ -1233,6 +1224,112 @@ disease‑associated variation in \textit{NFKB1}.  Functional validation of
 \textit{p.Ser237Ter} and targeted re‑sequencing of low‑coverage exons would
 therefore materially increase diagnostic confidence.
 
+
+
+
+
+
+
+
+
+
+
+New version
+
+\subsection*{Calculation of \(p(\text{causal \& damaging})\)}
+
+The key thing to appreciate is that \(p(\text{causal \& damaging})\) is built up in two layers:
+
+\paragraph{1. Per‑variant posterior shares}
+\begin{itemize}
+  \item For each variant \(i\) we draw \(M=10\,000\) samples
+    \[
+      \pi_i^{(m)} \;\sim\;\mathrm{Beta}(\alpha_i,\beta_i),
+      \quad
+      \tilde\pi_i^{(m)} \;=\;\frac{\pi_i^{(m)}}{\sum_j \pi_j^{(m)}},
+      \quad m=1,\dots,M,
+    \]
+    so that for each draw the \(\tilde\pi_i^{(m)}\) sum to 1 across all variants.
+  \item The variant‐level ``posterior\_share'' is
+    \[
+      \bar\pi_i \;=\;\frac{1}{M}\sum_{m=1}^M \tilde\pi_i^{(m)},
+    \]
+    and its 95 \% credible interval is given by the 2.5 \% and 97.5 \% quantiles of \(\{\tilde\pi_i^{(m)}\}\).
+  \item We then define
+    \[
+      p_{\text{cd},i}^{(m)}
+      =
+      \begin{cases}
+        \tilde\pi_i^{(m)}, & \text{if variant \(i\) is ``causal'' (score}>3),\\
+        0,                  & \text{otherwise},
+      \end{cases}
+    \]
+    and take
+    \[
+      \mathrm{prob\_causal\_damaging}_i
+      = \frac{1}{M}\sum_{m=1}^M p_{\text{cd},i}^{(m)}.
+    \]
+\end{itemize}
+
+\paragraph{2. Total damaging‑causal probability}
+\begin{itemize}
+  \item Within each draw we sum over all causal variants:
+    \[
+      P^{(m)} = \sum_{i:\,\text{causal}} p_{\text{cd},i}^{(m)}
+              = \sum_{i:\,\text{causal}} \tilde\pi_i^{(m)}.
+    \]
+  \item The overall median (\(0.751\)) and 95 \% CI (\(0.504\)–\(0.919\)) in Table~1 are the median and 2.5 %/97.5 % quantiles of the distribution \(\{P^{(m)}\}_{m=1}^M\).
+\end{itemize}
+
+Because there are two causal variants—one present (\texttt{p.Ser237Ter}) and one missing (\texttt{c.159+1G>A})—their posterior shares sum to \(P^{(m)}\) in each draw.  On average:
+\[
+  \bar\pi_{\text{present}}
+  \approx 0.377,
+  \quad
+  \bar\pi_{\text{missing}}
+  \approx 0.364,
+  \quad
+  \bar\pi_{\text{present}} + \bar\pi_{\text{missing}}
+  \approx 0.741,
+\]
+very close to the median of \(P^{(m)}\).  The slight difference is due to “sum of means” versus “median of sums.”
+
+\paragraph*{Interpretation}
+Yes, the missing splice‐donor variant carries the remainder of the damaging probability not taken by \texttt{p.Ser237Ter}.  Because each variant’s share is proportional to its adjusted occurrence probability \(p_i\), a variant whose \(p_i\) is about one‑quarter of the total gene‑level frequency will capture roughly 25 \% of the posterior mass.
+
+\bigskip
+
+\noindent\textbf{Suggested results paragraph:}
+
+\begin{quote}
+We ran \(M=10\,000\) posterior simulations from \(\mathrm{Beta}(\alpha_i,\beta_i)\) for each candidate variant, normalising draws so the \(\tilde\pi_i\) sum to one in each draw.  We zeroed out variants with evidence\_score \(\le3\) and summed the remaining \(\tilde\pi_i\) to obtain \(P^{(m)}\), the posterior probability that at least one damaging variant explains the phenotype.  For the \textit{NFKB1} proband, this overall \(p(\text{causal \& damaging})\) has median 0.751 (95 \% CI 0.504–0.919).  Breaking it down, the observed nonsense allele \texttt{p.Ser237Ter} carries a posterior\_share of \(\approx0.377\), while the unsequenced splice‐site variant \texttt{c.159+1G>A} accounts for \(\approx0.364\), together summing to the total.  Each variant’s share tracks its relative adjusted occurrence probability \(p_i\), so variants with similar \(p_i\) receive similar posterior mass.
+\end{quote}
+
+
+\subsection{Correct final version}
+\textbf{Figure \ref{fig:plot_scenario_1_quant_uncert_ci}} shows the ...
+\textbf{Figure \ref{fig:plot_scenario_2_quant_uncert_ci}} shows the ...
+
+\input{"../images/table_quant_uncert_ci.tex"}
+
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/plot_scenario_1_quant_uncert_ci.pdf}
+  \caption{
+   \textbf{cap}
+  }
+  \label{fig:plot_scenario_1_quant_uncert_ci}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/plot_scenario_2_quant_uncert_ci.pdf}
+  \caption{
+   \textbf{cap}
+  }
+  \label{fig:plot_scenario_2_quant_uncert_ci}
+\end{figure}
 
 \FloatBarrier
 \end{document}

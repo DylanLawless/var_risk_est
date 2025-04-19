@@ -71,7 +71,7 @@ patient_data <- varRisEst_var_scored |>
   mutate(
     known_var_observed = case_when(
       HGVSp_VEP == "p.Ser237Ter" ~  1L,
-      HGVSc_VEP == "c.159+1G>A"  ~ -9L,
+      # HGVSc_VEP == "c.159+1G>A"  ~ -9L,
       HGVSp_VEP == "p.Arg231His" ~  1L,
       HGVSp_VEP == "p.Gly650Arg" ~  1L,
       HGVSp_VEP == "p.Val236Ile" ~ -9L,
@@ -83,11 +83,21 @@ patient_data <- varRisEst_var_scored |>
     prior_w             = prior_weight(score)
   )
 
-# max_an ----------------------------------------------------------------------
-max_an <- max(patient_data$an, na.rm = TRUE)
+# cohort data - all REF alleles with 10% missing ----
+cohort_size <- 200
 
-
-
+patient_data <- patient_data %>%
+  mutate(
+    cohort_missing = map_int(
+      known_var_observed,
+      ~ {
+        base_missing <- if (.x == -9L) 1L else 0L
+        base_missing + rbinom(1, cohort_size - 1L, 0.10)
+      }
+    ),
+    cohort_AN = 2L * (cohort_size - cohort_missing)
+  ) %>%
+  select(-cohort_missing)
 
 # variants to model
 risk_variants <- patient_data |>
@@ -98,8 +108,8 @@ risk_variants <- patient_data |>
     variant_id  = dplyr::if_else(HGVSp_VEP == ".", HGVSc_VEP, HGVSp_VEP),
     # variant_lab = paste(flag, variant_id, sep = " "),
     variant_lab = paste(variant_id),
-    alpha       = round(adj_occurrence_prob * max_an) + prior_w,
-    beta        = max_an - round(adj_occurrence_prob * max_an) + 1,
+    alpha       = round(adj_occurrence_prob * cohort_AN) + prior_w,
+    beta        = cohort_AN - round(adj_occurrence_prob * cohort_AN) + 1,
     group       = factor(paste(flag, class),
                          levels = c("present causal", "present other",
                                     "missing causal", "missing other"))
@@ -327,8 +337,8 @@ p_causal_dist <- ggplot(share_df_causal,
   scale_y_reordered() +
   labs(x = "posterior p(causal & damaging)", y = NULL) +
   theme(legend.position = "none") +
-  scale_x_continuous(limits = c(0, .5), breaks = c(0, 0.2, 0.4))
-p_causal_dist
+  scale_x_continuous(limits = c(0,1), breaks = c(0, 0.25, 0.5, 0.75, 1))
+# p_causal_dist
 
 # ---------------------------------------------------------------------------
 # contribution of present vs missing causal variants (plot D)
@@ -403,6 +413,11 @@ p_quant <- (p_points + p_dist + p_causal) /  (p_source_stack + p_causal_dist) / 
 
 p_quant
 ggsave("../images/plot_quant_uncert_ci.pdf", plot = p_quant, width = 9, height = 7)
+
+
+# The results (Figure A–F) show that, of the total posterior probability that a damaging variant in NFKB1 underlies this proband’s phenotype, roughly half is carried by the single observed nonsense variant p.Ser237Ter and the other half is still attributable to known but unobserved pathogenic alleles at this locus.
+# In panel A we plot each variant’s posterior share, with 95 % credible intervals: p.Ser237Ter stands out at about 0.24 (CI ~0.11–0.42), while the next highest is an unobserved splice donor variant c.159+1G>A at roughly 0.26 (no interval because it’s fixed by definition). Panel B’s ridge plots trace the full posterior distribution for every variant, illustrating the overlap and skewness in their shares. Panel C then isolates only the damaging calls (score > 3), confirming that p.Ser237Ter and the missing splice donor together account for almost all of the damaging‑causal probability.
+# Panel D (the stacked bar) quantifies this directly: present variants contribute about 51.7 % of the damaging probability, and missing variants about 48.3 %. Panel E’s causal‑only density ridges further break down how each causal group (present vs missing) distributes its share. Finally, panel F shows the histogram of the total damaging‑causal probability (summing across all variants) with a median of 0.472 and a 95 % credible interval from 0.300 to 0.655. Together, these plots demonstrate that although p.Ser237Ter is the single most likely cause, nearly half of the aetiological probability remains tied to other known alleles not observed in this patient, underscoring the residual uncertainty and arguing for deeper or orthogonal validation.
 
 # ---------------------------------------------------------------------------
 # tabulating contributions

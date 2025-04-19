@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.7.19)  19 APR 2025 00:17
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.7.19)  19 APR 2025 12:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2067,38 +2067,50 @@ File: ../images/p_alphamissense_kw.pdf Graphic file (type pdf)
  [46] [47]
 [48
 
-] [49] [50] [51]
-File: ../images/plot_quant_uncert_ci.pdf Graphic file (type pdf)
-<use ../images/plot_quant_uncert_ci.pdf>
- [52] [53] [54]
-Overfull \hbox (0.8992pt too wide) in paragraph at lines 1219--1227
+] [49] [50] [51] [52] [53]
+Overfull \hbox (0.8992pt too wide) in paragraph at lines 1210--1218
 \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 300$\TU/lmr/m/n/12 –$\OT1/cm
 r/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 655$\TU/lmr/m/n/12 ; Fig.3E). Of th
 is, $\OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 245$ \TU/lmr/m/n/12 (51
 .7%) was assigned to the observed \TU/lmr/m/it/12 p.Ser237Ter
  []
 
-[55]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1238.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1238.
+[54] [55] (../images/table_quant_uncert_ci.tex
+Overfull \hbox (3.49687pt too wide) in paragraph at lines 14--14
+ []|\TU/lmr/m/n/12 Evidence
+ []
+
+
+Overfull \hbox (6.22896pt too wide) in paragraph at lines 14--14
+ []|\TU/lmr/m/n/12 Occurrence
+ []
+
+)
+File: ../images/plot_scenario_1_quant_uncert_ci.pdf Graphic file (type pdf)
+<use ../images/plot_scenario_1_quant_uncert_ci.pdf>
+File: ../images/plot_scenario_2_quant_uncert_ci.pdf Graphic file (type pdf)
+<use ../images/plot_scenario_2_quant_uncert_ci.pdf>
+ [56] [57] [58]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1335.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1335.
  (./varEstRisk2025lawless.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1238.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1238.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1335.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1335.
 
 Package rerunfilecheck Info: File `varEstRisk2025lawless.out' has not changed.
-(rerunfilecheck)             Checksum: F752617643FADFCD1B84263B12889078.
+(rerunfilecheck)             Checksum: 065D5059A101561F7C82A54169EAFF6F.
 
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 41646 strings out of 492970
- 867252 string characters out of 6133938
- 1030141 words of memory out of 5000000
- 44951 multiletter control sequences out of 15000+600000
- 552193 words of font info for 128 fonts, out of 8000000 for 9000
+ 41691 strings out of 492970
+ 868431 string characters out of 6133938
+ 1034271 words of memory out of 5000000
+ 44986 multiletter control sequences out of 15000+600000
+ 555251 words of font info for 143 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 65i,11n,101p,10564b,957s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 65i,14n,101p,10564b,957s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on varEstRisk2025lawless.pdf (55 pages).
+Output written on varEstRisk2025lawless.pdf (58 pages).
