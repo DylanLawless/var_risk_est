@@ -19,15 +19,14 @@
 
 %Abstract: 150 of 150. Main text:  3931 of 4000 (intro, result, discussion, conclusion). Display (4 figures / 2 tables) of 8 total. Extended display: 13 of 10. Note that this journal uses separate online methods.
 
-
-\begin{abstract}
-We present a novel framework for quantifying the prior probability of observing disease‐associated variants in any gene for a given phenotype. By integrating large‐scale genomic annotations, including population allele frequencies and ClinVar variant classifications, with Hardy-Weinberg-based calculations, our method estimates per-variant observation probabilities under autosomal dominant (AD), autosomal recessive (AR), and X-linked modes of inheritance. Applied to 557 genes implicated in primary immunodeficiency and inflammatory disease, our approach generated 54,814 variant probabilities. First, these detailed, pre-calculated results provide robust priors for any gene-disease combination. 
-Second, a score positive total metric summarises the aggregate pathogenic burden, serving as an indicator of the likelihood of observing a patient with the disease and reflecting genetic constraint. Validation in \textit{NFKB1} (AD) and \textit{CFTR} (AR) disorders confirmed close concordance between predicted and observed case counts. The resulting datasets, available in both machine-readable and human-friendly formats, support Bayesian variant interpretation and clinical decision-making.
+\begin{abstract} 
+ We present a framework to quantify the prior probability of observing disease-causing variants across all genes and inheritance modes. First, we computed genome-wide occurrence probabilities by integrating population allele frequencies, variant classifications, and Hardy-Weinberg expectations under autosomal dominant, recessive, and X-linked inheritance. Second, we used these priors to derive posterior probabilities for pathogenicity in individual patients, integrating both observed variants (true positives) and unsequenced (false negative) positions into a single, calibrated conclusion. Third, we summarised variant probabilities for 557 genes responsible for inborn errors of immunity (IEI), now integrated into a public database. Fourth, we derived new data-driven IEI classifications using protein-protein interactions and curated clinical features, aligned to immunophenotypes. Finally, we validated the framework in national-scale cohorts of autosomal dominant, recessive, and X-linked disorders, showing close concordance with observed case numbers. The resulting datasets support Bayesian variant interpretation and evidence-weighted decision-making in clinical genetics.
 \footnote{
 \noindent \textbf{Availability:} This data is integrated in public panels at 
 % \url{https://switzerlandomics.ch/services/panelAppRexAi/} and 
 \url{https://iei-genetics.github.io}.
-The source code and data are accessible as part of the variant risk estimation project at \url{https://github.com/DylanLawless/var_risk_est}.
+The source code and data are accessible as part of the variant risk estimation project at \url{https://github.com/DylanLawless/var_risk_est} and IEI-genetics project at
+\url{https://github.com/iei-genetics/iei-genetics.github.io}.
 The variant-level data is available from the Zenodo repository: 
 \url{https://doi.org/10.5281/zenodo.15111583}
 (VarRiskEst PanelAppRex ID 398 gene variants.tsv).
@@ -62,8 +61,10 @@ VarRiskEst is available under the MIT licence.}
  \acro{ge}[GE]{Genomics England} 
  \acro{gnomad}[gnomAD]{Genome Aggregation Database}
  \acro{grch38}[GRCh38]{Genome Reference Consortium Human Build 38}
+\acro{gvcf}[gVCF]{genomic variant call format}
  \acro{hgvs}[HGVS]{Human Genome Variation Society}
  \acro{hpc}[HPC]{High-Performance Computing}
+  \acro{hsd}[HSD]{Honestly Significant Difference}
  \acro{hwe}[HWE]{Hardy-Weinberg Equilibrium}
  \acro{iei}[IEI]{Inborn Errors of Immunity}
   \acro{ig}[Ig]{Immunoglobulin}
@@ -80,17 +81,20 @@ VarRiskEst is available under the MIT licence.}
  \acro{pird}[PIRD]{Diseases of Immune Dysregulation}
  \acro{ppi}[PPI]{Protein-Protein Interaction}
  \acro{pli}[pLI]{Probability of being Loss-of-function Intolerant}
+ \acro{qc}[QC]{Quality Control}
  \acro{snv}[SNV]{Single Nucleotide Variant}
  \acro{skat}[SKAT]{Sequence Kernel Association Test}
  \acro{stringdb}[STRINGdb]{Search Tool for the Retrieval of Interacting Genes/Proteins}
- \acro{hsd}[HSD]{Honestly Significant Difference}
+ \acro{tp}[TP]{true positive}
+\acro{fp}[FP]{false positive}
+\acro{tn}[TN]{true negative}
+\acro{fn}[FN]{false negative}
  \acro{umap}[UMAP]{Uniform Manifold Approximation and Projection}
  \acro{uniprot}[UniProt]{Universal Protein Resource}
+  \acro{vcf}[VCF]{variant call format}
  \acro{vep}[VEP]{Variant Effect Predictor}
  \acro{xl}[XL]{X-Linked}
 \end{acronym}
-
-
 
 \section{Introduction}
 
@@ -218,9 +222,77 @@ For each data chunk, the relevant fields were gene name, position, allele number
 The final results were aggregated by gene and ClinVar classification and used to generate summary statistics that reviewed the predicted disease observation probabilities.
 
 
+
+% --------------------------------------------------------------------------
+% Methods, Results and Discussion: gene‑level pathogenic attribution
+% --------------------------------------------------------------------------
+\subsection{Integrating observed true positives and unobserved false negatives into a single, actionable conclusion}
+
+In this section, we detail our approach to integrating sequencing data with prior classification evidence (e.g. pathogenic on ClinVar) to calculate the posterior probability of a complete successful genetic diagnosis.
+Our method is designed to account for possible outcomes of 
+\ac{tp},
+% \ac{fp},
+\ac{tn},
+and \ac{fn},
+by first ensuring that all nucleotides corresponding to known variant classifications (benign, pathogenic, etc.) have been accurately sequenced. 
+This implies the use of \ac{gvcf}-style data which refer to \ac{vcf}s that contain a record for every position in the genome (or interval of interest) regardless of whether a variant was detected at that site or not.
+Only after confirming that these positions match the reference alleles (or novel unaccounted variants are classified) do we calculate the probability that additional, alternative pathogenic variants (those not observed in the sequencing data) could be present. 
+Our \ac{ci} for pathogenicity thus incorporates uncertainty from the entire process, including the tally of \ac{tp}, \ac{tn}, and \ac{fn} outcomes.
+We ignore the contribution of \ac{fp}s  as a separate task to be tackled in the future.
+
+We estimated, for every query (e.g. gene or disease-panel), the posterior probability that at least one constituent allele is both damaging and causal in the proband.  
+The workflow comprises four consecutive stages.
+
+\paragraph{(i) Data pre‑processing}
+All coding and canonical splice‑region variants for \ac{nfkb1} were extracted from the gVCF.  Sites corresponding to previously reported pathogenic alleles were checked for read depth \mbox{$\ge\!10$} and genotype quality \mbox{$\ge\!20$}.  Positions that failed this check were labelled \emph{missing}, thus separating true reference calls from uninformative sequence.
+
+\paragraph{(ii) Evidence mapping and occurrence probability}
+PanelAppRex variants were annotated with ClinVar clinical significance.  Each label was converted to an ordinal evidence score $S_i\in[-5,5]$ (Table S2) and rescaled to a pathogenic weight $W_i=\operatorname{rescale}(S_i;\,-5,5\rightarrow0,1)$.  The HWE–based pipeline of Section \ref{sec:min_risk} supplied a per‑variant occurrence probability $p_i$.  The adjusted prior was
+
+\[
+p_{i}^{\ast}=W_i\,p_i,
+\qquad
+\text{and}\qquad
+\mathrm{flag}_i\in\{\text{present},\text{missing}\}.
+\]
+
+\paragraph{(iii) Prior specification}
+In a hypothetical cohort of $n=200$ diploid individuals the count of allele~$i$ follows a Beta–Binomial model.  Marginalising the Binomial yields the Beta prior
+
+\[
+\pi_i\sim\mathrm{Beta}\!\bigl(\alpha_i,\beta_i\bigr),\qquad
+\alpha_i=\mathrm{round}(2np_{i}^{\ast})+\tilde w_i,\;
+\beta_i = 2n-\mathrm{round}(2np_{i}^{\ast})+1,
+\]
+
+where $\tilde w_i=\max(1,S_i+1)$ contributes an additional pseudo‑count whenever $S_i>0$.
+
+\paragraph{(iv) Posterior simulation and aggregation}
+For each variant $i$ we drew $M=10\,000$ realisations $\pi_{i}^{(m)}$ and normalised within each iteration,
+
+\[
+\tilde\pi_{i}^{(m)}=\frac{\pi_{i}^{(m)}}{\sum_{j}\pi_{j}^{(m)}}.
+\]
+
+Variants with $S_i>3$ were deemed \emph{causal}.  Their mean posterior share $\bar\pi_i=M^{-1}\sum_m\tilde\pi_{i}^{(m)}$ and $95\%$ credible interval were retained.  The probability that a damaging causal allele is physically present was obtained by a second layer:
+
+\[
+P^{(m)}=\sum_{i:\,S_i>3}\tilde\pi_{i}^{(m)}\,G_{i}^{(m)},\qquad
+G_{i}^{(m)}\sim\mathrm{Bernoulli}(g_i),
+\]
+
+with $g_i=1$ for present variants, $g_i=0$ for reference calls, and $g_i=p_i$ for missing variants.  The gene‑level estimate is the median of $\{P^{(m)}\}_{m=1}^{M}$ and its $2.5^{\text{th}}$/$97.5^{\text{th}}$ percentiles.
+
+\paragraph{Scenario analysis}
+Two scenarios were explored:  
+\emph{(1) observed variants only} including only one known \ac{tp} pathogenic variant, \texttt{p.Ser237Ter}, and  
+\emph{(2) inclusion of the additional plausible yet unsequenced splice‑donor allele \texttt{c.159+1G{\small\textgreater}A}} as a \ac{fn}.  
+All subsequent steps were identical.
+
 \subsection{Validation of Autosomal Dominant Estimates Using \textit{NFKB1}}
 
-To validate our genome-wide probability estimates in an \ac{ad} gene, we focused on \ac{nfkb1}. Our goal was to compare the expected number of \ac{nfkb1}-related \ac{cvid} cases, as predicted by our framework, with the reported case count in a well-characterised national-scale \ac{pid} cohort.
+To validate our genome-wide probability estimates in an \ac{ad} gene, we focused on \ac{nfkb1}. 
+Our goal was to compare the expected number of \ac{nfkb1}-related \ac{cvid} cases, as predicted by our framework, with the reported case count in a well-characterised national-scale \ac{pid} cohort.
 
 \paragraph{1. Reference Dataset.}
 We used a reference dataset reported by \citet{tuijnenburgNFKB12018} to build a validation model in an \ac{ad} disease gene. This study performed whole‐genome sequencing of 846 predominantly sporadic, unrelated \ac{pid} cases from the NIHR BioResource-Rare Diseases cohort. There were 390 \ac{cvid} cases in the cohort. The study identified \ac{nfkb1} as one of the genes most strongly associated with \ac{pid}. Sixteen novel heterozygous variants including truncating, missense, and gene deletion variants, were found in \ac{nfkb1} among the \ac{cvid} cases.
@@ -385,9 +457,9 @@ A Kruskal-Wallis test was used to compare the observed disease probability acros
 
 \section{Results}
 
-\subsection{Observation Probability Across Disease Genes}
+\subsection{Observation probability across disease genes}
 
-Our study integrated large-scale annotation databases with gene panels from PanelAppRex to systematically assess disease genes by MOI. By combining population allele frequencies with ClinVar clinical classifications, we computed an expected observation probability for each SNV, representing the likelihood of encountering a variant of a specific pathogenicity for a given phenotype. We report these probabilities for 54,814 ClinVar variant classifications across 557 genes (linked dataset \cite{lawless_2025_15111584}).
+Our study integrated large-scale annotation databases with gene panels from PanelAppRex to systematically assess disease genes by \ac{moi}. By combining population allele frequencies with ClinVar clinical classifications, we computed an expected observation probability for each SNV, representing the likelihood of encountering a variant of a specific pathogenicity for a given phenotype. We report these probabilities for 54,814 ClinVar variant classifications across 557 genes (linked dataset \cite{lawless_2025_15111584}).
 
 In practice, our approach computed a simple observation probability for every SNV across the genome and was applicable to any disease-gene panel. Here, we focused on panels related to Primary Immunodeficiency or Monogenic Inflammatory Bowel Disease, using PanelAppRex panel ID 398 as a case study.
 \textbf{Figure \ref{fig:p_varRisEst_summary_scores}} displays all reported ClinVar  variant classifications for this panel. The resulting natural scaling system (-5 to +5) accounts for the frequently encountered combinations of classification labels (e.g. benign to pathogenic).
@@ -424,28 +496,59 @@ ABI3 & 398 & Uncertain significance & 49220257 & c.733C>G & p.Pro245Ala & AR & 0
   \label{fig:p_varRisEst_summary_scores}
 \end{figure}
 
-%\subsection{Validation studies}
-%\subsubsection{Validation of Dominant Disease Occurrence with \textit{NFKB1}}
-%
-%THESE VALUES ARE WRONG BECAUSE I USE THE n-cvid INSTEAD OF n-nfkb1 VARIABLE. FIX VALUES TO MATCH THE CORRECTED PLOT. we have 3 total synth de novo and 2 count as P score for the locus zoom plot: (P, P/LP, LP).
-%
-%To validate our genome-wide probability estimates for \ac{ad} disorders, we focused on \ac{nfkb1}. We used a reference dataset from \citet{tuijnenburgNFKB12018}, in which whole‐genome sequencing of 846 \ac{pid} patients identified \ac{nfkb1} as one of the genes most strongly associated with the disease, with 390 \ac{cvid} cases attributed to heterozygous variants. Our goal was to compare the predicted number of \ac{nfkb1}-related \ac{cvid} cases with the reported count in this well-characterised national-scale cohort.
-%
-%Our model calculated 456 \ac{nfkb1}-related \ac{cvid} cases in the UK. In the reference cohort,  390  \ac{nfkb1} \ac{cvid} cases were reported. 
-%We additionally wanted to account for potential under-reporting in the reference study.
-%We used an extrapolated national \ac{cvid} prevalence to yield an upper bound maximum of 1280 cases (95\% \ac{ci}: 1188–1374), while a Bayesian-adjusted mixture estimate produced a median of 835 cases (95\% \ac{ci}: 789–882). 
-%\textbf{Figure \ref{fig:validation_studies_bayesian_adjusted_estimates} (A)}
-%illustrates that our predicted value of 456 lies within these ranges and is closer to the observed count, thereby supporting the validity of our integrated probability estimation framework for \ac{ad} disorders.
+\subsection{Integrating observed true positives and unobserved false negatives into a single, actionable conclusion}
 
+Having previously established a probabilistic framework for estimating the prior probability of observing disease-associated variants under different inheritance modes, we then applied this model to a specific patient to demonstrate it's potential for clinical genetics.
+For each gene, we used the computed prior probabilities for all variant classifications, (e.g. benign, uncertain, and pathogenic). 
+We verified that all known pathogenic positions have been sequenced and observed as reference (true negatives), and identify any positions that were either observed as variant (true positives) or not assessable due to missing sequence data of failed \ac{qc}. 
+These missing sites represent potential false negatives. By jointly modelling the observed and unobserved space, the method yielded a calibrated, evidence-weighted probability that at least one damaging causal variant could be present in the gene.
+
+\textbf{Figure~\ref{fig:plot_scenario_1_quant_uncert_ci}} shows the results of the first scenario, in which only one known pathogenic variant, \ac{nfkb1} \texttt{p.Ser237Ter}, was observed and all previously reported pathogenic positions were successfully sequenced and confirmed as reference. In this setting, the model assigned the full posterior probability to the observed allele, yielding 100\,\% confidence that all present evidence supported a single, true positive causal explanation.
+
+\textbf{Figure \ref{fig:plot_scenario_2_quant_uncert_ci}} shows the second scenario, where the same pathogenic variant \ac{nfkb1} \texttt{p.Ser237Ter} was present, but coverage was incomplete at three additional sites known to harbour potentially pathogenic variants. Among these was the likely-pathogenic splice-site variant \texttt{c.159+1G{\small\textgreater}A}, which was not captured in the sequencing data. 
+The panels of \textbf{Figure \ref{fig:plot_scenario_2_quant_uncert_ci} (A-F)} illustrate the stepwise integration of observed and missing evidence, culminating in a posterior probability that reflects both confirmed findings and residual uncertainty.
+\textbf{Table 
+\ref{tab:table_scenario_2_quant_uncert_ci}} lists the metrics used to reach the conclusion for reporting the clinical genetics results.
+
+Bayesian integration of every annotated \ac{nfkb1} allele yielded the first quantitative credible intervals for gene‑level pathogenic attribution that (i) preserve Hardy-Weinberg expectations, (ii) accommodate \ac{ad}, \ac{ar}, \ac{xl} inheritance, and (iii) carry explicit uncertainty for non-sequenced (or failed \ac{qc}) genomic positions.  
+\textbf{Figure \ref{fig:plot_scenario_2_quant_uncert_ci}  (A)}
+depicts the prior landscape where occurrence probabilities are partitioned by observed or missing status and by causal or non‑causal evidence, with colour reflecting the underlying ClinVar score.  
+\textbf{Figure \ref{fig:plot_scenario_2_quant_uncert_ci}  (B)} shows posterior normalisation which concentrates probability density on two high‑confidence (high evidence score) alleles since the benign variants are, by definition, non-causal.
+\textbf{Figure \ref{fig:plot_scenario_2_quant_uncert_ci}  (C)} shows the resulting per‑variant probability of being simultaneously damaging and causal; only the confrimed present (true positive) nonsense variant \texttt{p.Ser237Ter} and the (false negative) hypothetical splice‑donor \texttt{c.159+1G{\small\textgreater}A} retain substantial support. 
+Restricting the view to causal candidates in 
+\textbf{Figure \ref{fig:plot_scenario_2_quant_uncert_ci}  (D)} 
+confirms that posterior mass is distributed almost equally between these two variants. 
+\textbf{Figure \ref{fig:plot_scenario_2_quant_uncert_ci}  (E)} decomposes the total damaging probability into observed (52 \%) and missing (48 \%) sources, whereas \textbf{Figure \ref{fig:plot_scenario_2_quant_uncert_ci}  (F)} summarises the gene‑level posterior: inclusion of the splice‑site allele (scenario 2) produces a median probability of 0.75 with a 95 \% credible interval of 0.50-0.92, compared with 0.38 (0.24–0.54) when the analysis is limited to sequenced alleles (scenario 1).  Numerically, the present variant \texttt{p.Ser237Ter} accounts for 0.38 (95 \% CrI 0.21–0.55) of the posterior share, the the potentially causal but missing splice‑donor allele contributes 0.37 (0.24–0.53), and the remaining four alleles together explain a negligible \% (\textbf{Table \ref{tab:table_scenario_2_quant_uncert_ci}}).
+
+\input{"../images/table_scenario_2_quant_uncert_ci.tex"}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/plot_scenario_2_quant_uncert_ci.pdf}
+  \caption{
+    \textbf{Quantification of gene-level pathogenic attribution for \textit{NFKB1} (scenario 2).}
+    The proband carried three known heterozygous variants, including pathogenic \texttt{p.Ser237Ter}, and had incomplete coverage at three additional loci, including likely-pathogenic splice-site variant \texttt{c.159+1G{\small\textgreater}A}.  The sequential steps towards the posterior  probability of complete genetic diagnosis are shown:
+    (A) Prior occurrence probabilities, stratified by observed/missing and causal/non-causal status. 
+    (B) Posterior distributions of normalised variant weights \(\tilde{\pi}_i\).  
+    (C) Per-variant posterior probability of being both damaging and causal.  
+    (D) Posterior distributions for causal variants only.  
+    (E) Decomposition of total pathogenic probability into observed (green) and missing (orange) sources.  
+    (F) Gene-level posterior showing the probability that at least one damaging causal allele is present; median 0.75, 95\,\% credible interval 0.50–0.92.
+  }
+  \label{fig:plot_scenario_2_quant_uncert_ci}
+\end{figure}
+
+
+\FloatBarrier
 \subsection{Validation studies}
-\subsubsection{Validation of Dominant Disease Occurrence with \textit{NFKB1}}
+\subsubsection{Validation of dominant disease occurrence with \textit{NFKB1}}
 
 To validate our genome-wide probability estimates for \ac{ad} disorders, we focused on \ac{nfkb1}. We used a reference dataset from \citet{tuijnenburgNFKB12018}, in which whole‐genome sequencing of 846 \ac{pid} patients identified \ac{nfkb1} as one of the genes most strongly associated with the disease, with 16 \ac{nfkb1}-related \ac{cvid} cases attributed to \ac{ad} heterozygous variants. Our goal was to compare the predicted number of \ac{nfkb1}-related \ac{cvid} cases with the reported count in this well-characterised national-scale cohort.
 
 Our model calculated 0 known pathogenic variant \ac{nfkb1}-related \ac{cvid} cases in the UK with a minimal risk of 456 unknown de novo variants. In the reference cohort, 16 \ac{nfkb1} \ac{cvid} cases were reported. We additionally wanted to account for potential under-reporting in the reference study. We used an extrapolated national \ac{cvid} prevalence which yielded a median estimate of 118 cases (95\% CI: 70–181), while a Bayesian-adjusted mixture estimate produced a median of 67 cases (95\% CI: 43–99). \textbf{Figure \ref{fig:validation_studies_bayesian_adjusted_estimates} (A)} illustrates that our predicted values reflect these ranges and are closer to the observed count. This case supports the validity of our integrated probability estimation framework for \ac{ad} disorders, and represents a challenging example where pathogenic \ac{snv} are not reported in the reference population of gnomAD. Our min-max values successfully contained the true reported values.
 
 
-\subsubsection{Validation of Recessive Disease Occurrence with \textit{CFTR}}
+\subsubsection{Validation of recessive disease occurrence with \textit{CFTR}}
 
 Our analysis predicted the number of \ac{cf} cases attributable to carriage of the p.Arg117His variant (either as homozygous or as compound heterozygous with another pathogenic allele) in the UK. Based on \ac{hwe} calculations and mortality adjustments, we predicted approximately 648 cases arising from biallelic variants and 160 cases from homozygous variants, resulting in a total of 808 expected cases.
 
@@ -460,11 +563,11 @@ In contrast, the nationally reported number of \ac{cf} cases was 714, as recorde
 
 
 \FloatBarrier
-\subsubsection{Interpretation of ClinVar Variant Observations}
+\subsubsection{Interpretation of ClinVar variant observations}
 
 \textbf{Figure~\ref{fig:all_genes_combined_bar_charts_mini}} shows  the two validation study \ac{pid} genes, representing \ac{ar} and dominant \ac{moi}. \textbf{Figure~\ref{fig:all_genes_combined_bar_charts_mini} (A)}   illustrates the overall probability of an affected birth by ClinVar variant classification, whereas \textbf{Figure~\ref{fig:all_genes_combined_bar_charts_mini}  (B)}  depicts the total expected number of cases per classification for an example population, here the UK, of approximately 69.4 million. 
 
-\subsubsection{Validation of SCID-specific Disease Occurrence}
+\subsubsection{Validation of SCID-specific disease occurrence}
 
 Given that SCID is a subset of PID, our probability estimates reflect the likelihood of observing a genetic variant as a diagnosis when the phenotype is PID. However, we additionally tested our results against SCID cohorts in 
  \textbf{Figure \ref{fig:scid_combined}}.
@@ -477,7 +580,7 @@ True counts for \textit{IL2RG} and \textit{DCLRE1C} from ten distinct locations 
 We next examined genetic constraint in high-impact protein networks across the whole \ac{iei} gene set of over 500 known disease-gene phenotypes \cite{tangye_human_2022}. By integrating ClinVar variant classification scores with \ac{ppi} data, we quantified the pathogenic burden per gene and assessed its relationship with network connectivity and genetic constraint
 \cite{szklarczyk2025string, karczewski2020mutational}.
 
-\subsubsection{Score-Positive-Total within IEI PPI network}
+\subsubsection{Score-positive-total within IEI PPI network}
 
 The ClinVar classifications reported in 
 \textbf{Figure \ref{fig:p_varRisEst_summary_scores}} were scaled -5 to +5 based on their pathogenicity. 
@@ -498,11 +601,8 @@ The top 15 genes with the highest total prior probabilities of being observed wi
 \end{figure}
 
 
-
-
-
 \FloatBarrier
-\subsubsection{Association Analysis of Score-Positive-Total across IEI Categories} 
+\subsubsection{Association analysis of score-positive-total across IEI categories} 
 
 We checked for any statistical enrichment in score positive totals, which represents the expected observation of pathogenicity, between the \ac{iei} categories.
 The one‐way \ac{anova} revealed an effect of major disease category on score positive total (\(F(8,500)=2.82,\,p=0.0046\)), indicating that group means were not identical, which we observed in
@@ -512,7 +612,7 @@ However, despite some apparent differences in median scores across categories (i
 showed that all pairwise differences had 95\% confidence intervals overlapping zero, suggesting that individual group differences were not significant.
 
 \FloatBarrier
-\subsubsection{UMAP Embedding of the PPI  Network}
+\subsubsection{UMAP embedding of the PPI  network}
 To address the density of the \ac{ppi} network for the \ac{iei} gene panel, we applied \ac{umap} (\textbf{Figure \ref{fig:p_umap}}). 
 Node sizes reflect interaction degree, a measure of evidence-supported connectivity \cite{szklarczyk2025string}. We tested for a correlation between interaction degree and score positive total. In \textbf{Figure \ref{fig:p_umap}}, gene names with degrees above the 95th percentile are labelled in blue, while the top 15 genes by score positive total are labelled in yellow (as per \textbf{Figure \ref{fig:p_varRisEst_summary_scores}}). Notably, genes with high pathogenic variant loads segregated from highly connected nodes, suggesting that \ac{lof} in hub genes is selectively constrained, whereas damaging variants in lower-degree genes yield more specific effects. This observation was subsequently tested empirically.
 
@@ -527,7 +627,7 @@ Node sizes reflect interaction degree, a measure of evidence-supported connectiv
 \end{figure}
 
 \FloatBarrier
-\subsubsection{Hierarchical Clustering of Enrichment Scores for Major Disease Categories}
+\subsubsection{Hierarchical clustering of enrichment scores for major disease categories}
 \textbf{Figure \ref{fig:patch2}} presents a heatmap of standardised residuals for major disease categories across network clusters, as per \textbf{Figure \ref{fig:p_umap}}. 
 A dendrogram clusters similar disease categories, while the accompanying bar plot displays the maximum absolute standardised residual for each category.
 Notably, (8) \ac{cd} shows the highest maximum enrichment, followed by 
@@ -535,7 +635,7 @@ Notably, (8) \ac{cd} shows the highest maximum enrichment, followed by
 While all maximum values exceed 2, the threshold for significance, this likely reflects the presence of protein clusters with strong damaging variant scores rather than uniform significance across all categories (i.e. genes from cluster 4 in 8 \ac{cd}).
 
 
-\subsubsection{PPI Connectivity, LOEUF Constraint and Enriched Network Cluster Analysis}
+\subsubsection{PPI connectivity, LOEUF constraint and enriched network cluster analysis}
 
 Based on the preliminary insight from \textbf{Figure \ref{fig:patch2}} ,
 we evaluated the relationship between network connectivity (\ac{ppi} degree) and \ac{lof} constraint (\ac{loeuf} upper rank) \citet{karczewski2020mutational} using Spearman’s rank correlation.
@@ -559,13 +659,13 @@ This indicated that shared mechanisms within pathway clusters may underpin genet
 % \subsubsection{Network Analysis of Enriched Significant Clusters Based on \ac{gnomad} Constraint}
 \textbf{Figure \ref{fig:p_cor_spear_rho_sig_clust_patch3} (C, D)} shows the re-plotted \ac{ppi} networks for clusters with significant correlations between \ac{ppi} degree and \ac{loeuf} upper rank. In these networks, node size is scaled by a normalised variant score, while node colour reflects the variant score according to a predefined palette.
 
-\subsection{New Insight from Functional Enrichment}
+\subsection{New insight from functional enrichment}
 To interpret the functional relevance of our prioritised \ac{iei} gene sets with the highest load of damaging variants (i.e. clusters 2 and 4 in \textbf{Figure \ref{fig:p_cor_spear_rho_sig_clust_patch3}}), we performed functional enrichment analysis for known disease associations using MsigDB with FUMA (i.e. GWAScatalog and Immunologic Signatures) \cite{watanabe_functional_2017}. Composite enrichment profiles (\textbf{Figure \ref{fig:fuma_merge}}) reveal that our enriched \ac{ppi} clusters were associated with distinct disease-related phenotypes, providing functional insights beyond traditional \ac{iuis} \ac{iei} groupings \cite{tangye_human_2022}. The gene expression profiles shown in \textbf{Figure \ref{fig:expHeatmaps}} (GTEx v8 54 tissue types) offer the tissue-specific context for these associations. Together, these results enable the annotation of \ac{iei} gene sets with established disease phenotypes, supporting a data-driven classification of \ac{iei}.
 
 Based on these independent sources of interpretation, we observed that genes from cluster 2 were independently associated with specific inflammatory phenotypes, including ankylosing spondylitis, psoriasis, inflammatory bowel disease, and rheumatoid arthritis, as well as quantitative immune traits such as lymphocyte and neutrophil percentages and serum protein levels.
 In contrast, genes from Cluster 4 were linked to ocular and complement-related phenotypes, notably various forms of age-related macular degeneration (e.g. geographic atrophy and choroidal neovascularisation) and biomarkers of the complement system (e.g. C3, C4, and factor H-related proteins), with additional associations to nephropathy and pulmonary function metrics.
 
-\subsection{Genome-wide Gene Distribution and Locus-specific Variant Occurrence}
+\subsection{Genome-wide gene distribution and locus-specific variant occurrence}
 
 \textbf{Figure \ref{fig:karyo_locusplot_merged} (A)} shows a genome-wide karyoplot of all \ac{iei} panel genes across GRCh38, with colour-coding based on \ac{moi}. Figures \textbf{(B)} and \textbf{(C)} display zoomed-in locus plots for \textit{NFKB1} and \textit{CFTR}, respectively. 
 In \textbf{Figure \ref{fig:karyo_locusplot_merged} (B)}, the probability of observing variants with known classifications is high only for variants such as p.Ala475Gly, which are considered benign in the \ac{ad} \textit{NFKB1} gene that is intolerant to \ac{lof}. 
@@ -742,6 +842,24 @@ We acknowledge that our current framework is restricted to \ac{snv}s and does no
 
 Future work will incorporate additional variant types and models to further refine these probability estimates. By continuously updating classical estimates with emerging data and prior knowledge, we aim to enhance the precision of genetic diagnostics and ultimately improve patient care.
 
+
+
+
+
+
+
+% \subsection{Integrating observed true positives and unobserved false negatives into a single, actionable conclusion}
+The results presented in the \textit{NFKB1} case study demonstrate how our Bayesian framework quantifies the final posterior probability that a damaging causal variant is present, by integrating both observed variant calls and unobserved, but potentially pathogenic, sites into a single conclusion. 
+This result applies across all disease-genes. 
+The model partitions posterior probability between a true positive (\texttt{p.Ser237Ter}) and a likely causal splice-site variant that was not captured by sequencing. Despite the latter being unobserved, the analysis attributes 48\,\% of total pathogenic probability to this missing position—an insight that would be unavailable under conventional approaches limited to called variants.
+
+This framework enables calibrated probabilistic conclusions at two levels: per-variant and per-gene. Rather than issuing a binary classification, the method produces interpretable posterior intervals that reflect both sequencing completeness and prior pathogenic evidence. For clinicians, this means that residual uncertainty—arising from false negatives or incomplete genomic coverage—is made visible, quantifiable, and actionable.
+
+A key output is the ability to generate structured variant reports (e.g. Table~\ref{tab:final_variant_report}) that transparently communicate which alleles are supported, which are excluded, and which remain unassessed but potentially disease-causing. These summaries facilitate informed consent, prioritise follow-up sequencing (e.g. long-read or targeted assays), and provide a reproducible, evidence-weighted foundation for diagnostic decision-making.
+
+More broadly, the same approach generalises to genome-wide applications. The precomputed priors for over 50,000 variants across 557 immune-related genes now enable quantitative confidence statements for any patient–phenotype combination. Because the model explicitly incorporates allele frequency, clinical classification, inheritance mode, and sequence quality, it provides a scalable template for delivering uncertainty-aware interpretation in clinical genomics.
+
+
 \section{Conclusion}
 Our work generates prior probabilities for observing any variant classification in \ac{iei} genetic disease, providing a quantitative resource to enhance Bayesian variant interpretation and clinical decision-making.
 
@@ -769,6 +887,19 @@ We declare no competing interest.
 %\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 \beginsupplement
 \section{Supplemental} \label{Supplemental_text}
+
+\subsection{Integrating observed true positives and unobserved false negatives into a single, actionable conclusion}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/plot_scenario_1_quant_uncert_ci.pdf}
+  \caption{
+ Quantification of gene-level pathogenic attribution for \textit{NFKB1} (scenario 1).  
+  Only one known pathogenic variant, \texttt{p.Ser237Ter}, was observed and all previously reported pathogenic positions were successfully sequenced and confirmed as reference (true negatives).  
+  Panels (A–F) follow the same structure as scenario 2 described in \textbf{Figure \ref{fig:plot_scenario_2_quant_uncert_ci}}, culminating in a gene-level posterior probability of 1 (95\,\% credible interval: 0.99–1.00), with full support assigned to the observed allele given the available evidence.
+  }
+  \label{fig:plot_scenario_1_quant_uncert_ci}
+\end{figure}
 
 \subsection{Validation studies}
 
@@ -891,445 +1022,430 @@ We selected the top two enriched clusters (as per \textbf{Figure \ref{fig:p_cor_
 
 \FloatBarrier
 \clearpage
-\section{Clinical Genetics Application}
-
-In this section, we detail our approach to integrating sequencing data with prior pathogenicity evidence. Our method is designed to account for all possible outcomes of true positives (TP), false positives (FP), true negatives (TN), and false negatives (FN), by first ensuring that every nucleotide corresponding to known pathogenic variants in a gene has been accurately sequenced. Only after confirming that these positions match the reference alleles (i.e. no unaccounted variant is present) do we calculate the probability that additional, alternative pathogenic variants (those not observed in the sequencing data) could be present. Our confidence interval (CI) for pathogenicity thus incorporates uncertainty from the entire process, including the tally of TP, FP, TN, and FN outcomes.
-
-\subsection{Methods}
-\subsubsection{Quality Control:}  
-Before performing any probability calculations, we inspect the gVCF to confirm that all known pathogenic variant positions in the gene are adequately covered and appear as reference alleles. This step not only verifies true negatives (TN) but also flags instances where sequencing quality is insufficient, leading to missing sequence information, and prevents false confidence. For example, if a nucleotide position corresponding to a known pathogenic variant has low quality reads and fails QC, it is flagged as missing, thereby affecting the overall probability estimate for unobserved variants.
-
-\subsubsection{Prior Probability Calculation:}  
-For variants with an established ClinVar classification, the occurrence probability is derived directly from the allele frequency. For variants lacking a ClinVar label (i.e. variants of uncertain significance, VUS), we utilise an ACMG evidence score (0–100) to compute a prior probability as follows:
-
-\begin{enumerate}
-    \item \textbf{Convert the ACMG Score:}  
-    The evidence score \(S\) is normalised to a fractional support level:
-    \[
-    S_{\text{adj}} = \frac{S}{100}
-    \]
-    This value reflects the strength of the pathogenic support.
-    
-    \item \textbf{Assign a Minimal Risk (\(\epsilon\)):}  
-    In the absence of a ClinVar classification, we assign a minimal risk based on the maximum observed allele number, \(\max(AN)\), scaled by the evidence support:
-    \[
-    \epsilon = \frac{1}{\max(AN) + 1} \times S_{\text{adj}}
-    \]
-    This step ensures that even low-frequency variants receive a baseline risk proportional to the qualitative evidence.
-    
-    \item \textbf{Adjust the Allele Frequency:}  
-    The observed allele frequency \(p_i\) is then increased by \(\epsilon\) to yield an adjusted frequency:
-    \[
-    p_i^{\text{adj}} = p_i + \epsilon
-    \]
-    This adjusted frequency reflects both the empirical observation and the ACMG evidence.
-    
-    \item \textbf{Calculate the Prior Probability of Disease:}  
-    \begin{itemize}
-        \item For \textbf{Autosomal Dominant (AD)} or \textbf{X-Linked (XL)} inheritance, the prior probability is:
-        \[
-        p_{\text{disease}} = p_i^{\text{adj}}
-        \]
-        \item For \textbf{Autosomal Recessive (AR)} inheritance—which considers both homozygosity and compound heterozygosity—the probability is calculated as:
-        \[
-        p_{\text{disease}} = \left(p_i^{\text{adj}}\right)^2 + 2\,p_i^{\text{adj}}\Bigl(P_{\text{tot}} - p_i^{\text{adj}}\Bigr)
-        \]
-        where
-        \[
-        P_{\text{tot}} = \sum_{j \in \text{gene}} p_j^{\text{adj}}
-        \]
-    \end{itemize}
-\end{enumerate}
-%    \item \textbf{Deriving the Confidence Interval (CI):}  
-%    To capture uncertainty from all possible outcomes (TP, FP, TN, FN) in our sequencing and variant classification process, we propagate the variance arising from:
-%    \begin{itemize}
-%        \item The observed allele frequency and its adjustment via \(\epsilon\).
-%        \item The potential misclassification of variants (e.g. a VUS might be miscalled, contributing to FP or FN counts).
-%        \item Missing sequence data at known pathogenic sites.
-%    \end{itemize}
-%    We model this combined uncertainty using either a Wilson score interval or a Bayesian credible interval (employing a Beta distribution) that integrates over the outcomes. For example, a Bayesian framework samples from the posterior probability distribution of pathogenicity—tallying TP, FP, TN, and FN—and the 2.5th and 97.5th percentiles of this distribution define the 95\% CI.
-%\end{enumerate}
-
-\subsubsection{Deriving the Confidence Interval (CI)}
-
-To capture uncertainty from all possible outcomes (TP, FP, TN, FN) in our sequencing and variant classification process, we propagate the variance arising from:
-
-\begin{itemize}
-    \item The observed allele frequency and its adjustment via \(\epsilon\).
-    \item The potential misclassification of variants (e.g. a VUS might be miscalled, contributing to FP or FN counts).
-    \item Missing sequence data at known pathogenic sites.
-\end{itemize}
-
-We demonstrate two methods for deriving the 95\% CI of the final occurrence probability: (1) the Wilson score interval and (2) a Bayesian credible interval using a Beta distribution.
-
-\paragraph{1. Wilson Score Interval}
-
-Assume the adjusted occurrence probability is estimated as \(\hat{p} = p_i^{\text{adj}}\) based on an effective sample size \(N\) (which reflects the number of informative reads or quality‐controlled observations). The Wilson score interval is computed as:
-
-\[
-\hat{p}_W = \frac{\hat{p} + \frac{z^2}{2N}}{1 + \frac{z^2}{N}}
-\]
-\[
-\text{Margin} = \frac{z}{1 + \frac{z^2}{N}} \sqrt{ \frac{\hat{p}(1-\hat{p})}{N} + \frac{z^2}{4N^2} }
-\]
-\[
-\text{CI}_{\text{Wilson}} = \left[ \hat{p}_W - \text{Margin}, \; \hat{p}_W + \text{Margin} \right]
-\]
-where \(z = 1.96\) for a 95\% confidence level. This interval integrates uncertainty from the adjusted allele frequency and any variability in the count data.
-
-\paragraph{2. Bayesian Credible Interval}
-
-Alternatively, we can model the uncertainty using a Bayesian framework. Suppose that, after accounting for TP, FP, TN, and FN outcomes, the posterior distribution of the pathogenic probability is approximated by a Beta distribution, \(\text{Beta}(\alpha, \beta)\). Here, the parameters \(\alpha\) and \(\beta\) are chosen based on the effective counts of “successes” (e.g. detection or strong evidence of pathogenicity) and “failures” (e.g. absence or refutation), respectively. For example, if \(k\) is the effective number of positive events and \(N-k\) the negatives, then:
-\[
-\alpha = k + 1, \quad \beta = N - k + 1.
-\]
-The 95\% credible interval is then given by the 2.5th and 97.5th percentiles of the Beta distribution:
-\[
-\text{CI}_{\text{Bayesian}} = \left[ \text{BetaInv}(0.025; \alpha, \beta), \; \text{BetaInv}(0.975; \alpha, \beta) \right],
-\]
-where \(\text{BetaInv}(q; \alpha, \beta)\) denotes the quantile function of the Beta distribution at probability \(q\).
-
-Both methods integrate the uncertainty from the observed data, the adjustment via \(\epsilon\) from the ACMG evidence score, and the potential misclassification or missing sequence data. In our analysis, the resulting 95\% CI for pathogenicity is derived from such propagation of uncertainty, ensuring that all outcomes (TP, FP, TN, FN) are reflected in the final confidence bounds.
-
-
-\subsection{Results}
-We illustrate our method with two examples:
-
-\paragraph{Example 1: Missing Sequence Information}
-In one case, a known pathogenic nucleotide position in \textit{GENE\_XYZ} exhibited low quality reads and did not pass QC. This missing information prevents confirmation of the absence of the known variant (a potential false negative), thereby widening the uncertainty in our probability estimate. In such cases, the adjusted allele frequency is calculated with additional variance, leading to a broader CI. For instance, if the observed allele frequency is \(1.0\times10^{-5}\) and after adjusting with the ACMG score the estimated occurrence probability is \(1.0\times10^{-5}\), the propagated uncertainty might yield a 95\% CI of [0.70, 0.85]. This broader interval reflects the impact of missing sequence data on our confidence.
-
-\paragraph{Example 2: Heterozygous Variant in an Autosomal Recessive Gene}
-In another case, a patient carries a heterozygous variant in an autosomal recessive (AR) gene. In this scenario, there is also a second VUS in the same gene. Both variants are assessed using the ACMG evidence score adjustment. Their adjusted allele frequencies are used to compute the overall prior probability of disease, accounting for the possibility of compound heterozygosity. The two VUS are then ranked based on their evidence and the resulting 95\% CIs. For instance, one variant may yield an occurrence probability of \(2.5\times10^{-4}\) with a 95\% CI of [0.80, 0.88], while the other might have a lower probability of \(1.8\times10^{-4}\) with a CI of [0.75, 0.83]. The variant with the higher occurrence probability and narrower CI would be ranked as the more likely causal variant in the context of AR inheritance.
-
-Table~\ref{tab:final_variant_report} shows the final variant results for a male patient carrying an X-linked loss-of-function (LOF) variant in \textit{GENE\_XYZ} where all known pathogenic positions were confirmed as reference alleles. For the variant c.\,1234del (p.Glu412Argfs*5), the observed allele frequency is \(1.2\times10^{-5}\). After applying the ACMG evidence score adjustment (for a VUS lacking a ClinVar classification), the adjusted allele frequency remains consistent with the observed data. The resulting occurrence probability is \(1.2\times10^{-5}\), and by propagating the uncertainty from the allele frequency, evidence score adjustment, and the full range of possible outcomes (TP, FP, TN, FN), we derive a 95\% CI for causality of [0.92, 0.97]. This confirms the variant as the top causal variant in this patient, with no evidence of additional alternative pathogenic variants.
-
-\begin{table}[ht]
-\centering
-\caption{Final Variant Results for Patient (XL LOF)}
-\label{tab:final_variant_report}
-\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
-\begin{tabular}{ll}
-\toprule
-\textbf{Parameter}                  & \textbf{Value}                         \\
-\midrule
-Gene                                & \textit{GENE\_XYZ}                       \\
-Variant                             & c.\,1234del (p.Glu412Argfs*5)             \\
-Variant Type                        & Loss-of-Function (LOF)                  \\
-Inheritance                         & X-Linked (XL)                           \\
-Patient Sex                         & Male (hemizygous)                       \\
-Allele Frequency                    & \(1.2\times10^{-5}\)                     \\
-Occurrence Probability              & \(1.2\times10^{-5}\)                     \\
-95\% CI for Causality               & [0.92, 0.97]                            \\
-Clinical Interpretation             & Top causal variant confirmed; no evidence \\
-                                    & of additional alternative pathogenic variants\\
-\bottomrule
-\end{tabular}}
-\end{table}
-
-
-
-
-\subsection{New version}
-
-
-
-\paragraph{Results.}
-Bayesian integration of allelic frequency and pathogenicity evidence for the \textit{NFKB1} locus yielded a median posterior probability of $0.472$ that a damaging variant in this gene underlies the proband’s phenotype (95\% credible interval: $0.300$–$0.655$).  Partitioning this probability showed that $0.245$ ($51.7\%$ of the total) was assigned to the single damaging variant observed in the patient (\textit{p.Ser237Ter}), whereas $0.228$ ($48.3\%$) was attributable to damaging variants that are known in the literature but were not detected in the patient’s sequence data.  Individual variant contributions are provided in Supplementary Table~S1.
-
-\paragraph{Discussion.}
-These figures indicate that, although the detected \textit{p.Ser237Ter} allele is the most likely causal explanation, almost half of the aetiological probability remains associated with as‑yet unobserved damaging alleles at the same locus.  This residual component reflects both the incompleteness of current variant catalogues and the possibility of technical false negatives in sequencing or variant calling.  Clinically, the result supports classifying \textit{p.Ser237Ter} as the leading candidate while recommending confirmatory functional testing and, where feasible, deeper genomic interrogation (e.g.\ long‑read or targeted sequencing) to exclude additional pathogenic alleles.  More generally, the analysis illustrates how explicit modelling of “missing but plausible” variants can temper over‑confidence in a single observed hit, providing a quantified measure of residual uncertainty that is directly interpretable in a diagnostic setting.
-
-
-\begin{table}
-\caption{overall probability of a damaging causal variant (95\% CI)}
-\centering
-\begin{tabular}[t]{lrrr}
-\toprule
-metric & lower & median & upper\\
-\midrule
-p(causal\_damaging) & 0.3 & 0.472 & 0.655\\
-\bottomrule
-\end{tabular}
-\end{table} 
-
-
-\begin{table}
-\caption{per‑variant probabilities with 95\% credible intervals}
-\centering
-\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
-\begin{tabular}[t]{llrrrrrr}
-\toprule
-group & variant & evidence & lower & median & upper & posterior share & prob causal damaging\\
-\midrule
-present causal & p.Ser237Ter & 5.0 & 0.108 & 0.238 & 0.415 & 0.245 & 0.245\\
-present other & p.Arg231His & 0.0 & 0.085 & 0.205 & 0.370 & 0.211 & 0.000\\
-present other & p.Gly650Arg & 0.0 & 0.086 & 0.205 & 0.374 & 0.211 & 0.000\\
-missing causal & c.159+1G>A & 4.5 & 0.264 & 0.264 & 0.264 & 0.228 & 0.228\\
-missing other & p.Thr567Ile & -5.0 & 0.001 & 0.001 & 0.001 & 0.035 & 0.000\\
-\addlinespace
-missing other & p.Val236Ile & 0.0 & 0.005 & 0.005 & 0.005 & 0.070 & 0.000\\
-\bottomrule
-\end{tabular}}
-\end{table} 
-
-
-
-
-% ---------------------------------------------------------------------------
-% Methods section (replace the earlier “Clinical Genetics Application” text)
-% ---------------------------------------------------------------------------
-
-\section{Bayesian assessment of per‑patient variant risk}
-
-\subsection{Data preprocessing}
-
-For every proband we extract all coding and splice‑region variants in the gene of
-interest from the gVCF and annotate them with ClinVar clinical significance
-labels.  Positions corresponding to previously reported pathogenic variants are
-checked for read depth and genotype quality; sites that fail this quality
-control step are recorded as \textit{missing}, differentiating true negatives
-from uninformative calls.
-
-\subsection{Pathogenicity scoring}
-
-Each ClinVar label is mapped to an integer score
-$S_i\in[-5,5]$ (Table~S2).  Positive values denote increasing evidence of
-pathogenicity; negative values denote benign evidence.
-These scores serve two purposes:
-
-\begin{enumerate}
-  \item \textbf{Evidence score.}  A variant is treated as
-        \textit{damaging} if $S_i>3$.
-  \item \textbf{Pathogenic weight.}
-        $W_i=\text{rescale}(S_i,-5,5;0,1)$ converts the score
-        to a continuous weight in $[0,1]$ which down‑weights allele
-        frequency for benign calls and leaves strongly pathogenic calls
-        unchanged.
-\end{enumerate}
-
-%\subsection{Adjusted allele probability}
+%\section{Clinical Genetics Application}
 %
-%Let $f_i$ be the gnomAD allele frequency and
-%$\text{AN}_{\max}$ the maximum allele number reported for the gene.
-%The prior occurrence probability for variant~$i$ is
+%In this section, we detail our approach to integrating sequencing data with prior pathogenicity evidence. Our method is designed to account for all possible outcomes of true positives (TP), false positives (FP), true negatives (TN), and false negatives (FN), by first ensuring that every nucleotide corresponding to known pathogenic variants in a gene has been accurately sequenced. Only after confirming that these positions match the reference alleles (i.e. no unaccounted variant is present) do we calculate the probability that additional, alternative pathogenic variants (those not observed in the sequencing data) could be present. Our confidence interval (CI) for pathogenicity thus incorporates uncertainty from the entire process, including the tally of TP, FP, TN, and FN outcomes.
+%
+%\subsection{Methods}
+%\subsubsection{Quality Control:}  
+%Before performing any probability calculations, we inspect the gVCF to confirm that all known pathogenic variant positions in the gene are adequately covered and appear as reference alleles. This step not only verifies true negatives (TN) but also flags instances where sequencing quality is insufficient, leading to missing sequence information, and prevents false confidence. For example, if a nucleotide position corresponding to a known pathogenic variant has low quality reads and fails QC, it is flagged as missing, thereby affecting the overall probability estimate for unobserved variants.
+%
+%\subsubsection{Prior Probability Calculation:}  
+%For variants with an established ClinVar classification, the occurrence probability is derived directly from the allele frequency. For variants lacking a ClinVar label (i.e. variants of uncertain significance, VUS), we utilise an ACMG evidence score (0–100) to compute a prior probability as follows:
+%
+%\begin{enumerate}
+%    \item \textbf{Convert the ACMG Score:}  
+%    The evidence score \(S\) is normalised to a fractional support level:
+%    \[
+%    S_{\text{adj}} = \frac{S}{100}
+%    \]
+%    This value reflects the strength of the pathogenic support.
+%    
+%    \item \textbf{Assign a Minimal Risk (\(\epsilon\)):}  
+%    In the absence of a ClinVar classification, we assign a minimal risk based on the maximum observed allele number, \(\max(AN)\), scaled by the evidence support:
+%    \[
+%    \epsilon = \frac{1}{\max(AN) + 1} \times S_{\text{adj}}
+%    \]
+%    This step ensures that even low-frequency variants receive a baseline risk proportional to the qualitative evidence.
+%    
+%    \item \textbf{Adjust the Allele Frequency:}  
+%    The observed allele frequency \(p_i\) is then increased by \(\epsilon\) to yield an adjusted frequency:
+%    \[
+%    p_i^{\text{adj}} = p_i + \epsilon
+%    \]
+%    This adjusted frequency reflects both the empirical observation and the ACMG evidence.
+%    
+%    \item \textbf{Calculate the Prior Probability of Disease:}  
+%    \begin{itemize}
+%        \item For \textbf{Autosomal Dominant (AD)} or \textbf{X-Linked (XL)} inheritance, the prior probability is:
+%        \[
+%        p_{\text{disease}} = p_i^{\text{adj}}
+%        \]
+%        \item For \textbf{Autosomal Recessive (AR)} inheritance—which considers both homozygosity and compound heterozygosity—the probability is calculated as:
+%        \[
+%        p_{\text{disease}} = \left(p_i^{\text{adj}}\right)^2 + 2\,p_i^{\text{adj}}\Bigl(P_{\text{tot}} - p_i^{\text{adj}}\Bigr)
+%        \]
+%        where
+%        \[
+%        P_{\text{tot}} = \sum_{j \in \text{gene}} p_j^{\text{adj}}
+%        \]
+%    \end{itemize}
+%\end{enumerate}
+%%    \item \textbf{Deriving the Confidence Interval (CI):}  
+%%    To capture uncertainty from all possible outcomes (TP, FP, TN, FN) in our sequencing and variant classification process, we propagate the variance arising from:
+%%    \begin{itemize}
+%%        \item The observed allele frequency and its adjustment via \(\epsilon\).
+%%        \item The potential misclassification of variants (e.g. a VUS might be miscalled, contributing to FP or FN counts).
+%%        \item Missing sequence data at known pathogenic sites.
+%%    \end{itemize}
+%%    We model this combined uncertainty using either a Wilson score interval or a Bayesian credible interval (employing a Beta distribution) that integrates over the outcomes. For example, a Bayesian framework samples from the posterior probability distribution of pathogenicity—tallying TP, FP, TN, and FN—and the 2.5th and 97.5th percentiles of this distribution define the 95\% CI.
+%%\end{enumerate}
+%
+%\subsubsection{Deriving the Confidence Interval (CI)}
+%
+%To capture uncertainty from all possible outcomes (TP, FP, TN, FN) in our sequencing and variant classification process, we propagate the variance arising from:
+%
+%\begin{itemize}
+%    \item The observed allele frequency and its adjustment via \(\epsilon\).
+%    \item The potential misclassification of variants (e.g. a VUS might be miscalled, contributing to FP or FN counts).
+%    \item Missing sequence data at known pathogenic sites.
+%\end{itemize}
+%
+%We demonstrate two methods for deriving the 95\% CI of the final occurrence probability: (1) the Wilson score interval and (2) a Bayesian credible interval using a Beta distribution.
+%
+%\paragraph{1. Wilson Score Interval}
+%
+%Assume the adjusted occurrence probability is estimated as \(\hat{p} = p_i^{\text{adj}}\) based on an effective sample size \(N\) (which reflects the number of informative reads or quality‐controlled observations). The Wilson score interval is computed as:
+%
 %\[
-%p_i^{\ast}=W_i\,f_i,
+%\hat{p}_W = \frac{\hat{p} + \frac{z^2}{2N}}{1 + \frac{z^2}{N}}
 %\]
-%and the corresponding Beta parameters are
 %\[
-%\alpha_i=\text{round}\!\left(p_i^{\ast}\cdot\text{AN}_{\max}\right)+
-%          \bigl[\![\,S_i>0\,]\!]\,(S_i+1)+\bigl[\![\,S_i\le 0\,]\!],
+%\text{Margin} = \frac{z}{1 + \frac{z^2}{N}} \sqrt{ \frac{\hat{p}(1-\hat{p})}{N} + \frac{z^2}{4N^2} }
+%\]
+%\[
+%\text{CI}_{\text{Wilson}} = \left[ \hat{p}_W - \text{Margin}, \; \hat{p}_W + \text{Margin} \right]
+%\]
+%where \(z = 1.96\) for a 95\% confidence level. This interval integrates uncertainty from the adjusted allele frequency and any variability in the count data.
+%
+%\paragraph{2. Bayesian Credible Interval}
+%
+%Alternatively, we can model the uncertainty using a Bayesian framework. Suppose that, after accounting for TP, FP, TN, and FN outcomes, the posterior distribution of the pathogenic probability is approximated by a Beta distribution, \(\text{Beta}(\alpha, \beta)\). Here, the parameters \(\alpha\) and \(\beta\) are chosen based on the effective counts of “successes” (e.g. detection or strong evidence of pathogenicity) and “failures” (e.g. absence or refutation), respectively. For example, if \(k\) is the effective number of positive events and \(N-k\) the negatives, then:
+%\[
+%\alpha = k + 1, \quad \beta = N - k + 1.
+%\]
+%The 95\% credible interval is then given by the 2.5th and 97.5th percentiles of the Beta distribution:
+%\[
+%\text{CI}_{\text{Bayesian}} = \left[ \text{BetaInv}(0.025; \alpha, \beta), \; \text{BetaInv}(0.975; \alpha, \beta) \right],
+%\]
+%where \(\text{BetaInv}(q; \alpha, \beta)\) denotes the quantile function of the Beta distribution at probability \(q\).
+%
+%Both methods integrate the uncertainty from the observed data, the adjustment via \(\epsilon\) from the ACMG evidence score, and the potential misclassification or missing sequence data. In our analysis, the resulting 95\% CI for pathogenicity is derived from such propagation of uncertainty, ensuring that all outcomes (TP, FP, TN, FN) are reflected in the final confidence bounds.
+%
+%
+%\subsection{Results}
+%We illustrate our method with two examples:
+%
+%\paragraph{Example 1: Missing Sequence Information}
+%In one case, a known pathogenic nucleotide position in \textit{GENE\_XYZ} exhibited low quality reads and did not pass QC. This missing information prevents confirmation of the absence of the known variant (a potential false negative), thereby widening the uncertainty in our probability estimate. In such cases, the adjusted allele frequency is calculated with additional variance, leading to a broader CI. For instance, if the observed allele frequency is \(1.0\times10^{-5}\) and after adjusting with the ACMG score the estimated occurrence probability is \(1.0\times10^{-5}\), the propagated uncertainty might yield a 95\% CI of [0.70, 0.85]. This broader interval reflects the impact of missing sequence data on our confidence.
+%
+%\paragraph{Example 2: Heterozygous Variant in an Autosomal Recessive Gene}
+%In another case, a patient carries a heterozygous variant in an autosomal recessive (AR) gene. In this scenario, there is also a second VUS in the same gene. Both variants are assessed using the ACMG evidence score adjustment. Their adjusted allele frequencies are used to compute the overall prior probability of disease, accounting for the possibility of compound heterozygosity. The two VUS are then ranked based on their evidence and the resulting 95\% CIs. For instance, one variant may yield an occurrence probability of \(2.5\times10^{-4}\) with a 95\% CI of [0.80, 0.88], while the other might have a lower probability of \(1.8\times10^{-4}\) with a CI of [0.75, 0.83]. The variant with the higher occurrence probability and narrower CI would be ranked as the more likely causal variant in the context of AR inheritance.
+%
+%Table~\ref{tab:final_variant_report} shows the final variant results for a male patient carrying an X-linked loss-of-function (LOF) variant in \textit{GENE\_XYZ} where all known pathogenic positions were confirmed as reference alleles. For the variant c.\,1234del (p.Glu412Argfs*5), the observed allele frequency is \(1.2\times10^{-5}\). After applying the ACMG evidence score adjustment (for a VUS lacking a ClinVar classification), the adjusted allele frequency remains consistent with the observed data. The resulting occurrence probability is \(1.2\times10^{-5}\), and by propagating the uncertainty from the allele frequency, evidence score adjustment, and the full range of possible outcomes (TP, FP, TN, FN), we derive a 95\% CI for causality of [0.92, 0.97]. This confirms the variant as the top causal variant in this patient, with no evidence of additional alternative pathogenic variants.
+%
+%\begin{table}[ht]
+%\centering
+%\caption{Final Variant Results for Patient (XL LOF)}
+%\label{tab:final_variant_report}
+%\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
+%\begin{tabular}{ll}
+%\toprule
+%\textbf{Parameter}                  & \textbf{Value}                         \\
+%\midrule
+%Gene                                & \textit{GENE\_XYZ}                       \\
+%Variant                             & c.\,1234del (p.Glu412Argfs*5)             \\
+%Variant Type                        & Loss-of-Function (LOF)                  \\
+%Inheritance                         & X-Linked (XL)                           \\
+%Patient Sex                         & Male (hemizygous)                       \\
+%Allele Frequency                    & \(1.2\times10^{-5}\)                     \\
+%Occurrence Probability              & \(1.2\times10^{-5}\)                     \\
+%95\% CI for Causality               & [0.92, 0.97]                            \\
+%Clinical Interpretation             & Top causal variant confirmed; no evidence \\
+%                                    & of additional alternative pathogenic variants\\
+%\bottomrule
+%\end{tabular}}
+%\end{table}
+%
+%
+%
+%
+%\subsection{New version}
+%
+%
+%
+%\paragraph{Results.}
+%Bayesian integration of allelic frequency and pathogenicity evidence for the \textit{NFKB1} locus yielded a median posterior probability of $0.472$ that a damaging variant in this gene underlies the proband’s phenotype (95\% credible interval: $0.300$–$0.655$).  Partitioning this probability showed that $0.245$ ($51.7\%$ of the total) was assigned to the single damaging variant observed in the patient (\textit{p.Ser237Ter}), whereas $0.228$ ($48.3\%$) was attributable to damaging variants that are known in the literature but were not detected in the patient’s sequence data.  Individual variant contributions are provided in Supplementary Table~S1.
+%
+%\paragraph{Discussion.}
+%These figures indicate that, although the detected \textit{p.Ser237Ter} allele is the most likely causal explanation, almost half of the aetiological probability remains associated with as‑yet unobserved damaging alleles at the same locus.  This residual component reflects both the incompleteness of current variant catalogues and the possibility of technical false negatives in sequencing or variant calling.  Clinically, the result supports classifying \textit{p.Ser237Ter} as the leading candidate while recommending confirmatory functional testing and, where feasible, deeper genomic interrogation (e.g.\ long‑read or targeted sequencing) to exclude additional pathogenic alleles.  More generally, the analysis illustrates how explicit modelling of “missing but plausible” variants can temper over‑confidence in a single observed hit, providing a quantified measure of residual uncertainty that is directly interpretable in a diagnostic setting.
+%
+%
+%\begin{table}
+%\caption{overall probability of a damaging causal variant (95\% CI)}
+%\centering
+%\begin{tabular}[t]{lrrr}
+%\toprule
+%metric & lower & median & upper\\
+%\midrule
+%p(causal\_damaging) & 0.3 & 0.472 & 0.655\\
+%\bottomrule
+%\end{tabular}
+%\end{table} 
+%
+%
+%\begin{table}
+%\caption{per‑variant probabilities with 95\% credible intervals}
+%\centering
+%\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
+%\begin{tabular}[t]{llrrrrrr}
+%\toprule
+%group & variant & evidence & lower & median & upper & posterior share & prob causal damaging\\
+%\midrule
+%present causal & p.Ser237Ter & 5.0 & 0.108 & 0.238 & 0.415 & 0.245 & 0.245\\
+%present other & p.Arg231His & 0.0 & 0.085 & 0.205 & 0.370 & 0.211 & 0.000\\
+%present other & p.Gly650Arg & 0.0 & 0.086 & 0.205 & 0.374 & 0.211 & 0.000\\
+%missing causal & c.159+1G>A & 4.5 & 0.264 & 0.264 & 0.264 & 0.228 & 0.228\\
+%missing other & p.Thr567Ile & -5.0 & 0.001 & 0.001 & 0.001 & 0.035 & 0.000\\
+%\addlinespace
+%missing other & p.Val236Ile & 0.0 & 0.005 & 0.005 & 0.005 & 0.070 & 0.000\\
+%\bottomrule
+%\end{tabular}}
+%\end{table} 
+%
+%
+%
+%
+%% ---------------------------------------------------------------------------
+%% Methods section (replace the earlier “Clinical Genetics Application” text)
+%% ---------------------------------------------------------------------------
+%
+%\section{Bayesian assessment of per‑patient variant risk}
+%
+%\subsection{Data preprocessing}
+%
+%For every proband we extract all coding and splice‑region variants in the gene of
+%interest from the gVCF and annotate them with ClinVar clinical significance
+%labels.  Positions corresponding to previously reported pathogenic variants are
+%checked for read depth and genotype quality; sites that fail this quality
+%control step are recorded as \textit{missing}, differentiating true negatives
+%from uninformative calls.
+%
+%\subsection{Pathogenicity scoring}
+%
+%Each ClinVar label is mapped to an integer score
+%$S_i\in[-5,5]$ (Table~S2).  Positive values denote increasing evidence of
+%pathogenicity; negative values denote benign evidence.
+%These scores serve two purposes:
+%
+%\begin{enumerate}
+%  \item \textbf{Evidence score.}  A variant is treated as
+%        \textit{damaging} if $S_i>3$.
+%  \item \textbf{Pathogenic weight.}
+%        $W_i=\text{rescale}(S_i,-5,5;0,1)$ converts the score
+%        to a continuous weight in $[0,1]$ which down‑weights allele
+%        frequency for benign calls and leaves strongly pathogenic calls
+%        unchanged.
+%\end{enumerate}
+%
+%%\subsection{Adjusted allele probability}
+%%
+%%Let $f_i$ be the gnomAD allele frequency and
+%%$\text{AN}_{\max}$ the maximum allele number reported for the gene.
+%%The prior occurrence probability for variant~$i$ is
+%%\[
+%%p_i^{\ast}=W_i\,f_i,
+%%\]
+%%and the corresponding Beta parameters are
+%%\[
+%%\alpha_i=\text{round}\!\left(p_i^{\ast}\cdot\text{AN}_{\max}\right)+
+%%          \bigl[\![\,S_i>0\,]\!]\,(S_i+1)+\bigl[\![\,S_i\le 0\,]\!],
+%%\qquad
+%%\beta_i = \text{AN}_{\max}-\text{round}\!\left(p_i^{\ast}\cdot
+%%          \text{AN}_{\max}\right)+1.
+%%\]
+%
+%
+%% ---------------------------------------------------------------------------
+%% Replace the paragraph that begins “Let $f_i$ be the gnomAD allele frequency…”
+%% ---------------------------------------------------------------------------
+%
+%\subsubsection{Prior occurrence probability}
+%
+%The analysis starts from a per‑variant quantity called
+%\verb|occurrence_prob| that was already included in the working
+%data frame.  This variable was produced upstream by the
+%\textsc{Variant‑Class Observation Probability} pipeline described in
+%Section~\ref{sec:min_risk} (HWE‑based model, minimal‐risk adjustment,
+%and \ac{moi}‑specific aggregation).%  In other words, the allele‑frequency logic in Eqns.~(1)–(4) is executed outside the present script and its output is written to disk.
+%
+%Within the Bayesian analysis we apply
+%a pathogenicity weight (or use scores like GuRu or other ACMG-style scoring),
+%\[
+%W_i=\operatorname{rescale}\!\bigl(S_i\,;\,-5,5\rightarrow 0,1\bigr),
+%\]
+%to obtain an adjusted prior
+%\[
+%p_i^{\ast}=W_i \times \verb|occurrence_prob|_i .
+%\]
+%This weighting down‑grades benign or uncertain variants
+%($S_i\le 0$) and leaves strongly pathogenic calls ($S_i>3$) unchanged.
+%The Beta parameters used in the posterior simulation are then
+%\[
+%\alpha_i=\operatorname{round}\!\bigl(p_i^{\ast}\,\text{AN}_{\max}\bigr)+
+%          \operatorname{prior\_w}(S_i),
 %\qquad
-%\beta_i = \text{AN}_{\max}-\text{round}\!\left(p_i^{\ast}\cdot
-%          \text{AN}_{\max}\right)+1.
+%\beta_i = \text{AN}_{\max}-\operatorname{round}\!\bigl(p_i^{\ast}\,
+%          \text{AN}_{\max}\bigr)+1,
 %\]
+%where \verb|prior_w|$(S_i)=S_i+1$ for $S_i>0$ and $1$ otherwise, exactly
+%as implemented in the script.
+%
+%Consequently, the code block does not duplicate the
+%HWE–allele‑frequency calculation but consumes its result; the only
+%adjustment performed \emph{in situ} is the pathogenicity weighting
+%described above.
+%
+%\subsection{Posterior simulation}
+%
+%We draw
+%$\pi_{i}^{(m)}\sim\mathrm{Beta}(\alpha_i,\beta_i)$ for
+%$m=1,\dots,10{,}000$ and normalise within every draw to obtain
+%\[
+%\tilde{\pi}_{i}^{(m)} = 
+%\frac{\pi_{i}^{(m)}}{\sum_{j=1}^{k}\pi_{j}^{(m)}},
+%\]
+%where $k$ is the number of candidate variants (both \emph{present} and
+%\emph{missing}).  The following quantities are retained:
+%
+%\begin{itemize}
+%  \item expected causal share
+%        $\bar{\pi}_i=\frac1{10{,}000}\sum_m\tilde{\pi}_{i}^{(m)}$;
+%  \item posterior 95\,\% credible interval for $\tilde{\pi}_i$;
+%  \item probability that variant~$i$ is the top causal candidate,
+%        $P(\tilde{\pi}_i=\max_j\tilde{\pi}_j)$;
+%  \item damaging‑causal probability for variant~$i$,
+%        $d_i=\bar{\pi}_i\mathbf{1}[S_i>3]$.
+%\end{itemize}
+%
+%Summing $d_i$ across all $i$ in each draw yields the posterior
+%distribution of “at least one damaging variant is causal”, from which
+%we report the median and 95\,\% credible interval.
+%
+%\subsection{Present versus missing contribution}
+%
+%Variants are also stratified by
+%\textit{present} ($\text{flag}=\text{present}$) or
+%\textit{missing} ($\text{flag}=\text{missing}$) status.
+%The total damaging probability is decomposed accordingly,
+%allowing a direct estimate of how much risk derives from the
+%observed pathogenic variant(s) versus uncertainty about un‑observed but
+%known pathogenic alleles.
+%
+%% ---------------------------------------------------------------------------
+%% Results paragraph to accompany Figure 3 (example values)
+%% ---------------------------------------------------------------------------
+%
+%\section{Results for the \textit{NFKB1} proband}
+%
+%For the illustrative proband the damaging‑causal probability was
+%$0.472$ (95\,\%~Cred.\ $0.300$–$0.655$;
+%Fig.\,3E).  Of this, $0.245$ (51.7\,\%) was assigned to the observed
+%\textit{p.Ser237Ter} nonsense variant, while $0.228$
+%(48.3\,\%) remained with damaging variants that are reported in
+%ClinVar but were technically not assessed in the patient sequence (e.g. non-sequenced or failed QC)
+%(Fig.\,3D).  The per‑variant posterior shares, credible intervals and
+%top‑hit probabilities are given in Supplementary Table~S3.
+%
+%\paragraph{Interpretation.}
+%Although \textit{p.Ser237Ter} is the most likely causal allele, nearly half of the
+%posterior mass resides with un‑observed pathogenic variants, reflecting (i)
+%possible technical false negatives and (ii) incomplete knowledge of
+%disease‑associated variation in \textit{NFKB1}.  Functional validation of
+%\textit{p.Ser237Ter} and targeted re‑sequencing of low‑coverage exons would
+%therefore materially increase diagnostic confidence.
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%New version
+%
+%\subsection*{Calculation of \(p(\text{causal \& damaging})\)}
+%
+%The key thing to appreciate is that \(p(\text{causal \& damaging})\) is built up in two layers:
+%
+%\paragraph{1. Per‑variant posterior shares}
+%\begin{itemize}
+%  \item For each variant \(i\) we draw \(M=10\,000\) samples
+%    \[
+%      \pi_i^{(m)} \;\sim\;\mathrm{Beta}(\alpha_i,\beta_i),
+%      \quad
+%      \tilde\pi_i^{(m)} \;=\;\frac{\pi_i^{(m)}}{\sum_j \pi_j^{(m)}},
+%      \quad m=1,\dots,M,
+%    \]
+%    so that for each draw the \(\tilde\pi_i^{(m)}\) sum to 1 across all variants.
+%  \item The variant‐level ``posterior\_share'' is
+%    \[
+%      \bar\pi_i \;=\;\frac{1}{M}\sum_{m=1}^M \tilde\pi_i^{(m)},
+%    \]
+%    and its 95 \% credible interval is given by the 2.5 \% and 97.5 \% quantiles of \(\{\tilde\pi_i^{(m)}\}\).
+%  \item We then define
+%    \[
+%      p_{\text{cd},i}^{(m)}
+%      =
+%      \begin{cases}
+%        \tilde\pi_i^{(m)}, & \text{if variant \(i\) is ``causal'' (score}>3),\\
+%        0,                  & \text{otherwise},
+%      \end{cases}
+%    \]
+%    and take
+%    \[
+%      \mathrm{prob\_causal\_damaging}_i
+%      = \frac{1}{M}\sum_{m=1}^M p_{\text{cd},i}^{(m)}.
+%    \]
+%\end{itemize}
+%
+%\paragraph{2. Total damaging‑causal probability}
+%\begin{itemize}
+%  \item Within each draw we sum over all causal variants:
+%    \[
+%      P^{(m)} = \sum_{i:\,\text{causal}} p_{\text{cd},i}^{(m)}
+%              = \sum_{i:\,\text{causal}} \tilde\pi_i^{(m)}.
+%    \]
+%  \item The overall median (\(0.751\)) and 95 \% CI (\(0.504\)–\(0.919\)) in Table~1 are the median and 2.5 %/97.5 % quantiles of the distribution \(\{P^{(m)}\}_{m=1}^M\).
+%\end{itemize}
+%
+%Because there are two causal variants—one present (\texttt{p.Ser237Ter}) and one missing (\texttt{c.159+1G>A})—their posterior shares sum to \(P^{(m)}\) in each draw.  On average:
+%\[
+%  \bar\pi_{\text{present}}
+%  \approx 0.377,
+%  \quad
+%  \bar\pi_{\text{missing}}
+%  \approx 0.364,
+%  \quad
+%  \bar\pi_{\text{present}} + \bar\pi_{\text{missing}}
+%  \approx 0.741,
+%\]
+%very close to the median of \(P^{(m)}\).  The slight difference is due to “sum of means” versus “median of sums.”
+%
+%\paragraph*{Interpretation}
+%Yes, the missing splice‐donor variant carries the remainder of the damaging probability not taken by \texttt{p.Ser237Ter}.  Because each variant’s share is proportional to its adjusted occurrence probability \(p_i\), a variant whose \(p_i\) is about one‑quarter of the total gene‑level frequency will capture roughly 25 \% of the posterior mass.
+%
+%\bigskip
+%
+%\noindent\textbf{Suggested results paragraph:}
+%
+%\begin{quote}
+%We ran \(M=10\,000\) posterior simulations from \(\mathrm{Beta}(\alpha_i,\beta_i)\) for each candidate variant, normalising draws so the \(\tilde\pi_i\) sum to one in each draw.  We zeroed out variants with evidence\_score \(\le3\) and summed the remaining \(\tilde\pi_i\) to obtain \(P^{(m)}\), the posterior probability that at least one damaging variant explains the phenotype.  For the \textit{NFKB1} proband, this overall \(p(\text{causal \& damaging})\) has median 0.751 (95 \% CI 0.504–0.919).  Breaking it down, the observed nonsense allele \texttt{p.Ser237Ter} carries a posterior\_share of \(\approx0.377\), while the unsequenced splice‐site variant \texttt{c.159+1G>A} accounts for \(\approx0.364\), together summing to the total.  Each variant’s share tracks its relative adjusted occurrence probability \(p_i\), so variants with similar \(p_i\) receive similar posterior mass.
+%\end{quote}
+%
+%
+%
+%\clearpage
+%\section{New}
 
 
-% ---------------------------------------------------------------------------
-% Replace the paragraph that begins “Let $f_i$ be the gnomAD allele frequency…”
-% ---------------------------------------------------------------------------
-
-\subsubsection{Prior occurrence probability}
-
-The analysis starts from a per‑variant quantity called
-\verb|occurrence_prob| that was already included in the working
-data frame.  This variable was produced upstream by the
-\textsc{Variant‑Class Observation Probability} pipeline described in
-Section~\ref{sec:min_risk} (HWE‑based model, minimal‐risk adjustment,
-and \ac{moi}‑specific aggregation).%  In other words, the allele‑frequency logic in Eqns.~(1)–(4) is executed outside the present script and its output is written to disk.
-
-Within the Bayesian analysis we apply
-a pathogenicity weight (or use scores like GuRu or other ACMG-style scoring),
-\[
-W_i=\operatorname{rescale}\!\bigl(S_i\,;\,-5,5\rightarrow 0,1\bigr),
-\]
-to obtain an adjusted prior
-\[
-p_i^{\ast}=W_i \times \verb|occurrence_prob|_i .
-\]
-This weighting down‑grades benign or uncertain variants
-($S_i\le 0$) and leaves strongly pathogenic calls ($S_i>3$) unchanged.
-The Beta parameters used in the posterior simulation are then
-\[
-\alpha_i=\operatorname{round}\!\bigl(p_i^{\ast}\,\text{AN}_{\max}\bigr)+
-          \operatorname{prior\_w}(S_i),
-\qquad
-\beta_i = \text{AN}_{\max}-\operatorname{round}\!\bigl(p_i^{\ast}\,
-          \text{AN}_{\max}\bigr)+1,
-\]
-where \verb|prior_w|$(S_i)=S_i+1$ for $S_i>0$ and $1$ otherwise, exactly
-as implemented in the script.
-
-Consequently, the code block does not duplicate the
-HWE–allele‑frequency calculation but consumes its result; the only
-adjustment performed \emph{in situ} is the pathogenicity weighting
-described above.
-
-\subsection{Posterior simulation}
-
-We draw
-$\pi_{i}^{(m)}\sim\mathrm{Beta}(\alpha_i,\beta_i)$ for
-$m=1,\dots,10{,}000$ and normalise within every draw to obtain
-\[
-\tilde{\pi}_{i}^{(m)} = 
-\frac{\pi_{i}^{(m)}}{\sum_{j=1}^{k}\pi_{j}^{(m)}},
-\]
-where $k$ is the number of candidate variants (both \emph{present} and
-\emph{missing}).  The following quantities are retained:
-
-\begin{itemize}
-  \item expected causal share
-        $\bar{\pi}_i=\frac1{10{,}000}\sum_m\tilde{\pi}_{i}^{(m)}$;
-  \item posterior 95\,\% credible interval for $\tilde{\pi}_i$;
-  \item probability that variant~$i$ is the top causal candidate,
-        $P(\tilde{\pi}_i=\max_j\tilde{\pi}_j)$;
-  \item damaging‑causal probability for variant~$i$,
-        $d_i=\bar{\pi}_i\mathbf{1}[S_i>3]$.
-\end{itemize}
-
-Summing $d_i$ across all $i$ in each draw yields the posterior
-distribution of “at least one damaging variant is causal”, from which
-we report the median and 95\,\% credible interval.
-
-\subsection{Present versus missing contribution}
-
-Variants are also stratified by
-\textit{present} ($\text{flag}=\text{present}$) or
-\textit{missing} ($\text{flag}=\text{missing}$) status.
-The total damaging probability is decomposed accordingly,
-allowing a direct estimate of how much risk derives from the
-observed pathogenic variant(s) versus uncertainty about un‑observed but
-known pathogenic alleles.
-
-% ---------------------------------------------------------------------------
-% Results paragraph to accompany Figure 3 (example values)
-% ---------------------------------------------------------------------------
-
-\section{Results for the \textit{NFKB1} proband}
-
-For the illustrative proband the damaging‑causal probability was
-$0.472$ (95\,\%~Cred.\ $0.300$–$0.655$;
-Fig.\,3E).  Of this, $0.245$ (51.7\,\%) was assigned to the observed
-\textit{p.Ser237Ter} nonsense variant, while $0.228$
-(48.3\,\%) remained with damaging variants that are reported in
-ClinVar but were technically not assessed in the patient sequence (e.g. non-sequenced or failed QC)
-(Fig.\,3D).  The per‑variant posterior shares, credible intervals and
-top‑hit probabilities are given in Supplementary Table~S3.
-
-\paragraph{Interpretation.}
-Although \textit{p.Ser237Ter} is the most likely causal allele, nearly half of the
-posterior mass resides with un‑observed pathogenic variants, reflecting (i)
-possible technical false negatives and (ii) incomplete knowledge of
-disease‑associated variation in \textit{NFKB1}.  Functional validation of
-\textit{p.Ser237Ter} and targeted re‑sequencing of low‑coverage exons would
-therefore materially increase diagnostic confidence.
 
 
 
 
-
-
-
-
-
-
-
-New version
-
-\subsection*{Calculation of \(p(\text{causal \& damaging})\)}
-
-The key thing to appreciate is that \(p(\text{causal \& damaging})\) is built up in two layers:
-
-\paragraph{1. Per‑variant posterior shares}
-\begin{itemize}
-  \item For each variant \(i\) we draw \(M=10\,000\) samples
-    \[
-      \pi_i^{(m)} \;\sim\;\mathrm{Beta}(\alpha_i,\beta_i),
-      \quad
-      \tilde\pi_i^{(m)} \;=\;\frac{\pi_i^{(m)}}{\sum_j \pi_j^{(m)}},
-      \quad m=1,\dots,M,
-    \]
-    so that for each draw the \(\tilde\pi_i^{(m)}\) sum to 1 across all variants.
-  \item The variant‐level ``posterior\_share'' is
-    \[
-      \bar\pi_i \;=\;\frac{1}{M}\sum_{m=1}^M \tilde\pi_i^{(m)},
-    \]
-    and its 95 \% credible interval is given by the 2.5 \% and 97.5 \% quantiles of \(\{\tilde\pi_i^{(m)}\}\).
-  \item We then define
-    \[
-      p_{\text{cd},i}^{(m)}
-      =
-      \begin{cases}
-        \tilde\pi_i^{(m)}, & \text{if variant \(i\) is ``causal'' (score}>3),\\
-        0,                  & \text{otherwise},
-      \end{cases}
-    \]
-    and take
-    \[
-      \mathrm{prob\_causal\_damaging}_i
-      = \frac{1}{M}\sum_{m=1}^M p_{\text{cd},i}^{(m)}.
-    \]
-\end{itemize}
-
-\paragraph{2. Total damaging‑causal probability}
-\begin{itemize}
-  \item Within each draw we sum over all causal variants:
-    \[
-      P^{(m)} = \sum_{i:\,\text{causal}} p_{\text{cd},i}^{(m)}
-              = \sum_{i:\,\text{causal}} \tilde\pi_i^{(m)}.
-    \]
-  \item The overall median (\(0.751\)) and 95 \% CI (\(0.504\)–\(0.919\)) in Table~1 are the median and 2.5 %/97.5 % quantiles of the distribution \(\{P^{(m)}\}_{m=1}^M\).
-\end{itemize}
-
-Because there are two causal variants—one present (\texttt{p.Ser237Ter}) and one missing (\texttt{c.159+1G>A})—their posterior shares sum to \(P^{(m)}\) in each draw.  On average:
-\[
-  \bar\pi_{\text{present}}
-  \approx 0.377,
-  \quad
-  \bar\pi_{\text{missing}}
-  \approx 0.364,
-  \quad
-  \bar\pi_{\text{present}} + \bar\pi_{\text{missing}}
-  \approx 0.741,
-\]
-very close to the median of \(P^{(m)}\).  The slight difference is due to “sum of means” versus “median of sums.”
-
-\paragraph*{Interpretation}
-Yes, the missing splice‐donor variant carries the remainder of the damaging probability not taken by \texttt{p.Ser237Ter}.  Because each variant’s share is proportional to its adjusted occurrence probability \(p_i\), a variant whose \(p_i\) is about one‑quarter of the total gene‑level frequency will capture roughly 25 \% of the posterior mass.
-
-\bigskip
-
-\noindent\textbf{Suggested results paragraph:}
-
-\begin{quote}
-We ran \(M=10\,000\) posterior simulations from \(\mathrm{Beta}(\alpha_i,\beta_i)\) for each candidate variant, normalising draws so the \(\tilde\pi_i\) sum to one in each draw.  We zeroed out variants with evidence\_score \(\le3\) and summed the remaining \(\tilde\pi_i\) to obtain \(P^{(m)}\), the posterior probability that at least one damaging variant explains the phenotype.  For the \textit{NFKB1} proband, this overall \(p(\text{causal \& damaging})\) has median 0.751 (95 \% CI 0.504–0.919).  Breaking it down, the observed nonsense allele \texttt{p.Ser237Ter} carries a posterior\_share of \(\approx0.377\), while the unsequenced splice‐site variant \texttt{c.159+1G>A} accounts for \(\approx0.364\), together summing to the total.  Each variant’s share tracks its relative adjusted occurrence probability \(p_i\), so variants with similar \(p_i\) receive similar posterior mass.
-\end{quote}
-
-
-\subsection{Correct final version}
-\textbf{Figure \ref{fig:plot_scenario_1_quant_uncert_ci}} shows the ...
-\textbf{Figure \ref{fig:plot_scenario_2_quant_uncert_ci}} shows the ...
-
-\input{"../images/table_quant_uncert_ci.tex"}
-
-
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.99\textwidth]{../images/plot_scenario_1_quant_uncert_ci.pdf}
-  \caption{
-   \textbf{cap}
-  }
-  \label{fig:plot_scenario_1_quant_uncert_ci}
-\end{figure}
-
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.99\textwidth]{../images/plot_scenario_2_quant_uncert_ci.pdf}
-  \caption{
-   \textbf{cap}
-  }
-  \label{fig:plot_scenario_2_quant_uncert_ci}
-\end{figure}
 
 \FloatBarrier
 \end{document}

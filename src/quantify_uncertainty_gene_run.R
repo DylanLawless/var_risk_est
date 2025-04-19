@@ -61,11 +61,11 @@ build_patient_data <- function(include_missing_variant = FALSE) {
 
 
 # scenario 1
-scenario     <- "scenario_1"
+scenario     <- "1"
 patient_data <- build_patient_data(include_missing_variant = FALSE)
 source("quantify_uncertainty_gene_functions.R")
 
 # scenario 2
-scenario     <- "scenario_2"
+scenario     <- "2"
 patient_data <- build_patient_data(include_missing_variant = TRUE)
 source("quantify_uncertainty_gene_functions.R")

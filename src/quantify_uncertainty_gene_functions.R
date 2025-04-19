@@ -243,7 +243,7 @@ p_quant <- (p_prior + p_dist + p_causal) /
 
 p_quant
 # ggsave("../images/plot_quant_uncert_ci.pdf", plot = p_quant, width = 9, height = 7)
-ggsave(paste0("../images/plot_", scenario, "_quant_uncert_ci.pdf"), plot = p_quant, width = 9, height = 7)
+ggsave(paste0("../images/plot_scenario_", scenario, "_quant_uncert_ci.pdf"), plot = p_quant, width = 9, height = 7)
 
 # tables ----
 library(knitr)
@@ -284,37 +284,66 @@ variant_table_full <- variant_with_ci %>%
   )) %>%
   arrange(desc(Prob_Causal))
 
-class(variant_table_full$Lower)
-variant_table_full$Lower
+
+# Add overall result to table
+overall_row <- tibble(
+  Variant         = "Total",
+  Flag            = NA,
+  Class           = NA,
+  Evidence_Score  = NA,
+  Occurrence_Prob = NA,
+  Adj_Occ_Prob    = NA,
+  Alpha           = NA,
+  Beta            = NA,
+  Lower           = round(ci_overall[1], 3),
+  Median          = round(ci_overall[2], 3),
+  Upper           = round(ci_overall[3], 3),
+  Posterior_Share = NA,
+  Prob_Causal     = round(ci_overall[2], 3),
+)
+
+# Bind to table
+variant_table_full <- bind_rows(variant_table_full, overall_row)
+
 
 # Generate the LaTeX tabuLower# Generate the LaTeX tabular code without the surrounding table environment
 latex_tabular <- kable(
   variant_table_full,
   format      = "latex",
+  linesep     = "",  # <- this removes all automatic row spacing
   booktabs    = TRUE,
+  caption = paste0("Result of clinical genetics diagnosis scenario ", scenario, ". The proband carried three observed variants, including the known pathogenic \\texttt{p.Ser237Ter} (true positive), and lacked coverage at three additional sites, including likely-pathogenic splice‑donor \\texttt{c.159+1G>A} (false negative). The damaging-only posterior probabilities for these two variants were 0.382 and 0.351, resulting in total probability (prob causal) of causal diagnosis given the existing evidence of 0.521 (95\\% CI: 0.248–0.787).
+                   \\label{tab:table_scenario_2_quant_uncert_ci}"),
   # escape      = FALSE,
   # table.envir = FALSE,                    # suppress \begin{table}...\end{table}
   col.names   = gsub("_", " ", names(variant_table_full))
 ) %>%
   kable_styling(
     latex_options = c("hold_position", "scale_down"),
-    position      = "center"
+    position      = "center",
   ) %>%
+  row_spec(6, extra_latex_after = "\\addlinespace") %>% 
   column_spec(1, width = "2.5cm") %>%  
-  column_spec(2, width = "1.8cm") %>%  
-  column_spec(3, width = "1.8cm") %>%  
+  column_spec(2, width = "1.5cm") %>%  
+  column_spec(3, width = "1.5cm") %>%  
   column_spec(4, width = "1.5cm") %>% 
   column_spec(5, width = "1.8cm") %>% 
   column_spec(6:10, width = "1.5cm") %>%
-  column_spec(11:13, width = "1.8cm")
+  column_spec(11:13, width = "1.5cm")
 
 # Wrap in resizebox and full table environment
 cat(latex_tabular)
 
 # write the LaTeX table to file
 # out_file <- "../images/table_quant_uncert_ci.tex"
-out_file <-  paste0("../images/table_", scenario, "_quant_uncert_ci.tex")
+out_file <-  paste0("../images/table_scenario_", scenario, "_quant_uncert_ci.tex")
 
 table_lines <- c(latex_tabular)
 
 writeLines(table_lines, out_file)
+
+
+
+
+
+

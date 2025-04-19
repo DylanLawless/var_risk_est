@@ -1,7 +1,10 @@
 \begin{table}[!h]
 \centering
+\caption{Result of clinical genetics diagnosis scenario 2. The proband carried three observed variants, including the known pathogenic \texttt{p.Ser237Ter} (true positive), and lacked coverage at three additional sites, including likely-pathogenic splice‑donor \texttt{c.159+1G>A} (false negative). The damaging-only posterior probabilities for these two variants were 0.382 and 0.351, resulting in total probability (prob causal) of causal diagnosis given the existing evidence of 0.521 (95\% CI: 0.248–0.787).
+                   \label{tab:table_scenario_2_quant_uncert_ci}}
+\centering
 \resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
-\begin{tabular}{>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{1.8cm}>{\raggedright\arraybackslash}p{1.8cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.8cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.8cm}>{\raggedleft\arraybackslash}p{1.8cm}>{\raggedleft\arraybackslash}p{1.8cm}}
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.8cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}}
 \toprule
 Variant & Flag & Class & Evidence Score & Occurrence Prob & Adj Occ Prob & Alpha & Beta & Lower & Median & Upper & Posterior Share & Prob Causal\\
 \midrule
@@ -10,8 +13,9 @@ c.159+1G>A & missing & causal & 4.5 & 0.000 & 0 & 5.5 & 367 & NA & NA & NA & 0.3
 p.Thr567Ile & missing & other & -5.0 & 0.002 & 0 & 1.0 & 331 & NA & NA & NA & 0.000 & 0.000\\
 p.Arg231His & present & other & 0.0 & 0.000 & 0 & 1.0 & 375 & 0.003 & 0.091 & 0.561 & 0.000 & 0.000\\
 p.Gly650Arg & present & other & 0.0 & 0.000 & 0 & 1.0 & 355 & 0.003 & 0.091 & 0.561 & 0.000 & 0.000\\
-\addlinespace
 p.Val236Ile & missing & other & 0.0 & 0.000 & 0 & 1.0 & 357 & NA & NA & NA & 0.000 & 0.000\\
+\addlinespace\\
+Total & NA & NA & NA & NA & NA & NA & NA & 0.248 & 0.521 & 0.787 & NA & 0.521\\
 \bottomrule
 \end{tabular}}
 \end{table}
