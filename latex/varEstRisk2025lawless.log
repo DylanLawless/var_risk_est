@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.7.19)  20 APR 2025 17:14
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.7.19)  20 APR 2025 17:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1961,47 +1961,44 @@ carriage of the p.Arg117His
 [21
 
 ] [22]
-File: ../images/untangleR_ppi_network_assoc_patch1.jpg Graphic file (type bmp)
-<../images/untangleR_ppi_network_assoc_patch1.jpg>
 Package acronym Info: Label `acro:bmf' newly defined as it shall be overridden
-although it is yet undefined on input line 660.
+although it is yet undefined on input line 649.
 
-Overfull \hbox (5.40863pt too wide) in paragraph at lines 657--663
+Overfull \hbox (5.40863pt too wide) in paragraph at lines 646--652
 [][] \TU/lmr/m/n/12 revealed an effect of major disease category on score posit
 ive total ($\OML/cmm/m/it/12 F\OT1/cmr/m/n/12 (8\OML/cmm/m/it/12 ; \OT1/cmr/m/n
 /12 500) =
  []
 
-[23]
 Package acronym Info: Label `acro:umap' newly defined as it shall be overridden
 
-although it is yet undefined on input line 666.
+although it is yet undefined on input line 655.
 Package acronym Info: Label `acro:lof' newly defined as it shall be overridden
-although it is yet undefined on input line 667.
+although it is yet undefined on input line 656.
 File: ../images/untangleR_ppi_network_umap.pdf Graphic file (type pdf)
 <use ../images/untangleR_ppi_network_umap.pdf>
- [24]
+[23]
 Package acronym Info: Label `acro:cd' newly defined as it shall be overridden
-although it is yet undefined on input line 683.
- [25]
+although it is yet undefined on input line 672.
+ [24]
 File: ../images/untangleR_ppi_network_p_cor_spear_rho_sig_clust_patch3.pdf Grap
 hic file (type pdf)
 <use ../images/untangleR_ppi_network_p_cor_spear_rho_sig_clust_patch3.pdf>
- [26]
+ [25]
 Package acronym Info: Label `acro:ld' newly defined as it shall be overridden
-although it is yet undefined on input line 722.
+although it is yet undefined on input line 711.
 File: ../images/karyo_locusplot_merged.pdf Graphic file (type pdf)
 <use ../images/karyo_locusplot_merged.pdf>
 
 
-LaTeX Warning: Reference `fig:chi_heatmaps' on page 27 undefined on input line 
-738.
+LaTeX Warning: Reference `fig:chi_heatmaps' on page 26 undefined on input line 
+727.
 
-[27]
+[26]
 Package acronym Info: Label `acro:ig' newly defined as it shall be overridden
-although it is yet undefined on input line 744.
+although it is yet undefined on input line 733.
 Missing character: There is no   in font [lmroman12-regular]:mapping=tex-text;!
- [28]
+ [27]
 Missing character: There is no   in font [lmroman12-regular]:mapping=tex-text;!
 Missing character: There is no   in font [lmroman12-regular]:mapping=tex-text;!
 Missing character: There is no   in font [lmroman12-regular]:mapping=tex-text;!
@@ -2013,17 +2010,13 @@ Missing character: There is no   in font [lmroman12-regular]:mapping=tex-text;
 Missing character: There is no   in font [lmroman12-regular]:mapping=tex-text;!
 Missing character: There is no   in font [lmroman12-regular]:mapping=tex-text;!
 
-Overfull \hbox (6.35822pt too wide) in paragraph at lines 760--772
+Overfull \hbox (6.35822pt too wide) in paragraph at lines 749--761
 []\TU/lmr/m/n/12 The PPI  and  immunophenotype model yielded 17 data‑driven PID
  groups, whereas
  []
 
 File: ../images/plot_patch1.pdf Graphic file (type pdf)
 <use ../images/plot_patch1.pdf>
-File: ../images/plot_multicat_patch_3_clust_chi.pdf Graphic file (type pdf)
-<use ../images/plot_multicat_patch_3_clust_chi.pdf>
-File: ../images/plot_multicat_performance_combined.pdf Graphic file (type pdf)
-<use ../images/plot_multicat_performance_combined.pdf>
 File: ../images/p_new_classification_finetune_tree.pdf Graphic file (type pdf)
 <use ../images/p_new_classification_finetune_tree.pdf>
 File: ../images/plot_new_pid_classifications_genetic.pdf Graphic file (type pdf
@@ -2032,50 +2025,42 @@ File: ../images/plot_new_pid_classifications_genetic.pdf Graphic file (type pdf
 File: ../images/plot_multicat_new_pid_classes_combined.pdf Graphic file (type p
 df)
 <use ../images/plot_multicat_new_pid_classes_combined.pdf>
-
-LaTeX Warning: Float too large for page by 4.30869pt on input line 810.
-
-[29] [30] [31] [32]
-Package acronym Info: Label `acro:omim' newly defined as it shall be overridden
-
-although it is yet undefined on input line 816.
-File: ../images/var_risk_est_iei_genetics.png Graphic file (type bmp)
-<../images/var_risk_est_iei_genetics.png>
- [33
-
-]
+[28] [29] [30]
 File: ../images/p_alphamissense_NFKB1.pdf Graphic file (type pdf)
 <use ../images/p_alphamissense_NFKB1.pdf>
 File: ../images/p_alphamissense_CFTR.pdf Graphic file (type pdf)
 <use ../images/p_alphamissense_CFTR.pdf>
- [34]
-Overfull \hbox (5.57898pt too wide) in paragraph at lines 849--850
-[]\TU/lmr/m/n/12 Our approach yielded two key results. First, our detailed, per
--variant pre-calculated
+ [31
+
+] [32]
+Overfull \hbox (1.31569pt too wide) in paragraph at lines 803--803
+[]\TU/lmr/bx/n/14.4 Integration of variant probabilities into IEI genetics data
+ 
  []
 
+Package acronym Info: Label `acro:omim' newly defined as it shall be overridden
 
-Overfull \hbox (8.79204pt too wide) in paragraph at lines 876--877
+although it is yet undefined on input line 806.
+File: ../images/var_risk_est_iei_genetics.png Graphic file (type bmp)
+<../images/var_risk_est_iei_genetics.png>
+[33
+
+] [34]
+Overfull \hbox (8.79204pt too wide) in paragraph at lines 868--869
 []\TU/lmr/m/n/12 This approach allows us to pre-calculate priors and summarise 
 the overall pathogenic
  []
 
-[35]
 Package acronym Info: Label `acro:skat' newly defined as it shall be overridden
 
-although it is yet undefined on input line 889.
+although it is yet undefined on input line 881.
 Package acronym Info: Label `acro:acat' newly defined as it shall be overridden
 
-although it is yet undefined on input line 889.
+although it is yet undefined on input line 881.
 Package acronym Info: Label `acro:acmg' newly defined as it shall be overridden
 
-although it is yet undefined on input line 889.
- [36]
-
-LaTeX Warning: Reference `tab:final_variant_report' on page 37 undefined on inp
-ut line 908.
-
-[37] (./varEstRisk2025lawless.bbl [38] [39]
+although it is yet undefined on input line 881.
+[35] (./varEstRisk2025lawless.bbl [36] [37] [38]
 Underfull \hbox (badness 1354) in paragraph at lines 197--206
 [][][][] [] [][][][][][][][][][][][][][][][][][][][][]$\TU/lmr/m/n/12 .  URL []
 []$[][][][][] [] [] [] [][][][][][][][][][][][][][] [] [][][][][][][][][][][][]
@@ -2083,7 +2068,7 @@ Underfull \hbox (badness 1354) in paragraph at lines 197--206
  []
 
 Missing character: There is no κ in font [lmroman12-regular]:mapping=tex-text;!
-[40] [41] [42]) [43] (../images/table_scenario_1_quant_uncert_ci.tex
+[39] [40]) [41] (../images/table_scenario_1_quant_uncert_ci.tex
 Overfull \hbox (3.49687pt too wide) in paragraph at lines 18--18
  []|\TU/lmr/m/n/12 Evidence
  []
@@ -2118,6 +2103,9 @@ File: ../images/plot_scenario_1_quant_uncert_ci.pdf Graphic file (type pdf)
 <use ../images/plot_scenario_1_quant_uncert_ci.pdf>
 File: ../images/plot_scenario_3_quant_uncert_ci.pdf Graphic file (type pdf)
 <use ../images/plot_scenario_3_quant_uncert_ci.pdf>
+ [42
+
+] [43] [44]
 File: ../images/validation_studies_bayesian_adjusted_estimates.png Graphic file
  (type bmp)
 <../images/validation_studies_bayesian_adjusted_estimates.png>
@@ -2130,9 +2118,11 @@ pdf)
 File: ../images/validation_studies_scid_combined_plot.pdf Graphic file (type pd
 f)
 <use ../images/validation_studies_scid_combined_plot.pdf>
- [44
+ [45
 
-] [45] [46] [47] [48] [49] [50]
+] [46] [47] [48]
+File: ../images/untangleR_ppi_network_assoc_patch1.jpg Graphic file (type bmp)
+<../images/untangleR_ppi_network_assoc_patch1.jpg>
 File: ../images/untangleR_ppi_network_patch2_cator.pdf Graphic file (type pdf)
 <use ../images/untangleR_ppi_network_patch2_cator.pdf>
 File: ../images/untangleR_ppi_network_p_umap_const.pdf Graphic file (type pdf)
@@ -2145,43 +2135,46 @@ File: ../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_2.png Graphic file
 File: ../images/expHeat_FUMA_jobs604403_var_risk_est_cluster_4.png Graphic file
  (type bmp)
 <../images/expHeat_FUMA_jobs604403_var_risk_est_cluster_4.png>
- [51
+ [49
 
-] [52] [53] [54]
+] [50] [51] [52]
 File: ../images/all_genes_combined_bar_charts_mini.png Graphic file (type bmp)
 <../images/all_genes_combined_bar_charts_mini.png>
+File: ../images/plot_multicat_patch_3_clust_chi.pdf Graphic file (type pdf)
+<use ../images/plot_multicat_patch_3_clust_chi.pdf>
+File: ../images/plot_multicat_performance_combined.pdf Graphic file (type pdf)
+<use ../images/plot_multicat_performance_combined.pdf>
 File: ../images/plot_combined_model_interpret_fine.pdf Graphic file (type pdf)
 <use ../images/plot_combined_model_interpret_fine.pdf>
- [55
+ [53
 
-]
+] [54] [55]
 File: ../images/p_alphamissense_kw.pdf Graphic file (type pdf)
 <use ../images/p_alphamissense_kw.pdf>
- [56] [57]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1518.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1518.
 
-(./varEstRisk2025lawless.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1518.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1518.
+[56
+
+]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1525.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1525.
+ (./varEstRisk2025lawless.aux)
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1525.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1525.
 
 Package rerunfilecheck Info: File `varEstRisk2025lawless.out' has not changed.
-(rerunfilecheck)             Checksum: C64C1C3F63D1A1E08F55BE09EC48D6CE.
+(rerunfilecheck)             Checksum: 6816874D61A7FE9CD2F69AC05D1DACD9.
 
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
- 41700 strings out of 492970
- 868314 string characters out of 6133938
- 1052767 words of memory out of 5000000
- 44999 multiletter control sequences out of 15000+600000
+ 41699 strings out of 492970
+ 868288 string characters out of 6133938
+ 1053040 words of memory out of 5000000
+ 44998 multiletter control sequences out of 15000+600000
  552169 words of font info for 125 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 65i,11n,101p,10564b,965s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 65i,11n,101p,10564b,953s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on varEstRisk2025lawless.pdf (57 pages).
+Output written on varEstRisk2025lawless.pdf (56 pages).

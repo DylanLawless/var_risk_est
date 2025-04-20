@@ -639,17 +639,6 @@ We tallied gene-level positive scores to give the score positive total metric.
 \textbf{Figure \ref{fig:ppi_network_assoc} (A)} shows the \ac{ppi} network of disease-associated genes, where node size and colour encode the score positive total (log-transformed). 
 The top 15 genes with the highest total prior probabilities of being observed with disease are labelled (as per \textbf{Figure \ref{fig:p_varRisEst_summary_scores}}).
 
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=\textwidth]{../images/untangleR_ppi_network_assoc_patch1.jpg}
-  \caption{\textbf{\ac{ppi} network and score positive total ClinVar significance variants}.
-    (A) \ac{ppi} network of disease-associated genes. Node size and colour represent the log-transformed score positive total, the top 15 genes/proteins with the highest probability of being observed in disease are labelled.
-    (B) Distribution of score positive total across the major \ac{iei} disease categories.
-    (C) Tukey \ac{hsd} comparisons of mean differences in score positive total among all pairwise disease categories. Every 5th label is shown on y-axis.
-  }
-  \label{fig:ppi_network_assoc}
-\end{figure}
-
 
 \FloatBarrier
 \subsubsection{Association analysis of score-positive-total across IEI categories} 
@@ -781,23 +770,6 @@ Because this framework is fully reproducible, alternative PPI embeddings or inco
   \label{fig:immunophenotype_before_after}
 \end{figure}
 
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.99\textwidth]{../images/plot_multicat_patch_3_clust_chi.pdf}
-  \caption{\textbf{Heatmaps of clinical feature distributions by PPI cluster.} The heatmaps display the count of observations for abnormality of each clinical feature (A) T cell, (B) B cell, (C) Immunoglobulin, (D) Neutrophil, in relation to the PPI clusters, with p-values from chi-square tests annotated in the titles.}
-  \label{fig:plot_multicat_patch_3_clust_chi}
-\end{figure}
-
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.99\textwidth]{../images/plot_multicat_performance_combined.pdf}
-  \caption{\textbf{Performance comparison of PID classifiers.} Classification predicting PPI cluster membership from IUIS major category, subcategory, and immunological features. (A) Overall accuracy for four rpart models
-used to predict \ac{ppi} clustering. The combined model achieves 61.4 \% accuracy, exceeding all simpler approaches. 
-Nodes were split to minimize Gini impurity, pruned by cost-complexity (cp = 0.001), and validated via 5‑fold cross‑validation. %Terminal leaves display the assigned cluster and the proportion of genes falling into each group. 
-(B-E) The summary statistics from the top model are detailed.  
-}
-  \label{fig:multicat_performance_combined}
-\end{figure}
 
 \begin{figure}[ht]
   \centering
@@ -810,7 +782,25 @@ Nodes were split to minimize Gini impurity, pruned by cost-complexity (cp = 0.00
 \end{figure}
 
 \FloatBarrier
-\subsubsection{Integration of Variant Probabilities into IEI Genetics Data}
+\subsection{Probability of observing AlphaMissense pathogenicity}
+AlphaMissense provides pathogenicity scores for all possible amino acid substitutions; however, our results in \textbf{Figure \ref{fig:alphamissense}} show that the most probable observations in patients occur predominantly for benign or unknown variants. This finding places the likelihood of disease-associated substitutions into perspective and offers a data-driven foundation for future improvements in variant prediction. The values in 
+\textbf{Figure \ref{fig:alphamissense} (A)} can be directly compared to 
+\textbf{Figure \ref{fig:p_varRisEst_summary_scores} (D)} to view the distribution of classifications.
+A Kruskal-Wallis test was used to compare the observed disease probability across clinical classification groups and no significant differences were detected. In general, most variants in patients are classified as benign or unknown, indicating limited discriminative power in the current classification, such that pathogenicity prediction does not infer observation prediction (\textbf{Figure \ref{fig:alphamissense_kw}}).
+  
+\begin{figure}[ht]
+\begin{center}
+%    \includegraphics[width=0.99\textwidth]{../images/p_alphamissense_RAG1.pdf}
+    \includegraphics[width=0.8\textwidth]{../images/p_alphamissense_NFKB1.pdf}
+    \includegraphics[width=0.8\textwidth]{../images/p_alphamissense_CFTR.pdf}
+\end{center}
+\caption{\textbf{(A) Probabilities of observing a patient with (B) AlphaMissense-derived pathogenicity scores.} Although AlphaMissense provides scores for every possible amino acid substitution, the most frequently observed variants in patients tend to be classified as benign or of unknown significance. This juxtaposition contextualises the likelihood of disease-associated substitutions and underlines prospects for refining predictive models. *Axis scaled for visibility near zero. Higher point indicates higher probability.}
+ \label{fig:alphamissense}
+\end{figure}
+
+
+\FloatBarrier
+\subsection{Integration of variant probabilities into IEI genetics data}
 We integrated the computed prior probabilities for observing variants in all known genes associated with a given phenotype \cite{tangye_human_2022}, across \ac{ad}, \ac{ar}, and \ac{xl} \ac{moi}, into our \ac{iei} genetics framework. These calculations, derived from gene panels in PanelAppRex, have yielded novel insights for the \ac{iei} disease panel. The final result comprised of machine- and human-readable datasets, including the table of variant classifications and priors available via a the linked repository \cite{lawless_2025_15111584}, and a user-friendly web interface that incorporates these new metrics.
 
 \textbf{Figure \ref{fig:var_risk_est_iei_genetics}} shows the interface summarising integrated variant data. Server-side pre-calculation of summary statistics minimises browser load, while clinical significance is converted to numerical metrics. Key quantiles (min, Q1, median, Q3, max) for each gene are rendered as sparkline box plots, and dynamic URLs link table entries to external databases (e.g. ClinVar, \ac{omim}, AlphaFold).
@@ -825,28 +815,30 @@ We integrated the computed prior probabilities for observing variants in all kno
   \label{fig:var_risk_est_iei_genetics}
 \end{figure}
 
-\subsection{Probability of observing AlphaMissense pathogenicity}
-AlphaMissense provides pathogenicity scores for all possible amino acid substitutions; however, our results in \textbf{Figure \ref{fig:alphamissense}} show that the most probable observations in patients occur predominantly for benign or unknown variants. This finding places the likelihood of disease-associated substitutions into perspective and offers a data-driven foundation for future improvements in variant prediction. The values in 
-\textbf{Figure \ref{fig:alphamissense} (A)} can be directly compared to 
-\textbf{Figure \ref{fig:p_varRisEst_summary_scores} (D)} to view the distribution of classifications.
-A Kruskal-Wallis test was used to compare the observed disease probability across clinical classification groups and no significant differences were detected. In general, most variants in patients are classified as benign or unknown, indicating limited discriminative power in the current classification, such that pathogenicity prediction does not infer observation prediction (\textbf{Figure \ref{fig:alphamissense_kw}}).
-  
-\begin{figure}[ht]
-\begin{center}
-%    \includegraphics[width=0.99\textwidth]{../images/p_alphamissense_RAG1.pdf}
-    \includegraphics[width=0.85\textwidth]{../images/p_alphamissense_NFKB1.pdf}
-    \includegraphics[width=0.85\textwidth]{../images/p_alphamissense_CFTR.pdf}
-\end{center}
-\caption{\textbf{(A) Probabilities of observing a patient with (B) AlphaMissense-derived pathogenicity scores.} Although AlphaMissense provides scores for every possible amino acid substitution, the most frequently observed variants in patients tend to be classified as benign or of unknown significance. This juxtaposition contextualises the likelihood of disease-associated substitutions and underlines prospects for refining predictive models. *Axis scaled for visibility near zero. Higher point indicates higher probability.}
- \label{fig:alphamissense}
-\end{figure}
-
 \FloatBarrier
 \section{Discussion}
 
 Our study presents, to our knowledge, the first comprehensive framework for calculating prior probabilities of observing disease-associated variants. By integrating large-scale genomic annotations, including population allele frequencies from \ac{gnomad} \cite{karczewski2020mutational}, variant classifications from ClinVar \cite{landrum_clinvar_2018}, and functional annotations from resources such as \ac{dbnsfp}, with classical Hardy-Weinberg-based calculations, we derived robust estimates for 54,814 ClinVar variant classifications across 557 \ac{iei} genes implicated in \ac{pid} and monogenic inflammatory bowel disease \cite{lawless_panelapprex_2025, tangye_human_2022}.
 
-Our approach yielded two key results. First, our detailed, per-variant pre-calculated results provide prior probabilities of observing disease-associated variants across all \ac{moi} for any gene-disease combination. Second, the score positive total metric effectively summarises the aggregate pathogenic burden across genes, serving as a robust indicator of genetic constraint and highlighting those with elevated disease relevance.
+Our approach yielded three key results. First, our detailed, per-variant pre-calculated results provide prior probabilities of observing disease-associated variants across all \ac{moi} for any gene-disease combination. Second, the score positive total metric effectively summarises the aggregate pathogenic burden across genes, serving as a robust indicator of genetic constraint and highlighting those with elevated disease relevance.
+
+Building on this foundation, our third key result is a clinically applicable method to estimate the probability that a patient carries a damaging causal variant, combining observed and potentially unobserved variants into a single, interpretable result.
+In the example scenarios, this enabled high-confidence attribution to a known pathogenic variant while simultaneously capturing the contribution of a likely-pathogenic splice-site variant missed by sequencing.
+This insight not is achievable using conventional approaches which focus on detecting \ac{tp}.
+The quantification of residual uncertainty enables structured reporting that highlights supported, excluded, and plausible-but-unseen variants, making the results actionable for clinical decision-making. 
+These outputs are suitable for diagnostic reports, support reanalysis and follow-up testing, and generalise to any phenotype using the accompanying genome-wide priors.
+By combining variant classification, allele frequency, \ac{moi}, and sequencing quality metrics, our method offers a scalable foundation for uncertainty-aware diagnostics in clinical genomics.
+
+%% \subsection{Integrating observed true positives and unobserved false negatives into a single, actionable conclusion}
+%The results presented in the \textit{NFKB1} case study demonstrate how our Bayesian framework quantifies the final posterior probability that a damaging causal variant is present, by integrating both observed variant calls and unobserved, but potentially pathogenic, sites into a single conclusion. 
+%This result applies across all disease-genes. 
+%The model partitions posterior probability between a true positive (\texttt{p.Ser237Ter}) and a likely causal splice-site variant that was not captured by sequencing. Despite the latter being unobserved, the analysis attributes 48\,\% of total pathogenic probability to this missing position—an insight that would be unavailable under conventional approaches limited to called variants.
+%
+%This framework enables calibrated probabilistic conclusions at two levels: per-variant and per-gene. Rather than issuing a binary classification, the method produces interpretable posterior intervals that reflect both sequencing completeness and prior pathogenic evidence. For clinicians, this means that residual uncertainty—arising from false negatives or incomplete genomic coverage—is made visible, quantifiable, and actionable.
+%
+%A key output is the ability to generate structured variant reports (e.g. Table~\ref{tab:final_variant_report}) that transparently communicate which alleles are supported, which are excluded, and which remain unassessed but potentially disease-causing. These summaries facilitate informed consent, prioritise follow-up sequencing (e.g. long-read or targeted assays), and provide a reproducible, evidence-weighted foundation for diagnostic decision-making.
+%
+%More broadly, the same approach generalises to genome-wide applications. The precomputed priors for over 50,000 variants across 557 immune-related genes now enable quantitative confidence statements for any patient–phenotype combination. Because the model explicitly incorporates allele frequency, clinical classification, inheritance mode, and sequence quality, it provides a scalable template for delivering uncertainty-aware interpretation in clinical genomics.
 
 Estimating disease risk in genetic studies is complicated by uncertainties in key parameters such as variant penetrance and the fraction of cases attributable to specific variants \cite{zschocke_mendelian_2023}. 
 In the simplest model, where a single, fully penetrant variant causes disease, the lifetime risk \(P(D)\) is equivalent to the genotype frequency \(P(G)\). 
@@ -897,17 +889,6 @@ Future work will incorporate additional variant types and models to further refi
 
 
 
-
-% \subsection{Integrating observed true positives and unobserved false negatives into a single, actionable conclusion}
-The results presented in the \textit{NFKB1} case study demonstrate how our Bayesian framework quantifies the final posterior probability that a damaging causal variant is present, by integrating both observed variant calls and unobserved, but potentially pathogenic, sites into a single conclusion. 
-This result applies across all disease-genes. 
-The model partitions posterior probability between a true positive (\texttt{p.Ser237Ter}) and a likely causal splice-site variant that was not captured by sequencing. Despite the latter being unobserved, the analysis attributes 48\,\% of total pathogenic probability to this missing position—an insight that would be unavailable under conventional approaches limited to called variants.
-
-This framework enables calibrated probabilistic conclusions at two levels: per-variant and per-gene. Rather than issuing a binary classification, the method produces interpretable posterior intervals that reflect both sequencing completeness and prior pathogenic evidence. For clinicians, this means that residual uncertainty—arising from false negatives or incomplete genomic coverage—is made visible, quantifiable, and actionable.
-
-A key output is the ability to generate structured variant reports (e.g. Table~\ref{tab:final_variant_report}) that transparently communicate which alleles are supported, which are excluded, and which remain unassessed but potentially disease-causing. These summaries facilitate informed consent, prioritise follow-up sequencing (e.g. long-read or targeted assays), and provide a reproducible, evidence-weighted foundation for diagnostic decision-making.
-
-More broadly, the same approach generalises to genome-wide applications. The precomputed priors for over 50,000 variants across 557 immune-related genes now enable quantitative confidence statements for any patient–phenotype combination. Because the model explicitly incorporates allele frequency, clinical classification, inheritance mode, and sequence quality, it provides a scalable template for delivering uncertainty-aware interpretation in clinical genomics.
 
 \section{Conclusion}
 Our work generates prior probabilities for observing any variant classification in \ac{iei} genetic disease, providing a quantitative resource to enhance Bayesian variant interpretation and clinical decision-making.
@@ -967,7 +948,7 @@ Pathogenicity scores (-5 to +5) are annotated in (A).
   \label{fig:plot_scenario_3_quant_uncert_ci}
 \end{figure}
 
-
+\FloatBarrier
 \subsection{Validation studies}
 
 \begin{figure}[ht]
@@ -1013,6 +994,20 @@ We then highlight the values for pathogenic variants specifically showing;
 \end{figure}
 
 
+\FloatBarrier
+\subsection{Genetic constraint in high-impact protein networks}
+\subsubsection{Score-positive-total within IEI PPI network}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{../images/untangleR_ppi_network_assoc_patch1.jpg}
+  \caption{\textbf{\ac{ppi} network and score positive total ClinVar significance variants}.
+    (A) \ac{ppi} network of disease-associated genes. Node size and colour represent the log-transformed score positive total, the top 15 genes/proteins with the highest probability of being observed in disease are labelled.
+    (B) Distribution of score positive total across the major \ac{iei} disease categories.
+    (C) Tukey \ac{hsd} comparisons of mean differences in score positive total among all pairwise disease categories. Every 5th label is shown on y-axis.
+  }
+  \label{fig:ppi_network_assoc}
+\end{figure}
 
 \FloatBarrier
 \subsection{Hierarchical Clustering of Enrichment Scores for Major Disease Categories}
@@ -1067,6 +1062,24 @@ We selected the top two enriched clusters (as per \textbf{Figure \ref{fig:p_cor_
 \subsection{Novel PID classifications}
 
 
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/plot_multicat_patch_3_clust_chi.pdf}
+  \caption{\textbf{Heatmaps of clinical feature distributions by PPI cluster.} The heatmaps display the count of observations for abnormality of each clinical feature (A) T cell, (B) B cell, (C) Immunoglobulin, (D) Neutrophil, in relation to the PPI clusters, with p-values from chi-square tests annotated in the titles.}
+  \label{fig:plot_multicat_patch_3_clust_chi}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.99\textwidth]{../images/plot_multicat_performance_combined.pdf}
+  \caption{\textbf{Performance comparison of PID classifiers.} Classification predicting PPI cluster membership from IUIS major category, subcategory, and immunological features. (A) Overall accuracy for four rpart models
+used to predict \ac{ppi} clustering. The combined model achieves 61.4 \% accuracy, exceeding all simpler approaches. 
+Nodes were split to minimize Gini impurity, pruned by cost-complexity (cp = 0.001), and validated via 5‑fold cross‑validation. %Terminal leaves display the assigned cluster and the proportion of genes falling into each group. 
+(B-E) The summary statistics from the top model are detailed.  
+}
+  \label{fig:multicat_performance_combined}
+\end{figure}
 
 \begin{figure}[ht]
   \centering
@@ -1507,12 +1520,6 @@ We selected the top two enriched clusters (as per \textbf{Figure \ref{fig:p_cor_
 %
 %\clearpage
 %\section{New}
-
-
-
-
-
-
 
 \FloatBarrier
 \end{document}
