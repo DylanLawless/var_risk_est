@@ -14,7 +14,6 @@ set.seed(666)
 
 # — data loading & preprocessing ——————————————————————————————————————
 PANEL          <- 398
-genetic_defect <- "NFKB1"
 path_data      <- "~/web/PanelAppRex/data"
 
 varRisEst_var  <- readRDS(sprintf(
@@ -62,10 +61,48 @@ build_patient_data <- function(include_missing_variant = FALSE) {
 
 # scenario 1
 scenario     <- "1"
+genetic_defect <- "NFKB1"
 patient_data <- build_patient_data(include_missing_variant = FALSE)
 source("quantify_uncertainty_gene_functions.R")
 
 # scenario 2
 scenario     <- "2"
+genetic_defect <- "NFKB1"
 patient_data <- build_patient_data(include_missing_variant = TRUE)
 source("quantify_uncertainty_gene_functions.R")
+
+# scenario 3
+# set one variant from every classification as missing 
+build_patient_data <- function(include_missing_variant = FALSE) {
+  var <- varRisEst_var %>%
+    filter(genename == genetic_defect) %>%
+    mutate(score = map_dbl(clinvar_clnsig, get_score))
+  
+  # select one representative variant per classification to mark as -9
+  mark_as_uncertain <- var %>%
+    group_by(clinvar_clnsig) %>%
+    slice(1) %>%
+    ungroup() %>%
+    pull(HGVSp_VEP)
+  
+  var %>%
+    mutate(
+      evidence_score      = score,
+      known_var_observed  = case_when(
+        HGVSp_VEP %in% c("p.Ser237Ter", "p.Arg231His", "p.Gly650Arg") ~ 1L,
+        HGVSp_VEP %in% mark_as_uncertain ~ -9L,
+        include_missing_variant & HGVSc_VEP == "c.159+1G>A" ~ -9L,
+        TRUE ~ 0L
+      ),
+      pathogenic_weight   = rescale(score, to = c(0, 1), from = c(-5, 5)),
+      adj_occurrence_prob = occurrence_prob * pathogenic_weight,
+      prior_w             = prior_weight(score)
+    )
+}
+
+scenario     <- "3"
+genetic_defect <- "TNFAIP3"
+patient_data <- build_patient_data(include_missing_variant = TRUE)
+source("quantify_uncertainty_gene_functions.R")
+
+# risk_variants  |> select(HGVSp_VEP, clinvar_clnsig, score) |> arrange(score)

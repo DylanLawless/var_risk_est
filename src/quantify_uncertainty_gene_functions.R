@@ -67,23 +67,27 @@ plot_df <- risk_variants %>%
   )
 
 # — plot A: raw priors (all variants) —————————————————————————
+# prior_df <- risk_variants %>%
+  # mutate(var_plot = reorder_within(variant_lab, occurrence_prob, group))
 prior_df <- risk_variants %>%
-  mutate(var_plot = reorder_within(variant_lab, occurrence_prob, group))
+  mutate(var_plot = fct_reorder(variant_lab, score, .desc = FALSE))
 
 p_prior <- ggplot(prior_df,
                   aes(x = occurrence_prob, y = var_plot, fill = score)) +
   geom_point(shape = 21, colour = "black", size = 3, stroke = 0.3) +
-  
+  geom_text(aes(label = score),
+            hjust = 0, nudge_x = 0.0005, size = 3) +
   facet_grid(group ~ ., scales = "free_y", space = "free_y",
              labeller = labeller(group = label_wrap_gen(width = 9))) +
   theme(strip.text.y = element_text(size = 7)) +
   scale_fill_gradientn(colours = c("navy", "lightblue", "red"),
                        breaks = c(-5, 0, 5),
                        labels = c("benign", "unknown", "pathogenic")) +
-  scale_y_reordered() +
   labs(x = "prior occurrence probability", y = NULL) +
-  scale_x_continuous(limits = c(0, 0.003),
+  scale_x_continuous(limits = c(0, 0.0035),
                      breaks = pretty_breaks(n = 2))
+
+p_prior
 
 # — plot B: full posterior distributions ——————————————————————————
 share_df <- as_tibble(share_all) %>%
@@ -91,7 +95,8 @@ share_df <- as_tibble(share_all) %>%
   pivot_longer(-draw, names_to="variant_lab", values_to="share") %>%
   left_join(risk_variants %>% select(variant_lab, group, score),
             by="variant_lab") %>%
-  mutate(var_plot=reorder_within(variant_lab, share, group))
+  # mutate(var_plot=reorder_within(variant_lab, share, group))
+  mutate(var_plot = fct_reorder(variant_lab, score, .desc = FALSE))
 
 p_dist <- ggplot(share_df,
                  aes(x=share, y=var_plot, fill=score)) +
@@ -108,9 +113,12 @@ p_dist <- ggplot(share_df,
   scale_x_continuous(limits   = c(0, 1), n.breaks = 3)
 
 # — plot C: p(causal & damaging) ——————————————————————————————
-p_causal <- ggplot(
-  risk_variants %>% mutate(var_plot=reorder_within(
-    variant_lab, prob_causal_damaging, group)),
+
+# risk_variants %>% mutate(var_plot=reorder_within(
+# variant_lab, prob_causal_damaging, group)
+# ),
+
+p_causal <- ggplot(prior_df,
   aes(x=prob_causal_damaging, y=var_plot, fill=score)
 ) +
   geom_point(shape=21, colour="black", size=3) +
@@ -153,7 +161,7 @@ source_totals <- variant_source_df %>% group_by(flag) %>% summarise(p_damaging=s
 eps <- 1e-2
 variant_source_df <- risk_variants %>%
   # include all variants, even non‑causal
-  select(flag, score, prob_causal_damaging) %>%
+  select(flag, score, prob_causal_damaging, variant_lab) %>%
   mutate(
     # add epsilon so zero‑prob variants still get a sliver
     prob_plot = prob_causal_damaging + eps
@@ -164,14 +172,25 @@ source_totals <- variant_source_df %>%
   summarise(p_damaging = sum(prob_causal_damaging), .groups = "drop") %>%
   mutate(prop = p_damaging / sum(p_damaging))
 
+
+variant_source_df <- variant_source_df %>%
+  arrange(flag, score) %>%
+  group_by(flag) %>%
+  mutate(
+    ymax = cumsum(prob_plot),
+    ymin = ymax - prob_plot,
+    ymid = (ymin + ymax) / 2
+  ) %>%
+  ungroup()
+
 p_source_stack <- ggplot(variant_source_df,
                          aes(x = flag, y = prob_plot, fill = score)) +
-  geom_col(width = 0.6, colour = "black", position = position_stack()) +
   geom_text(data = source_totals,
             aes(x = flag, y = p_damaging,
                 label = scales::percent(prop, accuracy = 0.1)),
             vjust = -2, size = 3.5, inherit.aes = FALSE) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.3))) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.4))) +
+  scale_x_discrete(expand = expansion(mult = c(1, 1))) + 
   scale_fill_gradientn(colours = c("navy", "lightblue", "red"),
                        breaks  = c(-5, 0, 5),
                        limits  = c(-5, 5),
@@ -179,10 +198,40 @@ p_source_stack <- ggplot(variant_source_df,
                        na.value = "grey80") +
   labs(x = NULL,
        y = "total\np(causal & damaging)") +
-  theme_bw()
+  theme_bw() +
+  geom_text_repel(
+    data = subset(variant_source_df, flag == "missing"),
+    aes(x = flag, y = ymid, label = variant_lab, colour = score),
+    nudge_x = -0.5,
+    direction = "y",
+    hjust = 1,
+    size = 2,
+    segment.size = 0.2,
+    max.overlaps = 10,
+    box.padding = 0.2
+  ) +
+  geom_text_repel(
+    data = subset(variant_source_df, flag == "present"),
+    aes(x = flag, y = ymid, label = variant_lab, colour = score),
+    nudge_x = 0.5,
+    direction = "y",
+    hjust = 0,
+    size = 2,
+    segment.size = 0.2,
+    max.overlaps = 10,
+    box.padding = 0.2
+  ) +
+  scale_colour_gradientn(
+    colours = c("navy", "blue", "darkred"),
+    breaks  = c(-5, 0, 5),
+    limits  = c(-5, 5),
+    labels  = c("benign", "unknown", "pathogenic"),
+    na.value = "grey80"
+  ) +
+  guides(color = "none") +
+  geom_col(width = 0.3, colour = "black", position = position_stack())
 
 p_source_stack
-
 
 # plot F: overall damaging‑causal distribution ----------------------------
 # 1. posterior draws of relative share among causals
@@ -222,15 +271,16 @@ p_overall <- ggplot(tibble(share = total_sim), aes(x = share)) +
   geom_vline(xintercept = ci_overall[2], colour = "purple") +
   annotate("text", 
            # x = ci_overall[2],
-           x = 0.5,
+           x = 0.54,
            y = Inf,
-           vjust = 1.2,
+           vjust = 1.1,
            label = sprintf("median = %.3f\n95%% CI = [%.3f, %.3f]",
                            ci_overall[2], ci_overall[1], ci_overall[3]),
-           hjust = 0.5, size = 4) +
+           # hjust = 0.5, 
+           size = 4) +
   labs(x = "total p(causal & damaging & present)", y = "count") +
   scale_x_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.2)) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.6)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.8)))
 
 p_overall
 
@@ -239,7 +289,7 @@ p_quant <- (p_prior + p_dist + p_causal) /
   (p_source_stack + p_causal_dist) /
   p_overall +
   plot_layout(guides="collect",axis="collect",heights=c(2,1,1)) +
-  plot_annotation(tag_levels="A")
+  plot_annotation(tag_levels="A", subtitle = paste0("Gene: ",  genetic_defect))
 
 p_quant
 # ggsave("../images/plot_quant_uncert_ci.pdf", plot = p_quant, width = 9, height = 7)
@@ -305,6 +355,47 @@ overall_row <- tibble(
 # Bind to table
 variant_table_full <- bind_rows(variant_table_full, overall_row)
 
+# prep caption ----
+
+# Identify top present and missing variants separately
+top_present <- variant_table_full %>%
+  filter(Flag == "present", !is.na(Prob_Causal), Variant != "Total") %>%
+  arrange(desc(Prob_Causal)) %>%
+  slice_head(n = 1)
+
+top_missing <- variant_table_full %>%
+  filter(Flag == "missing", !is.na(Prob_Causal), Variant != "Total") %>%
+  arrange(desc(Prob_Causal)) %>%
+  slice_head(n = 1)
+
+# Extract the overall summary
+overall_row <- variant_table_full %>%
+  filter(Variant == "Total")
+
+# Compose description fragments based on availability
+desc_present <- if (nrow(top_present) > 0) {
+  paste0("The most strongly supported observed variant was \\texttt{", 
+         top_present$Variant, "} (posterior: ", top_present$Prob_Causal, "). ")
+} else {
+  "No observed variants were detected in this scenario. "
+}
+
+desc_missing <- if (nrow(top_missing) > 0) {
+  paste0("The strongest unsequenced variant was \\texttt{", 
+         top_missing$Variant, "} (posterior: ", top_missing$Prob_Causal, "). ")
+} else {
+  "No unsequenced variants were included in this scenario. "
+}
+
+# Final caption
+caption_text <- paste0(
+  "Result of clinical genetics diagnosis scenario ", scenario, ". ",
+  desc_present,
+  desc_missing,
+  "The total probability of a causal diagnosis given the available evidence was ",
+  overall_row$Prob_Causal, " (95\\% CI: ", overall_row$Lower, "--", overall_row$Upper, ").",
+  "\\label{tab:table_scenario_", scenario, "_quant_uncert_ci}"
+)
 
 # Generate the LaTeX tabuLower# Generate the LaTeX tabular code without the surrounding table environment
 latex_tabular <- kable(
@@ -312,8 +403,8 @@ latex_tabular <- kable(
   format      = "latex",
   linesep     = "",  # <- this removes all automatic row spacing
   booktabs    = TRUE,
-  caption = paste0("Result of clinical genetics diagnosis scenario ", scenario, ". The proband carried three observed variants, including the known pathogenic \\texttt{p.Ser237Ter} (true positive), and lacked coverage at three additional sites, including likely-pathogenic splice‑donor \\texttt{c.159+1G>A} (false negative). The damaging-only posterior probabilities for these two variants were 0.382 and 0.351, resulting in total probability (prob causal) of causal diagnosis given the existing evidence of 0.521 (95\\% CI: 0.248–0.787).
-                   \\label{tab:table_scenario_2_quant_uncert_ci}"),
+  # caption = paste0("Result of clinical genetics diagnosis scenario ", scenario, ". The proband carried three observed variants, including the known pathogenic \\texttt{p.Ser237Ter} (true positive), and lacked coverage at three additional sites, including likely-pathogenic splice‑donor \\texttt{c.159+1G>A} (false negative). The damaging-only posterior probabilities for these two variants were 0.382 and 0.351, resulting in total probability (prob causal) of causal diagnosis given the existing evidence of 0.521 (95\\% CI: 0.248–0.787). \\label{tab:table_scenario_2_quant_uncert_ci}"),
+  caption = caption_text,
   # escape      = FALSE,
   # table.envir = FALSE,                    # suppress \begin{table}...\end{table}
   col.names   = gsub("_", " ", names(variant_table_full))
