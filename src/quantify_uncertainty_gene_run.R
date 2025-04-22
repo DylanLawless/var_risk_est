@@ -8,6 +8,9 @@ library(ggplot2)
 library(ggridges)
 library(patchwork)
 library(tidyr)
+library(ggrepel)
+library(knitr)
+library(kableExtra)
 theme_set(theme_bw())
 
 set.seed(666)
@@ -57,8 +60,6 @@ build_patient_data <- function(include_missing_variant = FALSE) {
     )
 }
 
-
-
 # scenario 1
 scenario     <- "1"
 genetic_defect <- "NFKB1"
@@ -106,3 +107,4 @@ patient_data <- build_patient_data(include_missing_variant = TRUE)
 source("quantify_uncertainty_gene_functions.R")
 
 # risk_variants  |> select(HGVSp_VEP, clinvar_clnsig, score) |> arrange(score)
+

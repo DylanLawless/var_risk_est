@@ -26,10 +26,23 @@ risk_variants <- patient_data %>%
 
 # posterior sampling -------------------------------------------------------
 n_sim   <- 10000
-sim_mat <- sapply(seq_len(nrow(risk_variants)),
-                  function(i) rbeta(n_sim,
-                                    risk_variants$alpha[i],
-                                    risk_variants$beta[i]))
+# n_sim   <- 5000
+# sim_mat <- sapply(seq_len(nrow(risk_variants)),
+#                   function(i) rbeta(n_sim,
+#                                     risk_variants$alpha[i],
+#                                     risk_variants$beta[i]))
+# 
+# head(sim_mat)
+
+# faster and better memory
+sim_mat <- matrix(
+  rbeta(n_sim * nrow(risk_variants), 
+        rep(risk_variants$alpha, each = n_sim), 
+        rep(risk_variants$beta,  each = n_sim)),
+  nrow = n_sim, byrow = FALSE
+)
+# head(sim_mat)
+
 colnames(sim_mat) <- risk_variants$variant_lab
 
 # normalisations ------------------------------------------------------------
@@ -87,7 +100,7 @@ p_prior <- ggplot(prior_df,
   scale_x_continuous(limits = c(0, 0.0035),
                      breaks = pretty_breaks(n = 2))
 
-p_prior
+# p_prior
 
 # — plot B: full posterior distributions ——————————————————————————
 share_df <- as_tibble(share_all) %>%
@@ -231,7 +244,7 @@ p_source_stack <- ggplot(variant_source_df,
   guides(color = "none") +
   geom_col(width = 0.3, colour = "black", position = position_stack())
 
-p_source_stack
+# p_source_stack
 
 # plot F: overall damaging‑causal distribution ----------------------------
 # 1. posterior draws of relative share among causals
@@ -282,7 +295,7 @@ p_overall <- ggplot(tibble(share = total_sim), aes(x = share)) +
   scale_x_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.2)) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.8)))
 
-p_overall
+# p_overall
 
 # assemble panels ---------------------------------------------------------
 p_quant <- (p_prior + p_dist + p_causal) /
@@ -291,13 +304,13 @@ p_quant <- (p_prior + p_dist + p_causal) /
   plot_layout(guides="collect",axis="collect",heights=c(2,1,1)) +
   plot_annotation(tag_levels="A", subtitle = paste0("Gene: ",  genetic_defect))
 
-p_quant
+# p_quant
 # ggsave("../images/plot_quant_uncert_ci.pdf", plot = p_quant, width = 9, height = 7)
 ggsave(paste0("../images/plot_scenario_", scenario, "_quant_uncert_ci.pdf"), plot = p_quant, width = 9, height = 7)
 
-# tables ----
-library(knitr)
-library(kableExtra)
+# # tables ----
+# library(knitr)
+# library(kableExtra)
 
 # first join in the CI columns (for present variants only)
 variant_with_ci <- risk_variants %>%
@@ -387,15 +400,17 @@ desc_missing <- if (nrow(top_missing) > 0) {
   "No unsequenced variants were included in this scenario. "
 }
 
-# Final caption
+# caption ----
 caption_text <- paste0(
-  "Result of clinical genetics diagnosis scenario ", scenario, ". ",
+  "Result of clinical genetics diagnosis scenario ", scenario, " including metadata. ",
   desc_present,
   desc_missing,
   "The total probability of a causal diagnosis given the available evidence was ",
   overall_row$Prob_Causal, " (95\\% CI: ", overall_row$Lower, "--", overall_row$Upper, ").",
   "\\label{tab:table_scenario_", scenario, "_quant_uncert_ci}"
 )
+
+# caption = paste0("Result of clinical genetics diagnosis scenario ", scenario, ". The proband carried three observed variants, including the known pathogenic \\texttt{p.Ser237Ter} (true positive), and lacked coverage at three additional sites, including likely-pathogenic splice‑donor \\texttt{c.159+1G>A} (false negative). The damaging-only posterior probabilities for these two variants were 0.382 and 0.351, resulting in total probability (prob causal) of causal diagnosis given the existing evidence of 0.521 (95\\% CI: 0.248–0.787). \\label{tab:table_scenario_2_quant_uncert_ci}"),
 
 # Generate the LaTeX tabuLower# Generate the LaTeX tabular code without the surrounding table environment
 latex_tabular <- kable(
@@ -423,18 +438,145 @@ latex_tabular <- kable(
   column_spec(11:13, width = "1.5cm")
 
 # Wrap in resizebox and full table environment
-cat(latex_tabular)
+# cat(latex_tabular)
 
 # write the LaTeX table to file
 # out_file <- "../images/table_quant_uncert_ci.tex"
 out_file <-  paste0("../images/table_scenario_", scenario, "_quant_uncert_ci.tex")
-
 table_lines <- c(latex_tabular)
-
 writeLines(table_lines, out_file)
 
+# report ----
+candidate_variants <- variant_table_full %>%
+  filter(Class == "causal", Variant != "Total") %>%
+  left_join(
+    risk_variants %>%
+      select(variant_lab, genename, Inheritance,
+             HGVSc_VEP, HGVSp_VEP,
+             gnomAD_genomes_AF, occurrence_prob,
+             posterior_share, prob_causal_damaging, flag),
+    by = c("Variant" = "variant_lab")
+  ) %>%
+  left_join(ci_present, by = c("Variant" = "variant_lab"))
 
 
+# define parameters
+param_names <- c(
+  "Gene",
+  "HGVSc",
+  "HGVSp",
+  "Inheritance",
+  "Patient sex",
+  "gnomAD frequency",
+  "95% CI lower",
+  "p(median)",
+  "95% CI upper",
+  "Posterior p(causal)",
+  "Interpretation"
+)
 
+# build list keyed by flag ("present","missing")
+vals_list <- lapply(seq_len(nrow(candidate_variants)), function(i) {
+  row <- candidate_variants[i, ]
+  c(
+    Gene                   = row$genename,
+    HGVSc                  = row$HGVSc_VEP,
+    HGVSp                  = row$HGVSp_VEP,
+    Inheritance            = row$Inheritance,
+    `Patient sex`          = "Male",
+    `gnomAD frequency`     = formatC(row$gnomAD_genomes_AF, format="e", digits=2),
+    `95% CI lower`         = sprintf("%.3f", row$lower),
+    `p(median)`            = sprintf("%.3f", row$median),
+    `95% CI upper`         = sprintf("%.3f", row$upper),
+    `Posterior p(causal)`  = sprintf("%.3f", row$prob_causal_damaging),
+    Interpretation         = if (row$flag == "present") {
+      "Reported causal; variant observed"
+    } else {
+      "Reported causal; variant not detected — consider follow‑up"
+    }
+  )
+})
+names(vals_list) <- candidate_variants$flag
 
+# assemble wide table (columns = present, missing)
+df_report_wide <- data.frame(
+  Parameter = param_names,
+  check.names = FALSE,
+  stringsAsFactors = FALSE
+)
+for(flag in unique(candidate_variants$flag)) {
+  df_report_wide[[flag]] <- vals_list[[flag]][param_names]
+}
 
+# --- build caption including total summary ---
+desc_present <- if(nrow(top_present)>0) {
+  paste0("Reported causal: \\texttt{", top_present$Variant, "} (posterior ", top_present$Prob_Causal, "). ")
+} else ""
+desc_missing <- if(nrow(top_missing)>0) {
+  paste0("Undetected causal: \\texttt{", top_missing$Variant, "} (posterior ", top_missing$Prob_Causal, "). ")
+} else ""
+desc_interp <- paste0(
+  # desc_present, desc_missing,
+  "Overall probability of correct causal diagnosis due to SNV/INDEL given the currently available evidence: ",
+  overall_row$Prob_Causal,
+  " (95\\% CI ", overall_row$Lower, "--", overall_row$Upper, "). "
+)
+# desc_interp
+
+caption_report <- paste0(
+  "Final variant report for clinical genetics scenario ", scenario, ". ",
+  desc_present,
+  desc_missing,
+  "The total probability of a causal diagnosis given the available evidence was ",
+  overall_row$Prob_Causal, " (95\\% CI: ", overall_row$Lower, "--", overall_row$Upper, ").",
+  "\\label{tab:table_scenario_", scenario, "_report}"
+)
+
+n_cols <- ncol(df_report_wide)
+# build a matching col.names vector:
+#   first element is always "Parameter", then the flag names
+col_names <- c("Parameter", setdiff(colnames(df_report_wide), "Parameter"))
+
+# 1. Render the base table to character
+latex_tab <- kable(
+  df_report_wide,
+  format    = "latex",
+  linesep     = "",  # <- this removes all automatic row spacing
+  booktabs  = TRUE,
+  caption   = caption_report,
+  col.names = c("Parameter", setdiff(names(df_report_wide), "Parameter"))
+) %>%
+  kable_styling(latex_options = c("hold_position","scale_down"),
+                position = "center") %>%
+  column_spec(1, width="4cm") %>%
+  { 
+    # widen the rest to match number of columns
+    n_cols <- ncol(df_report_wide)
+    column_spec(., 2:n_cols, width = paste0(12 / (n_cols-1), "cm")) 
+  } %>%
+  as.character()
+
+# 2. Split into lines
+lines <- strsplit(latex_tab, "\n", fixed = TRUE)[[1]]
+
+# 3. Locate bottomrule
+i_bot <- grep("^\\\\bottomrule", lines)
+
+# 4. Build footer with “Summary” in col 1
+n_cols <- ncol(df_report_wide)
+footer <- paste0(
+  "\\midrule\n",
+  "\\textbf{Summary} & ",
+  "\\multicolumn{", n_cols-1, "}{p{", paste0((n_cols-1)*5, "cm"), "}}{", 
+  desc_interp, 
+  "} \\\\"
+)
+
+new_lines <- append(lines, footer, after = i_bot - 1)
+
+latex_tab_with_footer <- paste(new_lines, collapse = "\n")
+
+out_file_report <-  paste0("../images/table_scenario_", scenario, "_final_report.tex")
+table_lines_report <- c(latex_tab_with_footer)
+writeLines(table_lines_report, out_file_report)
+gc()

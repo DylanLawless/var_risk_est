@@ -214,6 +214,16 @@ Damian Szklarczyk, Katerina Nastou, Mikaela Koutrouli, Rebecca Kirsch, Farrokh
 \newblock \emph{Nucleic Acids Research}, 53\penalty0 (D1):\penalty0 D730--D737,
   2025.
 
+\bibitem[Cheng et~al.(2023{\natexlab{b}})Cheng, Novati, Pan, Bycroft,
+  Žemgulytė, Applebaum, Pritzel, Wong, Zielinski, Sargeant, Schneider,
+  Senior, Jumper, Hassabis, Kohli, and Žiga Avsec]{jun_cheng_2023_8208688}
+Jun Cheng, Guido Novati, Joshua Pan, Clare Bycroft, Akvilė Žemgulytė, Taylor
+  Applebaum, Alexander Pritzel, Lai~Hong Wong, Michal Zielinski, Tobias
+  Sargeant, Rosalia~G. Schneider, Andrew~W. Senior, John Jumper, Demis
+  Hassabis, Pushmeet Kohli, and Žiga Avsec.
+\newblock Predictions for alphamissense, September 2023{\natexlab{b}}.
+\newblock URL \url{https://doi.org/10.5281/zenodo.8208688}.
+
 \bibitem[Tuijnenburg et~al.(2018)Tuijnenburg, Lango~Allen, Burns, Greene,
   Jansen, and Others.]{tuijnenburgNFKB12018}
 Paul Tuijnenburg, Hana Lango~Allen, Siobhan~O. Burns, Daniel Greene, Machiel~H.
@@ -290,16 +300,6 @@ Arthur Liberzon, Aravind Subramanian, Reid Pinchback, Helga Thorvaldsdóttir,
 \newblock \doi{10.1093/bioinformatics/btr260}.
 \newblock URL
   \url{https://academic.oup.com/bioinformatics/article/27/12/1739/257711}.
-
-\bibitem[Cheng et~al.(2023{\natexlab{b}})Cheng, Novati, Pan, Bycroft,
-  Žemgulytė, Applebaum, Pritzel, Wong, Zielinski, Sargeant, Schneider,
-  Senior, Jumper, Hassabis, Kohli, and Žiga Avsec]{jun_cheng_2023_8208688}
-Jun Cheng, Guido Novati, Joshua Pan, Clare Bycroft, Akvilė Žemgulytė, Taylor
-  Applebaum, Alexander Pritzel, Lai~Hong Wong, Michal Zielinski, Tobias
-  Sargeant, Rosalia~G. Schneider, Andrew~W. Senior, John Jumper, Demis
-  Hassabis, Pushmeet Kohli, and Žiga Avsec.
-\newblock Predictions for alphamissense, September 2023{\natexlab{b}}.
-\newblock URL \url{https://doi.org/10.5281/zenodo.8208688}.
 
 \bibitem[Lawless(2025{\natexlab{b}})]{lawless_2025_15111584}
 Dylan Lawless.
