@@ -1,34 +1,35 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
 \BOOKMARK [1][-]{section.2}{Methods}{}% 2
 \BOOKMARK [2][-]{subsection.2.1}{Dataset}{section.2}% 3
-\BOOKMARK [2][-]{subsection.2.2}{Variant\040class\040observation\040probability}{section.2}% 4
-\BOOKMARK [2][-]{subsection.2.3}{Integrating\040observed\040true\040positives\040and\040unobserved\040false\040negatives\040into\040a\040single,\040actionable\040conclusion}{section.2}% 5
-\BOOKMARK [2][-]{subsection.2.4}{Validation\040of\040autosomal\040dominant\040estimates\040using\040NFKB1}{section.2}% 6
-\BOOKMARK [2][-]{subsection.2.5}{Validation\040study\040for\040autosomal\040recessive\040CF\040using\040CFTR}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.2}{Variant classification occurrence probability}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Integrating observed true positives and unobserved false negatives into a single, actionable conclusion}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{Validation of autosomal dominant estimates using NFKB1}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.5}{Validation study for autosomal recessive CF using CFTR}{section.2}% 7
 \BOOKMARK [2][-]{subsection.2.6}{Validation of SCID-specific estimates using PID–SCID genes}{section.2}% 8
-\BOOKMARK [2][-]{subsection.2.7}{Protein\040network\040and\040genetic\040constraint\040interpretation}{section.2}% 9
-\BOOKMARK [2][-]{subsection.2.8}{Gene\040set\040enrichment\040test}{section.2}% 10
-\BOOKMARK [2][-]{subsection.2.9}{Deriving\040novel\040PID\040classifications\040by\040genetic\040PPI\040and\040clinical\040features}{section.2}% 11
-\BOOKMARK [2][-]{subsection.2.10}{Probability\040of\040observing\040AlphaMissense\040pathogenicity}{section.2}% 12
-\BOOKMARK [1][-]{section.3}{Results}{}% 13
-\BOOKMARK [2][-]{subsection.3.1}{Observation\040probability\040across\040disease\040genes}{section.3}% 14
-\BOOKMARK [2][-]{subsection.3.2}{Integrating\040observed\040true\040positives\040and\040unobserved\040false\040negatives\040into\040a\040single,\040actionable\040conclusion}{section.3}% 15
-\BOOKMARK [2][-]{subsection.3.3}{Scenario\040one\040-\040simple\040diagnosis}{section.3}% 16
-\BOOKMARK [2][-]{subsection.3.4}{Scenario\040two\040-\040complex\040diagnosis}{section.3}% 17
-\BOOKMARK [2][-]{subsection.3.5}{Scenario\040three\040-\040currently\040impossible\040diagnosis}{section.3}% 18
-\BOOKMARK [2][-]{subsection.3.6}{Validation\040studies}{section.3}% 19
-\BOOKMARK [2][-]{subsection.3.7}{Genetic\040constraint\040in\040high-impact\040protein\040networks}{section.3}% 20
-\BOOKMARK [2][-]{subsection.3.8}{New\040insight\040from\040functional\040enrichment}{section.3}% 21
-\BOOKMARK [2][-]{subsection.3.9}{Genome-wide\040gene\040distribution\040and\040linkage\040disequilibrium}{section.3}% 22
-\BOOKMARK [2][-]{subsection.3.10}{Novel\040PID\040classifications\040derived\040from\040genetic\040PPI\040and\040clinical\040features}{section.3}% 23
-\BOOKMARK [2][-]{subsection.3.11}{Probability\040of\040observing\040AlphaMissense\040pathogenicity}{section.3}% 24
-\BOOKMARK [2][-]{subsection.3.12}{Integration\040of\040variant\040probabilities\040into\040IEI\040genetics\040data}{section.3}% 25
-\BOOKMARK [1][-]{section.4}{Discussion}{}% 26
-\BOOKMARK [1][-]{section.5}{Conclusion}{}% 27
-\BOOKMARK [1][-]{section.6}{Supplemental}{}% 28
-\BOOKMARK [2][-]{subsection.6.1}{Integrating\040observed\040true\040positives\040and\040unobserved\040false\040negatives\040into\040a\040single,\040actionable\040conclusion}{section.6}% 29
-\BOOKMARK [2][-]{subsection.6.2}{Validation\040studies}{section.6}% 30
-\BOOKMARK [2][-]{subsection.6.3}{Genetic\040constraint\040in\040high-impact\040protein\040networks}{section.6}% 31
-\BOOKMARK [2][-]{subsection.6.4}{Interpretation\040of\040ClinVar\040Variant\040Observations}{section.6}% 32
-\BOOKMARK [2][-]{subsection.6.5}{Novel\040PID\040classifications}{section.6}% 33
-\BOOKMARK [2][-]{subsection.6.6}{Probability\040of\040observing\040AlphaMissense\040pathogenicity}{section.6}% 34
+\BOOKMARK [2][-]{subsection.2.7}{Protein network and genetic constraint interpretation}{section.2}% 9
+\BOOKMARK [2][-]{subsection.2.8}{Gene set enrichment test}{section.2}% 10
+\BOOKMARK [2][-]{subsection.2.9}{Deriving novel PID classifications by genetic PPI and clinical features}{section.2}% 11
+\BOOKMARK [2][-]{subsection.2.10}{Probability of observing AlphaMissense pathogenicity}{section.2}% 12
+\BOOKMARK [2][-]{subsection.2.11}{Probability model definitions}{section.2}% 13
+\BOOKMARK [1][-]{section.3}{Results}{}% 14
+\BOOKMARK [2][-]{subsection.3.1}{Occurrence probability across disease genes}{section.3}% 15
+\BOOKMARK [2][-]{subsection.3.2}{Integrating observed true positives and unobserved false negatives into a single, actionable conclusion}{section.3}% 16
+\BOOKMARK [2][-]{subsection.3.3}{Scenario one - simple diagnosis}{section.3}% 17
+\BOOKMARK [2][-]{subsection.3.4}{Scenario two - complex diagnosis}{section.3}% 18
+\BOOKMARK [2][-]{subsection.3.5}{Scenario three - currently impossible diagnosis}{section.3}% 19
+\BOOKMARK [2][-]{subsection.3.6}{Validation studies}{section.3}% 20
+\BOOKMARK [2][-]{subsection.3.7}{Genetic constraint in high-impact protein networks}{section.3}% 21
+\BOOKMARK [2][-]{subsection.3.8}{New insight from functional enrichment}{section.3}% 22
+\BOOKMARK [2][-]{subsection.3.9}{Genome-wide gene distribution and linkage disequilibrium}{section.3}% 23
+\BOOKMARK [2][-]{subsection.3.10}{Novel PID classifications derived from genetic PPI and clinical features}{section.3}% 24
+\BOOKMARK [2][-]{subsection.3.11}{Probability of observing AlphaMissense pathogenicity}{section.3}% 25
+\BOOKMARK [2][-]{subsection.3.12}{Integration of variant probabilities into IEI genetics data}{section.3}% 26
+\BOOKMARK [1][-]{section.4}{Discussion}{}% 27
+\BOOKMARK [1][-]{section.5}{Conclusion}{}% 28
+\BOOKMARK [1][-]{section.6}{Supplemental}{}% 29
+\BOOKMARK [2][-]{subsection.6.1}{Variant class occurrence probability}{section.6}% 30
+\BOOKMARK [2][-]{subsection.6.2}{Integrating observed true positives and unobserved false negatives into a single, actionable conclusion}{section.6}% 31
+\BOOKMARK [2][-]{subsection.6.3}{Validation studies}{section.6}% 32
+\BOOKMARK [2][-]{subsection.6.4}{Genetic constraint in high-impact protein networks}{section.6}% 33
+\BOOKMARK [2][-]{subsection.6.5}{Novel PID classifications derived from genetic PPI and clinical features}{section.6}% 34
+\BOOKMARK [2][-]{subsection.6.6}{Probability of observing AlphaMissense pathogenicity}{section.6}% 35

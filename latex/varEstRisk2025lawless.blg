@@ -3,55 +3,51 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: varEstRisk2025lawless.aux
 The style file: unsrtnat.bst
 Database file #1: references.bib
-Repeated entry---line 525 of file references.bib
- : @article{tangye_human_2022
- :                           ,
-I'm skipping whatever remains of this entry
 Warning--empty journal in lawless_panelapprex_2025
 Name 8 in "{The UniProt Consortium} and Bateman, Alex and Martin, Maria-Jesus and Orchard, Sandra and Magrane, Michele and Adesina, Aduragbemi and Ahmad, Shadab and Bowler-Barnett, and Others." has a comma at the end for entry the_uniprot_consortium_uniprot_2025
 while executing---line 1315 of file unsrtnat.bst
 Name 8 in "{The UniProt Consortium} and Bateman, Alex and Martin, Maria-Jesus and Orchard, Sandra and Magrane, Michele and Adesina, Aduragbemi and Ahmad, Shadab and Bowler-Barnett, and Others." has a comma at the end for entry the_uniprot_consortium_uniprot_2025
 while executing---line 1315 of file unsrtnat.bst
 Warning--empty journal in lawless_2025_15111584
-You've used 40 entries,
+You've used 43 entries,
             2481 wiz_defined-function locations,
-            862 strings with 18599 characters,
-and the built_in function-call counts, 22497 in all, are:
-= -- 1528
-> -- 2142
+            882 strings with 21302 characters,
+and the built_in function-call counts, 25972 in all, are:
+= -- 1648
+> -- 2709
 < -- 9
-+ -- 758
-- -- 676
-* -- 2365
-:= -- 4033
-add.period$ -- 178
-call.type$ -- 40
-change.case$ -- 80
-chr.to.int$ -- 38
-cite$ -- 42
-duplicate$ -- 763
-empty$ -- 1475
-format.name$ -- 725
-if$ -- 4400
++ -- 950
+- -- 862
+* -- 2825
+:= -- 4752
+add.period$ -- 196
+call.type$ -- 43
+change.case$ -- 86
+chr.to.int$ -- 41
+cite$ -- 45
+duplicate$ -- 819
+empty$ -- 1584
+format.name$ -- 914
+if$ -- 5007
 int.to.chr$ -- 3
-int.to.str$ -- 41
-missing$ -- 39
-newline$ -- 266
-num.names$ -- 120
-pop$ -- 239
+int.to.str$ -- 44
+missing$ -- 42
+newline$ -- 290
+num.names$ -- 129
+pop$ -- 251
 preamble$ -- 1
-purify$ -- 40
+purify$ -- 43
 quote$ -- 0
-skip$ -- 405
+skip$ -- 433
 stack$ -- 0
-substring$ -- 916
-swap$ -- 112
+substring$ -- 976
+swap$ -- 121
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 280
+type$ -- 301
 warning$ -- 2
-while$ -- 143
+while$ -- 151
 width$ -- 0
-write$ -- 637
-(There were 3 error messages)
+write$ -- 694
+(There were 2 error messages)

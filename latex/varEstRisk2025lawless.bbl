@@ -1,26 +1,27 @@
-\begin{thebibliography}{40}
+\begin{thebibliography}{43}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem[Tangye et~al.(2022)Tangye, Al-Herz, Bousfiha, Cunningham-Rundles,
-  Franco, Holland, Klein, Morio, Oksenhendler, Picard, Puel, Puck, Seppänen,
-  Somech, Su, Sullivan, Torgerson, and Meyts]{tangye_human_2022}
-Stuart~G. Tangye, Waleed Al-Herz, Aziz Bousfiha, Charlotte Cunningham-Rundles,
-  Jose~Luis Franco, Steven~M. Holland, Christoph Klein, Tomohiro Morio, Eric
-  Oksenhendler, Capucine Picard, Anne Puel, Jennifer Puck, Mikko R.~J.
-  Seppänen, Raz Somech, Helen~C. Su, Kathleen~E. Sullivan, Troy~R. Torgerson,
-  and Isabelle Meyts.
-\newblock Human {Inborn} {Errors} of {Immunity}: 2022 {Update} on the
-  {Classification} from the {International} {Union} of {Immunological}
-  {Societies} {Expert} {Committee}.
-\newblock \emph{Journal of Clinical Immunology}, 42\penalty0 (7):\penalty0
-  1473--1507, October 2022.
-\newblock ISSN 0271-9142, 1573-2592.
-\newblock \doi{10.1007/s10875-022-01289-3}.
-\newblock URL \url{https://link.springer.com/10.1007/s10875-022-01289-3}.
+\bibitem[Poli et~al.(2025)Poli, Aksentijevich, Bousfiha, Cunningham-Rundles,
+  Hambleton, Klein, Morio, Picard, Puel, Rezaei, Seppänen, Somech, Su,
+  Sullivan, Torgerson, Meyts, and Tangye]{poli_human_2025}
+M.~Cecilia Poli, Ivona Aksentijevich, Ahmed~Aziz Bousfiha, Charlotte
+  Cunningham-Rundles, Sophie Hambleton, Christoph Klein, Tomohiro Morio,
+  Capucine Picard, Anne Puel, Nima Rezaei, Mikko~R.J. Seppänen, Raz Somech,
+  Helen~C. Su, Kathleen~E. Sullivan, Troy~R. Torgerson, Isabelle Meyts, and
+  Stuart~G. Tangye.
+\newblock Human inborn errors of immunity: 2024 update on the classification
+  from the {International} {Union} of {Immunological} {Societies} {Expert}
+  {Committee}.
+\newblock \emph{Journal of Human Immunity}, 1\penalty0 (1):\penalty0 e20250003,
+  May 2025.
+\newblock ISSN 3065-8993.
+\newblock \doi{10.70962/jhi.20250003}.
+\newblock URL
+  \url{https://rupress.org/jhi/article/1/1/e20250003/277390/Human-inborn-errors-of-immunity-2024-update-on-the}.
 
 \bibitem[Lawless(2025{\natexlab{a}})]{lawless_panelapprex_2025}
 Dylan Lawless.
@@ -47,6 +48,23 @@ Antonio~Rueda Martin, Eleanor Williams, Rebecca~E. Foulger, Sarah Leigh,
 \newblock ISSN 1061-4036, 1546-1718.
 \newblock \doi{10.1038/s41588-019-0528-2}.
 \newblock URL \url{https://www.nature.com/articles/s41588-019-0528-2}.
+
+\bibitem[Bousfiha et~al.(2025)Bousfiha, Jeddane, Moundir, Poli, Aksentijevich,
+  Cunningham-Rundles, Hambleton, Klein, Morio, Picard, Puel, Rezaei, Seppänen,
+  Somech, Su, Sullivan, Torgerson, Tangye, and Meyts]{bousfiha_2024_2025}
+Ahmed~Aziz Bousfiha, Leïla Jeddane, Abderrahmane Moundir, M.~Cecilia Poli,
+  Ivona Aksentijevich, Charlotte Cunningham-Rundles, Sophie Hambleton,
+  Christoph Klein, Tomohiro Morio, Capucine Picard, Anne Puel, Nima Rezaei,
+  Mikko~R.J. Seppänen, Raz Somech, Helen~C. Su, Kathleen~E. Sullivan, Troy~R.
+  Torgerson, Stuart~G. Tangye, and Isabelle Meyts.
+\newblock The 2024 update of {IUIS} phenotypic classification of human inborn
+  errors of immunity.
+\newblock \emph{Journal of Human Immunity}, 1\penalty0 (1):\penalty0 e20250002,
+  May 2025.
+\newblock ISSN 3065-8993.
+\newblock \doi{10.70962/jhi.20250002}.
+\newblock URL
+  \url{https://rupress.org/jhi/article/1/1/e20250002/277374/The-2024-update-of-IUIS-phenotypic-classification}.
 
 \bibitem[Mayo(2008)]{MayoCentury2008}
 Oliver Mayo.
@@ -307,6 +325,55 @@ Dylan Lawless.
 \newblock March 2025{\natexlab{b}}.
 \newblock \doi{10.5281/zenodo.15111584}.
 \newblock URL \url{https://doi.org/10.5281/zenodo.15111584}.
+
+\bibitem[Minikel et~al.(2016)Minikel, Vallabh, Lek, Estrada, Samocha,
+  Sathirapongsasuti, McLean, Tung, Yu, Gambetti, Blevins, Zhang, Cohen, Chen,
+  Yamada, Hamaguchi, Sanjo, Mizusawa, Nakamura, Kitamoto, Collins, Boyd, Will,
+  Knight, Ponto, Zerr, Kraus, Eigenbrod, Giese, Calero, De~Pedro-Cuesta, Haïk,
+  Laplanche, Bouaziz-Amar, Brandel, Capellari, Parchi, Poleggi, Ladogana,
+  O’Donnell-Luria, Karczewski, Marshall, Boehnke, Laakso, Mohlke, Kähler,
+  Chambert, McCarroll, Sullivan, Hultman, Purcell, Sklar, Van Der~Lee,
+  Rozemuller, Jansen, Hofman, Kraaij, Van~Rooij, Ikram, Uitterlinden,
+  Van~Duijn, {Exome Aggregation Consortium (ExAC)}, Daly, and
+  MacArthur]{minikel_quantifying_2016}
+Eric~Vallabh Minikel, Sonia~M. Vallabh, Monkol Lek, Karol Estrada, Kaitlin~E.
+  Samocha, J.~Fah Sathirapongsasuti, Cory~Y. McLean, Joyce~Y. Tung, Linda P.~C.
+  Yu, Pierluigi Gambetti, Janis Blevins, Shulin Zhang, Yvonne Cohen, Wei Chen,
+  Masahito Yamada, Tsuyoshi Hamaguchi, Nobuo Sanjo, Hidehiro Mizusawa, Yosikazu
+  Nakamura, Tetsuyuki Kitamoto, Steven~J. Collins, Alison Boyd, Robert~G. Will,
+  Richard Knight, Claudia Ponto, Inga Zerr, Theo F.~J. Kraus, Sabina Eigenbrod,
+  Armin Giese, Miguel Calero, Jesús De~Pedro-Cuesta, Stéphane Haïk,
+  Jean-Louis Laplanche, Elodie Bouaziz-Amar, Jean-Philippe Brandel, Sabina
+  Capellari, Piero Parchi, Anna Poleggi, Anna Ladogana, Anne~H.
+  O’Donnell-Luria, Konrad~J. Karczewski, Jamie~L. Marshall, Michael Boehnke,
+  Markku Laakso, Karen~L. Mohlke, Anna Kähler, Kimberly Chambert, Steven
+  McCarroll, Patrick~F. Sullivan, Christina~M. Hultman, Shaun~M. Purcell,
+  Pamela Sklar, Sven~J. Van Der~Lee, Annemieke Rozemuller, Casper Jansen,
+  Albert Hofman, Robert Kraaij, Jeroen G.~J. Van~Rooij, M.~Arfan Ikram,
+  André~G. Uitterlinden, Cornelia~M. Van~Duijn, {Exome Aggregation Consortium
+  (ExAC)}, Mark~J. Daly, and Daniel~G. MacArthur.
+\newblock Quantifying prion disease penetrance using large population control
+  cohorts.
+\newblock \emph{Science Translational Medicine}, 8\penalty0 (322), January
+  2016.
+\newblock ISSN 1946-6234, 1946-6242.
+\newblock \doi{10.1126/scitranslmed.aad5169}.
+\newblock URL \url{https://www.science.org/doi/10.1126/scitranslmed.aad5169}.
+
+\bibitem[Whiffin et~al.(2017)Whiffin, Minikel, Walsh, O’Donnell-Luria,
+  Karczewski, Ing, Barton, Funke, Cook, MacArthur, and
+  Ware]{whiffin_using_2017}
+Nicola Whiffin, Eric Minikel, Roddy Walsh, Anne~H O’Donnell-Luria, Konrad
+  Karczewski, Alexander~Y Ing, Paul J~R Barton, Birgit Funke, Stuart~A Cook,
+  Daniel MacArthur, and James~S Ware.
+\newblock Using high-resolution variant frequencies to empower clinical genome
+  interpretation.
+\newblock \emph{Genetics in Medicine}, 19\penalty0 (10):\penalty0 1151--1158,
+  October 2017.
+\newblock ISSN 10983600.
+\newblock \doi{10.1038/gim.2017.26}.
+\newblock URL
+  \url{https://linkinghub.elsevier.com/retrieve/pii/S1098360021013678}.
 
 \bibitem[Efron and Morris(1973)]{efron_steins_1973}
 Bradley Efron and Carl Morris.

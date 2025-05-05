@@ -56,12 +56,27 @@ Results (summary tables and figures) will be saved in the `../images/` and `../o
 
 ## Citation
 
-Please cite the following references when using VarRiskEst:
+Please consider citing the following references when using VarRiskEst:
+
+```
+@article {Lawless2025VarRiskEst,
+	author = {Lawless, Dylan},
+	title = {Quantitative prior probabilities for disease-causing variants reveal the top genetic contributors in inborn errors of immunity},
+	elocation-id = {2025.03.25.25324607},
+	year = {2025},
+	doi = {10.1101/2025.03.25.25324607},
+	publisher = {Cold Spring Harbor Laboratory Press}
+}
+
+```
+
+Please consider citing the related works used to develop this tool:
 
 - Lawless, D. et al. (2025). PanelAppRex aggregates disease gene panels and facilitates sophisticated search. [GitHub repository](https://github.com/DylanLawless/PanelAppRex).
 - Landrum, M. J. et al. (2018). ClinVar: updates to support classifications of both germline and somatic variants. *Nucleic Acids Res.* doi:10.1093/nar/gkae1090.
 - Liu, X. et al. (2020). dbNSFP v4.0: A comprehensive database of functional predictions and annotations for human nonsynonymous and splice-site SNVs. *Nucleic Acids Res.*
 - Martin, A. R. et al. (2019). PanelApp: a tool for the diagnosis of rare diseases. *Nat. Genet.* [Include full citation details].
+
 
 ## License
 
