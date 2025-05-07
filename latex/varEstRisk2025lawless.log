@@ -1,4 +1,4 @@
-This is LuaTeX, Version 1.07.0 (TeX Live 2018)  (format=lualatex 2018.7.19)  3 MAY 2025 09:27
+This is LuaTeX, Version 1.07.0 (TeX Live 2018)  (format=lualatex 2018.7.19)  6 MAY 2025 15:41
  restricted system commands enabled.
 **varEstRisk2025lawless.tex
 (./varEstRisk2025lawless.tex
@@ -34,7 +34,7 @@ Inserting `luaotfload.aux.set_capheight' at position 3 in `luaotfload.patch_font
 '.
 Inserting `luaotfload.rewrite_fontname' at position 4 in `luaotfload.patch_font'
 .
-luaotfload | main : initialization completed in 0.118 seconds
+luaotfload | main : initialization completed in 0.518 seconds
 Babel <3.18> and hyphenation patterns for 1 language(s) loaded.
 (./head.tex (/usr/local/texlive/2018/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
@@ -1837,7 +1837,7 @@ l/lmroman7-regular.luc)(load luc: /usr/local/texlive/2018/texmf-var/luatex-cache
 <../images/var_risk_est_ci.pdf, id=198, 682.55pt x 687.56876pt>
 File: ../images/var_risk_est_ci.pdf Graphic file (type pdf)
 <use ../images/var_risk_est_ci.pdf>
-Package luatex.def Info: ../images/var_risk_est_ci.pdf  used on input line 64.
+Package luatex.def Info: ../images/var_risk_est_ci.pdf  used on input line 66.
 (luatex.def)             Requested size: 429.28616pt x 432.4467pt.
  [2
 
@@ -1846,104 +1846,104 @@ Package luatex.def Info: ../images/var_risk_est_ci.pdf  used on input line 64.
 
 ]
 Package acronym Info: Label `acro:tp' newly defined as it shall be overridden
-although it is yet undefined on input line 140.
+although it is yet undefined on input line 142.
 Package acronym Info: Label `acro:fp' newly defined as it shall be overridden
-although it is yet undefined on input line 141.
+although it is yet undefined on input line 143.
 Package acronym Info: Label `acro:fn' newly defined as it shall be overridden
-although it is yet undefined on input line 142.
+although it is yet undefined on input line 144.
 Package acronym Info: Label `acro:tn' newly defined as it shall be overridden
-although it is yet undefined on input line 142.
+although it is yet undefined on input line 144.
  [5]
 Package acronym Info: Label `acro:af' newly defined as it shall be overridden
-although it is yet undefined on input line 149.
+although it is yet undefined on input line 151.
 Package acronym Info: Label `acro:moi' newly defined as it shall be overridden
-although it is yet undefined on input line 149.
+although it is yet undefined on input line 151.
 Package acronym Info: Label `acro:hwe' newly defined as it shall be overridden
-although it is yet undefined on input line 149.
+although it is yet undefined on input line 151.
 Package acronym Info: Label `acro:iei' newly defined as it shall be overridden
-although it is yet undefined on input line 152.
+although it is yet undefined on input line 154.
 Package acronym Info: Label `acro:pid' newly defined as it shall be overridden
-although it is yet undefined on input line 152.
+although it is yet undefined on input line 154.
 Package acronym Info: Label `acro:iuis' newly defined as it shall be overridden
-although it is yet undefined on input line 156.
+although it is yet undefined on input line 158.
 Package acronym Info: Label `acro:snv' newly defined as it shall be overridden
-although it is yet undefined on input line 160.
+although it is yet undefined on input line 162.
 Package acronym Info: Label `acro:ar' newly defined as it shall be overridden
-although it is yet undefined on input line 161.
+although it is yet undefined on input line 163.
 Package acronym Info: Label `acro:ad' newly defined as it shall be overridden
-although it is yet undefined on input line 161.
+although it is yet undefined on input line 163.
 Package acronym Info: Label `acro:xl' newly defined as it shall be overridden
-although it is yet undefined on input line 161.
+although it is yet undefined on input line 163.
  [6]
 Package acronym Info: Label `acro:ge' newly defined as it shall be overridden
-although it is yet undefined on input line 182.
+although it is yet undefined on input line 184.
 Package acronym Info: Label `acro:uniprot' newly defined as it shall be overridd
 en
-although it is yet undefined on input line 182.
+although it is yet undefined on input line 184.
  [7]
 Package acronym Info: Label `acro:gnomad' newly defined as it shall be overridde
 n
-although it is yet undefined on input line 207.
+although it is yet undefined on input line 209.
 Package acronym Info: Label `acro:indel' newly defined as it shall be overridden
 
-although it is yet undefined on input line 207.
+although it is yet undefined on input line 209.
 Package acronym Info: Label `acro:dbnsfp' newly defined as it shall be overridde
 n
-although it is yet undefined on input line 207.
+although it is yet undefined on input line 209.
 Package acronym Info: Label `acro:ppi' newly defined as it shall be overridden
-although it is yet undefined on input line 211.
+although it is yet undefined on input line 213.
 Package acronym Info: Label `acro:stringdb' newly defined as it shall be overrid
 den
-although it is yet undefined on input line 211.
+although it is yet undefined on input line 213.
 Package acronym Info: Label `acro:hgvs' newly defined as it shall be overridden
-although it is yet undefined on input line 212.
+although it is yet undefined on input line 214.
 Package acronym Info: Label `acro:vep' newly defined as it shall be overridden
-although it is yet undefined on input line 212.
+although it is yet undefined on input line 214.
 Package acronym Info: Label `acro:nfkb1' newly defined as it shall be overridden
 
-although it is yet undefined on input line 217.
+although it is yet undefined on input line 219.
 Package acronym Info: Label `acro:cftr' newly defined as it shall be overridden
-although it is yet undefined on input line 222.
+although it is yet undefined on input line 224.
 Package acronym Info: Label `acro:scid' newly defined as it shall be overridden
-although it is yet undefined on input line 225.
+although it is yet undefined on input line 227.
 Package acronym Info: Label `acro:dclre1c' newly defined as it shall be overridd
 en
-although it is yet undefined on input line 226.
+although it is yet undefined on input line 228.
 Package acronym Info: Label `acro:rag1' newly defined as it shall be overridden
-although it is yet undefined on input line 227.
+although it is yet undefined on input line 229.
 Package acronym Info: Label `acro:il2rg' newly defined as it shall be overridden
 
-although it is yet undefined on input line 228.
+although it is yet undefined on input line 230.
 Package acronym Info: Label `acro:tnfaip3' newly defined as it shall be overridd
 en
-although it is yet undefined on input line 230.
+although it is yet undefined on input line 232.
  [8
 
 ]
 Package acronym Info: Label `acro:vre' newly defined as it shall be overridden
-although it is yet undefined on input line 246.
+although it is yet undefined on input line 248.
  [9] [10] [11]
 Package acronym Info: Label `acro:hpc' newly defined as it shall be overridden
-although it is yet undefined on input line 356.
+although it is yet undefined on input line 358.
  [12]
 Package acronym Info: Label `acro:gvcf' newly defined as it shall be overridden
-although it is yet undefined on input line 388.
-Package acronym Info: Label `acro:vcf' newly defined as it shall be overridden
-although it is yet undefined on input line 388.
-Package acronym Info: Label `acro:cri' newly defined as it shall be overridden
 although it is yet undefined on input line 390.
+Package acronym Info: Label `acro:vcf' newly defined as it shall be overridden
+although it is yet undefined on input line 390.
+Package acronym Info: Label `acro:cri' newly defined as it shall be overridden
+although it is yet undefined on input line 392.
 Package acronym Info: Label `acro:qc' newly defined as it shall be overridden
-although it is yet undefined on input line 401.
+although it is yet undefined on input line 403.
  [13] [14]
-Overfull \hbox (5.55098pt too wide) in paragraph at lines 453--453
+Overfull \hbox (5.55098pt too wide) in paragraph at lines 455--455
 []\TU/lmr/bx/n/14.4 Val-i-da-tion of au-to-so-mal dom-i-nant es-ti-mates us-ing
  \TU/lmr/bx/it/14.4 NFKB1 
  []
 
 Package acronym Info: Label `acro:cvid' newly defined as it shall be overridden
-although it is yet undefined on input line 456.
+although it is yet undefined on input line 458.
 
-Overfull \hbox (29.1518pt too wide) in paragraph at lines 469--470
+Overfull \hbox (29.1518pt too wide) in paragraph at lines 471--472
 []\TU/lmr/m/n/12 with a 95% con-fi-dence in-ter-val (us-ing Wil-son’s method)
  of ap-prox-i-mately $\OT1/cmr/m/n/12 (0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 0254\
 OML/cmm/m/it/12 ;  \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 0656)$\TU
@@ -1952,35 +1952,35 @@ OML/cmm/m/it/12 ;  \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 0656)$\TU
 
 [15]
 Package acronym Info: Label `acro:cf' newly defined as it shall be overridden
-although it is yet undefined on input line 557.
+although it is yet undefined on input line 559.
  [16]
-Overfull \hbox (10.20541pt too wide) in paragraph at lines 563--564
+Overfull \hbox (10.20541pt too wide) in paragraph at lines 565--566
 []\TU/lmr/bx/n/12 1. Ex-pected geno-type counts.[] \TU/lmr/m/n/12 Let $\OML/cmm
 /m/it/12 p$ \TU/lmr/m/n/12 de-note the al-lele fre-quency of the \TU/lmtt/m/n/1
 2 p.Arg117His
  []
 
 
-Overfull \hbox (59.3574pt too wide) detected at line 574
+Overfull \hbox (59.3574pt too wide) detected at line 576
  $\OML/cmm/m/it/12 f[] \OT1/cmr/m/n/12 = 2\OML/cmm/m/it/12 p q []:$ 
  []
 
 [17] [18]
 Package acronym Info: Label `acro:anova' newly defined as it shall be overridden
 
-although it is yet undefined on input line 644.
+although it is yet undefined on input line 646.
 Package acronym Info: Label `acro:hsd' newly defined as it shall be overridden
-although it is yet undefined on input line 644.
+although it is yet undefined on input line 646.
 Package acronym Info: Label `acro:loeuf' newly defined as it shall be overridden
 
-although it is yet undefined on input line 646.
+although it is yet undefined on input line 648.
 Package acronym Info: Label `acro:pli' newly defined as it shall be overridden
-although it is yet undefined on input line 646.
+although it is yet undefined on input line 648.
 Package acronym Info: Label `acro:lof' newly defined as it shall be overridden
-although it is yet undefined on input line 646.
+although it is yet undefined on input line 648.
  [19]
 Package acronym Info: Label `acro:umap' newly defined as it shall be overridden
-although it is yet undefined on input line 656.
+although it is yet undefined on input line 658.
  [20
 Missing character: There is no   (U+2009) in font [lmroman12-regular]:+tlig;!
 Missing character: There is no   (U+2009) in font [lmroman12-regular]:+tlig;!
@@ -1992,11 +1992,11 @@ Missing character: There is no   (U+2009) in font [lmroman12-regular]:+tlig;!
 Missing character: There is no   (U+2009) in font [lmroman12-regular]:+tlig;!
 Missing character: There is no   (U+2009) in font [lmroman12-regular]:+tlig;!
 ] [21]
-<../images/p_varRisEst_summary_scores.pdf, id=497, 722.7pt x 433.62pt>
+<../images/p_varRisEst_summary_scores.pdf, id=498, 722.7pt x 433.62pt>
 File: ../images/p_varRisEst_summary_scores.pdf Graphic file (type pdf)
 <use ../images/p_varRisEst_summary_scores.pdf>
 Package luatex.def Info: ../images/p_varRisEst_summary_scores.pdf  used on input
- line 714.
+ line 716.
 (luatex.def)             Requested size: 429.28616pt x 257.57372pt.
  [22
 
@@ -2006,69 +2006,68 @@ Package luatex.def Info: ../images/p_varRisEst_summary_scores.pdf  used on input
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 ) [24]
-<../images/plot_scenario_2_quant_uncert_ci.pdf, id=542, 650.43pt x 505.89pt>
+<../images/plot_scenario_2_quant_uncert_ci.pdf, id=543, 650.43pt x 505.89pt>
 File: ../images/plot_scenario_2_quant_uncert_ci.pdf Graphic file (type pdf)
 <use ../images/plot_scenario_2_quant_uncert_ci.pdf>
 Package luatex.def Info: ../images/plot_scenario_2_quant_uncert_ci.pdf  used on 
-input line 773.
+input line 775.
 (luatex.def)             Requested size: 429.28616pt x 333.89613pt.
  [25] [26<../images/plot_scenario_2_quant_uncert_ci.pdf>]
 Package acronym Info: Label `acro:ci' newly defined as it shall be overridden
-although it is yet undefined on input line 808.
+although it is yet undefined on input line 810.
  [27
 
 ] [28]
 Package acronym Info: Label `acro:bmf' newly defined as it shall be overridden
-although it is yet undefined on input line 852.
-<../images/untangleR_ppi_network_umap.pdf, id=611, 867.24pt x 505.89pt>
+although it is yet undefined on input line 854.
+<../images/untangleR_ppi_network_umap.pdf, id=612, 867.24pt x 505.89pt>
 File: ../images/untangleR_ppi_network_umap.pdf Graphic file (type pdf)
 <use ../images/untangleR_ppi_network_umap.pdf>
 Package luatex.def Info: ../images/untangleR_ppi_network_umap.pdf  used on input
- line 864.
+ line 866.
 (luatex.def)             Requested size: 429.28616pt x 250.42017pt.
 
 [29]
 Package acronym Info: Label `acro:cd' newly defined as it shall be overridden
-although it is yet undefined on input line 876.
+although it is yet undefined on input line 878.
  [30<../images/untangleR_ppi_network_umap.pdf>]
 Package acronym Info: Label `acro:ld' newly defined as it shall be overridden
-although it is yet undefined on input line 906.
+although it is yet undefined on input line 908.
  [31]
-<../images/karyo_locusplot_merged.pdf, id=666, 578.16pt x 433.62pt>
+<../images/karyo_locusplot_merged.pdf, id=667, 578.16pt x 433.62pt>
 File: ../images/karyo_locusplot_merged.pdf Graphic file (type pdf)
 <use ../images/karyo_locusplot_merged.pdf>
 Package luatex.def Info: ../images/karyo_locusplot_merged.pdf  used on input lin
-e 910.
+e 912.
 (luatex.def)             Requested size: 429.28616pt x 321.9655pt.
 (load luc: /usr/local/texlive/2018/texmf-var/luatex-cache/generic/fonts/otl/lmro
 man8-bold.luc)(load luc: /usr/local/texlive/2018/texmf-var/luatex-cache/generic/
-fonts/otl/lmroman6-bold.luc)
+fonts/otl/lmroman6-bold.luc) [32<../images/karyo_locusplot_merged.pdf>]
 Package acronym Info: Label `acro:ig' newly defined as it shall be overridden
-although it is yet undefined on input line 917.
+although it is yet undefined on input line 919.
 Missing character: There is no   (U+2009) in font [lmroman12-regular]:+tlig;!
- [32<../images/karyo_locusplot_merged.pdf>]
-<../images/p_new_classification_finetune_tree.pdf, id=692, 578.16pt x 252.945pt>
+<../images/p_new_classification_finetune_tree.pdf, id=693, 578.16pt x 252.945pt>
 
 File: ../images/p_new_classification_finetune_tree.pdf Graphic file (type pdf)
 <use ../images/p_new_classification_finetune_tree.pdf>
 Package luatex.def Info: ../images/p_new_classification_finetune_tree.pdf  used 
-on input line 948.
+on input line 950.
 (luatex.def)             Requested size: 429.28616pt x 187.8132pt.
-<../images/plot_new_pid_classifications_genetic.pdf, id=693, 578.16pt x 216.81pt
+<../images/plot_new_pid_classifications_genetic.pdf, id=694, 578.16pt x 216.81pt
 >
 File: ../images/plot_new_pid_classifications_genetic.pdf Graphic file (type pdf)
 
 <use ../images/plot_new_pid_classifications_genetic.pdf>
 Package luatex.def Info: ../images/plot_new_pid_classifications_genetic.pdf  use
-d on input line 949.
+d on input line 951.
 (luatex.def)             Requested size: 429.28616pt x 160.98274pt.
-<../images/plot_multicat_new_pid_classes_combined.pdf, id=694, 578.16pt x 216.81
+<../images/plot_multicat_new_pid_classes_combined.pdf, id=695, 578.16pt x 216.81
 pt>
 File: ../images/plot_multicat_new_pid_classes_combined.pdf Graphic file (type pd
 f)
 <use ../images/plot_multicat_new_pid_classes_combined.pdf>
 Package luatex.def Info: ../images/plot_multicat_new_pid_classes_combined.pdf  u
-sed on input line 950.
+sed on input line 952.
 (luatex.def)             Requested size: 429.28616pt x 160.98274pt.
  [33
 Missing character: There is no   (U+2009) in font [lmroman12-regular]:+tlig;!
@@ -2084,39 +2083,39 @@ Missing character: There is no   (U+2009) in font [lmroman12-regular]:+tlig;!
 ] [34<../images/p_new_classification_finetune_tree.pdf><../images/plot_new_pid_c
 lassifications_genetic.pdf><../images/plot_multicat_new_pid_classes_combined.pdf
 >]
-<../images/p_alphamissense_NFKB1.pdf, id=731, 722.7pt x 361.35pt>
+<../images/p_alphamissense_NFKB1.pdf, id=732, 722.7pt x 361.35pt>
 File: ../images/p_alphamissense_NFKB1.pdf Graphic file (type pdf)
 <use ../images/p_alphamissense_NFKB1.pdf>
 Package luatex.def Info: ../images/p_alphamissense_NFKB1.pdf  used on input line
- 967.
+ 969.
 (luatex.def)             Requested size: 346.89731pt x 173.44603pt.
-<../images/p_alphamissense_CFTR.pdf, id=732, 722.7pt x 361.35pt>
+<../images/p_alphamissense_CFTR.pdf, id=733, 722.7pt x 361.35pt>
 File: ../images/p_alphamissense_CFTR.pdf Graphic file (type pdf)
 <use ../images/p_alphamissense_CFTR.pdf>
 Package luatex.def Info: ../images/p_alphamissense_CFTR.pdf  used on input line 
-968.
+970.
 (luatex.def)             Requested size: 346.89731pt x 173.44603pt.
  [35
 
 ] [36<../images/p_alphamissense_NFKB1.pdf><../images/p_alphamissense_CFTR.pdf>]
 
-Overfull \hbox (0.91237pt too wide) in paragraph at lines 975--975
+Overfull \hbox (0.91237pt too wide) in paragraph at lines 977--977
 []\TU/lmr/bx/n/14.4 In-te-gra-tion of vari-ant prob-a-bil-i-ties into IEI ge-ne
 t-ics data 
  []
 
 Package acronym Info: Label `acro:omim' newly defined as it shall be overridden
-although it is yet undefined on input line 980.
-<../images/var_risk_est_iei_genetics.png, id=771, 2112.89375pt x 800.9925pt>
+although it is yet undefined on input line 982.
+<../images/var_risk_est_iei_genetics.png, id=772, 2112.89375pt x 800.9925pt>
 File: ../images/var_risk_est_iei_genetics.png Graphic file (type png)
 <use ../images/var_risk_est_iei_genetics.png>
 Package luatex.def Info: ../images/var_risk_est_iei_genetics.png  used on input 
-line 989.
+line 991.
 (luatex.def)             Requested size: 433.62pt x 164.37563pt.
 [37
 
 <../images/var_risk_est_iei_genetics.png>]
-Overfull \hbox (0.3497pt too wide) in paragraph at lines 1030--1032
+Overfull \hbox (0.3497pt too wide) in paragraph at lines 1032--1034
 []\TU/lmr/m/n/12 In the ex-am-ple single-case di-ag-no-sis sce-nar-ios, our ap-
 proach en-abled high-confidence
  []
@@ -2124,21 +2123,21 @@ proach en-abled high-confidence
 [38
 
 ]
-Overfull \hbox (0.85191pt too wide) in paragraph at lines 1061--1063
+Overfull \hbox (0.85191pt too wide) in paragraph at lines 1063--1065
 []\TU/lmr/m/n/12 This ap-proach al-lows us to pre-calculate pri-ors and sum-mar
 ise the over-all pathogenic
  []
 
 [39]
 Package acronym Info: Label `acro:skat' newly defined as it shall be overridden
-although it is yet undefined on input line 1078.
+although it is yet undefined on input line 1080.
 Package acronym Info: Label `acro:acat' newly defined as it shall be overridden
-although it is yet undefined on input line 1078.
+although it is yet undefined on input line 1080.
 Package acronym Info: Label `acro:acmg' newly defined as it shall be overridden
-although it is yet undefined on input line 1079.
- [40] (./varEstRisk2025lawless.bbl [41
+although it is yet undefined on input line 1081.
+ [40] [41
 
-]
+] (./varEstRisk2025lawless.bbl
 Underfull \hbox (badness 1616) in paragraph at lines 11--25
 []\TU/lmr/m/n/12 M. Ce-cilia Poli, Ivona Ak-sen-ti-je-vich, Ahmed Aziz Bous-fih
 a, Char-lotte
@@ -2147,11 +2146,11 @@ a, Char-lotte
 [42] [43] [44
 Missing character: There is no κ (U+03BA) in font [lmroman12-regular]:+tlig;!
 ] [45] [46]) [47]
-<../images/p_gene_summary_hist_patch3.png, id=926, 722.7pt x 361.35pt>
+<../images/p_gene_summary_hist_patch3.png, id=943, 722.7pt x 361.35pt>
 File: ../images/p_gene_summary_hist_patch3.png Graphic file (type png)
 <use ../images/p_gene_summary_hist_patch3.png>
 Package luatex.def Info: ../images/p_gene_summary_hist_patch3.png  used on input
- line 1132.
+ line 1135.
 (luatex.def)             Requested size: 429.28616pt x 214.64476pt.
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.1'
@@ -2169,21 +2168,21 @@ warning  (pdf backend): ignoring duplicate destination with the name 'table.2'
 
 warning  (pdf backend): ignoring duplicate destination with the name 'table.2'
 ) (../images/table_scenario_3_quant_uncert_ci.tex)
-<../images/plot_scenario_1_quant_uncert_ci.pdf, id=931, 650.43pt x 505.89pt>
+<../images/plot_scenario_1_quant_uncert_ci.pdf, id=948, 650.43pt x 505.89pt>
 File: ../images/plot_scenario_1_quant_uncert_ci.pdf Graphic file (type pdf)
 <use ../images/plot_scenario_1_quant_uncert_ci.pdf>
 Package luatex.def Info: ../images/plot_scenario_1_quant_uncert_ci.pdf  used on 
-input line 1151.
+input line 1154.
 (luatex.def)             Requested size: 429.28616pt x 333.89613pt.
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.2'
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.2'
-<../images/plot_scenario_3_quant_uncert_ci.pdf, id=934, 650.43pt x 505.89pt>
+<../images/plot_scenario_3_quant_uncert_ci.pdf, id=951, 650.43pt x 505.89pt>
 File: ../images/plot_scenario_3_quant_uncert_ci.pdf Graphic file (type pdf)
 <use ../images/plot_scenario_3_quant_uncert_ci.pdf>
 Package luatex.def Info: ../images/plot_scenario_3_quant_uncert_ci.pdf  used on 
-input line 1162.
+input line 1165.
 (luatex.def)             Requested size: 429.28616pt x 333.89613pt.
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.3'
@@ -2193,25 +2192,25 @@ warning  (pdf backend): ignoring duplicate destination with the name 'figure.3'
 
 ] [50<../images/plot_scenario_1_quant_uncert_ci.pdf>] [51<../images/plot_scenari
 o_3_quant_uncert_ci.pdf>]
-<../images/validation_studies_scatterdense_expected_prob.png, id=974, 722.7pt x 
+<../images/validation_studies_scatterdense_expected_prob.png, id=991, 722.7pt x 
 433.62pt>
 File: ../images/validation_studies_scatterdense_expected_prob.png Graphic file (
 type png)
 <use ../images/validation_studies_scatterdense_expected_prob.png>
 Package luatex.def Info: ../images/validation_studies_scatterdense_expected_prob
-.png  used on input line 1179.
+.png  used on input line 1182.
 (luatex.def)             Requested size: 433.62pt x 260.17401pt.
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.4'
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.4'
-<../images/validation_studies_bayesian_adjusted_estimates.png, id=975, 650.43pt 
+<../images/validation_studies_bayesian_adjusted_estimates.png, id=992, 650.43pt 
 x 433.62pt>
 File: ../images/validation_studies_bayesian_adjusted_estimates.png Graphic file 
 (type png)
 <use ../images/validation_studies_bayesian_adjusted_estimates.png>
 Package luatex.def Info: ../images/validation_studies_bayesian_adjusted_estimate
-s.png  used on input line 1192.
+s.png  used on input line 1195.
 (luatex.def)             Requested size: 429.28616pt x 286.1967pt.
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.5'
@@ -2222,35 +2221,36 @@ warning  (pdf backend): ignoring duplicate destination with the name 'figure.5'
 
 <../images/validation_studies_scatterdense_expected_prob.png>] [53<../images/val
 idation_studies_bayesian_adjusted_estimates.png>]
-<../images/all_genes_combined_bar_charts_mini.png, id=984, 867.24pt x 433.62pt>
+<../images/all_genes_combined_bar_charts_mini.png, id=1001, 867.24pt x 433.62pt>
+
 File: ../images/all_genes_combined_bar_charts_mini.png Graphic file (type png)
 <use ../images/all_genes_combined_bar_charts_mini.png>
 Package luatex.def Info: ../images/all_genes_combined_bar_charts_mini.png  used 
-on input line 1213.
+on input line 1216.
 (luatex.def)             Requested size: 429.28616pt x 214.64587pt.
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.6'
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.6'
-<../images/validation_studies_scid_gene_comparison.pdf, id=985, 433.62pt x 289.0
-8pt>
+<../images/validation_studies_scid_gene_comparison.pdf, id=1002, 433.62pt x 289.
+08pt>
 File: ../images/validation_studies_scid_gene_comparison.pdf Graphic file (type p
 df)
 <use ../images/validation_studies_scid_gene_comparison.pdf>
 Package luatex.def Info: ../images/validation_studies_scid_gene_comparison.pdf  
-used on input line 1221.
+used on input line 1224.
 (luatex.def)             Requested size: 325.215pt x 216.81828pt.
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.7'
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.7'
-<../images/validation_studies_scid_combined_plot.pdf, id=986, 578.16pt x 505.89p
-t>
+<../images/validation_studies_scid_combined_plot.pdf, id=1003, 578.16pt x 505.89
+pt>
 File: ../images/validation_studies_scid_combined_plot.pdf Graphic file (type pdf
 )
 <use ../images/validation_studies_scid_combined_plot.pdf>
 Package luatex.def Info: ../images/validation_studies_scid_combined_plot.pdf  us
-ed on input line 1228.
+ed on input line 1231.
 (luatex.def)             Requested size: 325.215pt x 284.56241pt.
 [54
 
@@ -2258,62 +2258,62 @@ ed on input line 1228.
 <../images/all_genes_combined_bar_charts_mini.png>] [55<../images/validation_stu
 dies_scid_gene_comparison.pdf>] [56<../images/validation_studies_scid_combined_p
 lot.pdf>]
-<../images/untangleR_ppi_network_assoc_patch1.jpg, id=1017, 1656.1875pt x 1214.5
+<../images/untangleR_ppi_network_assoc_patch1.jpg, id=1034, 1656.1875pt x 1214.5
 375pt>
 File: ../images/untangleR_ppi_network_assoc_patch1.jpg Graphic file (type jpg)
 <use ../images/untangleR_ppi_network_assoc_patch1.jpg>
 Package luatex.def Info: ../images/untangleR_ppi_network_assoc_patch1.jpg  used 
-on input line 1242.
+on input line 1245.
 (luatex.def)             Requested size: 433.62pt x 317.97765pt.
  [57
 
 
 <../images/untangleR_ppi_network_assoc_patch1.jpg>]
-<../images/untangleR_ppi_network_patch2_cator.pdf, id=1023, 1156.32pt x 505.89pt
+<../images/untangleR_ppi_network_patch2_cator.pdf, id=1040, 1156.32pt x 505.89pt
 >
 File: ../images/untangleR_ppi_network_patch2_cator.pdf Graphic file (type pdf)
 <use ../images/untangleR_ppi_network_patch2_cator.pdf>
 Package luatex.def Info: ../images/untangleR_ppi_network_patch2_cator.pdf  used 
-on input line 1256.
+on input line 1259.
 (luatex.def)             Requested size: 429.28616pt x 187.80934pt.
  [58
 
 <../images/untangleR_ppi_network_patch2_cator.pdf>]
-<../images/untangleR_ppi_network_p_umap_const.pdf, id=1039, 867.24pt x 505.89pt>
+<../images/untangleR_ppi_network_p_umap_const.pdf, id=1056, 867.24pt x 505.89pt>
 
 File: ../images/untangleR_ppi_network_p_umap_const.pdf Graphic file (type pdf)
 <use ../images/untangleR_ppi_network_p_umap_const.pdf>
 Package luatex.def Info: ../images/untangleR_ppi_network_p_umap_const.pdf  used 
-on input line 1271.
+on input line 1274.
 (luatex.def)             Requested size: 429.28616pt x 250.42017pt.
-<../images/untangleR_ppi_network_p_cor_spear_rho_sig_clust_patch3.pdf, id=1040, 
+<../images/untangleR_ppi_network_p_cor_spear_rho_sig_clust_patch3.pdf, id=1057, 
 1300.86pt x 867.24pt>
 File: ../images/untangleR_ppi_network_p_cor_spear_rho_sig_clust_patch3.pdf Graph
 ic file (type pdf)
 <use ../images/untangleR_ppi_network_p_cor_spear_rho_sig_clust_patch3.pdf>
 Package luatex.def Info: ../images/untangleR_ppi_network_p_cor_spear_rho_sig_clu
-st_patch3.pdf  used on input line 1281.
+st_patch3.pdf  used on input line 1284.
 (luatex.def)             Requested size: 429.28616pt x 286.1901pt.
-<../images/fuma_merge.pdf, id=1041, 867.24pt x 469.755pt>
+<../images/fuma_merge.pdf, id=1058, 867.24pt x 469.755pt>
 File: ../images/fuma_merge.pdf Graphic file (type pdf)
 <use ../images/fuma_merge.pdf>
-Package luatex.def Info: ../images/fuma_merge.pdf  used on input line 1291.
+Package luatex.def Info: ../images/fuma_merge.pdf  used on input line 1294.
 (luatex.def)             Requested size: 429.28616pt x 232.53302pt.
-<../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_2.png, id=1044, 3090.546
+<../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_2.png, id=1061, 3090.546
 25pt x 2898.83pt>
 File: ../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_2.png Graphic file 
 (type png)
 <use ../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_2.png>
 Package luatex.def Info: ../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_
-2.png  used on input line 1299.
+2.png  used on input line 1302.
 (luatex.def)             Requested size: 325.215pt x 305.02751pt.
-<../images/expHeat_FUMA_jobs604403_var_risk_est_cluster_4.png, id=1045, 3090.546
+<../images/expHeat_FUMA_jobs604403_var_risk_est_cluster_4.png, id=1062, 3090.546
 25pt x 1783.66376pt>
 File: ../images/expHeat_FUMA_jobs604403_var_risk_est_cluster_4.png Graphic file 
 (type png)
 <use ../images/expHeat_FUMA_jobs604403_var_risk_est_cluster_4.png>
 Package luatex.def Info: ../images/expHeat_FUMA_jobs604403_var_risk_est_cluster_
-4.png  used on input line 1300.
+4.png  used on input line 1303.
 (luatex.def)             Requested size: 325.215pt x 187.68486pt.
  [59
 
@@ -2321,84 +2321,85 @@ Package luatex.def Info: ../images/expHeat_FUMA_jobs604403_var_risk_est_cluster_
 network_p_cor_spear_rho_sig_clust_patch3.pdf>] [61<../images/fuma_merge.pdf>] [
 62<../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_2.png><../images/expHe
 at_FUMA_jobs604403_var_risk_est_cluster_4.png>]
-<../images/plot_patch1.pdf, id=1108, 650.43pt x 325.215pt>
+<../images/plot_patch1.pdf, id=1125, 650.43pt x 325.215pt>
 File: ../images/plot_patch1.pdf Graphic file (type pdf)
 <use ../images/plot_patch1.pdf>
-Package luatex.def Info: ../images/plot_patch1.pdf  used on input line 1315.
+Package luatex.def Info: ../images/plot_patch1.pdf  used on input line 1318.
 (luatex.def)             Requested size: 429.28616pt x 214.64752pt.
-<../images/plot_multicat_patch_3_clust_chi.pdf, id=1109, 650.43pt x 289.08pt>
+<../images/plot_multicat_patch_3_clust_chi.pdf, id=1126, 650.43pt x 289.08pt>
 File: ../images/plot_multicat_patch_3_clust_chi.pdf Graphic file (type pdf)
 <use ../images/plot_multicat_patch_3_clust_chi.pdf>
 Package luatex.def Info: ../images/plot_multicat_patch_3_clust_chi.pdf  used on 
-input line 1327.
+input line 1330.
 (luatex.def)             Requested size: 429.28616pt x 190.79779pt.
-<../images/plot_multicat_performance_combined.pdf, id=1110, 722.7pt x 433.62pt>
+<../images/plot_multicat_performance_combined.pdf, id=1127, 722.7pt x 433.62pt>
 File: ../images/plot_multicat_performance_combined.pdf Graphic file (type pdf)
 <use ../images/plot_multicat_performance_combined.pdf>
 Package luatex.def Info: ../images/plot_multicat_performance_combined.pdf  used 
-on input line 1334.
+on input line 1337.
 (luatex.def)             Requested size: 429.28616pt x 257.57372pt.
  [63
 
 
 <../images/plot_patch1.pdf>] [64<../images/plot_multicat_patch_3_clust_chi.pdf><
 ../images/plot_multicat_performance_combined.pdf>]
-<../images/p_alphamissense_kw.pdf, id=1139, 722.7pt x 433.62pt>
+<../images/p_alphamissense_kw.pdf, id=1157, 722.7pt x 433.62pt>
 File: ../images/p_alphamissense_kw.pdf Graphic file (type pdf)
 <use ../images/p_alphamissense_kw.pdf>
 Package luatex.def Info: ../images/p_alphamissense_kw.pdf  used on input line 13
-56.
+59.
 (luatex.def)             Requested size: 429.28616pt x 257.57372pt.
 
 [65
 
 
 <../images/p_alphamissense_kw.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1362.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1362.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1365.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1365.
  (./varEstRisk2025lawless.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1362.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1362.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1365.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1365.
 Package rerunfilecheck Info: File `varEstRisk2025lawless.out' has not changed.
 (rerunfilecheck)             Checksum: 16D18F490ABCF17802B17C1FD0307CB8;3204.
 )
 
 Here is how much of LuaTeX's memory you used:
- 40255 strings out of 494413
+ 40259 strings out of 494413
  100000,1144653 words of node,token memory allocated
  1760 words of node memory still in use:
    18 hlist, 2 vlist, 14 rule, 3 glue, 1 kern, 119 attribute, 123 glue_spec, 119
  attribute_list, 1 write, 24 pdf_literal, 19 pdf_action, 24 pdf_colorstack nodes
 
-   avail lists: 1:3,2:1767,3:992,4:143,5:275,6:466,7:7626,8:972,9:1967,10:26,11:
+   avail lists: 1:3,2:1789,3:994,4:250,5:313,6:466,7:7638,8:972,9:1972,10:26,11:
 458
- 42618 multiletter control sequences out of 65536+600000
+ 42622 multiletter control sequences out of 65536+600000
  134 fonts using 14544711 bytes
- 65i,11n,101p,1909b,964s stack positions out of 5000i,500n,10000p,200000b,100000s
+ 65i,11n,101p,1909b,976s stack positions out of 5000i,500n,10000p,200000b,100000s
 </usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/lmmono12-regular.ot
 f></usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/lmroman12-italic.
 otf></usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/lmroman10-boldi
 talic.otf></usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/lmroman12
 -bold.otf></usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/lmmono10-
 regular.otf></usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/lmroman
-7-regular.otf></usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/lmrom
-an10-bold.otf></usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/lmrom
-an10-regular.otf></usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/lm
-roman8-regular.otf></usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/
-lmroman12-regular.otf></usr/local/texlive/2018/texmf-dist/fonts/opentype/public/
-lm/lmroman17-regular.otf></usr/local/texlive/2018/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmex10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmmi12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmmi6.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmmi8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
-0.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.p
-fb>
-Output written on varEstRisk2025lawless.pdf (65 pages, 5293927 bytes).
+7-regular.otf></usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/lmsan
+s8-regular.otf></usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/lmro
+man10-bold.otf></usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/lmro
+man10-regular.otf></usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/l
+mroman8-regular.otf></usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm
+/lmroman12-regular.otf></usr/local/texlive/2018/texmf-dist/fonts/opentype/public
+/lm/lmroman17-regular.otf></usr/local/texlive/2018/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmex10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmmi12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmmi6.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmmi8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmr8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
+10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.
+pfb>
+Output written on varEstRisk2025lawless.pdf (65 pages, 5309188 bytes).
 
-PDF statistics: 1261 PDF objects out of 1440 (max. 8388607)
- 1039 compressed objects within 11 object streams
+PDF statistics: 1284 PDF objects out of 1440 (max. 8388607)
+ 1059 compressed objects within 11 object streams
  216 named destinations out of 1000 (max. 131072)
  536 words of extra memory for PDF output out of 10000 (max. 100000000)
 

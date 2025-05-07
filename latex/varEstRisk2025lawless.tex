@@ -4,30 +4,31 @@
 \title{Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity}
 
 % in your preamble, before \author:
+\newcommand{\QUANT}{1}
+\newcommand{\GHI}{2}
+\newcommand{\KISPIIMM}{3}
+ \newcommand{\METAB}{4}
+\newcommand{\LEEDS}{5}
+\newcommand{\IPSNEO}{6}
 
-\newcommand{\GHI}{1}
-\newcommand{\KISPIIMM}{2}
-\newcommand{\LEEDS}{3}
-\newcommand{\IPSNEO}{4}
-% \newcommand{\METAB}{5}
-
-\author[\GHI]{Simon Boutry \textsuperscript{†}}
-\author[\GHI]{Ali Saadat \textsuperscript{†}}
-% \author[\METAB]{D. Sean Froese \textsuperscript{†}}
-\author[\KISPIIMM]{Maarja Soomann \textsuperscript{†}}
+\author[\QUANT]{Quant Group} 
+\author[\GHI]{Simon Boutry}% \textsuperscript{†}}
+\author[\GHI]{Ali Saadat}% \textsuperscript{†}} \textsuperscript{†}}
+\author[\KISPIIMM]{Maarja Soomann}% \textsuperscript{†}} \textsuperscript{†}}
 \author[\KISPIIMM]{Johannes Trück}
+ \author[\METAB]{D. Sean Froese}
 \author[\GHI]{Jacques Fellay}
 \author[\LEEDS]{Sinisa Savic}% orcid.org/0000-0001-7910-0554
 \author[\IPSNEO]{Luregn J. Schlapbach}
 \author[\IPSNEO]{Dylan Lawless *%\thanks{Addresses for correspondence: \href{mailto:Dylan.Lawless@kispi.uzh.ch}{Dylan.Lawless@kispi.uzh.ch}}
 }
 % \textsuperscript{†}
-
+\affil[\QUANT]{The quantitative omic epidemiology group.} 
 \affil[\GHI]{Global Health Institute, School of Life Sciences, École Polytechnique Fédérale de Lausanne, Switzerland.}
 \affil[\KISPIIMM]{Division of Immunology and the Children’s Research Center, University Children’s Hospital Zurich, University of Zurich, Zurich, Switzerland.}
+ \affil[\METAB]{Division of Metabolism and Children’s Research Center, University Children’s Hospital Zürich, University of Zurich, Zurich, Switzerland.}
 \affil[\LEEDS]{Leeds Institute of Rheumatic and Musculoskeletal Medicine, University of Leeds, Leeds, UK.}
 \affil[\IPSNEO]{Department of Intensive Care and Neonatology, University Children's Hospital Zurich, University of Zurich, Zurich, Switzerland.}
-% \affil[\METAB]{Division of Metabolism and Children’s Research Center, University Children’s Hospital Zürich, University of Zurich, Zurich, Switzerland.}
 
 \maketitle
 \justify
@@ -35,7 +36,7 @@
 %Abstract: 150 of 150. Main text:  3931 of 4000 (intro, result, discussion, conclusion). Display (4 figures / 2 tables) of 8 total. Extended display: 13 of 10. Note that this journal uses separate online methods.
 
 \clearpage
-% \linenumbers
+ \linenumbers
 \begin{abstract} 
 We present a framework to quantify the prior probability of observing known disease-causing variants across all genes and inheritance modes. 
 First, we computed genome-wide occurrence probabilities by integrating population allele frequencies, variant classifications, and Hardy-Weinberg expectations under autosomal dominant, recessive, and X-linked inheritance. 
@@ -46,7 +47,7 @@ Fourth, we derived new data-driven IEI classifications using protein-protein int
 Finally, we validated the framework in national-scale cohorts, showing close concordance with observed case numbers. 
 The resulting datasets supported causal variant interpretation and evidence-aware decision-making in clinical genetics.\footnote{
 \noindent * Addresses for correspondence: \href{mailto:Dylan.Lawless@kispi.uzh.ch}{Dylan.Lawless@kispi.uzh.ch}.\\
- \noindent  \textsuperscript{† }These authors contributed equally and are listed alphabetically.\\
+% \noindent  \textsuperscript{† }These authors contributed equally and are listed alphabetically.\\
 \textbf{Availability:} This data is integrated in public panels at 
 % \url{https://switzerlandomics.ch/services/panelAppRexAi/} and 
 \url{https://iei-genetics.github.io}.
@@ -55,7 +56,9 @@ The source code are accessible as part of the variant risk estimation project at
 The data is available from the Zenodo repository: 
 \url{https://doi.org/10.5281/zenodo.15111583}
 (VarRiskEst PanelAppRex ID 398 gene variants.tsv).
-VarRiskEst is available under the MIT licence.}
+VarRiskEst is available under the MIT licence.
+% \url{https://github.com/TheQuantGroup/QauntGroup}.
+}
 \vfill
 \end{abstract}
 
@@ -138,7 +141,7 @@ Graphical abstract.
 
 Accurately determining the probability that a patient harbours a disease-causing genetic variant remains a foundational challenge in clinical and statistical genetics. For over a century, the primary focus has been on identifying \ac{tp}s, pathogenic causal variants observed in affected individuals. 
 Peer review and classification frameworks also work to suppress \ac{fp}s.
-However, two critical components of the genetic landscape have received far less attention: \ac{fn}, where pathogenic variants are missed due to technical or interpretive limitations, and \ac{tn}s, which represent the vast majority of benign or non-causal variants. 
+However, two critical components of the genetic landscape have received far less attention: \ac{fn}s, where pathogenic variants are missed due to technical or interpretive limitations, and \ac{tn}s, which represent the vast majority of benign or non-causal variants. 
 \ac{tn}s are more commonly used in contexts such as cancer screening, where a negative result can provide reassurance that a panel of known actionable variants has been checked. Yet outside these specific uses, their broader statistical and clinical value is rarely leveraged.
 From a statistical perspective, \ac{fn}s and \ac{tn}s are an untapped goldmine. 
 They hold essential information about what is not observed, what should be expected under baseline assumptions, and how confident one can be in the absence of a pathogenic finding. 
@@ -152,7 +155,7 @@ We focused on known \ac{iei} genes, sometimes called the ``\ac{pid} or Monogenic
 to validate our approach and demonstrate its clinical relevance. 
 This application to a well-established genotype-phenotype set, comprising over 500 gene-disease associations, underscores its utility.
 The most recent update on the classification 
-of \ac{iei} from the \ac{iuis}  expert committee is reported by \citet{poli_human_2025},
+of \ac{iei} from the \ac{iuis}  expert committee was reported by \citet{poli_human_2025},
 with an accompanying diagnostic guide \cite{bousfiha_2024_2025}.
 
 Quantifying the risk that a patient inherits a disease-causing variant is a fundamental challenge in genomics. 
@@ -163,7 +166,7 @@ Advances in genetic research have revealed that \ac{moi} can be even more comple
 Mechanisms such as dominant negative effects, haploinsufficiency, mosaicism, and digenic or epistatic interactions can further modulate disease risk and clinical presentation, underscoring the need for nuanced approaches in risk estimation.
 \citet{karczewski2020mutational} made significant advances; however, the remaining challenge lies in applying the necessary statistical genomics data across all \ac{moi} for any gene-disease combination,
 which our current work aims to address.
-Similar approaches have been reported for disease such Wilson disease, mucopolysaccharidoses,  primary ciliary dyskinesia, and treatable metabolic diseasse, 
+Similar approaches have been reported for diseases such Wilson disease, mucopolysaccharidoses,  primary ciliary dyskinesia, and treatable metabolic diseasse, 
 \cite{bick_estimating_2025, evans_estimating_2021}, 
 as reviewed by \citet{hannah_using_2024}.
 
@@ -179,7 +182,7 @@ functional annotations (e.g. UniProt \cite{the_uniprot_consortium_uniprot_2025})
 and pathogenicity prediction models (e.g. AlphaMissense \cite{cheng_accurate_2023}). 
 % integrated gene-disease annotation platforms (e.g. PanelAppRex \cite{lawless_panelapprex_2025, martin_panelapp_2019}), 
 We previously introduced PanelAppRex to aggregate gene panel data from multiple sources, including \ac{ge} PanelApp, ClinVar, and \ac{uniprot}, thereby enabling advanced natural searches for clinical and research applications \cite{lawless_panelapprex_2025, martin_panelapp_2019, landrum_clinvar_2018, the_uniprot_consortium_uniprot_2025}. 
-It automatically retrieves expert-curated panels, such as those from the NHS National Genomic Test Directory and the 100,000 Genomes Project, and converts them into machine-readable formats for rapid variant discovery and interpretation. 
+This earlier work relied on expert-curated panels, such as those from the NHS National Genomic Test Directory and the 100,000 Genomes Project, converted into machine-readable formats for rapid variant discovery and interpretation. 
 Together, these resources now make it possible to model the expected distribution of variant types, frequencies, and classifications across the genome.
 
 By reframing variant interpretation as a problem of calibrated expectation rather than solely reactive confirmation, our framework empowers clinicians and researchers to anticipate both observed and unobserved pathogenic burdens. 
@@ -207,7 +210,7 @@ Data from \ac{gnomad} v4 comprised 807,162 individuals, including 730,947 exomes
 \cite{liu_dbnsfp_2020}. 
 The PanelAppRex core model contained 58,592 entries consisting of 52 sets of annotations, including the gene name, disease-gene panel ID, diseases-related features, confidence measurements.
 \cite{lawless_panelapprex_2025}
-A \ac{ppi} network data was provided by \ac{stringdb}, consisting of 19,566 proteins and 505,968 interactions \cite{szklarczyk2025string}.
+\ac{ppi} network data was provided by \ac{stringdb}, consisting of 19,566 proteins and 505,968 interactions \cite{szklarczyk2025string}.
 The \ac{hgvs} nomenclature is used with \ac{vep}-based codes for variant IDs.
 AlphaMissense includes pathogenicity prediction classifications for 71 million variants in 19 thousand human genes \cite{cheng_accurate_2023, jun_cheng_2023_8208688}. We used these scores to compared against the probability of observing the same given variants.
 \textbf{Box \ref{box:definitions}} list the definitions from the \ac{iuis} \ac{iei} for the major disease categories used throughout this study \cite{poli_human_2025}.
@@ -1109,6 +1112,7 @@ AlphaMissense asks to cite \citet{cheng_accurate_2023} for usage in research, wi
 DL performed main analysis and wrote the manuscript.
 SB, AS, MS, and JT designed analysis and wrote the manuscript.
 JF, LJS supervised the work, and applied for funding.
+The Quant Group members on this project were DL, SB, AS, and MS.
 
 \section*{Competing interest}
 \noindent
