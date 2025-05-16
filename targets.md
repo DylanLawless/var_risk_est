@@ -1,5 +1,10 @@
 # https://journalimpact.org
 
+Cell Genomics
+2666-979X
+Impact factor: 11.1
+URL: https://www.cell.com/cell-genomics/home
+
 npj Genomic Medicine
 eISSN: 2056-7944
 Impact factor: 4.7

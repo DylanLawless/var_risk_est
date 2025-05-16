@@ -1,4 +1,4 @@
-This is LuaTeX, Version 1.07.0 (TeX Live 2018)  (format=lualatex 2018.7.19)  6 MAY 2025 15:41
+This is LuaTeX, Version 1.07.0 (TeX Live 2018)  (format=lualatex 2018.7.19)  14 MAY 2025 16:51
  restricted system commands enabled.
 **varEstRisk2025lawless.tex
 (./varEstRisk2025lawless.tex
@@ -34,7 +34,7 @@ Inserting `luaotfload.aux.set_capheight' at position 3 in `luaotfload.patch_font
 '.
 Inserting `luaotfload.rewrite_fontname' at position 4 in `luaotfload.patch_font'
 .
-luaotfload | main : initialization completed in 0.518 seconds
+luaotfload | main : initialization completed in 0.128 seconds
 Babel <3.18> and hyphenation patterns for 1 language(s) loaded.
 (./head.tex (/usr/local/texlive/2018/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
@@ -1834,7 +1834,7 @@ r.luc) [1
 d.luc)(load luc: /usr/local/texlive/2018/texmf-var/luatex-cache/generic/fonts/ot
 l/lmroman7-regular.luc)(load luc: /usr/local/texlive/2018/texmf-var/luatex-cache
 /generic/fonts/otl/lmroman5-regular.luc)
-<../images/var_risk_est_ci.pdf, id=198, 682.55pt x 687.56876pt>
+<../images/var_risk_est_ci.pdf, id=202, 682.55pt x 687.56876pt>
 File: ../images/var_risk_est_ci.pdf Graphic file (type pdf)
 <use ../images/var_risk_est_ci.pdf>
 Package luatex.def Info: ../images/var_risk_est_ci.pdf  used on input line 66.
@@ -1992,7 +1992,7 @@ Missing character: There is no   (U+2009) in font [lmroman12-regular]:+tlig;!
 Missing character: There is no   (U+2009) in font [lmroman12-regular]:+tlig;!
 Missing character: There is no   (U+2009) in font [lmroman12-regular]:+tlig;!
 ] [21]
-<../images/p_varRisEst_summary_scores.pdf, id=498, 722.7pt x 433.62pt>
+<../images/p_varRisEst_summary_scores.pdf, id=502, 722.7pt x 433.62pt>
 File: ../images/p_varRisEst_summary_scores.pdf Graphic file (type pdf)
 <use ../images/p_varRisEst_summary_scores.pdf>
 Package luatex.def Info: ../images/p_varRisEst_summary_scores.pdf  used on input
@@ -2006,7 +2006,7 @@ Package luatex.def Info: ../images/p_varRisEst_summary_scores.pdf  used on input
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 ) [24]
-<../images/plot_scenario_2_quant_uncert_ci.pdf, id=543, 650.43pt x 505.89pt>
+<../images/plot_scenario_2_quant_uncert_ci.pdf, id=547, 650.43pt x 505.89pt>
 File: ../images/plot_scenario_2_quant_uncert_ci.pdf Graphic file (type pdf)
 <use ../images/plot_scenario_2_quant_uncert_ci.pdf>
 Package luatex.def Info: ../images/plot_scenario_2_quant_uncert_ci.pdf  used on 
@@ -2020,7 +2020,7 @@ although it is yet undefined on input line 810.
 ] [28]
 Package acronym Info: Label `acro:bmf' newly defined as it shall be overridden
 although it is yet undefined on input line 854.
-<../images/untangleR_ppi_network_umap.pdf, id=612, 867.24pt x 505.89pt>
+<../images/untangleR_ppi_network_umap.pdf, id=616, 867.24pt x 505.89pt>
 File: ../images/untangleR_ppi_network_umap.pdf Graphic file (type pdf)
 <use ../images/untangleR_ppi_network_umap.pdf>
 Package luatex.def Info: ../images/untangleR_ppi_network_umap.pdf  used on input
@@ -2034,7 +2034,7 @@ although it is yet undefined on input line 878.
 Package acronym Info: Label `acro:ld' newly defined as it shall be overridden
 although it is yet undefined on input line 908.
  [31]
-<../images/karyo_locusplot_merged.pdf, id=667, 578.16pt x 433.62pt>
+<../images/karyo_locusplot_merged.pdf, id=671, 578.16pt x 433.62pt>
 File: ../images/karyo_locusplot_merged.pdf Graphic file (type pdf)
 <use ../images/karyo_locusplot_merged.pdf>
 Package luatex.def Info: ../images/karyo_locusplot_merged.pdf  used on input lin
@@ -2046,14 +2046,14 @@ fonts/otl/lmroman6-bold.luc) [32<../images/karyo_locusplot_merged.pdf>]
 Package acronym Info: Label `acro:ig' newly defined as it shall be overridden
 although it is yet undefined on input line 919.
 Missing character: There is no   (U+2009) in font [lmroman12-regular]:+tlig;!
-<../images/p_new_classification_finetune_tree.pdf, id=693, 578.16pt x 252.945pt>
+<../images/p_new_classification_finetune_tree.pdf, id=697, 578.16pt x 252.945pt>
 
 File: ../images/p_new_classification_finetune_tree.pdf Graphic file (type pdf)
 <use ../images/p_new_classification_finetune_tree.pdf>
 Package luatex.def Info: ../images/p_new_classification_finetune_tree.pdf  used 
 on input line 950.
 (luatex.def)             Requested size: 429.28616pt x 187.8132pt.
-<../images/plot_new_pid_classifications_genetic.pdf, id=694, 578.16pt x 216.81pt
+<../images/plot_new_pid_classifications_genetic.pdf, id=698, 578.16pt x 216.81pt
 >
 File: ../images/plot_new_pid_classifications_genetic.pdf Graphic file (type pdf)
 
@@ -2061,7 +2061,7 @@ File: ../images/plot_new_pid_classifications_genetic.pdf Graphic file (type pdf)
 Package luatex.def Info: ../images/plot_new_pid_classifications_genetic.pdf  use
 d on input line 951.
 (luatex.def)             Requested size: 429.28616pt x 160.98274pt.
-<../images/plot_multicat_new_pid_classes_combined.pdf, id=695, 578.16pt x 216.81
+<../images/plot_multicat_new_pid_classes_combined.pdf, id=699, 578.16pt x 216.81
 pt>
 File: ../images/plot_multicat_new_pid_classes_combined.pdf Graphic file (type pd
 f)
@@ -2083,13 +2083,13 @@ Missing character: There is no   (U+2009) in font [lmroman12-regular]:+tlig;!
 ] [34<../images/p_new_classification_finetune_tree.pdf><../images/plot_new_pid_c
 lassifications_genetic.pdf><../images/plot_multicat_new_pid_classes_combined.pdf
 >]
-<../images/p_alphamissense_NFKB1.pdf, id=732, 722.7pt x 361.35pt>
+<../images/p_alphamissense_NFKB1.pdf, id=736, 722.7pt x 361.35pt>
 File: ../images/p_alphamissense_NFKB1.pdf Graphic file (type pdf)
 <use ../images/p_alphamissense_NFKB1.pdf>
 Package luatex.def Info: ../images/p_alphamissense_NFKB1.pdf  used on input line
  969.
 (luatex.def)             Requested size: 346.89731pt x 173.44603pt.
-<../images/p_alphamissense_CFTR.pdf, id=733, 722.7pt x 361.35pt>
+<../images/p_alphamissense_CFTR.pdf, id=737, 722.7pt x 361.35pt>
 File: ../images/p_alphamissense_CFTR.pdf Graphic file (type pdf)
 <use ../images/p_alphamissense_CFTR.pdf>
 Package luatex.def Info: ../images/p_alphamissense_CFTR.pdf  used on input line 
@@ -2106,7 +2106,7 @@ t-ics data
 
 Package acronym Info: Label `acro:omim' newly defined as it shall be overridden
 although it is yet undefined on input line 982.
-<../images/var_risk_est_iei_genetics.png, id=772, 2112.89375pt x 800.9925pt>
+<../images/var_risk_est_iei_genetics.png, id=776, 2112.89375pt x 800.9925pt>
 File: ../images/var_risk_est_iei_genetics.png Graphic file (type png)
 <use ../images/var_risk_est_iei_genetics.png>
 Package luatex.def Info: ../images/var_risk_est_iei_genetics.png  used on input 
@@ -2143,20 +2143,20 @@ Underfull \hbox (badness 1616) in paragraph at lines 11--25
 a, Char-lotte
  []
 
-[42] [43] [44
+[42] [43] [44] [45
 Missing character: There is no κ (U+03BA) in font [lmroman12-regular]:+tlig;!
-] [45] [46]) [47]
-<../images/p_gene_summary_hist_patch3.png, id=943, 722.7pt x 361.35pt>
+] [46] [47]) [48]
+<../images/p_gene_summary_hist_patch3.png, id=952, 722.7pt x 361.35pt>
 File: ../images/p_gene_summary_hist_patch3.png Graphic file (type png)
 <use ../images/p_gene_summary_hist_patch3.png>
 Package luatex.def Info: ../images/p_gene_summary_hist_patch3.png  used on input
- line 1135.
+ line 1142.
 (luatex.def)             Requested size: 429.28616pt x 214.64476pt.
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.1'
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.1'
-[48
+[49
 
 <../images/p_gene_summary_hist_patch3.png>]
 (../images/table_scenario_1_quant_uncert_ci.tex
@@ -2168,203 +2168,213 @@ warning  (pdf backend): ignoring duplicate destination with the name 'table.2'
 
 warning  (pdf backend): ignoring duplicate destination with the name 'table.2'
 ) (../images/table_scenario_3_quant_uncert_ci.tex)
-<../images/plot_scenario_1_quant_uncert_ci.pdf, id=948, 650.43pt x 505.89pt>
+<../images/plot_scenario_1_quant_uncert_ci.pdf, id=958, 650.43pt x 505.89pt>
 File: ../images/plot_scenario_1_quant_uncert_ci.pdf Graphic file (type pdf)
 <use ../images/plot_scenario_1_quant_uncert_ci.pdf>
 Package luatex.def Info: ../images/plot_scenario_1_quant_uncert_ci.pdf  used on 
-input line 1154.
+input line 1161.
 (luatex.def)             Requested size: 429.28616pt x 333.89613pt.
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.2'
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.2'
-<../images/plot_scenario_3_quant_uncert_ci.pdf, id=951, 650.43pt x 505.89pt>
+<../images/plot_scenario_3_quant_uncert_ci.pdf, id=961, 650.43pt x 505.89pt>
 File: ../images/plot_scenario_3_quant_uncert_ci.pdf Graphic file (type pdf)
 <use ../images/plot_scenario_3_quant_uncert_ci.pdf>
 Package luatex.def Info: ../images/plot_scenario_3_quant_uncert_ci.pdf  used on 
-input line 1165.
+input line 1172.
 (luatex.def)             Requested size: 429.28616pt x 333.89613pt.
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.3'
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.3'
-[49
+[50
 
-] [50<../images/plot_scenario_1_quant_uncert_ci.pdf>] [51<../images/plot_scenari
+] [51<../images/plot_scenario_1_quant_uncert_ci.pdf>] [52<../images/plot_scenari
 o_3_quant_uncert_ci.pdf>]
-<../images/validation_studies_scatterdense_expected_prob.png, id=991, 722.7pt x 
-433.62pt>
+<../images/validation_studies_scatterdense_expected_prob.png, id=1002, 722.7pt x
+ 433.62pt>
 File: ../images/validation_studies_scatterdense_expected_prob.png Graphic file (
 type png)
 <use ../images/validation_studies_scatterdense_expected_prob.png>
 Package luatex.def Info: ../images/validation_studies_scatterdense_expected_prob
-.png  used on input line 1182.
+.png  used on input line 1189.
 (luatex.def)             Requested size: 433.62pt x 260.17401pt.
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.4'
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.4'
-<../images/validation_studies_bayesian_adjusted_estimates.png, id=992, 650.43pt 
-x 433.62pt>
+<../images/validation_studies_bayesian_adjusted_estimates.png, id=1003, 650.43pt
+ x 433.62pt>
 File: ../images/validation_studies_bayesian_adjusted_estimates.png Graphic file 
 (type png)
 <use ../images/validation_studies_bayesian_adjusted_estimates.png>
 Package luatex.def Info: ../images/validation_studies_bayesian_adjusted_estimate
-s.png  used on input line 1195.
+s.png  used on input line 1202.
 (luatex.def)             Requested size: 429.28616pt x 286.1967pt.
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.5'
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.5'
-[52
+[53
 
 
-<../images/validation_studies_scatterdense_expected_prob.png>] [53<../images/val
+<../images/validation_studies_scatterdense_expected_prob.png>] [54<../images/val
 idation_studies_bayesian_adjusted_estimates.png>]
-<../images/all_genes_combined_bar_charts_mini.png, id=1001, 867.24pt x 433.62pt>
+<../images/all_genes_combined_bar_charts_mini.png, id=1013, 867.24pt x 433.62pt>
 
 File: ../images/all_genes_combined_bar_charts_mini.png Graphic file (type png)
 <use ../images/all_genes_combined_bar_charts_mini.png>
 Package luatex.def Info: ../images/all_genes_combined_bar_charts_mini.png  used 
-on input line 1216.
+on input line 1223.
 (luatex.def)             Requested size: 429.28616pt x 214.64587pt.
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.6'
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.6'
-<../images/validation_studies_scid_gene_comparison.pdf, id=1002, 433.62pt x 289.
+<../images/validation_studies_scid_gene_comparison.pdf, id=1014, 433.62pt x 289.
 08pt>
 File: ../images/validation_studies_scid_gene_comparison.pdf Graphic file (type p
 df)
 <use ../images/validation_studies_scid_gene_comparison.pdf>
 Package luatex.def Info: ../images/validation_studies_scid_gene_comparison.pdf  
-used on input line 1224.
+used on input line 1231.
 (luatex.def)             Requested size: 325.215pt x 216.81828pt.
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.7'
 
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.7'
-<../images/validation_studies_scid_combined_plot.pdf, id=1003, 578.16pt x 505.89
+<../images/validation_studies_scid_combined_plot.pdf, id=1015, 578.16pt x 505.89
 pt>
 File: ../images/validation_studies_scid_combined_plot.pdf Graphic file (type pdf
 )
 <use ../images/validation_studies_scid_combined_plot.pdf>
 Package luatex.def Info: ../images/validation_studies_scid_combined_plot.pdf  us
-ed on input line 1231.
+ed on input line 1238.
 (luatex.def)             Requested size: 325.215pt x 284.56241pt.
-[54
+[55
 
 
-<../images/all_genes_combined_bar_charts_mini.png>] [55<../images/validation_stu
-dies_scid_gene_comparison.pdf>] [56<../images/validation_studies_scid_combined_p
+<../images/all_genes_combined_bar_charts_mini.png>] [56<../images/validation_stu
+dies_scid_gene_comparison.pdf>] [57<../images/validation_studies_scid_combined_p
 lot.pdf>]
-<../images/untangleR_ppi_network_assoc_patch1.jpg, id=1034, 1656.1875pt x 1214.5
+<../images/untangleR_ppi_network_assoc_patch1.jpg, id=1046, 1656.1875pt x 1214.5
 375pt>
 File: ../images/untangleR_ppi_network_assoc_patch1.jpg Graphic file (type jpg)
 <use ../images/untangleR_ppi_network_assoc_patch1.jpg>
 Package luatex.def Info: ../images/untangleR_ppi_network_assoc_patch1.jpg  used 
-on input line 1245.
+on input line 1252.
 (luatex.def)             Requested size: 433.62pt x 317.97765pt.
- [57
+ [58
 
 
 <../images/untangleR_ppi_network_assoc_patch1.jpg>]
-<../images/untangleR_ppi_network_patch2_cator.pdf, id=1040, 1156.32pt x 505.89pt
+<../images/untangleR_ppi_network_patch2_cator.pdf, id=1053, 1156.32pt x 505.89pt
 >
 File: ../images/untangleR_ppi_network_patch2_cator.pdf Graphic file (type pdf)
 <use ../images/untangleR_ppi_network_patch2_cator.pdf>
 Package luatex.def Info: ../images/untangleR_ppi_network_patch2_cator.pdf  used 
-on input line 1259.
+on input line 1266.
 (luatex.def)             Requested size: 429.28616pt x 187.80934pt.
- [58
+ [59
 
 <../images/untangleR_ppi_network_patch2_cator.pdf>]
-<../images/untangleR_ppi_network_p_umap_const.pdf, id=1056, 867.24pt x 505.89pt>
+<../images/untangleR_ppi_network_p_umap_const.pdf, id=1069, 867.24pt x 505.89pt>
 
 File: ../images/untangleR_ppi_network_p_umap_const.pdf Graphic file (type pdf)
 <use ../images/untangleR_ppi_network_p_umap_const.pdf>
 Package luatex.def Info: ../images/untangleR_ppi_network_p_umap_const.pdf  used 
-on input line 1274.
+on input line 1281.
 (luatex.def)             Requested size: 429.28616pt x 250.42017pt.
-<../images/untangleR_ppi_network_p_cor_spear_rho_sig_clust_patch3.pdf, id=1057, 
+<../images/untangleR_ppi_network_p_cor_spear_rho_sig_clust_patch3.pdf, id=1070, 
 1300.86pt x 867.24pt>
 File: ../images/untangleR_ppi_network_p_cor_spear_rho_sig_clust_patch3.pdf Graph
 ic file (type pdf)
 <use ../images/untangleR_ppi_network_p_cor_spear_rho_sig_clust_patch3.pdf>
 Package luatex.def Info: ../images/untangleR_ppi_network_p_cor_spear_rho_sig_clu
-st_patch3.pdf  used on input line 1284.
+st_patch3.pdf  used on input line 1291.
 (luatex.def)             Requested size: 429.28616pt x 286.1901pt.
-<../images/fuma_merge.pdf, id=1058, 867.24pt x 469.755pt>
+<../images/fuma_merge.pdf, id=1071, 867.24pt x 469.755pt>
 File: ../images/fuma_merge.pdf Graphic file (type pdf)
 <use ../images/fuma_merge.pdf>
-Package luatex.def Info: ../images/fuma_merge.pdf  used on input line 1294.
+Package luatex.def Info: ../images/fuma_merge.pdf  used on input line 1301.
 (luatex.def)             Requested size: 429.28616pt x 232.53302pt.
-<../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_2.png, id=1061, 3090.546
+<../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_2.png, id=1074, 3090.546
 25pt x 2898.83pt>
 File: ../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_2.png Graphic file 
 (type png)
 <use ../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_2.png>
 Package luatex.def Info: ../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_
-2.png  used on input line 1302.
+2.png  used on input line 1309.
 (luatex.def)             Requested size: 325.215pt x 305.02751pt.
-<../images/expHeat_FUMA_jobs604403_var_risk_est_cluster_4.png, id=1062, 3090.546
+<../images/expHeat_FUMA_jobs604403_var_risk_est_cluster_4.png, id=1075, 3090.546
 25pt x 1783.66376pt>
 File: ../images/expHeat_FUMA_jobs604403_var_risk_est_cluster_4.png Graphic file 
 (type png)
 <use ../images/expHeat_FUMA_jobs604403_var_risk_est_cluster_4.png>
 Package luatex.def Info: ../images/expHeat_FUMA_jobs604403_var_risk_est_cluster_
-4.png  used on input line 1303.
+4.png  used on input line 1310.
 (luatex.def)             Requested size: 325.215pt x 187.68486pt.
- [59
+ [60
 
-<../images/untangleR_ppi_network_p_umap_const.pdf>] [60<../images/untangleR_ppi_
-network_p_cor_spear_rho_sig_clust_patch3.pdf>] [61<../images/fuma_merge.pdf>] [
-62<../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_2.png><../images/expHe
+<../images/untangleR_ppi_network_p_umap_const.pdf>] [61<../images/untangleR_ppi_
+network_p_cor_spear_rho_sig_clust_patch3.pdf>] [62<../images/fuma_merge.pdf>] [
+63<../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_2.png><../images/expHe
 at_FUMA_jobs604403_var_risk_est_cluster_4.png>]
-<../images/plot_patch1.pdf, id=1125, 650.43pt x 325.215pt>
+<../images/plot_patch1.pdf, id=1138, 650.43pt x 325.215pt>
 File: ../images/plot_patch1.pdf Graphic file (type pdf)
 <use ../images/plot_patch1.pdf>
-Package luatex.def Info: ../images/plot_patch1.pdf  used on input line 1318.
+Package luatex.def Info: ../images/plot_patch1.pdf  used on input line 1325.
 (luatex.def)             Requested size: 429.28616pt x 214.64752pt.
-<../images/plot_multicat_patch_3_clust_chi.pdf, id=1126, 650.43pt x 289.08pt>
+<../images/plot_multicat_patch_3_clust_chi.pdf, id=1139, 650.43pt x 289.08pt>
 File: ../images/plot_multicat_patch_3_clust_chi.pdf Graphic file (type pdf)
 <use ../images/plot_multicat_patch_3_clust_chi.pdf>
 Package luatex.def Info: ../images/plot_multicat_patch_3_clust_chi.pdf  used on 
-input line 1330.
+input line 1337.
 (luatex.def)             Requested size: 429.28616pt x 190.79779pt.
-<../images/plot_multicat_performance_combined.pdf, id=1127, 722.7pt x 433.62pt>
+<../images/plot_multicat_performance_combined.pdf, id=1140, 722.7pt x 433.62pt>
 File: ../images/plot_multicat_performance_combined.pdf Graphic file (type pdf)
 <use ../images/plot_multicat_performance_combined.pdf>
 Package luatex.def Info: ../images/plot_multicat_performance_combined.pdf  used 
-on input line 1337.
+on input line 1344.
 (luatex.def)             Requested size: 429.28616pt x 257.57372pt.
- [63
+ [64
 
 
-<../images/plot_patch1.pdf>] [64<../images/plot_multicat_patch_3_clust_chi.pdf><
+<../images/plot_patch1.pdf>] [65<../images/plot_multicat_patch_3_clust_chi.pdf><
 ../images/plot_multicat_performance_combined.pdf>]
-<../images/p_alphamissense_kw.pdf, id=1157, 722.7pt x 433.62pt>
+<../images/p_alphamissense_kw.pdf, id=1171, 722.7pt x 433.62pt>
 File: ../images/p_alphamissense_kw.pdf Graphic file (type pdf)
 <use ../images/p_alphamissense_kw.pdf>
 Package luatex.def Info: ../images/p_alphamissense_kw.pdf  used on input line 13
-59.
+66.
 (luatex.def)             Requested size: 429.28616pt x 257.57372pt.
 
-[65
+[66
 
 
 <../images/p_alphamissense_kw.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1365.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1365.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1372.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1372.
  (./varEstRisk2025lawless.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1365.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1365.
-Package rerunfilecheck Info: File `varEstRisk2025lawless.out' has not changed.
-(rerunfilecheck)             Checksum: 16D18F490ABCF17802B17C1FD0307CB8;3204.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1372.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1372.
+
+
+Package rerunfilecheck Warning: File `varEstRisk2025lawless.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `varEstRisk2025lawless.out':
+(rerunfilecheck)             Before: 7AD2D56F62ACD1FA78ED23F03CDF491F;3256
+(rerunfilecheck)             After:  16D18F490ABCF17802B17C1FD0307CB8;3204.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 )
 
 Here is how much of LuaTeX's memory you used:
- 40259 strings out of 494413
+ 40269 strings out of 494413
  100000,1144653 words of node,token memory allocated
  1760 words of node memory still in use:
    18 hlist, 2 vlist, 14 rule, 3 glue, 1 kern, 119 attribute, 123 glue_spec, 119
@@ -2372,9 +2382,23 @@ Here is how much of LuaTeX's memory you used:
 
    avail lists: 1:3,2:1789,3:994,4:250,5:313,6:466,7:7638,8:972,9:1972,10:26,11:
 458
- 42622 multiletter control sequences out of 65536+600000
+ 42623 multiletter control sequences out of 65536+600000
  134 fonts using 14544711 bytes
- 65i,11n,101p,1909b,976s stack positions out of 5000i,500n,10000p,200000b,100000s
+ 65i,11n,101p,1909b,990s stack positions out of 5000i,500n,10000p,200000b,100000s
+
+warning  (pdf backend): unreferenced destination with name 'subsection.7.6'
+
+warning  (pdf backend): unreferenced destination with name 'subsection.7.5'
+
+warning  (pdf backend): unreferenced destination with name 'subsection.7.4'
+
+warning  (pdf backend): unreferenced destination with name 'subsection.7.3'
+
+warning  (pdf backend): unreferenced destination with name 'subsection.7.2'
+
+warning  (pdf backend): unreferenced destination with name 'subsection.7.1'
+
+warning  (pdf backend): unreferenced destination with name 'section.7'
 </usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/lmmono12-regular.ot
 f></usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/lmroman12-italic.
 otf></usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/lmroman10-boldi
@@ -2396,10 +2420,10 @@ cm/cmr12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmr8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
 10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.
 pfb>
-Output written on varEstRisk2025lawless.pdf (65 pages, 5309188 bytes).
+Output written on varEstRisk2025lawless.pdf (66 pages, 5310736 bytes).
 
-PDF statistics: 1284 PDF objects out of 1440 (max. 8388607)
- 1059 compressed objects within 11 object streams
- 216 named destinations out of 1000 (max. 131072)
- 536 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 1300 PDF objects out of 1440 (max. 8388607)
+ 1074 compressed objects within 11 object streams
+ 225 named destinations out of 1000 (max. 131072)
+ 544 words of extra memory for PDF output out of 10000 (max. 100000000)
 
