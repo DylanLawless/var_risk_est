@@ -147,33 +147,23 @@ From a statistical perspective, \ac{fn}s and \ac{tn}s are an untapped goldmine.
 They hold essential information about what is not observed, what should be expected under baseline assumptions, and how confident one can be in the absence of a pathogenic finding. 
 Yet these dimensions are rarely quantified, leaving a bias in current variant interpretation frameworks towards known \ac{tp}s and lacking principled priors for genome-wide disease probability estimation.
 
-In this study, we focused on reporting the probability of disease observation through genome-wide assessments of gene-disease combinations. 
-Our central hypothesis was that by using highly curated annotation data including population \ac{af}s, disease phenotypes, \ac{moi} patterns, and variant classifications and by applying rigorous calculations based on \ac{hwe}, we could accurately estimate the expected probabilities of observing disease-associated variants.
-Among other benefits, this knowledge can be used to derive genetic diagnosis confidence by incorporating these new priors.
-
-We focused on known \ac{iei} genes, sometimes called the ``\ac{pid} or Monogenic Inflammatory Bowel Disease genes'' \cite{poli_human_2025, lawless_panelapprex_2025, martin_panelapp_2019},
-to validate our approach and demonstrate its clinical relevance. 
-This application to a well-established genotype-phenotype set, comprising over 500 gene-disease associations, underscores its utility.
-The most recent update on the classification 
-of \ac{iei} from the \ac{iuis}  expert committee was reported by \citet{poli_human_2025},
-with an accompanying diagnostic guide \cite{bousfiha_2024_2025}.
-
 Quantifying the risk that a patient inherits a disease-causing variant is a fundamental challenge in genomics. 
-Classical statistical approaches grounded in \ac{hwe} \cite{MayoCentury2008, AbramovsHardyWeinberg2020} have long been used to calculate genetic \ac{moi} probabilities for \ac{snv}s. 
+Classical statistical approaches grounded in \ac{hwe} \cite{MayoCentury2008, AbramovsHardyWeinberg2020} have long been used to calculate genetic probabilities for \ac{snv}s. 
 However, applying these methods becomes more complex when accounting for different \ac{moi}, such as \ac{ar} versus \ac{ad} or \ac{xl} disorders. 
 In \ac{ar} conditions, for example, the occurrence probability must incorporate both the homozygous state and compound heterozygosity, whereas for \ac{ad} and \ac{xl} disorders, a single pathogenic allele is sufficient to cause disease. 
 Advances in genetic research have revealed that \ac{moi} can be even more complex \cite{zschocke_mendelian_2023}. 
 Mechanisms such as dominant negative effects, haploinsufficiency, mosaicism, and digenic or epistatic interactions can further modulate disease risk and clinical presentation, underscoring the need for nuanced approaches in risk estimation.
-\citet{karczewski2020mutational} made significant advances; however, the remaining challenge lies in applying the necessary statistical genomics data across all \ac{moi} for any gene-disease combination,
-which our current work aims to address.
-Similar approaches have been reported for diseases such Wilson disease, mucopolysaccharidoses,  primary ciliary dyskinesia, and treatable metabolic diseasse, 
+\citet{karczewski2020mutational} made significant advances; however, the remaining challenge lies in applying the necessary statistical genomics data across all \ac{moi} for any gene-disease combination.
+% which our current work aims to address.
+Preliminary approaches have been reported for diseases such Wilson disease, mucopolysaccharidoses,  primary ciliary dyskinesia, and treatable metabolic diseasse, 
 \cite{bick_estimating_2025, evans_estimating_2021}, 
 as reviewed by \citet{hannah_using_2024}.
 
 To our knowledge, all approaches to date have been limited to single \ac{moi}, specific to the given disease, or restricted to a small number of genes.
-We argue that our integrated approach is highly powerful because the resulting probabilities can serve as informative priors in a Bayesian framework for variant and disease probability estimation; a perspective that is often overlooked in clinical and statistical genetics. 
+We argue that an  integrated approach is both necessary and highly powerful because the resulting probabilities can serve as informative priors in a Bayesian framework for variant and disease probability estimation; a perspective that is often overlooked in clinical and statistical genetics. 
 Such a framework not only refines classical \ac{hwe}-based risk estimates but also has the potential to enrich clinicians’ understanding of what to expect in a patient and to enhance the analytical models employed by bioinformaticians.
-The dataset also holds value for AI and reinforcement learning applications, providing an enriched version of the data underpinning frameworks such as AlphaFold \cite{jumper_highly_2021} and AlphaMissense \cite{cheng_accurate_2023}.
+
+The resulting dataset from these necessary calculations also holds value for AI and reinforcement learning applications, providing an enriched version of the data underpinning frameworks such as AlphaFold \cite{jumper_highly_2021} and AlphaMissense \cite{cheng_accurate_2023}.
 
 This gap is not only due to conceptual limitations, but to the historical absence of large, harmonised reference datasets. 
 Only recently have resources become available to support rigorous genome-wide probability estimation. These include high-resolution population allele frequencies (e.g. gnomAD v4 \cite{karczewski2020mutational}), 
@@ -188,6 +178,15 @@ Together, these resources now make it possible to model the expected distributio
 By reframing variant interpretation as a problem of calibrated expectation rather than solely reactive confirmation, our framework empowers clinicians and researchers to anticipate both observed and unobserved pathogenic burdens. 
 This scalable, genome-wide approach promises to streamline diagnostic workflows, reduce uncertainty in inconclusive cases, inform statistical models and genetic epidemiology studies, and accelerate the integration of genetic insights into patient care.
 
+In this study, we focused on reporting the probability of disease observation through genome-wide assessments of gene-disease combinations. 
+We then focused on known \ac{iei} genes, sometimes called the ``\ac{pid} or Monogenic Inflammatory Bowel Disease genes'' \cite{poli_human_2025, lawless_panelapprex_2025, martin_panelapp_2019},
+to validate our approach and demonstrate its clinical relevance. 
+This application to a well-established genotype-phenotype set, comprising over 500 gene-disease associations, underscores its utility.
+The most recent update on the classification 
+of \ac{iei} from the \ac{iuis}  expert committee was reported by \citet{poli_human_2025},
+with an accompanying diagnostic guide \cite{bousfiha_2024_2025}.
+Our central hypothesis was that by using highly curated annotation data including population \ac{af}s, disease phenotypes, \ac{moi} patterns, and variant classifications and by applying rigorous calculations based on \ac{hwe}, we could accurately estimate the expected probabilities of observing disease-associated variants.
+Among other benefits, this knowledge can be used to derive genetic diagnosis confidence by incorporating these new priors.
 
 %We previously introduced PanelAppRex to aggregate gene panel data from multiple sources, including \ac{ge} PanelApp, ClinVar, and \ac{uniprot}, thereby enabling advanced natural searches for clinical and research applications \cite{lawless_panelapprex_2025, martin_panelapp_2019, landrum_clinvar_2018, the_uniprot_consortium_uniprot_2025}. 
 %It automatically retrieves expert-curated panels, such as those from the NHS National Genomic Test Directory and the 100,000 Genomes Project, and converts them into machine-readable formats for rapid variant discovery and interpretation. 
@@ -728,7 +727,7 @@ The algorithm first verified that all known pathogenic positions have been seque
 These missing sites represent potential false negatives. 
 By jointly modelling the observed and unobserved space, the method yielded a calibrated, evidence-weighted probability that at least one damaging causal variant could be present within a gene.
 
-\subsection{Scenario one - simple diagnosis}
+\subsection{Scenario one - complete coverage and simple diagnosis}
 We present the results from three scenarios for an example single-case patient being investigated for the genetic diagnosis of \ac{iei}.
 \textbf{Figure \ref{fig:plot_scenario_1_quant_uncert_ci}} shows the results of the first simple scenario, in which only one known pathogenic variant, \ac{nfkb1} \texttt{p.Ser237Ter}, was observed and all other previously reported pathogenic positions were successfully sequenced and confirmed as reference. 
 In this setting, the model assigned the full posterior probability to the observed allele, yielding 100\,\% confidence that all present evidence supported a single, true positive causal explanation. 
@@ -736,7 +735,7 @@ The most strongly supported observed variant was \texttt{p.Ser237Ter} (posterior
 The strongest (probability of observing) non-sequenced variant was a benign variant \texttt{p.Thr567Ile} (posterior: 0). 
 The total probability of a causal diagnosis given the available evidence was 1 (95\% CI: 1--1) (\textbf{Table~\ref{tab:table_scenario_1_quant_uncert_ci}}). 
 
-\subsection{Scenario two - complex diagnosis}
+\subsection{Scenario two - incomplete coverage and complex diagnosis}
 
 \textbf{Figure \ref{fig:plot_scenario_2_quant_uncert_ci}} shows the second more complex scenario, where the same pathogenic variant \ac{nfkb1} \texttt{p.Ser237Ter} was present, but coverage was incomplete at three additional sites of known classified variants. 
 Among these was the likely-pathogenic splice-site variant \ac{nfkb1} \texttt{c.159+1G{\small\textgreater}A}, which was not captured in the sequencing data. 
@@ -746,7 +745,9 @@ The panels of \textbf{Figure \ref{fig:plot_scenario_2_quant_uncert_ci} (A–F)} 
 \textbf{Figure \ref{fig:plot_scenario_2_quant_uncert_ci}}).
 
 Bayesian integration of every annotated allele yielded the quantitative \ac{cri}s for pathogenic attribution that (i) preserve Hardy-Weinberg expectations, (ii) accommodate \ac{ad}, \ac{ar}, \ac{xl} inheritance, and (iii) carry explicit uncertainty for non-sequenced (or failed \ac{qc}) genomic positions.  
-\textbf{Figure \ref{fig:plot_scenario_2_quant_uncert_ci} (A)}
+The incremental calculation steps for the variant in question are shown in \textbf{Figure~\ref{fig:plot_scenario_2_quant_uncert_ci}}.
+
+First, \textbf{Figure \ref{fig:plot_scenario_2_quant_uncert_ci} (A)}
 depicts the prior landscape where occurrence probabilities are partitioned by observed or missing status and by causal or non‑causal evidence, with colour reflecting the underlying ClinVar score.  
 \textbf{Figure \ref{fig:plot_scenario_2_quant_uncert_ci} (B)} shows posterior normalisation which concentrates probability density on two high‑confidence (high evidence score) alleles since the benign variants are, by definition, non-causal.
 \textbf{Figure \ref{fig:plot_scenario_2_quant_uncert_ci} (C)} shows the resulting per‑variant probability of being simultaneously damaging and causal; only the confirmed present (true positive) nonsense variant \texttt{p.Ser237Ter} and the (false negative) hypothetical splice‑donor \texttt{c.159+1G{\small\textgreater}A} retain substantial support. 
@@ -769,6 +770,14 @@ Instead, a broad range of plausible \ac{fn} were detected as missing for the gen
 The strongest (probability of observing and pathogenic) of these non-sequenced variants was \texttt{p.Cys243Arg} (posterior: 0.347). 
 However, the total probability of a causal diagnosis for the patient \emph{given the available evidence} was 0 (95\% CI: 0--0) since these missing variants must be accounted for (\textbf{Table~\ref{tab:table_scenario_3_quant_uncert_ci}}). 
 Upon confirmation, these probabilities can update, as per scenario two.
+
+\subsection{Posterior probabilities are calculated across all qualifying variants}
+
+While only the top-ranked gene/variant is shown in each of the three scenarios, we emphasise that the same posterior probability and \ac{cri} calculations are performed across all plausible candidates. 
+In real-world diagnostics, we commonly find multiple variants to carry non-negligible probabilities. 
+Our framework explicitly quantifies these competing hypotheses, enabling a ranked interpretation that reflects the totality of evidence. 
+Overlapping \ac{cri} do not indicate ambiguity in the method, but rather a principled measure of remaining uncertainty. 
+This output can directly inform follow-up actions, such as functional validation or treatment trials, and supports the use of CrI thresholds as a transparent decision-making aid when data are incomplete or equivocal.
 
 \begin{figure}[ht]
   \centering
@@ -830,7 +839,14 @@ We attributed this discrepancy to the lower penetrance and higher background fre
 Overall, we report that agreement within an order of magnitude was tolerable given the inherent uncertainties from reference studies arising from variable penetrance and allele frequencies.
 
 \FloatBarrier
+\subsection{Application in inborn errors of immunity}
 \subsection{Genetic constraint in high-impact protein networks}
+
+Sean- In this section I was lost. I don't see the connection to the previous sections, or how it relates to the original goals.
+
+Dylan - I need an introduction here with reasoning to show that instead of focusing on every IEI gene individually, we can cluster them based on protein networks and phenotypes, thereby increasing the value of the traditional IUIS IEI classification. 
+
+
 
 We next examined genetic constraint in high-impact protein networks across the whole \ac{iei} gene set of over 500 known disease-gene phenotypes \cite{poli_human_2025}. By integrating ClinVar variant classification scores with \ac{ppi} data, we quantified the pathogenic burden per gene and assessed its relationship with network connectivity and genetic constraint
 \cite{szklarczyk2025string, karczewski2020mutational}.
@@ -1123,7 +1139,7 @@ This  SwissPedHealth study, under which this work was carried out, was approved 
 The study was conducted in accordance with the Declaration of Helsinki.
 
 \section*{Funding}
-\noindent This project was supported through the grant NDS-2021-911 (SwissPedHealth) from the Swiss Personalized Health Network and the Strategic Focal Area `Personalized Health and Related Technologies' of the ETH Domain (Swiss Federal Institutes of Technology).
+\noindent This project was supported through the grant Swiss National Science Foundation (SNF) 320030\_201060, and NDS-2021-911 (SwissPedHealth) from the Swiss Personalized Health Network and the Strategic Focal Area `Personalized Health and Related Technologies' of the ETH Domain (Swiss Federal Institutes of Technology).
 
 % \newpage
 \bibliographystyle{unsrtnat}

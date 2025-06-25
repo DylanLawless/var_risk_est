@@ -3,12 +3,16 @@ library(stringr)
 library(purrr)
 library(scales)
 library(stringr)
+library(patchwork)
 library(ggplot2);theme_set(theme_bw())
 
 varRisEst_gene <- readRDS(file= "../output/VarRiskEst_PanelAppRex_ID_398_gene_tally.Rds") # gene level 
 varRisEst_var <- readRDS(file= "../output/VarRiskEst_PanelAppRex_ID_398_gene_variants.Rds") # all variants
 # test2 <- readRDS(file= "../data/var_risk_est/panel_all_genes_df.Rds") # includes UK pop: "expected_cases", "prob_at_least_one"
 # test3 <- readRDS(file= "../data/var_risk_est/panel_all_genes_df_tally.Rds") # includes UK pop: "expected_cases", "prob_at_least_one"
+
+# varRisEst_gene <- varRisEst_gene |> filter(genename == "TMEM173")
+# varRisEst_var <- varRisEst_var |> filter(genename == "TMEM173")
 
 score_map <- c(
   "Pathogenic" = 5,
@@ -165,16 +169,11 @@ patch1 <-
   plot_annotation(tag_levels = 'A',) +
   plot_layout(guides = 'collect', axis_titles = "collect")
 
-
-
-ggsave(patch1, file = "../output/p_varRisEst_summary_scores.pdf", height = 6, width = 10)
-ggsave(patch1, file = "~/web/var_risk_est/images/p_varRisEst_summary_scores.pdf", height = 6, width = 10)
-
-
+# ggsave(patch1, file = "../output/p_varRisEst_summary_scores.pdf", height = 6, width = 10)
+# ggsave(patch1, file = "~/web/var_risk_est/images/p_varRisEst_summary_scores.pdf", height = 6, width = 10)
   
 print("NEXT LOOK AT THE OVERLL_PROB score and start fresh - maybe the same plots")
 print("THEN LOOK AT CLUSTERING with string db and color by score - quantify which cluster are the biggest threat. ")
-
 
 # Aggregate counts per genename
 
@@ -189,17 +188,66 @@ print("THEN LOOK AT CLUSTERING with string db and color by score - quantify whic
 # 
 names(varRisEst_gene_scored)
 
-gene_summary <- varRisEst_gene_scored %>%
-  group_by(genename) %>%
-  summarise(
-    # 0-1,2-3,4,5,
-    score5 = sum(if_else(score == 5, count, 0L)),
-    score4 = sum(if_else(score >=3 & score <= 4, count, 0L)),
-    score2 = sum(if_else(score >= 0 & score <= 2, count, 0L)),
-    score0 = sum(if_else(score >= -5 & score <= -1, count, 0L)),
+# gene_summary <- varRisEst_gene_scored %>%
+#   group_by(genename) %>%
+#   summarise(
+#     # 0-1,2-3,4,5,
+#     score5 = sum(if_else(score == 5, count, 0L)),
+#     score4 = sum(if_else(score > 3 & score < 5, count, 0L)),
+#     # score4 = sum(if_else(score >=3 & score <= 4, count, 0L)),
+#     score2 = sum(if_else(score >= 0 & score <= 2, count, 0L)),
+#     score0 = sum(if_else(score >= -5 & score <= -1, count, 0L)),
+#   ) %>%
+#   ungroup() %>%
+#   mutate(VariantCounts = paste(score5, score4, score2,score0, sep = " / "))
+
+print("!! Sores like 4.5 were missing. New system here !!")
+
+# Single binning step
+varRisEst_gene_scored_binned <- varRisEst_gene_scored %>%
+  mutate(
+    score_bin = case_when(
+      score == 5 ~ "score5",
+      score >= 3 & score < 5 ~ "score4",
+      score > 0 & score < 3 ~ "score2",
+      score >= -5 & score <= 0 ~ "score0",
+      TRUE ~ "unassigned" # should never happen
+    )
+  )
+
+# Now summarise based on the bin
+gene_summary <- varRisEst_gene_scored_binned %>%
+  mutate(
+    score_bin = case_when(
+      score == 5 ~ "score5",
+      score >= 3 & score < 5 ~ "score4",
+      score > 0 & score < 3 ~ "score2",
+      score >= -5 & score <= 0 ~ "score0",
+      TRUE ~ "unassigned"
+    )
   ) %>%
-  ungroup() %>%
-  mutate(VariantCounts = paste(score5, score4, score2,score0, sep = " / "))
+  group_by(genename, score_bin) %>%
+  summarise(count_sum = sum(count), .groups = "drop") %>%
+  tidyr::pivot_wider(
+    names_from = score_bin,
+    values_from = count_sum,
+    values_fill = 0
+  ) %>%
+  select(genename, score5, score4, score2, score0) %>%  # force order
+  mutate(
+    VariantCounts = paste(score5, score4, score2, score0, sep = " / ")
+  )
+
+# test that all accounted
+unassigned <- varRisEst_gene_scored_binned %>%
+  filter(score_bin == "unassigned")
+
+if (nrow(unassigned) == 0) {
+  print("All scores assigned correctly.")
+} else {
+  print("There are unassigned scores!")
+}
+
 
 # clinvar_summary <- final_results_gene_scored %>%
 #   group_by(GeneSymbol) %>%

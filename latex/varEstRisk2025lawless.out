@@ -14,22 +14,24 @@
 \BOOKMARK [1][-]{section.3}{Results}{}% 14
 \BOOKMARK [2][-]{subsection.3.1}{Occurrence probability across disease genes}{section.3}% 15
 \BOOKMARK [2][-]{subsection.3.2}{Integrating observed true positives and unobserved false negatives into a single, actionable conclusion}{section.3}% 16
-\BOOKMARK [2][-]{subsection.3.3}{Scenario one - simple diagnosis}{section.3}% 17
-\BOOKMARK [2][-]{subsection.3.4}{Scenario two - complex diagnosis}{section.3}% 18
+\BOOKMARK [2][-]{subsection.3.3}{Scenario one - complete coverage and simple diagnosis}{section.3}% 17
+\BOOKMARK [2][-]{subsection.3.4}{Scenario two - incomplete coverage and complex diagnosis}{section.3}% 18
 \BOOKMARK [2][-]{subsection.3.5}{Scenario three - currently impossible diagnosis}{section.3}% 19
-\BOOKMARK [2][-]{subsection.3.6}{Validation studies}{section.3}% 20
-\BOOKMARK [2][-]{subsection.3.7}{Genetic constraint in high-impact protein networks}{section.3}% 21
-\BOOKMARK [2][-]{subsection.3.8}{New insight from functional enrichment}{section.3}% 22
-\BOOKMARK [2][-]{subsection.3.9}{Genome-wide gene distribution and linkage disequilibrium}{section.3}% 23
-\BOOKMARK [2][-]{subsection.3.10}{Novel PID classifications derived from genetic PPI and clinical features}{section.3}% 24
-\BOOKMARK [2][-]{subsection.3.11}{Probability of observing AlphaMissense pathogenicity}{section.3}% 25
-\BOOKMARK [2][-]{subsection.3.12}{Integration of variant probabilities into IEI genetics data}{section.3}% 26
-\BOOKMARK [1][-]{section.4}{Discussion}{}% 27
-\BOOKMARK [1][-]{section.5}{Conclusion}{}% 28
-\BOOKMARK [1][-]{section.6}{Supplemental}{}% 29
-\BOOKMARK [2][-]{subsection.6.1}{Variant class occurrence probability}{section.6}% 30
-\BOOKMARK [2][-]{subsection.6.2}{Integrating observed true positives and unobserved false negatives into a single, actionable conclusion}{section.6}% 31
-\BOOKMARK [2][-]{subsection.6.3}{Validation studies}{section.6}% 32
-\BOOKMARK [2][-]{subsection.6.4}{Genetic constraint in high-impact protein networks}{section.6}% 33
-\BOOKMARK [2][-]{subsection.6.5}{Novel PID classifications derived from genetic PPI and clinical features}{section.6}% 34
-\BOOKMARK [2][-]{subsection.6.6}{Probability of observing AlphaMissense pathogenicity}{section.6}% 35
+\BOOKMARK [2][-]{subsection.3.6}{Posterior probabilities are calculated across all qualifying variants}{section.3}% 20
+\BOOKMARK [2][-]{subsection.3.7}{Validation studies}{section.3}% 21
+\BOOKMARK [2][-]{subsection.3.8}{Application in inborn errors of immunity}{section.3}% 22
+\BOOKMARK [2][-]{subsection.3.9}{Genetic constraint in high-impact protein networks}{section.3}% 23
+\BOOKMARK [2][-]{subsection.3.10}{New insight from functional enrichment}{section.3}% 24
+\BOOKMARK [2][-]{subsection.3.11}{Genome-wide gene distribution and linkage disequilibrium}{section.3}% 25
+\BOOKMARK [2][-]{subsection.3.12}{Novel PID classifications derived from genetic PPI and clinical features}{section.3}% 26
+\BOOKMARK [2][-]{subsection.3.13}{Probability of observing AlphaMissense pathogenicity}{section.3}% 27
+\BOOKMARK [2][-]{subsection.3.14}{Integration of variant probabilities into IEI genetics data}{section.3}% 28
+\BOOKMARK [1][-]{section.4}{Discussion}{}% 29
+\BOOKMARK [1][-]{section.5}{Conclusion}{}% 30
+\BOOKMARK [1][-]{section.6}{Supplemental}{}% 31
+\BOOKMARK [2][-]{subsection.6.1}{Variant class occurrence probability}{section.6}% 32
+\BOOKMARK [2][-]{subsection.6.2}{Integrating observed true positives and unobserved false negatives into a single, actionable conclusion}{section.6}% 33
+\BOOKMARK [2][-]{subsection.6.3}{Validation studies}{section.6}% 34
+\BOOKMARK [2][-]{subsection.6.4}{Genetic constraint in high-impact protein networks}{section.6}% 35
+\BOOKMARK [2][-]{subsection.6.5}{Novel PID classifications derived from genetic PPI and clinical features}{section.6}% 36
+\BOOKMARK [2][-]{subsection.6.6}{Probability of observing AlphaMissense pathogenicity}{section.6}% 37

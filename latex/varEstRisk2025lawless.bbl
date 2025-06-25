@@ -5,67 +5,6 @@
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem[Poli et~al.(2025)Poli, Aksentijevich, Bousfiha, Cunningham-Rundles,
-  Hambleton, Klein, Morio, Picard, Puel, Rezaei, Seppänen, Somech, Su,
-  Sullivan, Torgerson, Meyts, and Tangye]{poli_human_2025}
-M.~Cecilia Poli, Ivona Aksentijevich, Ahmed~Aziz Bousfiha, Charlotte
-  Cunningham-Rundles, Sophie Hambleton, Christoph Klein, Tomohiro Morio,
-  Capucine Picard, Anne Puel, Nima Rezaei, Mikko~R.J. Seppänen, Raz Somech,
-  Helen~C. Su, Kathleen~E. Sullivan, Troy~R. Torgerson, Isabelle Meyts, and
-  Stuart~G. Tangye.
-\newblock Human inborn errors of immunity: 2024 update on the classification
-  from the {International} {Union} of {Immunological} {Societies} {Expert}
-  {Committee}.
-\newblock \emph{Journal of Human Immunity}, 1\penalty0 (1):\penalty0 e20250003,
-  May 2025.
-\newblock ISSN 3065-8993.
-\newblock \doi{10.70962/jhi.20250003}.
-\newblock URL
-  \url{https://rupress.org/jhi/article/1/1/e20250003/277390/Human-inborn-errors-of-immunity-2024-update-on-the}.
-
-\bibitem[Lawless(2025{\natexlab{a}})]{lawless_panelapprex_2025}
-Dylan Lawless.
-\newblock {PanelAppRex} aggregates disease gene panels and facilitates
-  sophisticated search.
-\newblock March 2025{\natexlab{a}}.
-\newblock \doi{10.1101/2025.03.20.25324319}.
-\newblock URL \url{http://medrxiv.org/lookup/doi/10.1101/2025.03.20.25324319}.
-
-\bibitem[Martin et~al.(2019)Martin, Williams, Foulger, Leigh, Daugherty,
-  Niblock, Leong, Smith, Gerasimenko, Haraldsdottir, Thomas, Scott, Baple,
-  Tucci, Brittain, De~Burca, Ibañez, Kasperaviciute, Smedley, Caulfield,
-  Rendon, and McDonagh]{martin_panelapp_2019}
-Antonio~Rueda Martin, Eleanor Williams, Rebecca~E. Foulger, Sarah Leigh,
-  Louise~C. Daugherty, Olivia Niblock, Ivone U.~S. Leong, Katherine~R. Smith,
-  Oleg Gerasimenko, Eik Haraldsdottir, Ellen Thomas, Richard~H. Scott, Emma
-  Baple, Arianna Tucci, Helen Brittain, Anna De~Burca, Kristina Ibañez, Dalia
-  Kasperaviciute, Damian Smedley, Mark Caulfield, Augusto Rendon, and Ellen~M.
-  McDonagh.
-\newblock {PanelApp} crowdsources expert knowledge to establish consensus
-  diagnostic gene panels.
-\newblock \emph{Nature Genetics}, 51\penalty0 (11):\penalty0 1560--1565,
-  November 2019.
-\newblock ISSN 1061-4036, 1546-1718.
-\newblock \doi{10.1038/s41588-019-0528-2}.
-\newblock URL \url{https://www.nature.com/articles/s41588-019-0528-2}.
-
-\bibitem[Bousfiha et~al.(2025)Bousfiha, Jeddane, Moundir, Poli, Aksentijevich,
-  Cunningham-Rundles, Hambleton, Klein, Morio, Picard, Puel, Rezaei, Seppänen,
-  Somech, Su, Sullivan, Torgerson, Tangye, and Meyts]{bousfiha_2024_2025}
-Ahmed~Aziz Bousfiha, Leïla Jeddane, Abderrahmane Moundir, M.~Cecilia Poli,
-  Ivona Aksentijevich, Charlotte Cunningham-Rundles, Sophie Hambleton,
-  Christoph Klein, Tomohiro Morio, Capucine Picard, Anne Puel, Nima Rezaei,
-  Mikko~R.J. Seppänen, Raz Somech, Helen~C. Su, Kathleen~E. Sullivan, Troy~R.
-  Torgerson, Stuart~G. Tangye, and Isabelle Meyts.
-\newblock The 2024 update of {IUIS} phenotypic classification of human inborn
-  errors of immunity.
-\newblock \emph{Journal of Human Immunity}, 1\penalty0 (1):\penalty0 e20250002,
-  May 2025.
-\newblock ISSN 3065-8993.
-\newblock \doi{10.70962/jhi.20250002}.
-\newblock URL
-  \url{https://rupress.org/jhi/article/1/1/e20250002/277374/The-2024-update-of-IUIS-phenotypic-classification}.
-
 \bibitem[Mayo(2008)]{MayoCentury2008}
 Oliver Mayo.
 \newblock A {Century} of {Hardy}–{Weinberg} {Equilibrium}.
@@ -210,6 +149,67 @@ Melissa~J Landrum, Jennifer~M Lee, Mark Benson, Garth~R Brown, Chen Chao,
 \newblock ISSN 0305-1048, 1362-4962.
 \newblock \doi{10.1093/nar/gkae1010}.
 \newblock URL \url{https://academic.oup.com/nar/article/53/D1/D609/7902999}.
+
+\bibitem[Lawless(2025{\natexlab{a}})]{lawless_panelapprex_2025}
+Dylan Lawless.
+\newblock {PanelAppRex} aggregates disease gene panels and facilitates
+  sophisticated search.
+\newblock March 2025{\natexlab{a}}.
+\newblock \doi{10.1101/2025.03.20.25324319}.
+\newblock URL \url{http://medrxiv.org/lookup/doi/10.1101/2025.03.20.25324319}.
+
+\bibitem[Martin et~al.(2019)Martin, Williams, Foulger, Leigh, Daugherty,
+  Niblock, Leong, Smith, Gerasimenko, Haraldsdottir, Thomas, Scott, Baple,
+  Tucci, Brittain, De~Burca, Ibañez, Kasperaviciute, Smedley, Caulfield,
+  Rendon, and McDonagh]{martin_panelapp_2019}
+Antonio~Rueda Martin, Eleanor Williams, Rebecca~E. Foulger, Sarah Leigh,
+  Louise~C. Daugherty, Olivia Niblock, Ivone U.~S. Leong, Katherine~R. Smith,
+  Oleg Gerasimenko, Eik Haraldsdottir, Ellen Thomas, Richard~H. Scott, Emma
+  Baple, Arianna Tucci, Helen Brittain, Anna De~Burca, Kristina Ibañez, Dalia
+  Kasperaviciute, Damian Smedley, Mark Caulfield, Augusto Rendon, and Ellen~M.
+  McDonagh.
+\newblock {PanelApp} crowdsources expert knowledge to establish consensus
+  diagnostic gene panels.
+\newblock \emph{Nature Genetics}, 51\penalty0 (11):\penalty0 1560--1565,
+  November 2019.
+\newblock ISSN 1061-4036, 1546-1718.
+\newblock \doi{10.1038/s41588-019-0528-2}.
+\newblock URL \url{https://www.nature.com/articles/s41588-019-0528-2}.
+
+\bibitem[Poli et~al.(2025)Poli, Aksentijevich, Bousfiha, Cunningham-Rundles,
+  Hambleton, Klein, Morio, Picard, Puel, Rezaei, Seppänen, Somech, Su,
+  Sullivan, Torgerson, Meyts, and Tangye]{poli_human_2025}
+M.~Cecilia Poli, Ivona Aksentijevich, Ahmed~Aziz Bousfiha, Charlotte
+  Cunningham-Rundles, Sophie Hambleton, Christoph Klein, Tomohiro Morio,
+  Capucine Picard, Anne Puel, Nima Rezaei, Mikko~R.J. Seppänen, Raz Somech,
+  Helen~C. Su, Kathleen~E. Sullivan, Troy~R. Torgerson, Isabelle Meyts, and
+  Stuart~G. Tangye.
+\newblock Human inborn errors of immunity: 2024 update on the classification
+  from the {International} {Union} of {Immunological} {Societies} {Expert}
+  {Committee}.
+\newblock \emph{Journal of Human Immunity}, 1\penalty0 (1):\penalty0 e20250003,
+  May 2025.
+\newblock ISSN 3065-8993.
+\newblock \doi{10.70962/jhi.20250003}.
+\newblock URL
+  \url{https://rupress.org/jhi/article/1/1/e20250003/277390/Human-inborn-errors-of-immunity-2024-update-on-the}.
+
+\bibitem[Bousfiha et~al.(2025)Bousfiha, Jeddane, Moundir, Poli, Aksentijevich,
+  Cunningham-Rundles, Hambleton, Klein, Morio, Picard, Puel, Rezaei, Seppänen,
+  Somech, Su, Sullivan, Torgerson, Tangye, and Meyts]{bousfiha_2024_2025}
+Ahmed~Aziz Bousfiha, Leïla Jeddane, Abderrahmane Moundir, M.~Cecilia Poli,
+  Ivona Aksentijevich, Charlotte Cunningham-Rundles, Sophie Hambleton,
+  Christoph Klein, Tomohiro Morio, Capucine Picard, Anne Puel, Nima Rezaei,
+  Mikko~R.J. Seppänen, Raz Somech, Helen~C. Su, Kathleen~E. Sullivan, Troy~R.
+  Torgerson, Stuart~G. Tangye, and Isabelle Meyts.
+\newblock The 2024 update of {IUIS} phenotypic classification of human inborn
+  errors of immunity.
+\newblock \emph{Journal of Human Immunity}, 1\penalty0 (1):\penalty0 e20250002,
+  May 2025.
+\newblock ISSN 3065-8993.
+\newblock \doi{10.70962/jhi.20250002}.
+\newblock URL
+  \url{https://rupress.org/jhi/article/1/1/e20250002/277374/The-2024-update-of-IUIS-phenotypic-classification}.
 
 \bibitem[Liu et~al.(2020)Liu, Li, Mou, Dong, and Tu]{liu_dbnsfp_2020}
 Xiaoming Liu, Chang Li, Chengcheng Mou, Yibo Dong, and Yicheng Tu.
