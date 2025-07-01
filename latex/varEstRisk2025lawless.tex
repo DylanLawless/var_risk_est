@@ -47,13 +47,16 @@
 %Finally, we validated the framework in national-scale cohorts, showing close concordance with observed case numbers. 
 %The resulting datasets supported causal variant interpretation and evidence-aware decision-making in clinical genetics.
 \noindent \textbf{Background}:
-Accurate interpretation of genetic variants requires quantifying the probability that a variant is disease-causing, including the possibility of unobserved causal alleles.
+Accurate interpretation of genetic variants requires quantifying the probability that a variant is disease-causing, including the possibility of alternative or unobserved causal alleles.
+\vspace{1em}
 
 \noindent  \textbf{Methods}:
-We developed a statistical framework that computes genome-wide prior probabilities for variant pathogenicity, integrating population allele frequencies, variant classifications, and Hardy-Weinberg expectations across inheritance modes. Bayesian modelling then combines these priors with patient data to produce credible intervals reflecting diagnostic confidence.
+We developed a statistical framework that computes genome-wide prior probabilities for variant classification, integrating population allele frequencies, disease classifications, and Hardy-Weinberg expectations across inheritance modes. Bayesian modelling then combines these priors with a subject’s data to produce credible intervals reflecting diagnostic confidence.
+\vspace{1em}
 
 \noindent  \textbf{Results}:
-We applied the framework to 557 genes implicated in inborn errors of immunity (IEI), generating variant-level probabilities now publicly accessible. Integrating these data with protein-protein interaction networks and immunophenotypic features revealed patterns of genetic constraint and refined disease classification. Validation in national cohorts demonstrated close agreement between predicted and observed case numbers.
+We demonstrated the framework in three known diagnostic scenarios, showing how it quantifies the probability that a candidate variant is causal, including residual uncertainty from unobserved alleles. We then applied it to 557 genes implicated in inborn errors of immunity (IEI), generating variant-level probabilities now publicly accessible. Integration with protein-protein interaction networks and immunophenotypic data revealed patterns of genetic constraint and refined disease classification. Validation in national cohorts showed close agreement between predicted and observed case numbers.
+\vspace{1em}
 
 \noindent  \textbf{Conclusions}:
 Our method addresses a long-standing gap in clinical genomics by quantifying both observed and unobserved genetic evidence in disease diagnosis. Although demonstrated in IEI, it is broadly applicable and provides a quantitative basis for variant interpretation, clinical decision-making, and future genomic analyses.
