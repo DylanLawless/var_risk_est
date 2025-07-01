@@ -38,14 +38,26 @@
 \clearpage
  \linenumbers
 \begin{abstract} 
-We present a framework to quantify the prior probability of observing known disease-causing variants across all genes and inheritance modes. 
-First, we computed genome-wide occurrence probabilities by integrating population allele frequencies, variant classifications, and Hardy-Weinberg expectations under autosomal dominant, recessive, and X-linked inheritance. 
-Second, both pathogenic variants and missing causal candidates were tested to identify the most likely genetic disease determinant and provide a clear confidence range for the overall diagnosis. 
-This provided a complete and interpretable summary of evidence for genetic diagnosis.
-Third, we summarised variant probabilities for 557 genes responsible for inborn errors of immunity (IEI), now integrated into a public database. 
-Fourth, we derived new data-driven IEI classifications using protein-protein interactions and curated clinical features, aligned to immunophenotypes. 
-Finally, we validated the framework in national-scale cohorts, showing close concordance with observed case numbers. 
-The resulting datasets supported causal variant interpretation and evidence-aware decision-making in clinical genetics.\footnote{
+%We present a framework to quantify the prior probability of observing known disease-causing variants across all genes and inheritance modes. 
+%First, we computed genome-wide occurrence probabilities by integrating population allele frequencies, variant classifications, and Hardy-Weinberg expectations under autosomal dominant, recessive, and X-linked inheritance. 
+%Second, both pathogenic variants and missing causal candidates were tested to identify the most likely genetic disease determinant and provide a clear confidence range for the overall diagnosis. 
+%This provided a complete and interpretable summary of evidence for genetic diagnosis.
+%Third, we summarised variant probabilities for 557 genes responsible for inborn errors of immunity (IEI), now integrated into a public database. 
+%Fourth, we derived new data-driven IEI classifications using protein-protein interactions and curated clinical features, aligned to immunophenotypes. 
+%Finally, we validated the framework in national-scale cohorts, showing close concordance with observed case numbers. 
+%The resulting datasets supported causal variant interpretation and evidence-aware decision-making in clinical genetics.
+\noindent \textbf{Background}:
+Accurate interpretation of genetic variants requires quantifying the probability that a variant is disease-causing, including the possibility of unobserved causal alleles.
+
+\noindent  \textbf{Methods}:
+We developed a statistical framework that computes genome-wide prior probabilities for variant pathogenicity, integrating population allele frequencies, variant classifications, and Hardy-Weinberg expectations across inheritance modes. Bayesian modelling then combines these priors with patient data to produce credible intervals reflecting diagnostic confidence.
+
+\noindent  \textbf{Results}:
+We applied the framework to 557 genes implicated in inborn errors of immunity (IEI), generating variant-level probabilities now publicly accessible. Integrating these data with protein-protein interaction networks and immunophenotypic features revealed patterns of genetic constraint and refined disease classification. Validation in national cohorts demonstrated close agreement between predicted and observed case numbers.
+
+\noindent  \textbf{Conclusions}:
+Our method addresses a long-standing gap in clinical genomics by quantifying both observed and unobserved genetic evidence in disease diagnosis. Although demonstrated in IEI, it is broadly applicable and provides a quantitative basis for variant interpretation, clinical decision-making, and future genomic analyses.
+\footnote{
 \noindent * Addresses for correspondence: \href{mailto:Dylan.Lawless@kispi.uzh.ch}{Dylan.Lawless@kispi.uzh.ch}.\\
 % \noindent  \textsuperscript{† }These authors contributed equally and are listed alphabetically.\\
 \textbf{Availability:} This data is integrated in public panels at 
@@ -668,9 +680,11 @@ A Kruskal-Wallis test was used to compare the observed disease probability acros
 
 \subsection{Probability model definitions}
 Estimating disease risk requires accounting for both variant penetrance, $P(D\mid G)$, where $D$ denotes the disease state and $G$ the genotype, and the fraction of cases attributable to a given variant, $P(G\mid D)$. In a fully penetrant single-variant model ($P(D\mid G)=1$), the lifetime risk $P(D)$ equals the genotype frequency $P(G)$. For an allele with population frequency $p$, this gives $P(D)=p^2$ for a recessive mode of inheritance and $P(D)=2p(1-p)\approx2p$ for a dominant mode. With incomplete penetrance, $P(D)=P(G)\,P(D\mid G)$, and when multiple variants contribute to disease,  
+
 \[
 P(D)=\frac{P(G)\,P(D\mid G)}{P(G\mid D)}.
 \]
+
 Because both $P(D\mid G)$ and $P(G\mid D)$ are often uncertain, we integrate ClinVar clinical classifications, population allele frequencies and curated gene–disease associations, assuming James-Stein shrinkage to derive robust aggregate priors. By focusing on a filtered set of variants $\mathcal{V}$ where each $P(G_i\mid D)$ is the probability that disease $D$ is attributable to variant $i$ and assuming $\sum_{i\in\mathcal{V}}P(G_i\mid D)\approx1$, we obtain calibrated estimates of genotype frequency $P(G)$ despite uncertainty in individual parameters. 
 
 
@@ -781,7 +795,7 @@ This output can directly inform follow-up actions, such as functional validation
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.99\textwidth]{../images/plot_scenario_2_quant_uncert_ci.pdf}
+  \includegraphics[width=0.85\textwidth]{../images/plot_scenario_2_quant_uncert_ci.pdf}
   \caption{
     \textbf{Quantification of present (\ac{tp}) and missing (\ac{fn}) causal genetic variants for disease in \textit{NFKB1} (scenario 2).}
     The example proband carried three known heterozygous variants, including pathogenic \texttt{p.Ser237Ter}, and had incomplete coverage at three additional loci, including likely-pathogenic splice-site variant \texttt{c.159+1G{\small\textgreater}A}.  The sequential steps towards the posterior  probability of complete genetic diagnosis are shown:
@@ -839,17 +853,13 @@ We attributed this discrepancy to the lower penetrance and higher background fre
 Overall, we report that agreement within an order of magnitude was tolerable given the inherent uncertainties from reference studies arising from variable penetrance and allele frequencies.
 
 \FloatBarrier
-\subsection{Application in inborn errors of immunity}
-\subsection{Genetic constraint in high-impact protein networks}
 
-Sean- In this section I was lost. I don't see the connection to the previous sections, or how it relates to the original goals.
+\subsection{Application to inborn errors of immunity}
+\subsubsection{Genetic constraint in high-impact protein networks}
 
-Dylan - I need an introduction here with reasoning to show that instead of focusing on every IEI gene individually, we can cluster them based on protein networks and phenotypes, thereby increasing the value of the traditional IUIS IEI classification. 
+We next applied our framework to \ac{iei},  a disease area in which we have expertise and which offers a well-curated gene set to validate genome-wide estimates and demonstrate potential applications \cite{poli_human_2025}. 
 
-
-
-We next examined genetic constraint in high-impact protein networks across the whole \ac{iei} gene set of over 500 known disease-gene phenotypes \cite{poli_human_2025}. By integrating ClinVar variant classification scores with \ac{ppi} data, we quantified the pathogenic burden per gene and assessed its relationship with network connectivity and genetic constraint
-\cite{szklarczyk2025string, karczewski2020mutational}.
+Given that pathogenicity in \ac{iei} may reflect shared molecular pathways, we integrated ClinVar-derived variant probability estimates with \ac{ppi}  data to quantify pathogenic burden per gene and examine whether genetic constraint aggregates within specific networks and corresponds to established \ac{iei} classifications and immunophenotypes \cite{szklarczyk2025string, karczewski2020mutational}.
 
 \subsubsection{Score-positive-total within IEI PPI network}
 
@@ -911,13 +921,13 @@ This indicated that shared mechanisms within pathway clusters may underpin genet
 % \subsubsection{Network Analysis of Enriched Significant Clusters Based on \ac{gnomad} Constraint}
 \textbf{Figure \ref{fig:p_cor_spear_rho_sig_clust_patch3} (C, D)} shows the re-plotted \ac{ppi} networks for clusters with significant correlations between \ac{ppi} degree and \ac{loeuf} upper rank. In these networks, node size is scaled by a normalised variant score, while node colour reflects the variant score according to a predefined palette.
 
-\subsection{New insight from functional enrichment}
+\subsubsection{New insight from functional enrichment}
 To interpret the functional relevance of our prioritised \ac{iei} gene sets with the highest load of damaging variants (i.e. clusters 2 and 4 in \textbf{Figure \ref{fig:p_cor_spear_rho_sig_clust_patch3}}), we performed functional enrichment analysis for known disease associations using MsigDB with FUMA (i.e. GWAScatalog and Immunologic Signatures) \cite{watanabe_functional_2017}. Composite enrichment profiles (\textbf{Figure \ref{fig:fuma_merge}}) reveal that our enriched \ac{ppi} clusters were associated with distinct disease-related phenotypes, providing functional insights beyond traditional \ac{iuis} \ac{iei} groupings \cite{poli_human_2025}. The gene expression profiles shown in \textbf{Figure \ref{fig:expHeatmaps}} (GTEx v8 54 tissue types) offer the tissue-specific context for these associations. Together, these results enable the annotation of \ac{iei} gene sets with established disease phenotypes, supporting a data-driven classification of \ac{iei}.
 
 Based on these independent sources of interpretation, we observed that genes from cluster 2 were independently associated with specific inflammatory phenotypes, including ankylosing spondylitis, psoriasis, inflammatory bowel disease, and rheumatoid arthritis, as well as quantitative immune traits such as lymphocyte and neutrophil percentages and serum protein levels.
 In contrast, genes from cluster 4 were linked to ocular and complement-related phenotypes, notably various forms of age-related macular degeneration (e.g. geographic atrophy and choroidal neovascularisation) and biomarkers of the complement system (e.g. C3, C4, and factor H-related proteins), with additional associations to nephropathy and pulmonary function metrics.
 
-\subsection{Genome-wide gene distribution and linkage disequilibrium}
+\subsubsection{Genome-wide gene distribution and linkage disequilibrium}
 
 \textbf{Figure \ref{fig:karyo_locusplot_merged} (A)} shows a genome-wide karyoplot of all \ac{iei} panel genes across GRCh38, with colour-coding based on \ac{moi}. Figures \textbf{(B)} and \textbf{(C)} display zoomed-in locus plots for \textit{NFKB1} and \textit{CFTR}, respectively. 
 In \textbf{Figure \ref{fig:karyo_locusplot_merged} (B)}, the probability of observing variants with known classifications is high only for variants such as p.Ala475Gly, which are considered benign in the \ac{ad} \textit{NFKB1} gene that is intolerant to \ac{lof}. 
@@ -931,7 +941,7 @@ In \textbf{Figure \ref{fig:karyo_locusplot_merged} (C)}, high probabilities of o
 \end{figure}
 
 \FloatBarrier
-\subsection{Novel PID classifications derived from genetic PPI and clinical features}
+\subsubsection{Novel PID classifications derived from genetic PPI and clinical features}
 We recategorised 315 immunophenotypic features from the original \ac{iuis} \ac{iei} annotations, reducing detailed descriptions (e.g.\ “decreased CD8, normal or decreased CD4”) to minimal labels (e.g.\ “low”) and then binarising them (normal vs.\ not-normal) for T cells, B cells, \ac{ig} and neutrophils 
 (\textbf{Figure \ref{fig:immunophenotype_before_after}}). 
 These simplified profiles were mapped onto STRINGdb \ac{ppi} clusters, revealing non‑random distributions ($\chi^2 < 1e‑13$; 
@@ -1105,7 +1115,7 @@ By continuously updating classical estimates with emerging data and prior knowle
 
 \clearpage
 \section{Conclusion}
-Our work generates prior probabilities for observing any variant classification in \ac{iei} genetic disease, providing a quantitative resource to enhance Bayesian variant interpretation and clinical decision-making.
+We present a statistical framework that resolves the long-standing challenge of quantifying the probability that any candidate variant is causal for genetic disease. Unlike traditional methods that stop at pathogenic or benign labels, our approach integrates both observed variants and the possibility of unobserved causal alleles into a single probabilistic model. By combining classical population genetics, large-scale variant data, and Bayesian inference, we generate genome-wide priors across inheritance modes and provide credible intervals that reflect both evidence and residual uncertainty. Although demonstrated here in inborn errors of immunity, the framework is broadly applicable and establishes a quantitative foundation for variant interpretation, clinical decision-making, and future genomic analyses.
 
 \section*{Acknowledgements}
 \noindent
