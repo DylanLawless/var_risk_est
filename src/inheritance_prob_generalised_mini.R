@@ -41,7 +41,7 @@ process_db_chunk <- function(chunk, pos) {
   colnames(chunk) <- header_fields
   
   # Select relevant columns
-  chunk <- chunk %>% select(genename, `pos(1-based)`, gnomAD_genomes_AN, gnomAD_genomes_AF, 
+  chunk <- chunk %>% select(genename, chr, `hg18_chr`, `hg19_chr`, `pos(1-based)`, gnomAD_genomes_AN, gnomAD_genomes_AF, 
                             clinvar_clnsig, HGVSc_VEP, HGVSp_VEP)
   
   # Replace missing values and convert allele frequency and number to numeric

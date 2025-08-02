@@ -2,6 +2,7 @@
 
 \begin{document}
 \title{Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity}
+%\title{Bayesian quantification of causal variant probabilities improves genetic diagnosis in inborn errors of immunity}
 
 % in your preamble, before \author:
 \newcommand{\QUANT}{1}
@@ -392,7 +393,57 @@ Each ClinVar classification was assigned an integer score: pathogenic = +5, like
 % --------------------------------------------------------------------------
 % Methods, Results and Discussion: gene‑level pathogenic attribution
 % --------------------------------------------------------------------------
-\subsection{Integrating observed true positives and unobserved false negatives into a single, actionable conclusion}
+
+\subsection{Bayesian framework for posterior probability of genetic diagnosis}
+
+We developed a Bayesian framework to estimate the probability that at least one variant in a given genome or target set is both present and clinically relevant in a proband. The method combines variant-specific priors derived from any classification system or scoring scheme with a probabilistic model of genotype presence, incorporating both observed and unsequenced genomic positions.
+
+\paragraph{Prior specification.}
+Each variant \( i \) was assigned a prior probability \( p_i \) reflecting its likelihood of being relevant to the user's target interpretation. This could include, for example, being classified as pathogenic, benign, or uncertain significance, or being prioritised by a quantitative scoring scheme. The priors may be derived from allele frequency, expert curation, functional prediction, or any other source of variant-level evidence. The framework supports modular priors without constraint, % accurate diagnostic inference generally requires gene‑disease information, including the \ac{moi}, to determine whether one or multiple variants are needed to explain the phenotype.
+In our implementation, priors are derived from ClinVar classification, gnomAD population frequency, and \ac{moi} specified with PanelAppRex gene-disease curation. We modelled the latent causality of each variant as a Beta distribution parameterised by
+
+$$
+\alpha_i = \text{round}(p_i \cdot A_N) + w, \qquad \beta_i = A_N - \text{round}(p_i \cdot A_N) + 1,
+$$
+
+where \( A_N \) is the total number of callable alleles at the site (e.g. \( A_N = 2n \) for \( n \) diploid individuals), and \( w \) is a small stabilising constant (typically \( w = 1 \)). This construction reflects the expected frequency of the variant in the tested cohort under the assumption of causal relevance.
+
+\paragraph{Posterior simulation.}
+We drew \( N = 10{,}000 \) samples from the Beta prior to approximate a posterior distribution for each variant:
+
+$$
+\theta_i^{(m)} \sim \text{Beta}(\alpha_i, \beta_i), \quad m = 1,\dots,N.
+$$
+
+In each simulation round, these values were normalised across all variants to reflect the relative share of the total causal signal:
+
+$$
+\tilde{\theta}_i^{(m)} = \frac{\theta_i^{(m)}}{\sum_j \theta_j^{(m)}}, \qquad \hat{P}_i = \frac{1}{N} \sum_{m=1}^{N} \tilde{\theta}_i^{(m)}.
+$$
+
+This yields a posterior expectation of variant-level contribution, which can be thresholded or ranked depending on the application.
+
+\paragraph{Genotype presence model.}
+Independently from the classification or interpretive context, each variant was assigned a probability \( q_i \in [0,1] \) of being present in the proband. For observed alternate genotypes, \( q_i = 1 \); for confidently called reference genotypes, \( q_i = 0 \); and for unsequenced or uncertain sites, \( q_i \) was set to the prior probability \( p_i \), or an alternative estimate reflecting presence likelihood.
+For each simulation round, we drew a genotype indicator:
+
+$$
+G_i^{(m)} \sim \text{Bernoulli}(q_i),
+$$
+
+and computed the total interpreted variant probability:
+
+$$
+T^{(m)} = \sum_i G_i^{(m)} \cdot \tilde{\theta}_i^{(m)}.
+$$
+
+The empirical distribution of \( \{T^{(m)}\} \) represents the posterior belief that the proband harbours at least one variant matching the specified interpretive criteria in the given gene or set. Summary statistics, such as the posterior median and 95\% credible interval, are used to report this probability with interval-based accountability.
+
+\paragraph{Flexibility and implementation.}
+This framework generalises across different scoring systems, prior models, and sequencing contexts. It can incorporate uncertain classifications, variant weights, unsequenced positions, or alternative genotype priors without altering the core inference structure. The method is implemented in R with modular inputs and reproducible simulation logic.
+
+\subsection{Application to diagnostic scenarios with observed and unobserved variant data}
+% \subsection{Integrating observed true positives and unobserved false negatives into a single, actionable conclusion}
 
 In this section, we detail our approach to integrating sequencing data with prior classification evidence (e.g. pathogenic on ClinVar) to calculate the posterior probability of a complete successful genetic diagnosis.
 Our method is designed to account for possible outcomes of 
@@ -465,6 +516,8 @@ The proband spiked data had either:
 (2) inclusion of an additional plausible yet non-sequenced splice‑donor allele \ac{nfkb1}  \texttt{c.159+1G{\small\textgreater}A} (likely pathogenic) as a \ac{fn}, and 
 (3) where no known causal variants were present for a patient, one representative variant from each distinct ClinVar classification was selected and marked as unsequenced to emulate a range of putative \acp{fn}. The selected variants were: \ac{tnfaip3} \texttt{p.Cys243Arg} (pathogenic), \texttt{p.Tyr246Ter} (likely pathogenic), \texttt{p.His646Pro} (conflicting interpretations of pathogenicity), \texttt{p.Thr635Ile} (uncertain significance), \texttt{p.Arg162Trp} (not provided), \texttt{p.Arg280Trp} (likely benign), \texttt{p.Ile207Leu} (benign/likely benign), and \texttt{p.Lys304Glu} (benign). 
 All subsequent steps were identical.
+
+
 
 \subsection{Validation of autosomal dominant estimates using \textit{NFKB1}}
 
@@ -1118,7 +1171,9 @@ By continuously updating classical estimates with emerging data and prior knowle
 
 \clearpage
 \section{Conclusion}
-We present a statistical framework that resolves the long-standing challenge of quantifying the probability that any candidate variant is causal for genetic disease. Unlike traditional methods that stop at pathogenic or benign labels, our approach integrates both observed variants and the possibility of unobserved causal alleles into a single probabilistic model. By combining classical population genetics, large-scale variant data, and Bayesian inference, we generate genome-wide priors across inheritance modes and provide credible intervals that reflect both evidence and residual uncertainty. Although demonstrated here in inborn errors of immunity, the framework is broadly applicable and establishes a quantitative foundation for variant interpretation, clinical decision-making, and future genomic analyses.
+%We present a statistical framework that resolves the long-standing challenge of quantifying the probability that any candidate variant is causal for genetic disease. Unlike traditional methods that stop at pathogenic or benign labels, our approach integrates both observed variants and the possibility of unobserved causal alleles into a single probabilistic model. By combining classical population genetics, large-scale variant data, and Bayesian inference, we generate genome-wide priors across inheritance modes and provide credible intervals that reflect both evidence and residual uncertainty. Although demonstrated here in inborn errors of immunity, the framework is broadly applicable and establishes a quantitative foundation for variant interpretation, clinical decision-making, and future genomic analyses.
+
+We present a statistical framework that quantifies the probability that any candidate variant is causally relevant to a genetic disorder, integrating both observed genotypes and the possibility of unobserved, disease-causing alleles. The model replaces binary classification schemes with continuous variant-level posterior probabilities and credible intervals that account for evidence strength, genotype availability, and residual uncertainty. By combining classical population genetics, inheritance mode, variant classification, and Bayesian inference, it supports inference across incomplete or ambiguous sequencing data by modelling the full space of plausible causal variants. This enables principled interpretation in scenarios involving compound heterozygosity, low coverage, or uncertain variant evidence, and offers a reproducible metric for estimating the probability of a genetic diagnosis at the level of a gene, panel, or genome. Although demonstrated here in the context of inborn errors of immunity, the framework is generalisable to other rare disease cohorts and supports future work on quantitative variant interpretation at scale.
 
 \section*{Acknowledgements}
 \noindent
@@ -1133,11 +1188,11 @@ GnomAD request that usages cites the \ac{gnomad} flagship paper \cite{karczewski
 and any online resources that include the data set provide a link to the browser, and note that tool includes data from the \ac{gnomad} v4.1 release.
 AlphaMissense asks to cite \citet{cheng_accurate_2023} for usage in research, with data available from \citet{jun_cheng_2023_8208688}.
 
-
 \section*{Contributions}
 \noindent 
 DL performed main analyses and wrote the manuscript.
 SB, AS, MS, and JT designed analysis and wrote the manuscript.
+DSF, and SS wrote the manuscript.
 JF, LJS supervised the work, and applied for funding.
 The Quant Group is a collaboration across multiple institutions where authors contribute equally; the members on this project were DL, SB, AS, and MS.
 

@@ -1,5 +1,6 @@
 %%%% Document type  %%%%
-\documentclass[preprint,12pt,fleqn]{article}
+%\documentclass[preprint,12pt,fleqn]{article}
+\documentclass[12pt]{article}
 \usepackage{ragged2e}
 
 % \usepackage{nopageno} % no page numbers
@@ -29,7 +30,7 @@
 
 \usepackage{lineno} % used along with \linenumbers after begin document. 
 \usepackage{setspace} 
-% \setstretch{1.4}
+\setstretch{1.25}
 \makeatletter % The following lines get rid of footer stating pre-preint to elsevier.
 \def\ps@pprintTitle{%
 \let\@oddhead\@empty
@@ -56,7 +57,8 @@
 \usepackage{nameref}% this allows a reference be named, to print unnumbered references by their section name (used here for linking to Supplemental text in this case).
 
 %%%% Paragraph Formatting %%%
-\setlength{\parindent}{0pt}
+% \setlength{\parindent}{0pt}
+\setlength{\parindent}{15pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 
 %%%% Supplemental labels%%%%
@@ -140,3 +142,7 @@
 \renewcommand\Authfont{\normalsize}
 \renewcommand\Affilfont{\small}
 \setlength{\affilsep}{1em}
+
+\usepackage{fontspec}
+\usepackage{titlesec}
+\setmainfont{SF Pro Text}

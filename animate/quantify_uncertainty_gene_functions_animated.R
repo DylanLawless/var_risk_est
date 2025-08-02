@@ -60,7 +60,7 @@ p <- ggplot(df, aes(x = value, y = value)) +
 
 
 anim0 <- animate(p, duration = 3, fps = 20, width = 700, height = 700, res = 120)
-gif_filename <- file.path("./qunat_anim0.gif")
+gif_filename <- file.path("./quant_anim0.gif")
 anim_save(gif_filename, anim0)
 
 # 1 ----
@@ -103,7 +103,7 @@ p_prior_anim <- ggplot(prior_df_anim,
 
 # animate(p_prior_anim, fps = 20, duration = 3, width = 600, height = 400)
 anim1 <- animate(p_prior_anim, duration = 3, fps = 20, width = 700, height = 700, res = 120)
-gif_filename <- file.path("./qunat_anim1.gif")
+gif_filename <- file.path("./quant_anim1.gif")
 anim_save(gif_filename, anim1)
 
 
@@ -215,7 +215,7 @@ p_dist_anim <- ggplot(hist_df, aes(x = bin_mid, y = count, fill = score)) +
 # animate(p_dist_anim, fps = 20, duration = 3, width = 400, height = 400)
 # anim2 <- animate(p_anim, nframes = 100, fps = 10, width = 700, height = 500, res = 120)
 anim2 <- animate(p_dist_anim, duration = 3, fps = 20, width = 700, height = 700, res = 120)
-gif_filename <- file.path("./qunat_anim2.gif")
+gif_filename <- file.path("./quant_anim2.gif")
 anim_save(gif_filename, anim2)
 
 # ggsave(paste0("../images/plot_scenario_", scenario, "_quant_uncert_ci.pdf"), plot = p_quant, width = 9, height = 7)
@@ -315,7 +315,7 @@ p_source_stack_anim <- ggplot(interp_df, aes(x = flag, y = prob_plot_interp, fil
 # Animate
 # animate(p_anim, fps = 20, width = 800, height = 500, res = 120)
 anim3 <- animate(p_source_stack_anim, duration = 3, fps = 20, width = 700, height = 700, res = 120)
-gif_filename <- file.path("./qunat_anim3.gif")
+gif_filename <- file.path("./quant_anim3.gif")
 anim_save(gif_filename, anim3)
 
 
@@ -421,7 +421,7 @@ p_anim_dist <- ggplot(anim_df, aes(x = value)) +
 # animate(p_anim_dist, fps = 20, width = 700, height = 400, res = 120)
 
 anim4 <- animate(p_anim_dist, duration = 3, fps = 20, width = 700, height = 700, res = 120)
-gif_filename <- file.path("./qunat_anim4.gif")
+gif_filename <- file.path("./quant_anim4.gif")
 anim_save(gif_filename, anim4)
 
 
