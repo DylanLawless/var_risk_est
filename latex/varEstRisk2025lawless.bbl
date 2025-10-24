@@ -211,16 +211,12 @@ Ahmed~Aziz Bousfiha, Leïla Jeddane, Abderrahmane Moundir, M.~Cecilia Poli,
 \newblock URL
   \url{https://rupress.org/jhi/article/1/1/e20250002/277374/The-2024-update-of-IUIS-phenotypic-classification}.
 
-\bibitem[Liu et~al.(2020)Liu, Li, Mou, Dong, and Tu]{liu_dbnsfp_2020}
-Xiaoming Liu, Chang Li, Chengcheng Mou, Yibo Dong, and Yicheng Tu.
-\newblock {dbNSFP} v4: a comprehensive database of transcript-specific
-  functional predictions and annotations for human nonsynonymous and
-  splice-site {SNVs}.
-\newblock \emph{Genome Medicine}, 12\penalty0 (1):\penalty0 103, December 2020.
-\newblock ISSN 1756-994X.
-\newblock \doi{10.1186/s13073-020-00803-9}.
-\newblock URL
-  \url{https://genomemedicine.biomedcentral.com/articles/10.1186/s13073-020-00803-9}.
+\bibitem[Lawless(2025{\natexlab{b}})]{lawless_2025_15111584}
+Dylan Lawless.
+\newblock Variant risk estimate probabilities for iei genes.
+\newblock March 2025{\natexlab{b}}.
+\newblock \doi{10.5281/zenodo.15111584}.
+\newblock URL \url{https://doi.org/10.5281/zenodo.15111584}.
 
 \bibitem[Szklarczyk et~al.(2025)Szklarczyk, Nastou, Koutrouli, Kirsch,
   Mehryary, Hachilif, Hu, Peluso, Huang, Fang, et~al.]{szklarczyk2025string}
@@ -232,70 +228,6 @@ Damian Szklarczyk, Katerina Nastou, Mikaela Koutrouli, Rebecca Kirsch, Farrokh
 \newblock \emph{Nucleic Acids Research}, 53\penalty0 (D1):\penalty0 D730--D737,
   2025.
 
-\bibitem[Cheng et~al.(2023{\natexlab{b}})Cheng, Novati, Pan, Bycroft,
-  Žemgulytė, Applebaum, Pritzel, Wong, Zielinski, Sargeant, Schneider,
-  Senior, Jumper, Hassabis, Kohli, and Žiga Avsec]{jun_cheng_2023_8208688}
-Jun Cheng, Guido Novati, Joshua Pan, Clare Bycroft, Akvilė Žemgulytė, Taylor
-  Applebaum, Alexander Pritzel, Lai~Hong Wong, Michal Zielinski, Tobias
-  Sargeant, Rosalia~G. Schneider, Andrew~W. Senior, John Jumper, Demis
-  Hassabis, Pushmeet Kohli, and Žiga Avsec.
-\newblock Predictions for alphamissense, September 2023{\natexlab{b}}.
-\newblock URL \url{https://doi.org/10.5281/zenodo.8208688}.
-
-\bibitem[Tuijnenburg et~al.(2018)Tuijnenburg, Lango~Allen, Burns, Greene,
-  Jansen, and Others.]{tuijnenburgNFKB12018}
-Paul Tuijnenburg, Hana Lango~Allen, Siobhan~O. Burns, Daniel Greene, Machiel~H.
-  Jansen, and Others.
-\newblock Loss-of-function nuclear factor κ{B} subunit 1 ({NFKB1}) variants
-  are the most common monogenic cause of common variable immunodeficiency in
-  {Europeans}.
-\newblock \emph{Journal of Allergy and Clinical Immunology}, 142\penalty0
-  (4):\penalty0 1285--1296, October 2018.
-\newblock ISSN 00916749.
-\newblock \doi{10.1016/j.jaci.2018.01.039}.
-\newblock URL
-  \url{https://linkinghub.elsevier.com/retrieve/pii/S0091674918302860}.
-
-\bibitem[Group et~al.(1997)]{who1997primary}
-WHO~Scientific Group et~al.
-\newblock Primary immunodeficiency diseases: report of a who scientific group.
-\newblock \emph{Clin. Exp. Immunol.}, 109\penalty0 (1):\penalty0 1--28, 1997.
-
-\bibitem[Cunningham-Rundles and Bodian(1999)]{cunningham1999common}
-Charlotte Cunningham-Rundles and Carol Bodian.
-\newblock Common variable immunodeficiency: clinical and immunological features
-  of 248 patients.
-\newblock \emph{Clinical immunology}, 92\penalty0 (1):\penalty0 34--48, 1999.
-
-\bibitem[Oksenhendler et~al.(2008)Oksenhendler, G{\'e}rard, Fieschi,
-  Malphettes, Mouillot, Jaussaud, Viallard, Gardembas, Galicier, Schleinitz,
-  et~al.]{oksenhendler2008infections}
-Eric Oksenhendler, Laurence G{\'e}rard, Claire Fieschi, Marion Malphettes, Gael
-  Mouillot, Roland Jaussaud, Jean-Fran{\c{c}}ois Viallard, Martine Gardembas,
-  Lionel Galicier, Nicolas Schleinitz, et~al.
-\newblock Infections in 252 patients with common variable immunodeficiency.
-\newblock \emph{Clinical Infectious Diseases}, 46\penalty0 (10):\penalty0
-  1547--1554, 2008.
-
-\bibitem[Naito et~al.(2023)Naito, Adams, Charman, Duckers, Davies, and
-  Clarke]{naito2023uk}
-Y~Naito, F~Adams, S~Charman, J~Duckers, G~Davies, and S~Clarke.
-\newblock Uk cystic fibrosis registry 2023 annual data report.
-\newblock \emph{London: Cystric Fibrosis Trust}, 2023.
-
-\bibitem[Castellani et~al.(2013)Castellani, team, et~al.]{castellani2013cftr2}
-Carlo Castellani, CFTR2 team, et~al.
-\newblock Cftr2: how will it help care?
-\newblock \emph{Paediatric respiratory reviews}, 14:\penalty0 2--5, 2013.
-
-\bibitem[Grasemann and Ratjen(2023)]{Grasemann2023cftr}
-Hartmut Grasemann and Felix Ratjen.
-\newblock Cystic fibrosis.
-\newblock \emph{New England Journal of Medicine}, 389\penalty0 (18):\penalty0
-  1693--1707, 2023.
-\newblock \doi{10.1056/NEJMra2216474}.
-\newblock URL \url{https://www.nejm.org/doi/full/10.1056/NEJMra2216474}.
-
 \bibitem[Watanabe et~al.(2017)Watanabe, Taskesen, Van~Bochoven, and
   Posthuma]{watanabe_functional_2017}
 Kyoko Watanabe, Erdogan Taskesen, Arjen Van~Bochoven, and Danielle Posthuma.
@@ -306,25 +238,6 @@ Kyoko Watanabe, Erdogan Taskesen, Arjen Van~Bochoven, and Danielle Posthuma.
 \newblock ISSN 2041-1723.
 \newblock \doi{10.1038/s41467-017-01261-5}.
 \newblock URL \url{https://www.nature.com/articles/s41467-017-01261-5}.
-
-\bibitem[Liberzon et~al.(2011)Liberzon, Subramanian, Pinchback,
-  Thorvaldsdóttir, Tamayo, and Mesirov]{liberzon_molecular_2011}
-Arthur Liberzon, Aravind Subramanian, Reid Pinchback, Helga Thorvaldsdóttir,
-  Pablo Tamayo, and Jill~P. Mesirov.
-\newblock Molecular signatures database ({MSigDB}) 3.0.
-\newblock \emph{Bioinformatics}, 27\penalty0 (12):\penalty0 1739--1740, June
-  2011.
-\newblock ISSN 1367-4811, 1367-4803.
-\newblock \doi{10.1093/bioinformatics/btr260}.
-\newblock URL
-  \url{https://academic.oup.com/bioinformatics/article/27/12/1739/257711}.
-
-\bibitem[Lawless(2025{\natexlab{b}})]{lawless_2025_15111584}
-Dylan Lawless.
-\newblock Variant risk estimate probabilities for iei genes.
-\newblock March 2025{\natexlab{b}}.
-\newblock \doi{10.5281/zenodo.15111584}.
-\newblock URL \url{https://doi.org/10.5281/zenodo.15111584}.
 
 \bibitem[Minikel et~al.(2016)Minikel, Vallabh, Lek, Estrada, Samocha,
   Sathirapongsasuti, McLean, Tung, Yu, Gambetti, Blevins, Zhang, Cohen, Chen,
@@ -490,5 +403,92 @@ David~T Miller, Kristy Lee, Noura~S Abul-Husn, Laura~M Amendola, Kyle Brothers,
   exome and genome sequencing: a policy statement of the american college of
   medical genetics and genomics (acmg).
 \newblock \emph{Genetics in Medicine}, 25\penalty0 (8):\penalty0 100866, 2023.
+
+\bibitem[Cheng et~al.(2023{\natexlab{b}})Cheng, Novati, Pan, Bycroft,
+  Žemgulytė, Applebaum, Pritzel, Wong, Zielinski, Sargeant, Schneider,
+  Senior, Jumper, Hassabis, Kohli, and Žiga Avsec]{jun_cheng_2023_8208688}
+Jun Cheng, Guido Novati, Joshua Pan, Clare Bycroft, Akvilė Žemgulytė, Taylor
+  Applebaum, Alexander Pritzel, Lai~Hong Wong, Michal Zielinski, Tobias
+  Sargeant, Rosalia~G. Schneider, Andrew~W. Senior, John Jumper, Demis
+  Hassabis, Pushmeet Kohli, and Žiga Avsec.
+\newblock Predictions for alphamissense, September 2023{\natexlab{b}}.
+\newblock URL \url{https://doi.org/10.5281/zenodo.8208688}.
+
+\bibitem[Liu et~al.(2020)Liu, Li, Mou, Dong, and Tu]{liu_dbnsfp_2020}
+Xiaoming Liu, Chang Li, Chengcheng Mou, Yibo Dong, and Yicheng Tu.
+\newblock {dbNSFP} v4: a comprehensive database of transcript-specific
+  functional predictions and annotations for human nonsynonymous and
+  splice-site {SNVs}.
+\newblock \emph{Genome Medicine}, 12\penalty0 (1):\penalty0 103, December 2020.
+\newblock ISSN 1756-994X.
+\newblock \doi{10.1186/s13073-020-00803-9}.
+\newblock URL
+  \url{https://genomemedicine.biomedcentral.com/articles/10.1186/s13073-020-00803-9}.
+
+\bibitem[Tuijnenburg et~al.(2018)Tuijnenburg, Lango~Allen, Burns, Greene,
+  Jansen, and Others.]{tuijnenburgNFKB12018}
+Paul Tuijnenburg, Hana Lango~Allen, Siobhan~O. Burns, Daniel Greene, Machiel~H.
+  Jansen, and Others.
+\newblock Loss-of-function nuclear factor κ{B} subunit 1 ({NFKB1}) variants
+  are the most common monogenic cause of common variable immunodeficiency in
+  {Europeans}.
+\newblock \emph{Journal of Allergy and Clinical Immunology}, 142\penalty0
+  (4):\penalty0 1285--1296, October 2018.
+\newblock ISSN 00916749.
+\newblock \doi{10.1016/j.jaci.2018.01.039}.
+\newblock URL
+  \url{https://linkinghub.elsevier.com/retrieve/pii/S0091674918302860}.
+
+\bibitem[Group et~al.(1997)]{who1997primary}
+WHO~Scientific Group et~al.
+\newblock Primary immunodeficiency diseases: report of a who scientific group.
+\newblock \emph{Clin. Exp. Immunol.}, 109\penalty0 (1):\penalty0 1--28, 1997.
+
+\bibitem[Cunningham-Rundles and Bodian(1999)]{cunningham1999common}
+Charlotte Cunningham-Rundles and Carol Bodian.
+\newblock Common variable immunodeficiency: clinical and immunological features
+  of 248 patients.
+\newblock \emph{Clinical immunology}, 92\penalty0 (1):\penalty0 34--48, 1999.
+
+\bibitem[Oksenhendler et~al.(2008)Oksenhendler, G{\'e}rard, Fieschi,
+  Malphettes, Mouillot, Jaussaud, Viallard, Gardembas, Galicier, Schleinitz,
+  et~al.]{oksenhendler2008infections}
+Eric Oksenhendler, Laurence G{\'e}rard, Claire Fieschi, Marion Malphettes, Gael
+  Mouillot, Roland Jaussaud, Jean-Fran{\c{c}}ois Viallard, Martine Gardembas,
+  Lionel Galicier, Nicolas Schleinitz, et~al.
+\newblock Infections in 252 patients with common variable immunodeficiency.
+\newblock \emph{Clinical Infectious Diseases}, 46\penalty0 (10):\penalty0
+  1547--1554, 2008.
+
+\bibitem[Naito et~al.(2023)Naito, Adams, Charman, Duckers, Davies, and
+  Clarke]{naito2023uk}
+Y~Naito, F~Adams, S~Charman, J~Duckers, G~Davies, and S~Clarke.
+\newblock Uk cystic fibrosis registry 2023 annual data report.
+\newblock \emph{London: Cystric Fibrosis Trust}, 2023.
+
+\bibitem[Castellani et~al.(2013)Castellani, team, et~al.]{castellani2013cftr2}
+Carlo Castellani, CFTR2 team, et~al.
+\newblock Cftr2: how will it help care?
+\newblock \emph{Paediatric respiratory reviews}, 14:\penalty0 2--5, 2013.
+
+\bibitem[Grasemann and Ratjen(2023)]{Grasemann2023cftr}
+Hartmut Grasemann and Felix Ratjen.
+\newblock Cystic fibrosis.
+\newblock \emph{New England Journal of Medicine}, 389\penalty0 (18):\penalty0
+  1693--1707, 2023.
+\newblock \doi{10.1056/NEJMra2216474}.
+\newblock URL \url{https://www.nejm.org/doi/full/10.1056/NEJMra2216474}.
+
+\bibitem[Liberzon et~al.(2011)Liberzon, Subramanian, Pinchback,
+  Thorvaldsdóttir, Tamayo, and Mesirov]{liberzon_molecular_2011}
+Arthur Liberzon, Aravind Subramanian, Reid Pinchback, Helga Thorvaldsdóttir,
+  Pablo Tamayo, and Jill~P. Mesirov.
+\newblock Molecular signatures database ({MSigDB}) 3.0.
+\newblock \emph{Bioinformatics}, 27\penalty0 (12):\penalty0 1739--1740, June
+  2011.
+\newblock ISSN 1367-4811, 1367-4803.
+\newblock \doi{10.1093/bioinformatics/btr260}.
+\newblock URL
+  \url{https://academic.oup.com/bioinformatics/article/27/12/1739/257711}.
 
 \end{thebibliography}

@@ -258,7 +258,8 @@ plot_occurrence_by_class <- function(df_af, gene) {
     scale_x_discrete(labels = c("LBen" = "Benign", "Amb" = "Unknown", "LPath" = "Pathogenic")) +
     labs(subtitle = annot_text,
          x = "Classification",
-         y = "Observed Disease\nProbability") +
+         # y = "Observed Disease\nProbability"
+         y = "Modelled probability\nof variant observation") +
     theme_minimal(base_size = 14) +
     theme(legend.position = "none",
           axis.text.x = element_text(angle = 45, hjust = 1))
