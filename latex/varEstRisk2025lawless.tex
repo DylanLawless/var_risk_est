@@ -1,8 +1,14 @@
 \input{head.tex}
 
 \begin{document}
+
+\newcounter{myboxcounter}
+\newcommand{\boxlabel}[1]{%
+  \refstepcounter{myboxcounter}%
+  \label{#1}%
+}
+
 \title{Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity}
-%\title{Bayesian quantification of causal variant probabilities improves genetic diagnosis in inborn errors of immunity}
 
 % in your preamble, before \author:
 \newcommand{\QUANT}{1}
@@ -34,33 +40,26 @@
 \maketitle
 \justify
 
-%Abstract: 150 of 150. Main text:  3931 of 4000 (intro, result, discussion, conclusion). Display (4 figures / 2 tables) of 8 total. Extended display: 13 of 10. Note that this journal uses separate online methods.
+%Abstract: 150 of 150. Main text:  3931 of 4000 (intro, result, discussion, conclusion). Display (4 figures / 2 tables) of 8 total. Extended display: x of 10. Note that this journal uses separate online methods.
 
 \clearpage
- \linenumbers
+%  \linenumbers
 \begin{abstract} 
-%We present a framework to quantify the prior probability of observing known disease-causing variants across all genes and inheritance modes. 
-%First, we computed genome-wide occurrence probabilities by integrating population allele frequencies, variant classifications, and Hardy-Weinberg expectations under autosomal dominant, recessive, and X-linked inheritance. 
-%Second, both pathogenic variants and missing causal candidates were tested to identify the most likely genetic disease determinant and provide a clear confidence range for the overall diagnosis. 
-%This provided a complete and interpretable summary of evidence for genetic diagnosis.
-%Third, we summarised variant probabilities for 557 genes responsible for inborn errors of immunity (IEI), now integrated into a public database. 
-%Fourth, we derived new data-driven IEI classifications using protein-protein interactions and curated clinical features, aligned to immunophenotypes. 
-%Finally, we validated the framework in national-scale cohorts, showing close concordance with observed case numbers. 
-%The resulting datasets supported causal variant interpretation and evidence-aware decision-making in clinical genetics.
+
 \noindent \textbf{Background}:
-Accurate interpretation of genetic variants requires quantifying the probability that a variant is disease-causing, including the possibility of alternative or unobserved causal alleles.
+Accurate interpretation of genetic variants requires a quantitative estimate of how likely a variant is to contribute to disease, accounting for both observed and unobserved causal alleles across different inheritance modes.
 \vspace{1em}
 
-\noindent  \textbf{Methods}:
-We developed a statistical framework that computes genome-wide prior probabilities for variant classification, integrating population allele frequencies, disease classifications, and Hardy-Weinberg expectations across inheritance modes. Bayesian modelling then combines these priors with a subject’s data to produce credible intervals reflecting diagnostic confidence.
+\noindent \textbf{Methods}:
+We developed a statistical framework that computes genome-wide prior probabilities for variant classification by integrating population allele frequencies, disease classifications, and Hardy-Weinberg expectations across dominant, recessive, and X-linked inheritance. Bayesian modelling then combines these priors with individual-level data to produce credible intervals that quantify diagnostic confidence.
 \vspace{1em}
 
-\noindent  \textbf{Results}:
-We demonstrated the framework in three known diagnostic scenarios, showing how it quantifies the probability that a candidate variant is causal, including residual uncertainty from unobserved alleles. We then applied it to 557 genes implicated in inborn errors of immunity (IEI), generating variant-level probabilities now publicly accessible. Integration with protein-protein interaction networks and immunophenotypic data revealed patterns of genetic constraint and refined disease classification. Validation in national cohorts showed close agreement between predicted and observed case numbers.
+\noindent \textbf{Results}:
+The framework replaces categorical variant classification with continuous posterior probabilities that capture residual uncertainty from incomplete or missing genotype data. Demonstrations in three diagnostic scenarios show accurate quantification of variant-level disease relevance. Application to 557 genes implicated in inborn errors of immunity (IEI) generated a public database of prior probabilities. Integration with protein-protein interaction and immunophenotypic data revealed gene-level constraint patterns, and validation in national cohorts showed close agreement between predicted and observed case numbers.
 \vspace{1em}
 
-\noindent  \textbf{Conclusions}:
-Our method addresses a long-standing gap in clinical genomics by quantifying both observed and unobserved genetic evidence in disease diagnosis. Although demonstrated in IEI, it is broadly applicable and provides a quantitative basis for variant interpretation, clinical decision-making, and future genomic analyses.
+\noindent \textbf{Conclusions}:
+Our method addresses a long-standing gap in clinical genomics by quantifying both observed and unobserved genetic evidence in disease diagnosis. It provides a reproducible probabilistic foundation for variant interpretation, clinical decision-making, and large-scale genomic analysis.
 \footnote{
 \noindent * Addresses for correspondence: \href{mailto:Dylan.Lawless@kispi.uzh.ch}{Dylan.Lawless@kispi.uzh.ch}.\\
 % \noindent  \textsuperscript{† }These authors contributed equally and are listed alphabetically.\\
@@ -85,11 +84,10 @@ Graphical abstract.
 
 \clearpage
 
-
 \section*{Acronyms}
 \renewenvironment{description}%
   {\list{}{\labelwidth0pt\itemindent-\leftmargin
-    \parsep-.5em\itemsep0pt\let\makelabel\descriptionlabel}}
+    \parsep-1em\itemsep0pt\let\makelabel\descriptionlabel}}
   {\endlist}
 \begin{acronym}
 \acro{acmg}[ACMG]{American College of Medical Genetics and Genomics}%
@@ -155,596 +153,67 @@ Graphical abstract.
 
 \section{Introduction}
 
-Accurately determining the probability that a patient harbours a disease-causing genetic variant remains a foundational challenge in clinical and statistical genetics. For over a century, the primary focus has been on identifying \ac{tp}s, pathogenic causal variants observed in affected individuals. 
-Peer review and classification frameworks also work to suppress \ac{fp}s.
-However, two critical components of the genetic landscape have received far less attention: \ac{fn}s, where pathogenic variants are missed due to technical or interpretive limitations, and \ac{tn}s, which represent the vast majority of benign or non-causal variants. 
-\ac{tn}s are more commonly used in contexts such as cancer screening, where a negative result can provide reassurance that a panel of known actionable variants has been checked. Yet outside these specific uses, their broader statistical and clinical value is rarely leveraged.
-From a statistical perspective, \ac{fn}s and \ac{tn}s are an untapped goldmine. 
-They hold essential information about what is not observed, what should be expected under baseline assumptions, and how confident one can be in the absence of a pathogenic finding. 
-Yet these dimensions are rarely quantified, leaving a bias in current variant interpretation frameworks towards known \ac{tp}s and lacking principled priors for genome-wide disease probability estimation.
+%Accurately determining the probability that a patient harbours a disease-causing genetic variant remains a foundational challenge in clinical and statistical genetics. For over a century, the primary focus has been on identifying \ac{tp}s, pathogenic causal variants observed in affected individuals. 
+%Peer review and classification frameworks also work to suppress \ac{fp}s.
+%However, two critical components of the genetic landscape have received far less attention: \ac{fn}s, where pathogenic variants are missed due to technical or interpretive limitations, and \ac{tn}s, which represent the vast majority of benign or non-causal variants. 
+%\ac{tn}s are more commonly used in contexts such as cancer screening, where a negative result can provide reassurance that a panel of known actionable variants has been checked. Yet outside these specific uses, their broader statistical and clinical value is rarely leveraged.
+%From a statistical perspective, \ac{fn}s and \ac{tn}s are an untapped goldmine. 
+%They hold essential information about what is not observed, what should be expected under baseline assumptions, and how confident one can be in the absence of a pathogenic finding. 
+%Yet these dimensions are rarely quantified, leaving a bias in current variant interpretation frameworks towards known \ac{tp}s and lacking principled priors for genome-wide disease probability estimation.
 
-Quantifying the risk that a patient inherits a disease-causing variant is a fundamental challenge in genomics. 
-Classical statistical approaches grounded in \ac{hwe} \cite{MayoCentury2008, AbramovsHardyWeinberg2020} have long been used to calculate genetic probabilities for \ac{snv}s. 
-However, applying these methods becomes more complex when accounting for different \ac{moi}, such as \ac{ar} versus \ac{ad} or \ac{xl} disorders. 
-In \ac{ar} conditions, for example, the occurrence probability must incorporate both the homozygous state and compound heterozygosity, whereas for \ac{ad} and \ac{xl} disorders, a single pathogenic allele is sufficient to cause disease. 
-Advances in genetic research have revealed that \ac{moi} can be even more complex \cite{zschocke_mendelian_2023}. 
-Mechanisms such as dominant negative effects, haploinsufficiency, mosaicism, and digenic or epistatic interactions can further modulate disease risk and clinical presentation, underscoring the need for nuanced approaches in risk estimation.
-\citet{karczewski2020mutational} made significant advances; however, the remaining challenge lies in applying the necessary statistical genomics data across all \ac{moi} for any gene-disease combination.
-% which our current work aims to address.
-Preliminary approaches have been reported for diseases such Wilson disease, mucopolysaccharidoses,  primary ciliary dyskinesia, and treatable metabolic diseasse, 
-\cite{bick_estimating_2025, evans_estimating_2021}, 
-as reviewed by \citet{hannah_using_2024}.
+Accurately estimating the probability that a patient carries a disease-causing genetic variant remains a central challenge in clinical and statistical genetics. For over a century, attention has focused on identifying variants which are \ac{tp} and reducing \ac{fp}, while \ac{fn} and \ac{tn} have received comparatively little consideration. \ac{fn} arise when pathogenic variants are missed due to technical or interpretive limits, and \ac{tn} represent the vast background of benign variants. Although \ac{tn} have clear value in contexts such as cancer screening, their wider statistical and clinical relevance remains underused. From a probabilistic standpoint, \ac{fn} and \ac{tn} provide crucial information about what is not observed, what should be expected under baseline genetic assumptions, and how confident one can be in the absence of a pathogenic finding. Current variant interpretation frameworks rarely quantify these dimensions, resulting in bias towards known \ac{tp} and a lack of principled priors for genome-wide disease probability estimation.
 
-To our knowledge, all approaches to date have been limited to single \ac{moi}, specific to the given disease, or restricted to a small number of genes.
-We argue that an  integrated approach is both necessary and highly powerful because the resulting probabilities can serve as informative priors in a Bayesian framework for variant and disease probability estimation; a perspective that is often overlooked in clinical and statistical genetics. 
-Such a framework not only refines classical \ac{hwe}-based risk estimates but also has the potential to enrich clinicians’ understanding of what to expect in a patient and to enhance the analytical models employed by bioinformaticians.
+%Quantifying the risk that a patient inherits a disease-causing variant is a fundamental challenge in genomics. 
+%Classical statistical approaches grounded in \ac{hwe} \cite{MayoCentury2008, AbramovsHardyWeinberg2020} have long been used to calculate genetic probabilities for \ac{snv}s. 
+%However, applying these methods becomes more complex when accounting for different \ac{moi}, such as \ac{ar} versus \ac{ad} or \ac{xl} disorders. 
+%In \ac{ar} conditions, for example, the occurrence probability must incorporate both the homozygous state and compound heterozygosity, whereas for \ac{ad} and \ac{xl} disorders, a single pathogenic allele is sufficient to cause disease. 
+%Advances in genetic research have revealed that \ac{moi} can be even more complex \cite{zschocke_mendelian_2023}. 
+%Mechanisms such as dominant negative effects, haploinsufficiency, mosaicism, and digenic or epistatic interactions can further modulate disease risk and clinical presentation, underscoring the need for nuanced approaches in risk estimation.
+%\citet{karczewski2020mutational} made significant advances; however, the remaining challenge lies in applying the necessary statistical genomics data across all \ac{moi} for any gene-disease combination.
+%Preliminary approaches have been reported for diseases such Wilson disease, mucopolysaccharidoses,  primary ciliary dyskinesia, and treatable metabolic diseasse, 
+%\cite{bick_estimating_2025, evans_estimating_2021}, 
+%as reviewed by \citet{hannah_using_2024}.
+
+Quantifying the risk that a patient inherits a disease-causing variant is a core problem in genomics. Classical approaches based on \ac{hwe} \cite{MayoCentury2008, AbramovsHardyWeinberg2020} have long provided the foundation for calculating variant probabilities. However, these models become more complex when extended to different \ac{moi}, such as \ac{ar}, \ac{ad}, or \ac{xl} disorders. In \ac{ar} diseases, risk depends on both homozygosity and compound heterozygosity, whereas a single allele can cause disease in \ac{ad} or \ac{xl} forms. Modern evidence shows that \ac{moi} can be further modulated by mechanisms including dominant negative effects, haploinsufficiency, mosaicism, and digenic or epistatic interactions \cite{zschocke_mendelian_2023}. Although \citet{karczewski2020mutational} advanced the field considerably, applying statistical genomics data across all \ac{moi} for any gene–disease combination remains unresolved. Recent disease-specific estimates, including Wilson disease, mucopolysaccharidoses, primary ciliary dyskinesia, and treatable metabolic disorders \cite{bick_estimating_2025, evans_estimating_2021}, as reviewed by \citet{hannah_using_2024}, demonstrate progress but remain limited in scope.
+
+
+
+
+%To our knowledge, all approaches to date have been limited to single \ac{moi}, specific to the given disease, or restricted to a small number of genes.
+%We argue that an  integrated approach is both necessary and highly powerful because the resulting probabilities can serve as informative priors in a Bayesian framework for variant and disease probability estimation; a perspective that is often overlooked in clinical and statistical genetics. 
+%Such a framework not only refines classical \ac{hwe}-based risk estimates but also has the potential to enrich clinicians’ understanding of what to expect in a patient and to enhance the analytical models employed by bioinformaticians.
+
+All existing approaches remain limited to single \ac{moi}, specific disorders, or narrow gene sets. An integrated model is needed to unify these perspectives and generate probabilities that can serve as informative priors in a Bayesian framework for variant and disease probability estimation. Such a framework extends classical \ac{hwe}-based methods, strengthens clinical interpretation by clarifying expected genetic outcomes, and enhances analytical models used in statistical genomics.
 
 The resulting dataset from these necessary calculations also holds value for AI and reinforcement learning applications, providing an enriched version of the data underpinning frameworks such as AlphaFold \cite{jumper_highly_2021} and AlphaMissense \cite{cheng_accurate_2023}.
 
-This gap is not only due to conceptual limitations, but to the historical absence of large, harmonised reference datasets. 
-Only recently have resources become available to support rigorous genome-wide probability estimation. These include high-resolution population allele frequencies (e.g. gnomAD v4 \cite{karczewski2020mutational}), 
-curated variant classifications (e.g. ClinVar \cite{landrum_clinvar_2018}), 
-functional annotations (e.g. UniProt \cite{the_uniprot_consortium_uniprot_2025}),
-and pathogenicity prediction models (e.g. AlphaMissense \cite{cheng_accurate_2023}). 
-% integrated gene-disease annotation platforms (e.g. PanelAppRex \cite{lawless_panelapprex_2025, martin_panelapp_2019}), 
-We previously introduced PanelAppRex to aggregate gene panel data from multiple sources, including \ac{ge} PanelApp, ClinVar, and \ac{uniprot}, thereby enabling advanced natural searches for clinical and research applications \cite{lawless_panelapprex_2025, martin_panelapp_2019, landrum_clinvar_2018, the_uniprot_consortium_uniprot_2025}. 
-This earlier work relied on expert-curated panels, such as those from the NHS National Genomic Test Directory and the 100,000 Genomes Project, converted into machine-readable formats for rapid variant discovery and interpretation. 
-Together, these resources now make it possible to model the expected distribution of variant types, frequencies, and classifications across the genome.
-
-By reframing variant interpretation as a problem of calibrated expectation rather than solely reactive confirmation, our framework empowers clinicians and researchers to anticipate both observed and unobserved pathogenic burdens. 
-This scalable, genome-wide approach promises to streamline diagnostic workflows, reduce uncertainty in inconclusive cases, inform statistical models and genetic epidemiology studies, and accelerate the integration of genetic insights into patient care.
-
-In this study, we focused on reporting the probability of disease observation through genome-wide assessments of gene-disease combinations. 
-We then focused on known \ac{iei} genes, sometimes called the ``\ac{pid} or Monogenic Inflammatory Bowel Disease genes'' \cite{poli_human_2025, lawless_panelapprex_2025, martin_panelapp_2019},
-to validate our approach and demonstrate its clinical relevance. 
-This application to a well-established genotype-phenotype set, comprising over 500 gene-disease associations, underscores its utility.
-The most recent update on the classification 
-of \ac{iei} from the \ac{iuis}  expert committee was reported by \citet{poli_human_2025},
-with an accompanying diagnostic guide \cite{bousfiha_2024_2025}.
-Our central hypothesis was that by using highly curated annotation data including population \ac{af}s, disease phenotypes, \ac{moi} patterns, and variant classifications and by applying rigorous calculations based on \ac{hwe}, we could accurately estimate the expected probabilities of observing disease-associated variants.
-Among other benefits, this knowledge can be used to derive genetic diagnosis confidence by incorporating these new priors.
-
+%This gap is not only due to conceptual limitations, but to the historical absence of large, harmonised reference datasets. 
+%Only recently have resources become available to support rigorous genome-wide probability estimation. These include high-resolution population allele frequencies (e.g. gnomAD v4 \cite{karczewski2020mutational}), 
+%curated variant classifications (e.g. ClinVar \cite{landrum_clinvar_2018}), 
+%functional annotations (e.g. UniProt \cite{the_uniprot_consortium_uniprot_2025}),
+%and pathogenicity prediction models (e.g. AlphaMissense \cite{cheng_accurate_2023}). 
 %We previously introduced PanelAppRex to aggregate gene panel data from multiple sources, including \ac{ge} PanelApp, ClinVar, and \ac{uniprot}, thereby enabling advanced natural searches for clinical and research applications \cite{lawless_panelapprex_2025, martin_panelapp_2019, landrum_clinvar_2018, the_uniprot_consortium_uniprot_2025}. 
-%It automatically retrieves expert-curated panels, such as those from the NHS National Genomic Test Directory and the 100,000 Genomes Project, and converts them into machine-readable formats for rapid variant discovery and interpretation. 
-%We used PanelAppRex to label disease-associated variants.
-%We also integrate key statistical genomic resources 
-%including gnomAD which consists of over 900 million variants
-%from over 800,000 individuals
-%\cite{karczewski2020mutational},
-%\ac{dbnsfp} which provides functional annotations for over 120 million potential variants 
-%from 33 sources \cite{liu_dbnsfp_2020}, 
-%and ClinVar which offers curated variant classifications such as ``Pathogenic'', ``Likely pathogenic'' and ``Benign'' mapped to \ac{hgvs} standards and expert reviews \cite{landrum_clinvar_2018}.
+%This earlier work relied on expert-curated panels, such as those from the NHS National Genomic Test Directory and the 100,000 Genomes Project, converted into machine-readable formats for rapid variant discovery and interpretation. 
+%Together, these resources now make it possible to model the expected distribution of variant types, frequencies, and classifications across the genome.
 
-%To cite: \url{https://doi.org/10.1016/j.gimo.2024.101881} \url{https://doi.org/10.1016/j.gim.2024.101284} and some from 
 
-\clearpage
-\section{Methods}
-\subsection{Dataset}
 
-Data from \ac{gnomad} v4 comprised 807,162 individuals, including 730,947 exomes and 76,215 genomes \cite{karczewski2020mutational}. This dataset provided 786,500,648 \ac{snv}s and 122,583,462 \ac{indel}s, with variant type counts of 9,643,254 synonymous, 16,412,219 missense, 726,924 nonsense, 1,186,588 frameshift and 542,514 canonical splice site variants. ClinVar data were obtained from the variant summary dataset (as of: 16 March 2025) available from the NCBI FTP site, and included 6,845,091 entries, which were processed into 91,319 gene classification groups and a total of 38,983 gene classifications; for example, the gene \textit{A1BG} contained four variants classified as likely benign and 102 total entries \cite{landrum_clinvar_2018}. For our analysis phase we also used \ac{dbnsfp} which consisted of a number of annotations for 121,832,908 \ac{snv}s 
-\cite{liu_dbnsfp_2020}. 
-The PanelAppRex core model contained 58,592 entries consisting of 52 sets of annotations, including the gene name, disease-gene panel ID, diseases-related features, confidence measurements.
-\cite{lawless_panelapprex_2025}
-\ac{ppi} network data was provided by \ac{stringdb}, consisting of 19,566 proteins and 505,968 interactions \cite{szklarczyk2025string}.
-The \ac{hgvs} nomenclature is used with \ac{vep}-based codes for variant IDs.
-AlphaMissense includes pathogenicity prediction classifications for 71 million variants in 19 thousand human genes \cite{cheng_accurate_2023, jun_cheng_2023_8208688}. We used these scores to compared against the probability of observing the same given variants.
-\textbf{Box \ref{box:definitions}} list the definitions from the \ac{iuis} \ac{iei} for the major disease categories used throughout this study \cite{poli_human_2025}.
+This gap has persisted largely due to the historical absence of harmonised reference datasets. Only recently have resources become available to enable rigorous genome-wide probability estimation, including population allele frequencies (gnomAD v4 \cite{karczewski2020mutational}), curated variant classifications (ClinVar \cite{landrum_clinvar_2018}), functional annotations (UniProt \cite{the_uniprot_consortium_uniprot_2025}), and pathogenicity prediction models (AlphaMissense \cite{cheng_accurate_2023}). We previously introduced PanelAppRex to integrate gene panel data from sources such as \ac{ge} PanelApp, ClinVar, and \ac{uniprot}, enabling structured, machine-readable datasets for variant discovery and interpretation \cite{lawless_panelapprex_2025, martin_panelapp_2019, landrum_clinvar_2018, the_uniprot_consortium_uniprot_2025}. Together, these advances now allow systematic modelling of the expected distribution of variant types, frequencies, and classifications across the genome.
 
-The following genes were used for disease cohort validations and examples.
-We used the two most commonly reported genes from the \ac{iei} panel \ac{nfkb1} 
-\cite{tuijnenburgNFKB12018,
-who1997primary,
-cunningham1999common,
-oksenhendler2008infections}
-and \ac{cftr} 
-\cite{naito2023uk, castellani2013cftr2, Grasemann2023cftr}
-to demonstrate applications in \ac{ad} and \ac{ar} disease genes, respectively.
-We used \ac{scid}-specific genes 
-\ac{ar} \ac{dclre1c},
-\ac{ar} \ac{rag1},
-\ac{xl} \ac{il2rg} to demonstrate a \ac{iei} subset disease phenotype of 
-\ac{scid}.
-We also used \ac{ad} \ac{tnfaip3} for other examples comparable to \ac{nfkb1} since it is also causes \ac{ad} pro-inflammatory disease but has more known ClinVar classifications at higher \ac{af} then \ac{nfkb1}.
+By reframing variant interpretation as a problem of calibrated expectation rather than reactive confirmation, our framework enables clinicians and researchers to anticipate both observed and unobserved pathogenic burdens. This scalable, genome-wide approach aims to improve diagnostic efficiency, reduce uncertainty in inconclusive cases, inform genetic epidemiology and statistical modelling, and supports the translation of genomic data into patient care.
 
-\begin{tcolorbox}[colback=black!01, colframe=black!70, title=Box \ref{box:definitions} Definitions for IEI Major Disease Categories, label=box:definitions]
-\textbf{Major Category} \hspace{4em} \textbf{Description}\\[5pt]
-1. CID  Immunodeficiencies affecting cellular and humoral immunity\\[2pt]
-2. CID+  Combined immunodeficiencies with associated or syndromic features\\[2pt]
-3. PAD - Predominantly Antibody Deficiencies\\[2pt]
-4. PIRD - Diseases of Immune Dysregulation\\[2pt]
-5. PD - Congenital defects of phagocyte number or function\\[2pt]
-6. IID - Defects in intrinsic and innate immunity\\[2pt]
-7. AID - Autoinflammatory Disorders\\[2pt]
-8. CD - Complement Deficiencies\\[2pt]
-9. BMF - Bone marrow failure
-\end{tcolorbox}
+%In this study, we focused on reporting the probability of disease observation through genome-wide assessments of gene-disease combinations. 
+%We then focused on known \ac{iei} genes, sometimes called the ``\ac{pid} or Monogenic Inflammatory Bowel Disease genes'' \cite{poli_human_2025, lawless_panelapprex_2025, martin_panelapp_2019},
+%to validate our approach and demonstrate its clinical relevance. 
+%This application to a well-established genotype-phenotype set, comprising over 500 gene-disease associations, underscores its utility.
+%The most recent update on the classification 
+%of \ac{iei} from the \ac{iuis}  expert committee was reported by \citet{poli_human_2025},
+%with an accompanying diagnostic guide \cite{bousfiha_2024_2025}.
+%Our central hypothesis was that by using highly curated annotation data including population \ac{af}s, disease phenotypes, \ac{moi} patterns, and variant classifications and by applying rigorous calculations based on \ac{hwe}, we could accurately estimate the expected probabilities of observing disease-associated variants.
+%Among other benefits, this knowledge can be used to derive genetic diagnosis confidence by incorporating these new priors.
 
-\subsection{Variant classification occurrence probability}
-To quantify the likelihood that an individual harbours a variant with a given disease classification, we compute the variant-level occurrence probability (\ac{vre}) for each variant.
-As a starting point, we considered the classical \ac{hwe} for a biallelic locus:
-\[
-p^2 + 2pq + q^2 = 1,
-\]
-where \(p\) is the allele frequency, \(q = 1 - p\), \(p^2\) represents the homozygous dominant, \(2pq\) the heterozygous, and \(q^2\) the homozygous recessive genotype frequencies. For disease phenotypes, particularly under \ac{ar} \ac{moi}, the risk is traditionally linked to the homozygous state (\(p^2\)); however, to account for compound heterozygosity across multiple variants, %we extend this by incorporating the contribution from other pathogenic alleles.
-we allocated the overall gene-level risk proportionally among variants.
+In this study, we report genome-wide probabilities of disease observation across gene-disease combinations, focusing on known \ac{iei} genes, also referred to as \ac{pid} or monogenic inflammatory bowel disease genes \cite{poli_human_2025, lawless_panelapprex_2025, martin_panelapp_2019}. This well-defined genotype-phenotype set, comprising more than 500 gene-disease associations, provides a robust validation of clinical relevance. The latest \ac{iuis} classification and diagnostic guidelines \cite{poli_human_2025, bousfiha_2024_2025} serve as the benchmark reference. We hypothesised that by integrating curated annotations on population \ac{af}, disease phenotypes, \ac{moi} patterns, and variant classifications with \ac{hwe}-based calculations, it would be possible to estimate expected probabilities of disease-associated variants and derive quantitative confidence in genetic diagnosis using these priors.
 
-Our computational pipeline estimated the probability of observing a disease-associated genotype for each variant and aggregated these probabilities by gene and ClinVar classification. This approach included all variant classifications, not limited solely to those deemed ``pathogenic'', and explicitly conditioned the classification on the given phenotype, recognising that a variant could only be considered pathogenic relative to a defined clinical context. The core calculations proceeded as follows:
-
-\paragraph{1. Allele frequency and total variant frequency.} 
-\label{sec:min_risk}
-For each variant \(i\) in a gene, the allele frequency was denoted as \(p_i\). For each gene (any genomic region or set), we defined the total variant frequency (summing across all reported variants in that gene) as:
-
-\[P_{\text{tot}} = \sum_{i \in \text{gene}} p_i.\]
-
-Note that, because each calculation is confined to one gene, no additional scaling was required for our primary analyses (\(P_{\text{tot}}\)). However, if this same unscaled summation is applied across regions or variant sets of differing size or dosage sensitivity, it can bias burden estimates. In such cases, normalisation by region length or incorporation of gene- or region-specific dosage constraints is recommended.
-
-If any of the possible \ac{snv}  had no observed allele (\(p_i = 0\)), we assigned a minimal risk:
-
-\[p_i = \frac{1}{\max(AN) + 1}\]
-
-where \(\max(AN)\) was the maximum allele number observed for that gene. This adjustment ensured that a nonzero risk was incorporated even in the absence of observed variants in the reference database.
-
-%\paragraph{2. Occurrence probability based on \ac{moi}.}
-%The probability that an individual was affected by a variant depended on the \ac{moi} relative to a specific phenotype. 
-%Specifically, we calculated the occurrence probability \(p_{\text{disease},i}\) (\ac{vre}) for each variant as follows:
-%\begin{itemize}
-%    \item For \textbf{\ac{ad}} and \textbf{\ac{xl}} variants, a single copy was sufficient, so
-%    \[
-%    p_{\text{disease},i} = p_i.
-%    \]
-%    \item For \textbf{\ac{ar}} variants, disease is expected to manifest when two pathogenic alleles are present, either as homozygotes or as compound heterozygotes. 
-%     We allocated the overall gene-level risk ($P_{\text{tot}}^2$) proportionally by variant allele frequency:
-%% version 1 is wrong because it counted het variants twice: \[ p_{\text{disease},i} = p_i^2 + 2\,p_i\bigl(P_{\text{tot}} - p_i\bigr). \]
-%    \[p_{\text{disease},i} = p_i \; P_{\text{tot}}.\] % version 2
-%\end{itemize}
-
-\paragraph{2. Occurrence probability based on \ac{moi}.}
-The probability that an individual is affected by a variant depends on the \ac{moi}. For \textbf{\ac{ad}} and \textbf{\ac{xl}} variants, a single pathogenic allele suffices:
-
-\[
-p_{\text{disease},i} = p_i.
-\]
-
-For\textbf{ \ac{ar}} variants, disease manifests when two pathogenic alleles are present, either as homozygotes or as compound heterozygotes. We use:
-
-\[p_{\text{disease},i} = p_i \; P_{\text{tot}}.\] % version 2
-
-Under \ac{hwe}, the overall gene-level probability of an \ac{ar} genotype is
-
-\[
-P_{\text{AR}} \;=\; P_{\text{tot}}^2
-\;=\;\sum_i p_i^2 \;+\; 2\sum_{i<j} p_i\,p_j,
-\]
-
-where \(P_{\text{tot}}=\sum_i p_i\). A naïve per-variant assignment
-
-\[
-p_i^2 + 2\,p_i\,(P_{\text{tot}} - p_i)
-\]
-
-would, when summed over all \(i\), double-count the compound heterozygous terms. 
-To partition \(P_{\text{AR}}\) among variants without double counting, we allocate risk in proportion to each variant’s allele frequency:
-
-\[
-p_{\text{disease},i}
-=\frac{p_i}{P_{\text{tot}}}\times P_{\text{tot}}^2
-= p_i\,P_{\text{tot}}.
-\]
-
-This ensures
-
-\[
-\sum_i p_{\text{disease},i}
-= \sum_i p_i\,P_{\text{tot}}
-= P_{\text{tot}}^2,
-\]
-
-recovering the correct \ac{ar} risk while attributing each variant its fair share of homozygous and compound-heterozygous contributions.
-
-More simply, for \ac{ad} or \ac{xl} conditions a single pathogenic allele suffices, so the classification risk (e.g. benign, pathogenic) equals its population frequency. For \ac{ar} conditions two pathogenic alleles are required - either two copies of the same variant or one copy each of two different variants, so we divide the overall recessive risk among variants according to each variant’s share of the total classification frequency in that gene.
-
-\paragraph{3. Expected case numbers and case detection probability.}
-Given a population with \(N\) births (e.g. as seen in our validation studies, \(N = 69\,433\,632\)), the expected number of cases attributable to variant \(i\) was calculated as:
-
-\[
-E_i = N \cdot p_{\text{disease},i}.
-\]
-
-The probability of detecting at least one affected individual for that variant was computed as:
-
-\[
-P(\geq 1)_i = 1 - \bigl(1 - p_{\text{disease},i}\bigr)^N.
-\]
-
-\paragraph{4. Aggregation by gene and ClinVar classification.}
-For each gene and for each ClinVar classification (e.g. ``Pathogenic'', ``Likely pathogenic'', ``Uncertain significance'', etc.), we aggregated the results across all variants. The classification grouping can be substituted by any alternative score system. The total expected cases for a given group was:
-
-\[
-E_{\text{group}} = \sum_{i \in \text{group}} E_i,
-\]
-
-and the overall probability of observing at least one case within the group was calculated as:
-
-\[
-P_{\text{group}} = 1 - \prod_{i \in \text{group}} \left(1 - p_{\text{disease},i}\right).
-\]
-
-\paragraph{5. Data processing and implementation.}
-We implemented the calculations within a \ac{hpc} pipeline and provided an example for a single dominant disease gene, \textit{TNFAIP3}, in the source code to enhance reproducibility. Variant data were imported in chunks from the annotation database for all chromosomes (1-22, X, Y, M). 
-
-For each data chunk, the relevant fields were gene name, position, allele number, allele frequency, ClinVar classification, and HGVS annotations. 
-Missing classifications (denoted by ``.'') were replaced with zeros and allele frequencies were converted to numeric values. % We then retained only the first transcript allele annotation for simplicity, as the analysis was based on genomic coordinates. 
-Subsequently, the variant data were merged with gene panel data from PanelAppRex to obtain the disease-related \ac{moi} mode for each gene. 
-For each gene, if no variant was observed for a given ClinVar classification (i.e. \(p_i = 0\)), a minimal risk was assigned as described above. 
-Finally, we computed the occurrence probability, expected cases, and the probability of observing at least one case of disease using the equations presented.
-
-The final results were aggregated by gene and ClinVar classification and used to generate summary statistics that reviewed the predicted disease observation probabilities.
-We define the \emph{\ac{vre}} as the prior probability of observing a variant classified as the cause of disease 
-
-\paragraph{6. Score-positive-total.}
-For use as a simple summary statistic on the resulting user-interface, we defined the \emph{score-positive-total} as the total number of positively scored variant classifications within a given region (gene, locus, or variant set). 
-Using the ClinVar classification assigned to a scale from$-5$ (benign) to $+5$ (pathogenic), we included only scores $> 0$, corresponding to some evidence of pathogenicity. 
-The score-positive-total yields a non-normalised estimate of the prior probability that a phenotype is explained by known pathogenic variants.
-
-\paragraph{7. Classification scoring system.}
-\label{sec:classification_score}
-Each ClinVar classification was assigned an integer score: pathogenic = +5, likely pathogenic = +4, pathogenic (low penetrance) = +3, likely pathogenic (low penetrance) = +2, conflicting pathogenicity = +2, likely risk allele/risk factor/association = +1, drug response/uncertain significance/no classification/affects/other/not provided/uncertain risk allele = 0, protective = –3, likely benign = –4, benign = –5. No further normalisation was applied. The resulting distribution (\textbf{Figure \ref{fig:p_gene_summary_hist_patch3} A-B}) is naturally comparable to a zero-centred average rank (\textbf{C-D}). This straightforward, modular approach can be readily replaced by any comparable evidence-based classification system. Variants with scores  $\leq 0$ were omitted, since benign classifications do not inform disease likelihood in the score-positive-total summary.
-
-% --------------------------------------------------------------------------
-% Methods, Results and Discussion: gene‑level pathogenic attribution
-% --------------------------------------------------------------------------
-
-\subsection{Bayesian framework for posterior probability of genetic diagnosis}
-
-We developed a Bayesian framework to estimate the probability that at least one variant in a given genome or target set is both present and clinically relevant in a proband. The method combines variant-specific priors derived from any classification system or scoring scheme with a probabilistic model of genotype presence, incorporating both observed and unsequenced genomic positions.
-
-\paragraph{Prior specification.}
-Each variant \( i \) was assigned a prior probability \( p_i \) reflecting its likelihood of being relevant to the user's target interpretation. This could include, for example, being classified as pathogenic, benign, or uncertain significance, or being prioritised by a quantitative scoring scheme. The priors may be derived from allele frequency, expert curation, functional prediction, or any other source of variant-level evidence. The framework supports modular priors without constraint, % accurate diagnostic inference generally requires gene‑disease information, including the \ac{moi}, to determine whether one or multiple variants are needed to explain the phenotype.
-In our implementation, priors are derived from ClinVar classification, gnomAD population frequency, and \ac{moi} specified with PanelAppRex gene-disease curation. We modelled the latent causality of each variant as a Beta distribution parameterised by
-
-$$
-\alpha_i = \text{round}(p_i \cdot A_N) + w, \qquad \beta_i = A_N - \text{round}(p_i \cdot A_N) + 1,
-$$
-
-where \( A_N \) is the total number of callable alleles at the site (e.g. \( A_N = 2n \) for \( n \) diploid individuals), and \( w \) is a small stabilising constant (typically \( w = 1 \)). This construction reflects the expected frequency of the variant in the tested cohort under the assumption of causal relevance.
-
-\paragraph{Posterior simulation.}
-We drew \( N = 10{,}000 \) samples from the Beta prior to approximate a posterior distribution for each variant:
-
-$$
-\theta_i^{(m)} \sim \text{Beta}(\alpha_i, \beta_i), \quad m = 1,\dots,N.
-$$
-
-In each simulation round, these values were normalised across all variants to reflect the relative share of the total causal signal:
-
-$$
-\tilde{\theta}_i^{(m)} = \frac{\theta_i^{(m)}}{\sum_j \theta_j^{(m)}}, \qquad \hat{P}_i = \frac{1}{N} \sum_{m=1}^{N} \tilde{\theta}_i^{(m)}.
-$$
-
-This yields a posterior expectation of variant-level contribution, which can be thresholded or ranked depending on the application.
-
-\paragraph{Genotype presence model.}
-Independently from the classification or interpretive context, each variant was assigned a probability \( q_i \in [0,1] \) of being present in the proband. For observed alternate genotypes, \( q_i = 1 \); for confidently called reference genotypes, \( q_i = 0 \); and for unsequenced or uncertain sites, \( q_i \) was set to the prior probability \( p_i \), or an alternative estimate reflecting presence likelihood.
-For each simulation round, we drew a genotype indicator:
-
-$$
-G_i^{(m)} \sim \text{Bernoulli}(q_i),
-$$
-
-and computed the total interpreted variant probability:
-
-$$
-T^{(m)} = \sum_i G_i^{(m)} \cdot \tilde{\theta}_i^{(m)}.
-$$
-
-The empirical distribution of \( \{T^{(m)}\} \) represents the posterior belief that the proband harbours at least one variant matching the specified interpretive criteria in the given gene or set. Summary statistics, such as the posterior median and 95\% credible interval, are used to report this probability with interval-based accountability.
-
-\paragraph{Flexibility and implementation.}
-This framework generalises across different scoring systems, prior models, and sequencing contexts. It can incorporate uncertain classifications, variant weights, unsequenced positions, or alternative genotype priors without altering the core inference structure. The method is implemented in R with modular inputs and reproducible simulation logic.
-
-\subsection{Application to diagnostic scenarios with observed and unobserved variant data}
-% \subsection{Integrating observed true positives and unobserved false negatives into a single, actionable conclusion}
-
-In this section, we detail our approach to integrating sequencing data with prior classification evidence (e.g. pathogenic on ClinVar) to calculate the posterior probability of a complete successful genetic diagnosis.
-Our method is designed to account for possible outcomes of 
-\ac{tp},
-% \ac{fp},
-\ac{tn},
-and \ac{fn},
-by first ensuring that all nucleotides corresponding to known variant classifications (benign, pathogenic, etc.) have been accurately sequenced. 
-This implies the use of \ac{gvcf}-style data which refer to \ac{vcf}s that contain a record for every position in the genome (or interval of interest) regardless of whether a variant was detected at that site or not.
-Only after confirming that these positions match the reference alleles (or novel unaccounted variants are classified) do we calculate the probability that additional, alternative pathogenic variants (those not observed in the sequencing data) could be present. 
-Our \ac{cri} for pathogenicity thus incorporates uncertainty from the entire process, including the tally of \ac{tp}, \ac{tn}, and \ac{fn} outcomes.
-We ignore the contribution of \ac{fp}s  as a separate task to be tackled in the future.
-
-We estimated, for every query (e.g. gene or disease-panel), the posterior probability that at least one constituent allele is both damaging and causal in the proband.  
-The workflow comprises four consecutive stages.
-
-\paragraph{(i) Data pre‑processing.}
-We synthesized an example patient in a disease cohort of 200 cases.
-We made several scenarios where a causal genetic diagnosis based on the available data is either simple, difficult, or impossible.
-Our example focused on a proband two representative genes for \ac{ad} \ac{iei}: \ac{nfkb1} and  \ac{tnfaip3}.
-All coding and canonical splice‑region variants for \ac{nfkb1} were extracted from the gVCF.  
-We assumed a typical \ac{qc} scenario, where sites corresponding to previously reported pathogenic alleles were checked for read depth \mbox{$\ge\!10$} and genotype quality \mbox{$\ge\!20$}.  
-Positions that failed this check were labelled \emph{missing}, thus separating true reference calls from non-sequenced or uninformative sequence.
-
-\paragraph{(ii) Evidence mapping and occurrence probability.}
-PanelAppRex variants were annotated with ClinVar clinical significance.  Each label was converted to an ordinal evidence score $S_i\in[-5,5]$ and rescaled to a pathogenic weight $W_i=\operatorname{rescale}(S_i;\,-5,5\rightarrow0,1)$.  
-This scoring system can be replaced with any comparable alternative.
-The HWE-based pipeline of Section \ref{sec:min_risk} supplied a per‑variant occurrence probability $p_i$.  The adjusted prior was
-
-\[
-p_{i}^{\ast}=W_i\,p_i,
-\qquad
-\text{and}\qquad
-\mathrm{flag}_i\in\{\text{present},\text{missing}\}.
-\]
-
-\paragraph{(iii) Prior specification.}
-In a hypothetical cohort of $n=200$ diploid individuals the count of allele~$i$ follows a Beta-Binomial model.  Marginalising the Binomial yields the Beta prior
-
-\[
-\pi_i\sim\mathrm{Beta}\!\bigl(\alpha_i,\beta_i\bigr),\qquad
-\alpha_i=\mathrm{round}(2np_{i}^{\ast})+\tilde w_i,\;
-\beta_i = 2n-\mathrm{round}(2np_{i}^{\ast})+1,
-\]
-
-where $\tilde w_i=\max(1,S_i+1)$ contributes an additional pseudo‑count whenever $S_i>0$.
-
-\paragraph{(iv) Posterior simulation and aggregation.}
-For each variant $i$ we drew $M=10\,000$ realisations $\pi_{i}^{(m)}$ and normalised within each iteration,
-
-\[
-\tilde\pi_{i}^{(m)}=\frac{\pi_{i}^{(m)}}{\sum_{j}\pi_{j}^{(m)}}.
-\]
-
-Variants with $S_i>4$ were deemed to have evidence as \emph{causal} (pathogenic or likely pathogenic). 
-We note that an alternative evidence score or conditional threshold can be substituted for this step.
-Their mean posterior share $\bar\pi_i=M^{-1}\sum_m\tilde\pi_{i}^{(m)}$ and $95\%$ \ac{cri} were retained.  The probability that a damaging causal allele is physically present was obtained by a second layer:
-
-\[
-P^{(m)}=\sum_{i:\,S_i>3}\tilde\pi_{i}^{(m)}\,G_{i}^{(m)},\qquad
-G_{i}^{(m)}\sim\mathrm{Bernoulli}(g_i),
-\]
-
-with $g_i=1$ for present variants, $g_i=0$ for reference calls, and $g_i=p_i$ for missing variants.  The gene‑level estimate is the median of $\{P^{(m)}\}_{m=1}^{M}$ and its $2.5^{\text{th}}$/$97.5^{\text{th}}$ percentiles.
-
-\paragraph{(v) Scenario analysis.}
-The three scenarios were explored for a causal genetic diagnosis that is either simple, difficult, or impossible given the existing data.
-The proband spiked data had either:
-(1) known classified variants only, including only one known \ac{tp} pathogenic variant, \ac{nfkb1}  \texttt{p.Ser237Ter}, 
-(2) inclusion of an additional plausible yet non-sequenced splice‑donor allele \ac{nfkb1}  \texttt{c.159+1G{\small\textgreater}A} (likely pathogenic) as a \ac{fn}, and 
-(3) where no known causal variants were present for a patient, one representative variant from each distinct ClinVar classification was selected and marked as unsequenced to emulate a range of putative \acp{fn}. The selected variants were: \ac{tnfaip3} \texttt{p.Cys243Arg} (pathogenic), \texttt{p.Tyr246Ter} (likely pathogenic), \texttt{p.His646Pro} (conflicting interpretations of pathogenicity), \texttt{p.Thr635Ile} (uncertain significance), \texttt{p.Arg162Trp} (not provided), \texttt{p.Arg280Trp} (likely benign), \texttt{p.Ile207Leu} (benign/likely benign), and \texttt{p.Lys304Glu} (benign). 
-All subsequent steps were identical.
-
-
-
-\subsection{Validation of autosomal dominant estimates using \textit{NFKB1}}
-
-To validate our genome-wide probability estimates in an \ac{ad} gene, we focused on \ac{nfkb1}. 
-Our goal was to compare the expected number of \ac{nfkb1}-related \ac{cvid} cases, as predicted by our framework, with the reported case count in a well-characterised national-scale \ac{pid} cohort.
-
-\paragraph{1. Reference dataset.}
-We used a reference dataset reported by \citet{tuijnenburgNFKB12018} to build a validation model in an \ac{ad} disease gene. This study performed whole-genome sequencing of 846 predominantly sporadic, unrelated \ac{pid} cases from the NIHR BioResource-Rare Diseases cohort. There were 390 \ac{cvid} cases in the cohort. The study identified \ac{nfkb1} as one of the genes most strongly associated with \ac{pid}. Sixteen novel heterozygous variants including truncating, missense, and gene deletion variants, were found in \ac{nfkb1} among the \ac{cvid} cases.
-
-\paragraph{2. Cohort prevalence calculation.}
-Within the cohort, 16 out of 390 \ac{cvid} cases were attributable to \ac{nfkb1}. 
-Thus, the observed cohort prevalence was
-
-\[
-\text{Prevalence}_{\text{cohort}} = \frac{16}{390} \approx 0.041,
-\]
-
-with a 95\% confidence interval (using Wilson's method) of approximately \((0.0254,\,0.0656)\).
-
-\paragraph{3. National estimate based on literature.}
-Based on literature
-\cite{tuijnenburgNFKB12018, who1997primary, oksenhendler2008infections},
-the prevalence of \ac{cvid} in the general population was estimated as
-
-\[
-\text{Prevalence}_{\text{CVID}} = \frac{1}{25\,000}.
-\]
-
-For a UK population of  $N_{\text{UK}} \approx 69\,433\,632,$
-the expected total number of \ac{cvid} cases was
-
-$E_{\text{CVID}} \approx \frac{69\,433\,632}{25\,000} \approx 2777.$
-
-Assuming that the proportion of \ac{cvid} cases attributable to \ac{nfkb1} is equivalent to the cohort estimate, the literature extrapolated estimate is
-$
-\text{Estimated NFKB1 cases} \approx 2777 \times 0.041 \approx 114,
-$
-with a median value of approximately 118 and a 95\% confidence interval of 70 to 181 cases (derived from posterior sampling).
-%
-%\paragraph{4. Bayesian adjustment.}
-%Recognising that the clinical cohort likely represents nearly all \ac{cvid} cases (besides first-second degree relatives), two Bayesian adjustments were performed:
-%\begin{enumerate}
-%  \item \textbf{Weighted adjustment (emphasising the cohort, \(w=0.9\)):}
-%  \[
-%  \text{Adjusted Estimate} = 0.9 \times 16 + 0.1 \times 114 \approx 26,
-%  \]
-%  with a corresponding 95\% confidence interval of approximately 21 to 33 cases.
-%  
-%  \item \textbf{Mixture adjustment (equal weighting, \(w=0.5\)):}  
-%  Posterior sampling of the cohort prevalence was performed assuming
-%  \[
-%  p \sim \mathrm{Beta}(16+1,\,390-16+1),
-%  \]
-%  which yielded a Bayesian mixture adjusted median estimate of 67 cases with a 95\% \ac{cri} of approximately 43 to 99 cases.
-%\end{enumerate}
-
-\paragraph{4. Bayesian adjustment.}
-Recognising that the sequenced cohort cases likely captures the majority of \ac{nfkb1}‑related patients (apart from close relatives), but may still miss rare or geographically dispersed variants, we combined the cohort-based and literature-based estimates using two complementary Bayesian approaches:
-
-\begin{enumerate}
-  \item \textbf{Weighted adjustment (emphasising the cohort, \(w=0.9\)):}  
-  We assigned \(90\%\) weight to the directly observed cohort count (16) and \(10\%\) to the extrapolated population estimate (114), thereby accounting, illustratively, for a small fraction of unobserved cases while retaining confidence in our well‑characterised cohort:
-
-  \[
-    \text{Adjusted Estimate}
-    = 0.9 \times 16 \;+\; 0.1 \times 114
-    \;\approx\; 26,
-  \]
-  
-  yielding a 95\% \ac{cri} of roughly 21 to 33 cases.
-  
-  \item \textbf{Mixture adjustment (equal weighting, \(w=0.5\)):}  
-  To reflect greater uncertainty about how representative the cohort is, we combined cohort and population prevalences equally. 
-  We sampled from the posterior distribution of the cohort prevalence,
- 
-  \[
-    p \sim \mathrm{Beta}(16 + 1,\,390 - 16 + 1),
-  \]
-
-  and mixed this with the literature-based rate at \(50\%\) each \cite{tuijnenburgNFKB12018, who1997primary, oksenhendler2008infections}. 
-  This yields a median estimate of 67 cases and a wider 95\% \ac{cri} of approximately 43 to 99 cases, capturing uncertainty in both under-ascertainment and over-generalisation.
-\end{enumerate}
-
-\paragraph{5. Predicted total genotype counts.}
-The predicted total synthetic genotype count (before adjustment) was 456, whereas the predicted total genotypes adjusted for \texttt{synth\_flag} was 0. 
-This higher synthetic count was set based on a minimal risk threshold, ensuring that at least one genotype is assumed to exist (e.g. accounting for a potential unknown de novo variant) even when no variant is observed in gnomAD (as per \textbf{section
-\ref{sec:min_risk}}).
-
-\paragraph{6. Validation test.}
-Thus, the expected number of \ac{nfkb1}-related \ac{cvid} cases derived from our genome-wide probability estimates was compared with the observed counts from the UK-based \ac{pid} cohort. 
-This comparison validates our framework for estimating disease incidence in \ac{ad} disorders.
-
-% Annotated key values from R:
-% Predicted total genotypes (adjusted for synth_flag): 0 
-% Predicted total synthetic genotype count: 456 
-% Reported NFKB1-related CVID cases (n_NFKB1): 16 
-% Literature extrapolated estimate median: 118 
-% 95% CI for literature extrapolated estimate: [70, 181] 
-% Bayesian mixture adjusted estimate (w = 0.5) median: 67 
-% 95% CI for Bayesian mixture adjusted estimate: [43, 99] 
-% Bayesian adjusted estimated number of NFKB1-related CVID cases (w = 0.9): 26 
-% 95% Bayesian adjusted CI (w = 0.9): [21, 33]
-
-\subsection{Validation study for autosomal recessive CF using \textit{CFTR}}
-
-To validate our framework for \ac{ar} diseases, we focused on \ac{cf}.
-For comparability sizes between the validation studies, we analysed the most common \ac{snv} in the \ac{cftr} gene, typically reported as \texttt{p.Arg117His} (GRCh38 Chr 7:117530975 G/A, MANE Select HGVSp ENST00000003084.11: p.Arg117His).
-Our goal was to validate our genome-wide probability estimates by comparing the expected number of \ac{cf} cases attributable to the \texttt{p.Arg117His} variant in \ac{cftr} with the nationally reported case count in a well-characterised disease cohort
-\cite{naito2023uk, castellani2013cftr2, Grasemann2023cftr}.
-
-\paragraph{1. Expected genotype counts.}
-Let \( p \) denote the allele frequency of the \texttt{p.Arg117His} variant and \( q \) denote the combined frequency of all other pathogenic \ac{cftr} variants, such that
-\[
-q = P_{\text{tot}} - p \quad \text{with} \quad P_{\text{tot}} = \sum_{i \in \text{CFTR}} p_i.
-\]
-Under Hardy–Weinberg equilibrium for an \ac{ar} trait, the expected frequencies were:
-\[
-f_{\text{hom}} = p^2 \quad \text{(homozygous for p.Arg117His)}
-\]
-and
-\[
-f_{\text{comphet}} = 2p\,q \quad \text{(compound heterozygotes carrying p.Arg117His and another pathogenic allele)}.
-\]
-For a population of size \( N \) (here, \( N \approx 69\,433\,632 \)), the expected number of cases were:
-\[
-E_{\text{hom}} = N \cdot p^2,\quad E_{\text{comphet}} = N \cdot 2p\,q,\quad E_{\text{total}} = E_{\text{hom}} + E_{\text{comphet}}.
-\]
-
-\paragraph{2. Mortality adjustment.}
-Since \ac{cf} patients experience increased mortality, we adjusted the expected genotype counts using an exponential survival model \cite{naito2023uk, castellani2013cftr2, Grasemann2023cftr}. With an annual mortality rate \(\lambda \approx 0.004\) and a median age of 22 years, the survival factor was computed as:
-
-\[
-S = \exp(-\lambda \cdot 22).
-\]
-
-Thus, the mortality-adjusted expected genotype count became:
-
-\[
-E_{\text{adj}} = E_{\text{total}} \times S.
-\]
-
-\paragraph{3. Bayesian uncertainty simulation.}
-To incorporate uncertainty in the allele frequency \( p \), we modelled \( p \) as a beta-distributed random variable:
-
-\[
-p \sim \mathrm{Beta}(p \cdot \text{AN}_{\text{eff}} + 1,\; \text{AN}_{\text{eff}} - p \cdot \text{AN}_{\text{eff}} + 1),
-\]
-
-using a large effective allele count (\(\text{AN}_{\text{eff}}\)) for illustration. 
-By generating 10,000 posterior samples of \( p \), we obtained a distribution of the literature-based adjusted expected counts, \(E_{\text{adj}}\).
-
-\paragraph{4. Bayesian Mixture Adjustment.}
-Since the national registry may not capture all nuances (e.g., reduced penetrance) of \ac{cftr}-related disease, we further combined the literature-based estimate with the observed national count (714 cases from the UK Cystic Fibrosis Registry 2023 Annual Data Report) using a 50:50 weighting:
-
-\[
-E_{\text{Bayes}} = 0.5 \times (\text{Observed Count}) + 0.5 \times E_{\text{adj}}.
-\]
-
-\paragraph{5. Validation test.}
-Thus, the expected number of \ac{cftr}-related \ac{cf} cases derived from our genome-wide probability estimates was compared with the observed counts from the UK-based \ac{cf} registry. This comparison validated our framework for estimating disease incidence in \ac{ad} disorders.
-
-\subsection{Validation of SCID-specific estimates using PID–SCID genes}
-
-To validate our genome-wide probability estimates for diagnosing a genetic variant in a patient with an \ac{pid} phenotype, we focused on a subset of genes implicated in \ac{scid}. Given that the overall panel corresponds to PID, but SCID represents a rarer subset, the probabilities were converted to values per million PID cases.
-
-\paragraph{1. Incidence conversion.}
-Based on literature, \ac{pid} occurs in approximately 1 in 1,000 births, whereas \ac{scid} occurs in approximately 1 in 100,000 births. 
-Consequently, in a population of 1,000,000 births there are about 1,000 \ac{pid} cases and 10 \ac{scid} cases. 
-To express \ac{scid}-related variant counts on a per-million \ac{pid}  scale, the observed \ac{scid} counts were multiplied by 100. 
-For example, if a gene is expected to cause \ac{scid} in 10 cases within the total \ac{pid} population, then on a per-million \ac{pid}  basis the count is 10 × 100 = 1,000 cases (across all relevant genes).
-
-\paragraph{2. Prevalence calculation and data adjustment.}
-For each SCID-associated gene (e.g. \textit{IL2RG}, \textit{RAG1}, \ac{dclre1c}), the observed variant counts in the dataset were adjusted by multiplying by 100 so that the probabilities reflect the expected number of cases per 1,000,000 \ac{pid}. 
-In this manner, our estimates are directly comparable to known counts from SCID cohorts, rather than to national population counts as in previous validation studies.
-
-\paragraph{3. Integration with prior probability estimates.}
-The predicted genotype occurrence probabilities were derived from our framework across the \ac{pid} gene panel. 
-These probabilities were then converted to expected case counts per million  \ac{pid} cases by multiplying by 1,000,000. 
-For instance, if the probability of observing a pathogenic variant in \textit{IL2RG} is \(p\), the expected \ac{scid}-related count becomes \(p \times 10^6\). Similar conversions are applied for all relevant \ac{scid} genes.
-
-\paragraph{4. Bayesian Uncertainty and Comparison with Observed Data.}
-To address uncertainty in the \ac{scid}-specific estimates, a Bayesian uncertainty simulation was performed for each gene to generate a distribution of predicted case counts on a per-million \ac{pid} scale. 
-The resulting median estimates and 95\% \ac{cri}s were then compared against known national \ac{scid} counts compiled from independent registries. 
-This comparison permuted a direct evaluation of our framework’s accuracy in predicting the occurrence of \ac{scid}-associated variants within a \ac{pid} cohort.
-
-\paragraph{5. Validation Test.}
-Thus, by converting the overall probability estimates to a per-million \ac{pid} scale, our framework was directly validated against observed counts for \ac{scid}. %This procedure confirms that our probability estimation approach can be effectively adapted to specific subphenotypes within a broader disease spectrum, ensuring robust application for both global PID and SCID diagnostics.
-
-\subsection{Protein network and genetic constraint interpretation}
-A \ac{ppi} network was constructed using protein interaction data from \ac{stringdb} \cite{szklarczyk2025string}. We previously prepared and reported 
-on this dataset consisting of 19,566 proteins and 505,968 interactions 
-(\url{https://github.com/DylanLawless/ProteoMCLustR}).
-Node attributes were derived from log-transformed score-positive-total values, which informed both node size and colour. Top-scoring nodes (top 15 based on score) were labelled to highlight prominent interactions. To evaluate group differences in score-positive-total across major disease categories, one-way \ac{anova} was performed followed by Tukey \ac{hsd} post hoc tests (and non-parametric Dunn’s test for confirmation). 
-GnomAD v4.1 constraint metrics data was used for the \ac{ppi} analysis and was sourced from \citet{karczewski2020mutational}.
-This provided transcript-level metrics, such as observed/expected ratios, \ac{loeuf}, \ac{pli}, and Z-scores, quantifying \ac{lof} and missense intolerance, along with confidence intervals and related annotations for 211,523 observations.
-
-\subsection{Gene set enrichment test}
-
-To test for overrepresentation of biological functions, the prioritised genes were compared against gene sets from MsigDB (including hallmark, positional, curated, motif, computational, GO, oncogenic, and immunologic signatures) and WikiPathways using hypergeometric tests with FUMA \cite{watanabe_functional_2017, liberzon_molecular_2011}.
-The background set consisted of 24,304 genes. Multiple testing correction was applied per data source using the Benjamini-Hochberg method, and gene sets with an adjusted P-value $\le$ 0.05 and more than one overlapping gene are reported.
-
-\subsection{Deriving novel PID classifications by genetic PPI and clinical features}
-We recategorised 315 immunophenotypic features from the original \ac{iuis} \ac{iei} annotations, reducing the original multi-level descriptors (e.g. ``decreased CD8, normal or decreased CD4'') first to 
-minimal labels (e.g.``low'') and second to binary outcomes (normal vs. not-normal) for T cells, B cells, neutrophils, and immunoglobulins %(\textbf{Figure \ref{fig:immunophenotype_before_after}}). 
-Each gene was mapped to its \ac{ppi} cluster derived from \ac{stringdb} and \ac{umap} embeddings from previous steps. 
-We first tested for non-random associations between these four binary immunophenotypes and \ac{ppi} clusters using $\chi^2$ tests. %(see Figure \ref{fig:multicat_patch_3_clust_chi}). 
-To generate a data-driven PID classification, we trained a decision tree (rpart) to predict \ac{ppi} cluster membership from the four immunophenotypic features plus the traditional \ac{iuis} Major and Subcategory labels. 
-Hyperparameters (complexity parameter = 0.001, minimum split = 10, minimum bucket = 5, maximum depth = 30) were optimised via five-fold cross validation using the \texttt{caret} framework. 
-Terminal node assignments were then relabelled according to each group’s predominant abnormal feature profile.
-
-\subsection{Probability of observing AlphaMissense pathogenicity}
-We obtained the subset pathogenicity predictions from AlphaMissense via the AlphaFold database and whole genome data from the studies data repository\cite{cheng_accurate_2023, jun_cheng_2023_8208688}. 
-The AlphaMissense data (genome-aligned and amino acid substitutions) were merged with the panel variants based on genomic coordinate and HGVSc annotation. 
-Occurrence probabilities were log-transformed and adjusted (y-axis displaying log10(occurrence prob + 1e-5) + 5)), to visualise the distribution of pathogenicity scores across the residue sequence. 
-A Kruskal-Wallis test was used to compare the observed disease probability across clinical classification groups.
-
-\subsection{Probability model definitions}
-Estimating disease risk requires accounting for both variant penetrance, $P(D\mid G)$, where $D$ denotes the disease state and $G$ the genotype, and the fraction of cases attributable to a given variant, $P(G\mid D)$. In a fully penetrant single-variant model ($P(D\mid G)=1$), the lifetime risk $P(D)$ equals the genotype frequency $P(G)$. For an allele with population frequency $p$, this gives $P(D)=p^2$ for a recessive mode of inheritance and $P(D)=2p(1-p)\approx2p$ for a dominant mode. With incomplete penetrance, $P(D)=P(G)\,P(D\mid G)$, and when multiple variants contribute to disease,  
-
-\[
-P(D)=\frac{P(G)\,P(D\mid G)}{P(G\mid D)}.
-\]
-
-Because both $P(D\mid G)$ and $P(G\mid D)$ are often uncertain, we integrate ClinVar clinical classifications, population allele frequencies and curated gene–disease associations, assuming James-Stein shrinkage to derive robust aggregate priors. By focusing on a filtered set of variants $\mathcal{V}$ where each $P(G_i\mid D)$ is the probability that disease $D$ is attributable to variant $i$ and assuming $\sum_{i\in\mathcal{V}}P(G_i\mid D)\approx1$, we obtain calibrated estimates of genotype frequency $P(G)$ despite uncertainty in individual parameters. 
-
-
-\clearpage
 \section{Results}
 \subsection{Occurrence probability across disease genes}
 \label{sec:pro_obs}
@@ -851,7 +320,7 @@ This output can directly inform follow-up actions, such as functional validation
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.85\textwidth]{../images/plot_scenario_2_quant_uncert_ci.pdf}
+  \includegraphics[width=0.99\textwidth]{../images/plot_scenario_2_quant_uncert_ci.pdf}
   \caption{
     \textbf{Quantification of present (\ac{tp}) and missing (\ac{fn}) causal genetic variants for disease in \textit{NFKB1} (scenario 2).}
     The example proband carried three known heterozygous variants, including pathogenic \texttt{p.Ser237Ter}, and had incomplete coverage at three additional loci, including likely-pathogenic splice-site variant \texttt{c.159+1G{\small\textgreater}A}.  The sequential steps towards the posterior  probability of complete genetic diagnosis are shown:
@@ -868,53 +337,11 @@ This output can directly inform follow-up actions, such as functional validation
 \end{figure}
 
 \FloatBarrier
-\subsection{Validation studies}
-\subsubsection{Validation of dominant disease occurrence with \textit{NFKB1}}
-
-To validate our genome-wide probability estimates for \ac{ad} disorders, we focused on \ac{nfkb1}.
-We used a reference dataset from \citet{tuijnenburgNFKB12018}, in which whole-genome sequencing of 846 \ac{pid} patients identified \ac{nfkb1} as one of the genes most strongly associated with the disease, with 16 \ac{nfkb1}-related \ac{cvid} cases attributed to \ac{ad} heterozygous variants. 
-Our goal was to compare the predicted number of \ac{nfkb1}-related \ac{cvid} cases with the reported count in this well-characterised national-scale cohort.
-
-Our model calculated 0 known pathogenic variant \ac{nfkb1}-related \ac{cvid} cases in the UK with a minimal risk of 456 unknown de novo variants. In the reference cohort, 16 \ac{nfkb1} \ac{cvid} cases were reported. 
-We additionally wanted to account for potential under-reporting in the reference study. 
-We used an extrapolated national \ac{cvid} prevalence which yielded a median estimate of 118 cases (95\% CI: 70–181), while a Bayesian-adjusted mixture estimate produced a median of 67 cases (95\% CI: 43–99). \textbf{Figure \ref{fig:validation_studies_bayesian_adjusted_estimates} (A)} illustrates that our predicted values reflect these ranges and are closer to the observed count. 
-This case supports the validity of our integrated probability estimation framework for \ac{ad} disorders, and represents a challenging example where pathogenic \ac{snv} are not reported in the reference population of gnomAD. Our min-max values successfully contained the true reported values.
-
-
-\subsubsection{Validation of recessive disease occurrence with \textit{CFTR}}
-
-Our analysis predicted the number of \ac{cf} cases attributable to carriage of the \texttt{p.Arg117His} variant (either as homozygous or as compound heterozygous with another pathogenic allele) in the UK. Based on \ac{hwe} calculations and mortality adjustments, we predicted approximately 648 cases arising from biallelic variants and 160 cases from homozygous variants, resulting in a total of 808 expected cases.
-
-In contrast, the nationally reported number of \ac{cf} cases was 714, as recorded in the UK Cystic Fibrosis Registry 2023 Annual Data Report
-\cite{naito2023uk}. To account for factors such as reduced penetrance and the mortality-adjusted expected genotype, we derived a Bayesian-adjusted estimate via posterior simulation. Our Bayesian approach yielded a median estimate of 740 cases (95\% \ac{ci}: 696, 786) and a mixture-based estimate of 727 cases (95\% \ac{ci}: 705, 750).
-\textbf{Figure \ref{fig:validation_studies_bayesian_adjusted_estimates} (B)} illustrates the close concordance between the predicted values, the Bayesian-adjusted estimates, and the national report supports the validity of our approach for estimating disease.
-
-
-\textbf{Figure \ref{fig:validation_scatter_dense}} shows the final values for these genes of interest in a given population size and phenotype. It reveals that an allele frequency threshold of approximately 0.000007 is required to observe a single heterozygous carrier of a disease-causing variant in the UK population for both genes. However, owing to the \ac{ar} \ac{moi} pattern of \ac{cftr}, this threshold translates into more than 100,000 heterozygous carriers, compared to only 456 carriers for the \ac{ad} gene \ac{nfkb1}. Note that this allele frequency threshold, being derived from the current reference population, represents a lower bound that can become more precise as public datasets continue to grow. This marked difference underscores the significant impact of \ac{moi} patterns on population carrier frequencies and the observed disease prevalence.
-
-\FloatBarrier
-\subsubsection{Interpretation of ClinVar variant occurrences}
-
-\textbf{Figure~\ref{fig:all_genes_combined_bar_charts_mini}} shows  the two validation study \ac{pid} genes, representing \ac{ar} and dominant \ac{moi}. \textbf{Figure~\ref{fig:all_genes_combined_bar_charts_mini} (A)}   illustrates the overall probability of an affected birth by ClinVar variant classification, whereas \textbf{Figure~\ref{fig:all_genes_combined_bar_charts_mini}  (B)}  depicts the total expected number of cases per classification for an example population, here the UK, of approximately 69.4 million. 
-
-\subsubsection{Validation of SCID-specific disease occurrence}
-
-Given that \ac{scid} is a subset of \ac{pid}, our probability estimates reflect the likelihood of observing a genetic variant as a diagnosis when the phenotype is \ac{pid}. 
-However, we additionally tested our results against \ac{scid} cohorts in 
- \textbf{Figure \ref{fig:scid_combined}}.
-The summarised raw cohort data for SCID-specific gene counts are summarised and compared across countries in \textbf{Figure \ref{fig:scid_gene_comparison}}.
-True counts for \textit{IL2RG} and \ac{dclre1c} from ten distinct locations yielded 95\% \ac{ci} surrounding our predicted values. 
-For \ac{il2rg}, the prediction was low (approximately 1 case per 1,000,000 \ac{pid}), as expected since loss-of-function variants in this \ac{xl} gene are highly deleterious and rarely observed in gnomAD. In contrast, the predicted value for \ac{rag1} was substantially higher (553 cases per 1,000,000 \ac{pid}) than the observed counts (ranging from 0 to 200). 
-We attributed this discrepancy to the lower penetrance and higher background frequency of \ac{rag1} variants in recessive inheritance, whereby reference studies may underreport the true national incidence. 
-Overall, we report that agreement within an order of magnitude was tolerable given the inherent uncertainties from reference studies arising from variable penetrance and allele frequencies.
-
-\FloatBarrier
 
 \subsection{Application to inborn errors of immunity}
 \subsubsection{Genetic constraint in high-impact protein networks}
 
 We next applied our framework to \ac{iei},  a disease area in which we have expertise and which offers a well-curated gene set to validate genome-wide estimates and demonstrate potential applications \cite{poli_human_2025}. 
-
 Given that pathogenicity in \ac{iei} may reflect shared molecular pathways, we integrated ClinVar-derived variant probability estimates with \ac{ppi}  data to quantify pathogenic burden per gene and examine whether genetic constraint aggregates within specific networks and corresponds to established \ac{iei} classifications and immunophenotypes \cite{szklarczyk2025string, karczewski2020mutational}.
 
 \subsubsection{Score-positive-total within IEI PPI network}
@@ -1067,19 +494,8 @@ The prepared data are available for bioinformatic application
 \cite{lawless_2025_15111584} 
 as per \textbf{Section \ref{sec:intregrate_tp_fn}}.
 
-
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=1\textwidth]{../images/var_risk_est_iei_genetics.png}
-  \caption{
-    \textbf{Integration of variant probabilities into the \ac{iei} genetics framework.}
-    The interface summarises the condensed variant data, with pre-calculated summary statistics and dynamic links to external databases. This integration enables immediate access to detailed variant classifications and prior probabilities for each gene.
-  }
-  \label{fig:var_risk_est_iei_genetics}
-\end{figure}
-
 \FloatBarrier
-\clearpage
+
 \section{Discussion}
 
 % 1. Occurrence probability across disease genes
@@ -1171,9 +587,7 @@ By continuously updating classical estimates with emerging data and prior knowle
 
 \clearpage
 \section{Conclusion}
-%We present a statistical framework that resolves the long-standing challenge of quantifying the probability that any candidate variant is causal for genetic disease. Unlike traditional methods that stop at pathogenic or benign labels, our approach integrates both observed variants and the possibility of unobserved causal alleles into a single probabilistic model. By combining classical population genetics, large-scale variant data, and Bayesian inference, we generate genome-wide priors across inheritance modes and provide credible intervals that reflect both evidence and residual uncertainty. Although demonstrated here in inborn errors of immunity, the framework is broadly applicable and establishes a quantitative foundation for variant interpretation, clinical decision-making, and future genomic analyses.
-
-We present a statistical framework that quantifies the probability that any candidate variant is causally relevant to a genetic disorder, integrating both observed genotypes and the possibility of unobserved, disease-causing alleles. The model replaces binary classification schemes with continuous variant-level posterior probabilities and credible intervals that account for evidence strength, genotype availability, and residual uncertainty. By combining classical population genetics, inheritance mode, variant classification, and Bayesian inference, it supports inference across incomplete or ambiguous sequencing data by modelling the full space of plausible causal variants. This enables principled interpretation in scenarios involving compound heterozygosity, low coverage, or uncertain variant evidence, and offers a reproducible metric for estimating the probability of a genetic diagnosis at the level of a gene, panel, or genome. Although demonstrated here in the context of inborn errors of immunity, the framework is generalisable to other rare disease cohorts and supports future work on quantitative variant interpretation at scale.
+We present a statistical framework that quantifies the probability that any variant contributes to disease by integrating observed genotypes with the possibility of unobserved alleles. It replaces binary classifications with continuous posterior probabilities and credible intervals that capture evidence strength and uncertainty. The approach combines population genetics, inheritance, and Bayesian inference to support inference from incomplete data and provides a reproducible metric for estimating diagnostic probability at gene, panel, or genome level. Although demonstrated in inborn errors of immunity, it is generalisable to other rare disease cohorts and enables quantitative genomic interpretation at scale.
 
 \section*{Acknowledgements}
 \noindent
@@ -1209,6 +623,409 @@ The study was conducted in accordance with the Declaration of Helsinki.
 \section*{Funding}
 \noindent This project was supported through the grant Swiss National Science Foundation (SNF) 320030\_201060, and NDS-2021-911 (SwissPedHealth) from the Swiss Personalized Health Network and the Strategic Focal Area `Personalized Health and Related Technologies' of the ETH Domain (Swiss Federal Institutes of Technology).
 
+\clearpage
+
+\section{Methods}
+\subsection{Dataset}
+
+Data from \ac{gnomad} v4 comprised 807,162 individuals, including 730,947 exomes and 76,215 genomes \cite{karczewski2020mutational}. This dataset provided 786,500,648 \ac{snv}s and 122,583,462 \ac{indel}s, with variant type counts of 9,643,254 synonymous, 16,412,219 missense, 726,924 nonsense, 1,186,588 frameshift and 542,514 canonical splice site variants. ClinVar data were obtained from the variant summary dataset (as of: 16 March 2025) available from the NCBI FTP site, and included 6,845,091 entries, which were processed into 91,319 gene classification groups and a total of 38,983 gene classifications; for example, the gene \textit{A1BG} contained four variants classified as likely benign and 102 total entries \cite{landrum_clinvar_2018}. For our analysis phase we also used \ac{dbnsfp} which consisted of a number of annotations for 121,832,908 \ac{snv}s 
+\cite{liu_dbnsfp_2020}. 
+The PanelAppRex core model contained 58,592 entries consisting of 52 sets of annotations, including the gene name, disease-gene panel ID, diseases-related features, confidence measurements.
+\cite{lawless_panelapprex_2025}
+\ac{ppi} network data was provided by \ac{stringdb}, consisting of 19,566 proteins and 505,968 interactions \cite{szklarczyk2025string}.
+The \ac{hgvs} nomenclature is used with \ac{vep}-based codes for variant IDs.
+AlphaMissense includes pathogenicity prediction classifications for 71 million variants in 19 thousand human genes \cite{cheng_accurate_2023, jun_cheng_2023_8208688}. We used these scores to compared against the probability of observing the same given variants.
+\textbf{Box \ref{box:definitions}} list the definitions from the \ac{iuis} \ac{iei} for the major disease categories used throughout this study \cite{poli_human_2025}.
+
+The following genes were used for disease cohort validations and examples.
+We used the two most commonly reported genes from the \ac{iei} panel \ac{nfkb1} 
+\cite{tuijnenburgNFKB12018,
+who1997primary,
+cunningham1999common,
+oksenhendler2008infections}
+and \ac{cftr} 
+\cite{naito2023uk, castellani2013cftr2, Grasemann2023cftr}
+to demonstrate applications in \ac{ad} and \ac{ar} disease genes, respectively.
+We used \ac{scid}-specific genes 
+\ac{ar} \ac{dclre1c},
+\ac{ar} \ac{rag1},
+\ac{xl} \ac{il2rg} to demonstrate a \ac{iei} subset disease phenotype of 
+\ac{scid}.
+We also used \ac{ad} \ac{tnfaip3} for other examples comparable to \ac{nfkb1} since it is also causes \ac{ad} pro-inflammatory disease but has more known ClinVar classifications at higher \ac{af} then \ac{nfkb1}.
+
+
+
+
+\begin{tcolorbox}[
+    colback=white!0,
+    colframe=black!70,
+    boxrule=1pt,
+    arc=1mm,
+    outer arc=1mm,
+    title=\textbf{\refstepcounter{myboxcounter}\label{box:definitions}Box \themyboxcounter: definitions}
+]
+% \begin{tcolorbox}[colback=black!01, colframe=black!70, title=Box \ref{box:definitions} Definitions for IEI Major Disease Categories, label=box:definitions]
+\textbf{Major Category} \hspace{4em} \textbf{Description}\\[5pt]
+1. CID  Immunodeficiencies affecting cellular and humoral immunity\\[2pt]
+2. CID+  Combined immunodeficiencies with associated or syndromic features\\[2pt]
+3. PAD - Predominantly Antibody Deficiencies\\[2pt]
+4. PIRD - Diseases of Immune Dysregulation\\[2pt]
+5. PD - Congenital defects of phagocyte number or function\\[2pt]
+6. IID - Defects in intrinsic and innate immunity\\[2pt]
+7. AID - Autoinflammatory Disorders\\[2pt]
+8. CD - Complement Deficiencies\\[2pt]
+9. BMF - Bone marrow failure
+\end{tcolorbox}
+
+\subsection{Variant classification occurrence probability}
+To quantify the likelihood that an individual harbours a variant with a given disease classification, we compute the variant-level occurrence probability (\ac{vre}) for each variant.
+As a starting point, we considered the classical \ac{hwe} for a biallelic locus:
+$
+p^2 + 2pq + q^2 = 1,
+$
+where \(p\) is the allele frequency, \(q = 1 - p\), \(p^2\) represents the homozygous dominant, \(2pq\) the heterozygous, and \(q^2\) the homozygous recessive genotype frequencies. For disease phenotypes, particularly under \ac{ar} \ac{moi}, the risk is traditionally linked to the homozygous state (\(p^2\)); however, to account for compound heterozygosity across multiple variants, %we extend this by incorporating the contribution from other pathogenic alleles.
+we allocated the overall gene-level risk proportionally among variants.
+
+Our computational pipeline estimated the probability of observing a disease-associated genotype for each variant and aggregated these probabilities by gene and ClinVar classification. This approach included all variant classifications, not limited solely to those deemed ``pathogenic'', and explicitly conditioned the classification on the given phenotype, recognising that a variant could only be considered pathogenic relative to a defined clinical context. The core calculations proceeded as follows:
+
+\paragraph{1. Allele frequency and total variant frequency.} 
+\label{sec:min_risk}
+For each variant \(i\) in a gene, the allele frequency was denoted as \(p_i\). For each gene (any genomic region or set), we defined the total variant frequency (summing across all reported variants in that gene) as:
+$P_{\text{tot}} = \sum_{i \in \text{gene}} p_i$.
+Note that, because each calculation is confined to one gene, no additional scaling was required for our primary analyses (\(P_{\text{tot}}\)). However, if this same unscaled summation is applied across regions or variant sets of differing size or dosage sensitivity, it can bias burden estimates. In such cases, normalisation by region length or incorporation of gene- or region-specific dosage constraints is recommended.
+
+If any of the possible \ac{snv}  had no observed allele (\(p_i = 0\)), we assigned a minimal risk:
+$p_i = \frac{1}{\max(AN) + 1}$
+where \(\max(AN)\) was the maximum allele number observed for that gene. This adjustment ensured that a nonzero risk was incorporated even in the absence of observed variants in the reference database.
+
+\paragraph{2. Occurrence probability based on \ac{moi}.}
+The probability that an individual is affected by a variant depends on the \ac{moi}. For \textbf{\ac{ad}} and \textbf{\ac{xl}} variants, a single pathogenic allele suffices:
+$p_{\text{disease},i} = p_i$.
+For\textbf{ \ac{ar}} variants, disease manifests when two pathogenic alleles are present, either as homozygotes or as compound heterozygotes. We use:
+$p_{\text{disease},i} = p_i \; P_{\text{tot}}$. % version 2
+
+Under \ac{hwe}, the overall gene-level probability of an \ac{ar} genotype is
+$P_{\text{AR}} \;=\; P_{\text{tot}}^2
+\;=\;\sum_i p_i^2 \;+\; 2\sum_{i<j} p_i\,p_j$,
+where \(P_{\text{tot}}=\sum_i p_i\). A naïve per-variant assignment
+$p_i^2 + 2\,p_i\,(P_{\text{tot}} - p_i)$
+would, when summed over all \(i\), double-count the compound heterozygous terms. 
+To partition \(P_{\text{AR}}\) among variants without double counting, we allocate risk in proportion to each variant’s allele frequency:
+$
+p_{\text{disease},i}
+=\frac{p_i}{P_{\text{tot}}}\times P_{\text{tot}}^2
+= p_i\,P_{\text{tot}}$.
+
+This ensures
+$
+\sum_i p_{\text{disease},i}
+= \sum_i p_i\,P_{\text{tot}}
+= P_{\text{tot}}^2,
+$
+recovering the correct \ac{ar} risk while attributing each variant its fair share of homozygous and compound-heterozygous contributions.
+
+More simply, for \ac{ad} or \ac{xl} conditions a single pathogenic allele suffices, so the classification risk (e.g. benign, pathogenic) equals its population frequency. For \ac{ar} conditions two pathogenic alleles are required - either two copies of the same variant or one copy each of two different variants, so we divide the overall recessive risk among variants according to each variant’s share of the total classification frequency in that gene.
+
+\paragraph{3. Expected case numbers and case detection probability.}
+Given a population with \(N\) births (e.g. as seen in our validation studies, \(N = 69\,433\,632\)), the expected number of cases attributable to variant \(i\) was calculated as:
+$E_i = N \cdot p_{\text{disease},i}$.
+The probability of detecting at least one affected individual for that variant was computed as:
+$P(\geq 1)_i = 1 - \bigl(1 - p_{\text{disease},i}\bigr)^N$.
+
+\paragraph{4. Aggregation by gene and ClinVar classification.}
+For each gene and for each ClinVar classification (e.g. ``Pathogenic'', ``Likely pathogenic'', ``Uncertain significance'', etc.), we aggregated the results across all variants. The classification grouping can be substituted by any alternative score system. The total expected cases for a given group was:
+$E_{\text{group}} = \sum_{i \in \text{group}} E_i$,
+and the overall probability of observing at least one case within the group was calculated as:
+$P_{\text{group}} = 1 - \prod_{i \in \text{group}} \left(1 - p_{\text{disease},i}\right)$.
+
+\paragraph{5. Data processing and implementation.}
+We implemented the calculations within a \ac{hpc} pipeline and provided an example for a single dominant disease gene, \textit{TNFAIP3}, in the source code to enhance reproducibility. Variant data were imported in chunks from the annotation database for all chromosomes (1-22, X, Y, M). 
+
+For each data chunk, the relevant fields were gene name, position, allele number, allele frequency, ClinVar classification, and HGVS annotations. 
+Missing classifications (denoted by ``.'') were replaced with zeros and allele frequencies were converted to numeric values. % We then retained only the first transcript allele annotation for simplicity, as the analysis was based on genomic coordinates. 
+Subsequently, the variant data were merged with gene panel data from PanelAppRex to obtain the disease-related \ac{moi} mode for each gene. 
+For each gene, if no variant was observed for a given ClinVar classification (i.e. \(p_i = 0\)), a minimal risk was assigned as described above. 
+Finally, we computed the occurrence probability, expected cases, and the probability of observing at least one case of disease using the equations presented.
+
+The final results were aggregated by gene and ClinVar classification and used to generate summary statistics that reviewed the predicted disease observation probabilities.
+We define the \emph{\ac{vre}} as the prior probability of observing a variant classified as the cause of disease 
+
+\paragraph{6. Score-positive-total.}
+For use as a simple summary statistic on the resulting user-interface, we defined the \emph{score-positive-total} as the total number of positively scored variant classifications within a given region (gene, locus, or variant set). 
+Using the ClinVar classification assigned to a scale from$-5$ (benign) to $+5$ (pathogenic), we included only scores $> 0$, corresponding to some evidence of pathogenicity. 
+The score-positive-total yields a non-normalised estimate of the prior probability that a phenotype is explained by known pathogenic variants.
+
+\paragraph{7. Classification scoring system.}
+\label{sec:classification_score}
+Each ClinVar classification was assigned an integer score: pathogenic = +5, likely pathogenic = +4, pathogenic (low penetrance) = +3, likely pathogenic (low penetrance) = +2, conflicting pathogenicity = +2, likely risk allele/risk factor/association = +1, drug response/uncertain significance/no classification/affects/other/not provided/uncertain risk allele = 0, protective = –3, likely benign = –4, benign = –5. No further normalisation was applied. The resulting distribution (\textbf{Figure \ref{fig:p_gene_summary_hist_patch3} A-B}) is naturally comparable to a zero-centred average rank (\textbf{C-D}). This straightforward, modular approach can be readily replaced by any comparable evidence-based classification system. Variants with scores  $\leq 0$ were omitted, since benign classifications do not inform disease likelihood in the score-positive-total summary.
+
+% --------------------------------------------------------------------------
+% Methods, Results and Discussion: gene‑level pathogenic attribution
+% --------------------------------------------------------------------------
+
+\subsection{Bayesian framework for posterior probability of genetic diagnosis}
+
+We developed a Bayesian framework to estimate the probability that at least one variant in a given genome or target set is both present and clinically relevant in a proband. The method combines variant-specific priors derived from any classification system or scoring scheme with a probabilistic model of genotype presence, incorporating both observed and unsequenced genomic positions.
+
+\paragraph{Prior specification.}
+Each variant \( i \) was assigned a prior probability \( p_i \) reflecting its likelihood of being relevant to the user's target interpretation. This could include, for example, being classified as pathogenic, benign, or uncertain significance, or being prioritised by a quantitative scoring scheme. The priors may be derived from allele frequency, expert curation, functional prediction, or any other source of variant-level evidence. The framework supports modular priors without constraint. % accurate diagnostic inference generally requires gene‑disease information, including the \ac{moi}, to determine whether one or multiple variants are needed to explain the phenotype.
+In our implementation, priors are derived from ClinVar classification, gnomAD population frequency, and \ac{moi} specified with PanelAppRex gene-disease curation. We modelled the latent causality of each variant as a Beta distribution parameterised by
+$\alpha_i = \text{round}(p_i \cdot A_N) + w$, 
+$\beta_i = A_N - \text{round}(p_i \cdot A_N) + 1$,
+where \( A_N \) is the total number of callable alleles at the site (e.g. \( A_N = 2n \) for \( n \) diploid individuals), and \( w \) is a small stabilising constant (typically \( w = 1 \)). This construction reflects the expected frequency of the variant in the tested cohort under the assumption of causal relevance.
+
+\paragraph{Posterior simulation.}
+We drew \( N = 10{,}000 \) samples from the Beta prior to approximate a posterior distribution for each variant:
+$\theta_i^{(m)} \sim \text{Beta}(\alpha_i, \beta_i), \quad m = 1,\dots,N$.
+In each simulation round, these values were normalised across all variants to reflect the relative share of the total causal signal:
+$$
+\tilde{\theta}_i^{(m)} = \frac{\theta_i^{(m)}}{\sum_j \theta_j^{(m)}}, \qquad \hat{P}_i = \frac{1}{N} \sum_{m=1}^{N} \tilde{\theta}_i^{(m)}.
+$$
+
+This yields a posterior expectation of variant-level contribution, which can be thresholded or ranked depending on the application.
+
+\paragraph{Genotype presence model.}
+Independently from the classification or interpretive context, each variant was assigned a probability \( q_i \in [0,1] \) of being present in the proband. For observed alternate genotypes, \( q_i = 1 \); for confidently called reference genotypes, \( q_i = 0 \); and for unsequenced or uncertain sites, \( q_i \) was set to the prior probability \( p_i \), or an alternative estimate reflecting presence likelihood.
+For each simulation round, we drew a genotype indicator:
+$G_i^{(m)} \sim \text{Bernoulli}(q_i)$,
+and computed the total interpreted variant probability:
+$
+T^{(m)} = \sum_i G_i^{(m)} \cdot \tilde{\theta}_i^{(m)}$.
+The empirical distribution of \( \{T^{(m)}\} \) represents the posterior belief that the proband harbours at least one variant matching the specified interpretive criteria in the given gene or set. Summary statistics, such as the posterior median and 95\% credible interval, are used to report this probability with interval-based accountability.
+
+\paragraph{Flexibility and implementation.}
+This framework generalises across different scoring systems, prior models, and sequencing contexts. It can incorporate uncertain classifications, variant weights, unsequenced positions, or alternative genotype priors without altering the core inference structure. The method is implemented in R with modular inputs and reproducible simulation logic.
+
+\subsection{Application to diagnostic scenarios with observed and unobserved variant data}
+% \subsection{Integrating observed true positives and unobserved false negatives into a single, actionable conclusion}
+
+In this section, we detail our approach to integrating sequencing data with prior classification evidence (e.g. pathogenic on ClinVar) to calculate the posterior probability of a complete successful genetic diagnosis.
+Our method is designed to account for possible outcomes of 
+\ac{tp},
+% \ac{fp},
+\ac{tn},
+and \ac{fn},
+by first ensuring that all nucleotides corresponding to known variant classifications (benign, pathogenic, etc.) have been accurately sequenced. 
+This implies the use of \ac{gvcf}-style data which refer to \ac{vcf}s that contain a record for every position in the genome (or interval of interest) regardless of whether a variant was detected at that site or not.
+Only after confirming that these positions match the reference alleles (or novel unaccounted variants are classified) do we calculate the probability that additional, alternative pathogenic variants (those not observed in the sequencing data) could be present. 
+Our \ac{cri} for pathogenicity thus incorporates uncertainty from the entire process, including the tally of \ac{tp}, \ac{tn}, and \ac{fn} outcomes.
+We ignore the contribution of \ac{fp}s  as a separate task to be tackled in the future.
+
+We estimated, for every query (e.g. gene or disease-panel), the posterior probability that at least one constituent allele is both damaging and causal in the proband.  
+The workflow comprises four consecutive stages.
+
+\paragraph{(i) Data pre‑processing.}
+We synthesized an example patient in a disease cohort of 200 cases.
+We made several scenarios where a causal genetic diagnosis based on the available data is either simple, difficult, or impossible.
+Our example focused on a proband two representative genes for \ac{ad} \ac{iei}: \ac{nfkb1} and  \ac{tnfaip3}.
+All coding and canonical splice‑region variants for \ac{nfkb1} were extracted from the gVCF.  
+We assumed a typical \ac{qc} scenario, where sites corresponding to previously reported pathogenic alleles were checked for read depth \mbox{$\ge\!10$} and genotype quality \mbox{$\ge\!20$}.  
+Positions that failed this check were labelled \emph{missing}, thus separating true reference calls from non-sequenced or uninformative sequence.
+
+\paragraph{(ii) Evidence mapping and occurrence probability.}
+PanelAppRex variants were annotated with ClinVar clinical significance.  Each label was converted to an ordinal evidence score $S_i\in[-5,5]$ and rescaled to a pathogenic weight $W_i=\operatorname{rescale}(S_i;\,-5,5\rightarrow0,1)$.  
+This scoring system can be replaced with any comparable alternative.
+The HWE-based pipeline of Section \ref{sec:min_risk} supplied a per‑variant occurrence probability $p_i$.  The adjusted prior was
+$p_{i}^{\ast}=W_i\,p_i,$ and
+$\mathrm{flag}_i\in\{\text{present},\text{missing}\}$.
+
+\paragraph{(iii) Prior specification.}
+In a hypothetical cohort of $n=200$ diploid individuals the count of allele~$i$ follows a Beta-Binomial model.  Marginalising the Binomial yields the Beta prior
+$\pi_i\sim\mathrm{Beta}\!\bigl(\alpha_i,\beta_i\bigr)$,
+$\alpha_i=\mathrm{round}(2np_{i}^{\ast})+\tilde w_i,\;
+\beta_i = 2n-\mathrm{round}(2np_{i}^{\ast})+1$,
+where $\tilde w_i=\max(1,S_i+1)$ contributes an additional pseudo‑count whenever $S_i>0$.
+
+\paragraph{(iv) Posterior simulation and aggregation.}
+For each variant $i$ we drew $M=10\,000$ realisations $\pi_{i}^{(m)}$ and normalised within each iteration,
+$\tilde\pi_{i}^{(m)}=\frac{\pi_{i}^{(m)}}{\sum_{j}\pi_{j}^{(m)}}$.
+Variants with $S_i>4$ were deemed to have evidence as \emph{causal} (pathogenic or likely pathogenic). 
+We note that an alternative evidence score or conditional threshold can be substituted for this step.
+Their mean posterior share $\bar\pi_i=M^{-1}\sum_m\tilde\pi_{i}^{(m)}$ and $95\%$ \ac{cri} were retained.  The probability that a damaging causal allele is physically present was obtained by a second layer:
+$P^{(m)}=\sum_{i:\,S_i>3}\tilde\pi_{i}^{(m)}\,G_{i}^{(m)}$, and
+$G_{i}^{(m)}\sim\mathrm{Bernoulli}(g_i)$,
+with $g_i=1$ for present variants, $g_i=0$ for reference calls, and $g_i=p_i$ for missing variants.  The gene‑level estimate is the median of $\{P^{(m)}\}_{m=1}^{M}$ and its $2.5^{\text{th}}$/$97.5^{\text{th}}$ percentiles.
+
+\paragraph{(v) Scenario analysis.}
+The three scenarios were explored for a causal genetic diagnosis that is either simple, difficult, or impossible given the existing data.
+The proband spiked data had either:
+(1) known classified variants only, including only one known \ac{tp} pathogenic variant, \ac{nfkb1}  \texttt{p.Ser237Ter}, 
+(2) inclusion of an additional plausible yet non-sequenced splice‑donor allele \ac{nfkb1}  \texttt{c.159+1G{\small\textgreater}A} (likely pathogenic) as a \ac{fn}, and 
+(3) where no known causal variants were present for a patient, one representative variant from each distinct ClinVar classification was selected and marked as unsequenced to emulate a range of putative \acp{fn}. The selected variants were: \ac{tnfaip3} \texttt{p.Cys243Arg} (pathogenic), \texttt{p.Tyr246Ter} (likely pathogenic), \texttt{p.His646Pro} (conflicting interpretations of pathogenicity), \texttt{p.Thr635Ile} (uncertain significance), \texttt{p.Arg162Trp} (not provided), \texttt{p.Arg280Trp} (likely benign), \texttt{p.Ile207Leu} (benign/likely benign), and \texttt{p.Lys304Glu} (benign). 
+All subsequent steps were identical.
+
+\subsection{Validation of autosomal dominant estimates using \textit{NFKB1}}
+
+To validate our genome-wide probability estimates in an \ac{ad} gene, we focused on \ac{nfkb1}. 
+Our goal was to compare the expected number of \ac{nfkb1}-related \ac{cvid} cases, as predicted by our framework, with the reported case count in a well-characterised national-scale \ac{pid} cohort.
+
+\paragraph{1. Reference dataset.}
+We used a reference dataset reported by \citet{tuijnenburgNFKB12018} to build a validation model in an \ac{ad} disease gene. This study performed whole-genome sequencing of 846 predominantly sporadic, unrelated \ac{pid} cases from the NIHR BioResource-Rare Diseases cohort. There were 390 \ac{cvid} cases in the cohort. The study identified \ac{nfkb1} as one of the genes most strongly associated with \ac{pid}. Sixteen novel heterozygous variants including truncating, missense, and gene deletion variants, were found in \ac{nfkb1} among the \ac{cvid} cases.
+
+\paragraph{2. Cohort prevalence calculation.}
+Within the cohort, 16 out of 390 \ac{cvid} cases were attributable to \ac{nfkb1}. 
+Thus, the observed cohort prevalence was
+$
+\text{Prevalence}_{\text{cohort}} = \frac{16}{390} \approx 0.041$,
+with a 95\% confidence interval (using Wilson's method) of approximately \((0.0254,\,0.0656)\).
+
+\paragraph{3. National estimate based on literature.}
+Based on literature
+\cite{tuijnenburgNFKB12018, who1997primary, oksenhendler2008infections},
+the prevalence of \ac{cvid} in the general population was estimated as
+$\text{Prevalence}_{\text{CVID}} = \frac{1}{25\,000}$.
+For a UK population of  $N_{\text{UK}} \approx 69\,433\,632,$
+the expected total number of \ac{cvid} cases was
+$E_{\text{CVID}} \approx \frac{69\,433\,632}{25\,000} \approx 2777.$
+Assuming that the proportion of \ac{cvid} cases attributable to \ac{nfkb1} is equivalent to the cohort estimate, the literature extrapolated estimate is
+$\text{Estimated NFKB1 cases} \approx 2777 \times 0.041 \approx 114$,
+with a median value of approximately 118 and a 95\% confidence interval of 70 to 181 cases (derived from posterior sampling).
+
+\paragraph{4. Bayesian adjustment.}
+Recognising that the sequenced cohort cases likely captures the majority of \ac{nfkb1}‑related patients (apart from close relatives), but may still miss rare or geographically dispersed variants, we combined the cohort-based and literature-based estimates using two complementary Bayesian approaches:
+
+\begin{enumerate}
+  \item \textbf{Weighted adjustment (emphasising the cohort, \(w=0.9\)):}  
+  We assigned \(90\%\) weight to the directly observed cohort count (16) and \(10\%\) to the extrapolated population estimate (114), thereby accounting, illustratively, for a small fraction of unobserved cases while retaining confidence in our well‑characterised cohort:
+$  \text{Adjusted Estimate}
+    = 0.9 \times 16 \;+\; 0.1 \times 114
+    \;\approx\; 26$,
+  yielding a 95\% \ac{cri} of roughly 21 to 33 cases.
+  \item \textbf{Mixture adjustment (equal weighting, \(w=0.5\)):}  
+  To reflect greater uncertainty about how representative the cohort is, we combined cohort and population prevalences equally. 
+  We sampled from the posterior distribution of the cohort prevalence,
+   $p \sim \mathrm{Beta}(16 + 1,\,390 - 16 + 1)$,
+  and mixed this with the literature-based rate at \(50\%\) each \cite{tuijnenburgNFKB12018, who1997primary, oksenhendler2008infections}. 
+  This yields a median estimate of 67 cases and a wider 95\% \ac{cri} of approximately 43 to 99 cases, capturing uncertainty in both under-ascertainment and over-generalisation.
+\end{enumerate}
+
+\paragraph{5. Predicted total genotype counts.}
+The predicted total synthetic genotype count (before adjustment) was 456, whereas the predicted total genotypes adjusted for \texttt{synth\_flag} was 0. 
+This higher synthetic count was set based on a minimal risk threshold, ensuring that at least one genotype is assumed to exist (e.g. accounting for a potential unknown de novo variant) even when no variant is observed in gnomAD (as per \textbf{section
+\ref{sec:min_risk}}).
+
+\paragraph{6. Validation test.}
+Thus, the expected number of \ac{nfkb1}-related \ac{cvid} cases derived from our genome-wide probability estimates was compared with the observed counts from the UK-based \ac{pid} cohort. 
+This comparison validates our framework for estimating disease incidence in \ac{ad} disorders.
+
+% Annotated key values from R:
+% Predicted total genotypes (adjusted for synth_flag): 0 
+% Predicted total synthetic genotype count: 456 
+% Reported NFKB1-related CVID cases (n_NFKB1): 16 
+% Literature extrapolated estimate median: 118 
+% 95% CI for literature extrapolated estimate: [70, 181] 
+% Bayesian mixture adjusted estimate (w = 0.5) median: 67 
+% 95% CI for Bayesian mixture adjusted estimate: [43, 99] 
+% Bayesian adjusted estimated number of NFKB1-related CVID cases (w = 0.9): 26 
+% 95% Bayesian adjusted CI (w = 0.9): [21, 33]
+
+\subsection{Validation study for autosomal recessive CF using \textit{CFTR}}
+
+To validate our framework for \ac{ar} diseases, we focused on \ac{cf}.
+For comparability sizes between the validation studies, we analysed the most common \ac{snv} in the \ac{cftr} gene, typically reported as \texttt{p.Arg117His} (GRCh38 Chr 7:117530975 G/A, MANE Select HGVSp ENST00000003084.11: p.Arg117His).
+Our goal was to validate our genome-wide probability estimates by comparing the expected number of \ac{cf} cases attributable to the \texttt{p.Arg117His} variant in \ac{cftr} with the nationally reported case count in a well-characterised disease cohort
+\cite{naito2023uk, castellani2013cftr2, Grasemann2023cftr}.
+
+\paragraph{1. Expected genotype counts.}
+Let \( p \) denote the allele frequency of the \texttt{p.Arg117His} variant and \( q \) denote the combined frequency of all other pathogenic \ac{cftr} variants, such that
+$q = P_{\text{tot}} - p \quad \text{with} \quad P_{\text{tot}} = \sum_{i \in \text{CFTR}} p_i$.
+Under Hardy–Weinberg equilibrium for an \ac{ar} trait, the expected frequencies were:
+$f_{\text{hom}} = p^2$ (homozygous for p.Arg117His)
+and
+$f_{\text{comphet}} = 2p\,q$ 
+(compound heterozygotes carrying p.Arg117His and another pathogenic allele).
+For a population of size \( N \) (here, \( N \approx 69\,433\,632 \)), the expected number of cases were:
+$E_{\text{hom}} = N \cdot p^2,\quad E_{\text{comphet}} = N \cdot 2p\,q,\quad E_{\text{total}} = E_{\text{hom}} + E_{\text{comphet}}$.
+
+\paragraph{2. Mortality adjustment.}
+Since \ac{cf} patients experience increased mortality, we adjusted the expected genotype counts using an exponential survival model \cite{naito2023uk, castellani2013cftr2, Grasemann2023cftr}. With an annual mortality rate \(\lambda \approx 0.004\) and a median age of 22 years, the survival factor was computed as:
+$S = \exp(-\lambda \cdot 22)$.
+Thus, the mortality-adjusted expected genotype count became:
+$E_{\text{adj}} = E_{\text{total}} \times S$.
+
+\paragraph{3. Bayesian uncertainty simulation.}
+To incorporate uncertainty in the allele frequency \( p \), we modelled \( p \) as a beta-distributed random variable:
+\[
+p \sim \mathrm{Beta}(p \cdot \text{AN}_{\text{eff}} + 1,\; \text{AN}_{\text{eff}} - p \cdot \text{AN}_{\text{eff}} + 1),
+\]
+using a large effective allele count (\(\text{AN}_{\text{eff}}\)) for illustration. 
+By generating 10,000 posterior samples of \( p \), we obtained a distribution of the literature-based adjusted expected counts, \(E_{\text{adj}}\).
+
+\paragraph{4. Bayesian Mixture Adjustment.}
+Since the national registry may not capture all nuances (e.g., reduced penetrance) of \ac{cftr}-related disease, we further combined the literature-based estimate with the observed national count (714 cases from the UK Cystic Fibrosis Registry 2023 Annual Data Report) using a 50:50 weighting:
+\[
+E_{\text{Bayes}} = 0.5 \times (\text{Observed Count}) + 0.5 \times E_{\text{adj}}.
+\]
+
+\paragraph{5. Validation test.}
+Thus, the expected number of \ac{cftr}-related \ac{cf} cases derived from our genome-wide probability estimates was compared with the observed counts from the UK-based \ac{cf} registry. This comparison validated our framework for estimating disease incidence in \ac{ad} disorders.
+
+\subsection{Validation of SCID-specific estimates using PID–SCID genes}
+
+To validate our genome-wide probability estimates for diagnosing a genetic variant in a patient with an \ac{pid} phenotype, we focused on a subset of genes implicated in \ac{scid}. Given that the overall panel corresponds to PID, but SCID represents a rarer subset, the probabilities were converted to values per million PID cases.
+
+\paragraph{1. Incidence conversion.}
+Based on literature, \ac{pid} occurs in approximately 1 in 1,000 births, whereas \ac{scid} occurs in approximately 1 in 100,000 births. 
+Consequently, in a population of 1,000,000 births there are about 1,000 \ac{pid} cases and 10 \ac{scid} cases. 
+To express \ac{scid}-related variant counts on a per-million \ac{pid}  scale, the observed \ac{scid} counts were multiplied by 100. 
+For example, if a gene is expected to cause \ac{scid} in 10 cases within the total \ac{pid} population, then on a per-million \ac{pid}  basis the count is 10 × 100 = 1,000 cases (across all relevant genes).
+
+\paragraph{2. Prevalence calculation and data adjustment.}
+For each SCID-associated gene (e.g. \textit{IL2RG}, \textit{RAG1}, \ac{dclre1c}), the observed variant counts in the dataset were adjusted by multiplying by 100 so that the probabilities reflect the expected number of cases per 1,000,000 \ac{pid}. 
+In this manner, our estimates are directly comparable to known counts from SCID cohorts, rather than to national population counts as in previous validation studies.
+
+\paragraph{3. Integration with prior probability estimates.}
+The predicted genotype occurrence probabilities were derived from our framework across the \ac{pid} gene panel. 
+These probabilities were then converted to expected case counts per million  \ac{pid} cases by multiplying by 1,000,000. 
+For instance, if the probability of observing a pathogenic variant in \textit{IL2RG} is \(p\), the expected \ac{scid}-related count becomes \(p \times 10^6\). Similar conversions are applied for all relevant \ac{scid} genes.
+
+\paragraph{4. Bayesian Uncertainty and Comparison with Observed Data.}
+To address uncertainty in the \ac{scid}-specific estimates, a Bayesian uncertainty simulation was performed for each gene to generate a distribution of predicted case counts on a per-million \ac{pid} scale. 
+The resulting median estimates and 95\% \ac{cri}s were then compared against known national \ac{scid} counts compiled from independent registries. 
+This comparison permuted a direct evaluation of our framework’s accuracy in predicting the occurrence of \ac{scid}-associated variants within a \ac{pid} cohort.
+
+\paragraph{5. Validation Test.}
+Thus, by converting the overall probability estimates to a per-million \ac{pid} scale, our framework was directly validated against observed counts for \ac{scid}. %This procedure confirms that our probability estimation approach can be effectively adapted to specific subphenotypes within a broader disease spectrum, ensuring robust application for both global PID and SCID diagnostics.
+
+\subsection{Protein network and genetic constraint interpretation}
+A \ac{ppi} network was constructed using protein interaction data from \ac{stringdb} \cite{szklarczyk2025string}. We previously prepared and reported 
+on this dataset consisting of 19,566 proteins and 505,968 interactions 
+(\url{https://github.com/DylanLawless/ProteoMCLustR}).
+Node attributes were derived from log-transformed score-positive-total values, which informed both node size and colour. Top-scoring nodes (top 15 based on score) were labelled to highlight prominent interactions. To evaluate group differences in score-positive-total across major disease categories, one-way \ac{anova} was performed followed by Tukey \ac{hsd} post hoc tests (and non-parametric Dunn’s test for confirmation). 
+GnomAD v4.1 constraint metrics data was used for the \ac{ppi} analysis and was sourced from \citet{karczewski2020mutational}.
+This provided transcript-level metrics, such as observed/expected ratios, \ac{loeuf}, \ac{pli}, and Z-scores, quantifying \ac{lof} and missense intolerance, along with confidence intervals and related annotations for 211,523 observations.
+
+\subsection{Gene set enrichment test}
+
+To test for overrepresentation of biological functions, the prioritised genes were compared against gene sets from MsigDB (including hallmark, positional, curated, motif, computational, GO, oncogenic, and immunologic signatures) and WikiPathways using hypergeometric tests with FUMA \cite{watanabe_functional_2017, liberzon_molecular_2011}.
+The background set consisted of 24,304 genes. Multiple testing correction was applied per data source using the Benjamini-Hochberg method, and gene sets with an adjusted P-value $\le$ 0.05 and more than one overlapping gene are reported.
+
+\subsection{Deriving novel PID classifications by genetic PPI and clinical features}
+We recategorised 315 immunophenotypic features from the original \ac{iuis} \ac{iei} annotations, reducing the original multi-level descriptors (e.g. ``decreased CD8, normal or decreased CD4'') first to 
+minimal labels (e.g.``low'') and second to binary outcomes (normal vs. not-normal) for T cells, B cells, neutrophils, and immunoglobulins %(\textbf{Figure \ref{fig:immunophenotype_before_after}}). 
+Each gene was mapped to its \ac{ppi} cluster derived from \ac{stringdb} and \ac{umap} embeddings from previous steps. 
+We first tested for non-random associations between these four binary immunophenotypes and \ac{ppi} clusters using $\chi^2$ tests. %(see Figure \ref{fig:multicat_patch_3_clust_chi}). 
+To generate a data-driven PID classification, we trained a decision tree (rpart) to predict \ac{ppi} cluster membership from the four immunophenotypic features plus the traditional \ac{iuis} Major and Subcategory labels. 
+Hyperparameters (complexity parameter = 0.001, minimum split = 10, minimum bucket = 5, maximum depth = 30) were optimised via five-fold cross validation using the \texttt{caret} framework. 
+Terminal node assignments were then relabelled according to each group’s predominant abnormal feature profile.
+
+\subsection{Probability of observing AlphaMissense pathogenicity}
+We obtained the subset pathogenicity predictions from AlphaMissense via the AlphaFold database and whole genome data from the studies data repository\cite{cheng_accurate_2023, jun_cheng_2023_8208688}. 
+The AlphaMissense data (genome-aligned and amino acid substitutions) were merged with the panel variants based on genomic coordinate and HGVSc annotation. 
+Occurrence probabilities were log-transformed and adjusted (y-axis displaying log10(occurrence prob + 1e-5) + 5)), to visualise the distribution of pathogenicity scores across the residue sequence. 
+A Kruskal-Wallis test was used to compare the observed disease probability across clinical classification groups.
+
+\subsection{Probability model definitions}
+Estimating disease risk requires accounting for both variant penetrance, $P(D\mid G)$, where $D$ denotes the disease state and $G$ the genotype, and the fraction of cases attributable to a given variant, $P(G\mid D)$. In a fully penetrant single-variant model ($P(D\mid G)=1$), the lifetime risk $P(D)$ equals the genotype frequency $P(G)$. For an allele with population frequency $p$, this gives $P(D)=p^2$ for a recessive mode of inheritance and $P(D)=2p(1-p)\approx2p$ for a dominant mode. With incomplete penetrance, $P(D)=P(G)\,P(D\mid G)$, and when multiple variants contribute to disease,  
+
+\[
+P(D)=\frac{P(G)\,P(D\mid G)}{P(G\mid D)}.
+\]
+
+Because both $P(D\mid G)$ and $P(G\mid D)$ are often uncertain, we integrate ClinVar clinical classifications, population allele frequencies and curated gene–disease associations, assuming James-Stein shrinkage to derive robust aggregate priors. By focusing on a filtered set of variants $\mathcal{V}$ where each $P(G_i\mid D)$ is the probability that disease $D$ is attributable to variant $i$ and assuming $\sum_{i\in\mathcal{V}}P(G_i\mid D)\approx1$, we obtain calibrated estimates of genotype frequency $P(G)$ despite uncertainty in individual parameters. 
+
+
+\clearpage
 % \newpage
 \bibliographystyle{unsrtnat}
 \bibliography{references}
@@ -1266,20 +1083,28 @@ Pathogenicity scores (-5 to +5) are annotated in (A).
 
 \FloatBarrier
 \clearpage
-\subsection{Validation studies}
 
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=\textwidth]{../images/validation_studies_scatterdense_expected_prob.png}
-  \caption{\textbf{Interpretation of probability of observing a variant classification.} 
- The result from the chosen validation genes \ac{cftr} and \ac{nfkb1} are shown. 
- Case counts are dependant on the population size and phenotype.
-(A) The density plots of expected observations by ClinVar clinical significance. 
-We then highlight the values for pathogenic variants specifically showing;
-(B) the allele frequency versus expected cases in this population size and
-(C) the probability of observing at least one event in this population size.}
-  \label{fig:validation_scatter_dense}
-\end{figure}
+
+
+
+
+
+
+
+
+
+
+\subsection{Validation studies}
+\subsubsection{Validation of dominant disease occurrence with \textit{NFKB1}}
+
+To validate our genome-wide probability estimates for \ac{ad} disorders, we focused on \ac{nfkb1}.
+We used a reference dataset from \citet{tuijnenburgNFKB12018}, in which whole-genome sequencing of 846 \ac{pid} patients identified \ac{nfkb1} as one of the genes most strongly associated with the disease, with 16 \ac{nfkb1}-related \ac{cvid} cases attributed to \ac{ad} heterozygous variants. 
+Our goal was to compare the predicted number of \ac{nfkb1}-related \ac{cvid} cases with the reported count in this well-characterised national-scale cohort.
+
+Our model calculated 0 known pathogenic variant \ac{nfkb1}-related \ac{cvid} cases in the UK with a minimal risk of 456 unknown de novo variants. In the reference cohort, 16 \ac{nfkb1} \ac{cvid} cases were reported. 
+We additionally wanted to account for potential under-reporting in the reference study. 
+We used an extrapolated national \ac{cvid} prevalence which yielded a median estimate of 118 cases (95\% CI: 70–181), while a Bayesian-adjusted mixture estimate produced a median of 67 cases (95\% CI: 43–99). \textbf{Figure \ref{fig:validation_studies_bayesian_adjusted_estimates} (A)} illustrates that our predicted values reflect these ranges and are closer to the observed count. 
+This case supports the validity of our integrated probability estimation framework for \ac{ad} disorders, and represents a challenging example where pathogenic \ac{snv} are not reported in the reference population of gnomAD. Our min-max values successfully contained the true reported values.
 
 \begin{figure}[ht]
   \centering
@@ -1295,12 +1120,34 @@ The blue curve represents maximum extrapolated count of 740, and the orange curv
   \label{fig:validation_studies_bayesian_adjusted_estimates}
 \end{figure}
 
+\FloatBarrier
+\subsubsection{Validation of recessive disease occurrence with \textit{CFTR}}
 
+Our analysis predicted the number of \ac{cf} cases attributable to carriage of the \texttt{p.Arg117His} variant (either as homozygous or as compound heterozygous with another pathogenic allele) in the UK. Based on \ac{hwe} calculations and mortality adjustments, we predicted approximately 648 cases arising from biallelic variants and 160 cases from homozygous variants, resulting in a total of 808 expected cases.
 
+In contrast, the nationally reported number of \ac{cf} cases was 714, as recorded in the UK Cystic Fibrosis Registry 2023 Annual Data Report
+\cite{naito2023uk}. To account for factors such as reduced penetrance and the mortality-adjusted expected genotype, we derived a Bayesian-adjusted estimate via posterior simulation. Our Bayesian approach yielded a median estimate of 740 cases (95\% \ac{ci}: 696, 786) and a mixture-based estimate of 727 cases (95\% \ac{ci}: 705, 750).
+\textbf{Figure \ref{fig:validation_studies_bayesian_adjusted_estimates} (B)} illustrates the close concordance between the predicted values, the Bayesian-adjusted estimates, and the national report supports the validity of our approach for estimating disease.
+
+\textbf{Figure \ref{fig:validation_scatter_dense}} shows the final values for these genes of interest in a given population size and phenotype. It reveals that an allele frequency threshold of approximately 0.000007 is required to observe a single heterozygous carrier of a disease-causing variant in the UK population for both genes. However, owing to the \ac{ar} \ac{moi} pattern of \ac{cftr}, this threshold translates into more than 100,000 heterozygous carriers, compared to only 456 carriers for the \ac{ad} gene \ac{nfkb1}. Note that this allele frequency threshold, being derived from the current reference population, represents a lower bound that can become more precise as public datasets continue to grow. This marked difference underscores the significant impact of \ac{moi} patterns on population carrier frequencies and the observed disease prevalence.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{../images/validation_studies_scatterdense_expected_prob.png}
+  \caption{\textbf{Interpretation of probability of observing a variant classification.} 
+ The result from the chosen validation genes \ac{cftr} and \ac{nfkb1} are shown. 
+ Case counts are dependant on the population size and phenotype.
+(A) The density plots of expected observations by ClinVar clinical significance. 
+We then highlight the values for pathogenic variants specifically showing;
+(B) the allele frequency versus expected cases in this population size and
+(C) the probability of observing at least one event in this population size.}
+  \label{fig:validation_scatter_dense}
+\end{figure}
 
 \FloatBarrier
-\clearpage
-\subsubsection{Interpretation of ClinVar variant observations}
+\subsubsection{Interpretation of ClinVar variant occurrences}
+
+\textbf{Figure~\ref{fig:all_genes_combined_bar_charts_mini}} shows  the two validation study \ac{pid} genes, representing \ac{ar} and dominant \ac{moi}. \textbf{Figure~\ref{fig:all_genes_combined_bar_charts_mini} (A)}   illustrates the overall probability of an affected birth by ClinVar variant classification, whereas \textbf{Figure~\ref{fig:all_genes_combined_bar_charts_mini}  (B)}  depicts the total expected number of cases per classification for an example population, here the UK, of approximately 69.4 million. 
 
 \begin{figure}[ht]
   \centering
@@ -1309,7 +1156,19 @@ The blue curve represents maximum extrapolated count of 740, and the orange curv
   \label{fig:all_genes_combined_bar_charts_mini}
 \end{figure}
 
+\FloatBarrier
 \subsubsection{Validation of SCID-specific disease occurrence}
+
+Given that \ac{scid} is a subset of \ac{pid}, our probability estimates reflect the likelihood of observing a genetic variant as a diagnosis when the phenotype is \ac{pid}. 
+However, we additionally tested our results against \ac{scid} cohorts in 
+ \textbf{Figure \ref{fig:scid_combined}}.
+The summarised raw cohort data for SCID-specific gene counts are summarised and compared across countries in \textbf{Figure \ref{fig:scid_gene_comparison}}.
+True counts for \textit{IL2RG} and \ac{dclre1c} from ten distinct locations yielded 95\% \ac{ci} surrounding our predicted values. 
+For \ac{il2rg}, the prediction was low (approximately 1 case per 1,000,000 \ac{pid}), as expected since loss-of-function variants in this \ac{xl} gene are highly deleterious and rarely observed in gnomAD. In contrast, the predicted value for \ac{rag1} was substantially higher (553 cases per 1,000,000 \ac{pid}) than the observed counts (ranging from 0 to 200). 
+We attributed this discrepancy to the lower penetrance and higher background frequency of \ac{rag1} variants in recessive inheritance, whereby reference studies may underreport the true national incidence. 
+Overall, we report that agreement within an order of magnitude was tolerable given the inherent uncertainties from reference studies arising from variable penetrance and allele frequencies.
+
+
 \begin{figure}[ht]
   \centering
   \includegraphics[width=.75\textwidth]{../images/validation_studies_scid_gene_comparison.pdf}
@@ -1325,9 +1184,9 @@ The blue curve represents maximum extrapolated count of 740, and the orange curv
   \label{fig:scid_combined}
 \end{figure}
 
-
 \FloatBarrier
 \clearpage
+
 \subsection{Genetic constraint in high-impact protein networks}
 \subsubsection{Score-positive-total within IEI PPI network}
 
@@ -1453,6 +1312,20 @@ Nodes were split to minimize Gini impurity, pruned by cost-complexity (cp = 0.00
 \end{figure}
 
 \FloatBarrier
+
+\subsection{Integration of variant probabilities into IEI genetics data}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\textwidth]{../images/var_risk_est_iei_genetics.png}
+  \caption{
+    \textbf{Integration of variant probabilities into the \ac{iei} genetics framework.}
+    The interface summarises the condensed variant data, with pre-calculated summary statistics and dynamic links to external databases. This integration enables immediate access to detailed variant classifications and prior probabilities for each gene.
+  }
+  \label{fig:var_risk_est_iei_genetics}
+\end{figure}
+
+
 \end{document}
 
 

@@ -1,0 +1,56 @@
+\documentclass[12pt,a4paper]{letter}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage[backend=bibtex, style=authoryear, natbib=true, sorting=nyt]{biblatex} 
+\usepackage[colorlinks=true]{hyperref}
+\hypersetup{
+    linkcolor=blue,         % color of internal links
+    citecolor=black,         % color of citation links
+    urlcolor=blue           % color of URL links
+}
+\usepackage{filecontents}
+\usepackage{geometry}
+\geometry{left=3cm, top=2cm, right=3cm, bottom=2cm} 
+
+\address{Dylan Lawless@kispi.uzh.ch\\
+Department of Intensive\\
+Care and Neonatology,\\
+University Children's\\
+Hospital Zürich,\\
+University of Zürich.
+}
+
+\signature{Dylan Lawless, PhD\\
+on behalf of all co-authors} 
+
+\begin{document} 
+
+\begin{letter}{Dear Editors,}
+
+\opening{}
+
+
+I am pleased to submit our manuscript entitled 
+\textit{``Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity''}
+ for consideration in 
+\textit{npj Genomic Medicine}. 
+This work resolves a century-old problem in genetics by introducing the first quantitative model for the probability that a variant causes disease across dominant, recessive, and X-linked inheritance.
+
+Our framework unites classical population genetics and Bayesian inference to compute variant-level posterior probabilities with credible intervals that capture uncertainty from both observed and unobserved alleles. It replaces binary classifications with continuous, reproducible probabilities applicable at gene, panel, and genome level.
+
+Unlike recent leading methods, including Evans (2021), Hannah (2024), Bick (2025), and GeniE (Broad Institute, 2024), our approach generalises across all inheritance modes and models missing variant evidence directly.
+
+Applied to 557 genes implicated in inborn errors of immunity, it identifies the top genetic contributors and provides publicly accessible prior probabilities consistent with national cohort data. The new powerful tool integrates with existing diagnostic pipelines, complementing current approaches by adding quantitative confidence intervals to variants for disease interpretation.
+
+\closing{Yours sincerely,}
+
+\end{letter}
+\end{document}
+
+%\cc{Cclist} 
+%\ps{adding a postscript} 
+%\encl{list of enclosed material} 
+%\vfill
+%\printbibliography[heading=none]
