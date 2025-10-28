@@ -683,3 +683,52 @@ eprint = {https://www.nejm.org/doi/pdf/10.1056/NEJMra2216474}
 	year = {2016},
 }
 
+
+@article{2020ciprianiImprovedPhenotypeDrivenTool,
+  title = {An {{Improved Phenotype-Driven Tool}} for {{Rare Mendelian Variant Prioritization}}: {{Benchmarking Exomiser}} on {{Real Patient Whole-Exome Data}}},
+  shorttitle = {An {{Improved Phenotype-Driven Tool}} for {{Rare Mendelian Variant Prioritization}}},
+  author = {Cipriani, Valentina and Pontikos, Nikolas and Arno, Gavin and Sergouniotis, Panagiotis I. and Lenassi, Eva and Thawong, Penpitcha and Danis, Daniel and Michaelides, Michel and Webster, Andrew R. and Moore, Anthony T. and Robinson, Peter N. and Jacobsen, Julius O.B. and Smedley, Damian},
+  year = 2020,
+  month = apr,
+  journal = {Genes},
+  volume = {11},
+  number = {4},
+  pages = {460},
+  issn = {2073-4425},
+  doi = {10.3390/genes11040460},
+  urldate = {2025-10-16},
+  abstract = {Next-generation sequencing has revolutionized rare disease diagnostics, but many patients remain without a molecular diagnosis, particularly because many candidate variants usually survive despite strict filtering. Exomiser was launched in 2014 as a Java tool that performs an integrative analysis of patients' sequencing data and their phenotypes encoded with Human Phenotype Ontology (HPO) terms. It prioritizes variants by leveraging information on variant frequency, predicted pathogenicity, and gene-phenotype associations derived from human diseases, model organisms, and protein--protein interactions. Early published releases of Exomiser were able to prioritize disease-causative variants as top candidates in up to 97\% of simulated whole-exomes. The size of the tested real patient datasets published so far are very limited. Here, we present the latest Exomiser version 12.0.1 with many new features. We assessed the performance using a set of 134 whole-exomes from patients with a range of rare retinal diseases and known molecular diagnosis. Using default settings, Exomiser ranked the correct diagnosed variants as the top candidate in 74\% of the dataset and top 5 in 94\%; not using the patients' HPO profiles (i.e., variant-only analysis) decreased the performance to 3\% and 27\%, respectively. In conclusion, Exomiser is an effective support tool for rare Mendelian phenotype-driven variant prioritization.},
+  langid = {english}
+}
+
+@article{2020holtgreweVarFishComprehensiveDNA,
+  title = {{{VarFish}}: Comprehensive {{DNA}} Variant Analysis for Diagnostics and Research},
+  shorttitle = {{{VarFish}}},
+  author = {Holtgrewe, Manuel and Stolpe, Oliver and Nieminen, Mikko and Mundlos, Stefan and Knaus, Alexej and Kornak, Uwe and Seelow, Dominik and Segebrecht, Lara and Spielmann, Malte and {Fischer-Zirnsak}, Bj{\"o}rn and Boschann, Felix and Scholl, Ute and Ehmke, Nadja and Beule, Dieter},
+  year = 2020,
+  month = jul,
+  journal = {Nucleic Acids Research},
+  volume = {48},
+  number = {W1},
+  pages = {W162-W169},
+  issn = {0305-1048, 1362-4962},
+  doi = {10.1093/nar/gkaa241},
+  urldate = {2025-10-16},
+  abstract = {Abstract             VarFish is a user-friendly web application for the quality control, filtering, prioritization, analysis, and user-based annotation of DNA variant data with a focus on rare disease genetics. It is capable of processing variant call files with single or multiple samples. The variants are automatically annotated with population frequencies, molecular impact, and presence in databases such as ClinVar. Further, it provides support for pathogenicity scores including CADD, MutationTaster, and phenotypic similarity scores. Users can filter variants based on these annotations and presumed inheritance pattern and sort the results by these scores. Variants passing the filter are listed with their annotations and many useful link-outs to genome browsers, other gene/variant data portals, and external tools for variant assessment. VarFish allows users to create their own annotations including support for variant assessment following ACMG-AMP guidelines. In close collaboration with medical practitioners, VarFish was designed for variant analysis and prioritization in diagnostic and research settings as described in the software's extensive manual. The user interface has been optimized for supporting these protocols. Users can install VarFish on their own in-house servers where it provides additional lab notebook features for collaborative analysis and allows re-analysis of cases, e.g.~after update of genotype or phenotype databases.},
+  copyright = {http://creativecommons.org/licenses/by-nc/4.0/},
+  langid = {english}
+}
+
+@article{2024riccioVariantEffectPredictors,
+  title = {Variant Effect Predictors: A Systematic Review and Practical Guide},
+  author = {Riccio, Cristian and Jansen, Max L. and Guo, Linlin and Ziegler, Andreas},
+  year = 2024,
+  month = may,
+  journal = {Human Genetics},
+  volume = {143},
+  number = {5},
+  pages = {625--634},
+  issn = {1432-1203},
+  doi = {10.1007/s00439-024-02670-5},
+  abstract = {Large-scale association analyses using whole-genome sequence data have become feasible, but understanding the functional impacts of these associations remains challenging. Although many tools are available to predict the functional impacts of genetic variants, it is unclear which tool should be used in practice. This work provides a practical guide to assist in selecting appropriate tools for variant annotation. We conducted a MEDLINE search up to November 10, 2023, and included tools that are applicable to a broad range of phenotypes, can be used locally, and have been recently updated. Tools were categorized based on the types of variants they accept and the functional impacts they predict. Sequence Ontology terms were used for standardization. We identified 118 databases and software packages, encompassing 36 variant types and 161 functional impacts. Combining only three tools, namely SnpEff, FAVOR, and SparkINFERNO, allows predicting 99 (61\%) distinct functional impacts. Thirty-seven tools predict 89 functional impacts that are not supported by any other tool, while 75 tools predict pathogenicity and can be used within the ACMG/AMP guidelines in a clinical context. We launched a website allowing researchers to select tools based on desired variants and impacts. In summary, more than 100 tools are already available to predict approximately 160 functional impacts. About 60\% of the functional impacts can be predicted by the combination of three tools. Unexpectedly, recent tools do not predict more impacts than older ones. Future research should allow predicting the functionality of so far unsupported variant types, such as gene fusions.}
+}

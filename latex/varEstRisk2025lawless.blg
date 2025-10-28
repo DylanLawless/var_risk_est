@@ -9,45 +9,45 @@ Name 8 in "{The UniProt Consortium} and Bateman, Alex and Martin, Maria-Jesus an
 while executing---line 1315 of file unsrtnat.bst
 Warning--empty journal in lawless_panelapprex_2025
 Warning--empty journal in lawless_2025_15111584
-You've used 43 entries,
+You've used 46 entries,
             2481 wiz_defined-function locations,
-            882 strings with 21302 characters,
-and the built_in function-call counts, 25972 in all, are:
-= -- 1648
-> -- 2709
+            907 strings with 22574 characters,
+and the built_in function-call counts, 27826 in all, are:
+= -- 1765
+> -- 2904
 < -- 9
-+ -- 950
-- -- 862
-* -- 2825
-:= -- 4752
-add.period$ -- 196
-call.type$ -- 43
-change.case$ -- 86
-chr.to.int$ -- 41
-cite$ -- 45
-duplicate$ -- 819
-empty$ -- 1584
-format.name$ -- 914
-if$ -- 5007
++ -- 1018
+- -- 924
+* -- 3035
+:= -- 5093
+add.period$ -- 211
+call.type$ -- 46
+change.case$ -- 92
+chr.to.int$ -- 44
+cite$ -- 48
+duplicate$ -- 876
+empty$ -- 1696
+format.name$ -- 979
+if$ -- 5365
 int.to.chr$ -- 3
-int.to.str$ -- 44
-missing$ -- 42
-newline$ -- 290
-num.names$ -- 129
-pop$ -- 251
+int.to.str$ -- 47
+missing$ -- 45
+newline$ -- 311
+num.names$ -- 138
+pop$ -- 266
 preamble$ -- 1
-purify$ -- 43
+purify$ -- 46
 quote$ -- 0
-skip$ -- 433
+skip$ -- 460
 stack$ -- 0
-substring$ -- 976
-swap$ -- 121
+substring$ -- 1043
+swap$ -- 130
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 301
+type$ -- 322
 warning$ -- 2
-while$ -- 151
+while$ -- 161
 width$ -- 0
-write$ -- 694
+write$ -- 745
 (There were 2 error messages)

@@ -1,9 +1,44 @@
-\begin{thebibliography}{43}
+\begin{thebibliography}{46}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Riccio et~al.(2024)Riccio, Jansen, Guo, and
+  Ziegler]{2024riccioVariantEffectPredictors}
+Cristian Riccio, Max~L. Jansen, Linlin Guo, and Andreas Ziegler.
+\newblock Variant effect predictors: A systematic review and practical guide.
+\newblock \emph{Human Genetics}, 143\penalty0 (5):\penalty0 625--634, May 2024.
+\newblock ISSN 1432-1203.
+\newblock \doi{10.1007/s00439-024-02670-5}.
+
+\bibitem[Cipriani et~al.(2020)Cipriani, Pontikos, Arno, Sergouniotis, Lenassi,
+  Thawong, Danis, Michaelides, Webster, Moore, Robinson, Jacobsen, and
+  Smedley]{2020ciprianiImprovedPhenotypeDrivenTool}
+Valentina Cipriani, Nikolas Pontikos, Gavin Arno, Panagiotis~I. Sergouniotis,
+  Eva Lenassi, Penpitcha Thawong, Daniel Danis, Michel Michaelides, Andrew~R.
+  Webster, Anthony~T. Moore, Peter~N. Robinson, Julius~O.B. Jacobsen, and
+  Damian Smedley.
+\newblock An {{Improved Phenotype-Driven Tool}} for {{Rare Mendelian Variant
+  Prioritization}}: {{Benchmarking Exomiser}} on {{Real Patient Whole-Exome
+  Data}}.
+\newblock \emph{Genes}, 11\penalty0 (4):\penalty0 460, April 2020.
+\newblock ISSN 2073-4425.
+\newblock \doi{10.3390/genes11040460}.
+
+\bibitem[Holtgrewe et~al.(2020)Holtgrewe, Stolpe, Nieminen, Mundlos, Knaus,
+  Kornak, Seelow, Segebrecht, Spielmann, {Fischer-Zirnsak}, Boschann, Scholl,
+  Ehmke, and Beule]{2020holtgreweVarFishComprehensiveDNA}
+Manuel Holtgrewe, Oliver Stolpe, Mikko Nieminen, Stefan Mundlos, Alexej Knaus,
+  Uwe Kornak, Dominik Seelow, Lara Segebrecht, Malte Spielmann, Bj{\"o}rn
+  {Fischer-Zirnsak}, Felix Boschann, Ute Scholl, Nadja Ehmke, and Dieter Beule.
+\newblock {{VarFish}}: Comprehensive {{DNA}} variant analysis for diagnostics
+  and research.
+\newblock \emph{Nucleic Acids Research}, 48\penalty0 (W1):\penalty0 W162--W169,
+  July 2020.
+\newblock ISSN 0305-1048, 1362-4962.
+\newblock \doi{10.1093/nar/gkaa241}.
 
 \bibitem[Mayo(2008)]{MayoCentury2008}
 Oliver Mayo.
