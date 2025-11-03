@@ -42,8 +42,7 @@
 
 %Abstract: 150 of 150. Main text:  3931 of 4000 (intro, result, discussion, conclusion). Display (4 figures / 2 tables) of 8 total. Extended display: x of 10. Note that this journal uses separate online methods.
 
-
-\noindent\includegraphics[width=0.7\textwidth]{../images/var_risk_est_ci.pdf}
+\noindent\includegraphics[width=0.7\textwidth]{./images/var_risk_est_ci.pdf}
 
 \noindent Graphical abstract.
 
@@ -66,7 +65,7 @@ The framework replaces categorical variant classification with continuous poster
 \noindent \textbf{Conclusions}:
 Our method addresses a long-standing gap in clinical genomics by quantifying both observed and unobserved genetic evidence in disease diagnosis. It provides a reproducible probabilistic foundation for variant interpretation, clinical decision-making, and large-scale genomic analysis.
 \footnote{
-\noindent * Addresses for correspondence: \href{mailto:Dylan.Lawless@kispi.uzh.ch}{Dylan.Lawless@kispi.uzh.ch}.\\
+\noindent * Addresses for correspondence: \href{mailto:Dylan.Lawless@uzh.ch}{Dylan.Lawless@uzh.ch}.\\
 % \noindent  \textsuperscript{† }These authors contributed equally and are listed alphabetically.\\
 \textbf{Availability:} This data is integrated in public panels at 
 % \url{https://switzerlandomics.ch/services/panelAppRexAi/} and 
@@ -132,7 +131,7 @@ ABI3 & 398 & Uncertain significance & 3:49220257 & c.733C>G & p.Pro245Ala & AR &
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.99\textwidth]{../images/p_varRisEst_summary_scores.pdf}
+  \includegraphics[width=0.99\textwidth]{./images/p_varRisEst_summary_scores.pdf}
   \caption{\textbf{Summary of ClinVar clinical significance classifications in the \ac{pid} gene panel.} (A) Shows the numeric score coding for each classification (i.e. -5 benign to +5 pathogenic) as defined in methods Section \ref{sec:classification_score}. (B) Displays the stacked absolute count of classifications per gene. The same counts are shows as percentages per gene in (C). (D) For demonstration, the top 15 genes ranked by absolute count of pathogenic (score 5) variant classifications, indicating those most frequently occurring in the population as disease-causing.
   }
   \label{fig:p_varRisEst_summary_scores}
@@ -164,7 +163,7 @@ Bayesian integration of all annotated alleles produced quantitative \ac{cri}s fo
 
 Numerically, the present variant \texttt{p.Ser237Ter} contributes 0.399 of the posterior share and the missing splice-donor allele \texttt{c.159+1G{\small\textgreater}A} contributes 0.339, with remaining alleles contributing negligibly (\textbf{Table~\ref{tab:table_scenario_2_quant_uncert_ci}}). For this patient scenario, the probability of correct genetic diagnosis due to \ac{nfkb1} \texttt{p.Ser237Ter} is 0.542 (95,\% \ac{cri}: 0.264-0.8), reflecting the remaining uncertainty from an unconfirmed alternative allele. If the second variant is confirmed absent, the confidence increases to 1 (95,\% \ac{cri}: 1-1), consistent with scenario one.
 
-% \input{"../images/table_scenario_2_final_report.tex"}
+% \input{"./images/table_scenario_2_final_report.tex"}
 
 \begin{table}[h]
 \centering
@@ -194,7 +193,7 @@ Interpretation & Reported causal; variant observed & Reported causal; variant no
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.85\textwidth]{../images/plot_scenario_2_quant_uncert_ci.pdf}
+  \includegraphics[width=0.85\textwidth]{./images/plot_scenario_2_quant_uncert_ci.pdf}
   \caption{\textbf{Quantifying diagnostic certainty from genomic evidence.}
 Example of \textit{NFKB1} (scenario 2) with observed (\ac{tp}) and missing (\ac{fn}) causal variants. The proband carried three heterozygous variants, including pathogenic \texttt{p.Ser237Ter}, with incomplete coverage at three loci, including splice-site variant \texttt{c.159+1G{\small\textgreater}A}. Panels show: (A) prior occurrence probabilities; (B) posterior variant weights \(\tilde{\pi}_i\); (C) per-variant posterior probability of being damaging and causal; (D) posterior for causal variants; (E) decomposition of total pathogenic probability into observed (green) and missing (orange) components; and (F) the final posterior probability that a damaging allele is present (median 0.54, 95\,\% \ac{cri} 0.26-0.80). Results are compared to \textbf{Table \ref{tab:table_scenario_2_report}}.
 %and scenarios one and three in Figures~\ref{fig:plot_scenario_1_quant_uncert_ci} and~\ref{fig:plot_scenario_3_quant_uncert_ci}.
@@ -243,7 +242,7 @@ To visualise the \ac{ppi} network, we applied \ac{umap} projection (\textbf{Figu
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.8\textwidth]{../images/untangleR_ppi_network_umap.pdf}
+  \includegraphics[width=0.8\textwidth]{./images/untangleR_ppi_network_umap.pdf}
   \caption{
     \textbf{\ac{umap} embedding of the \ac{ppi} network.} 
     Projection of the high-dimensional protein interaction network into two dimensions. Nodes are coloured by cluster and scaled by interaction degree. Blue labels denote hub genes (degree above the 95th percentile) and yellow labels mark the top 15 genes by score-positive-total (damaging ClinVar classifications). The separation indicates that genes with high pathogenic variant loads differ from highly connected nodes.
@@ -274,7 +273,7 @@ Analysis of \ac{ld} using $\text{R}^2$ demonstrates that regions of high linkage
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.99\textwidth]{../images/karyo_locusplot_merged.pdf}
+  \includegraphics[width=0.99\textwidth]{./images/karyo_locusplot_merged.pdf}
   \caption{\textbf{Genome-wide \ac{iei}, variant occurrence probability and \ac{ld} by $\text{R}^2$.} (A) Genome-wide karyoplot of all \ac{iei} panel genes mapped to GRCh38, with colours indicating \ac{moi}. (B) Zoomed-in locus plot example for \textit{NFKB1} showing variant occurrence probabilities; only benign variants such exhibit high probabilities in this \ac{ad} gene intolerant to \ac{lof}. (C) Locus plot example for \textit{CFTR} displaying high probabilities for pathogenic variants; due to the dense clustering of pathogenic variants, score filter >0 was applied. Top five variants are labelled per gene.}
   \label{fig:karyo_locusplot_merged}
 \end{figure}
@@ -290,9 +289,9 @@ Immunophenotypic data from the \ac{iuis} \ac{iei} tables link genes to clinical 
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.9\textwidth]{../images/p_new_classification_finetune_tree.pdf}       
-  \includegraphics[width=0.9\textwidth]{../images/plot_new_pid_classifications_genetic.pdf}
-  \includegraphics[width=0.9\textwidth]{../images/plot_multicat_new_pid_classes_combined.pdf}
+  \includegraphics[width=0.9\textwidth]{./images/p_new_classification_finetune_tree.pdf}       
+  \includegraphics[width=0.9\textwidth]{./images/plot_new_pid_classifications_genetic.pdf}
+  \includegraphics[width=0.9\textwidth]{./images/plot_multicat_new_pid_classes_combined.pdf}
 \caption{\textbf{Data-driven model integrating variant probability and refining PID classifications.}
 (Top) Decision tree grouping genes into 17 new PID classes based on immunophenotypic, \ac{ppi}, and variant occurrence features, including LOEUF constraint. Each node summarises gene count, class probabilities, and sample fraction.
 (Middle) Distribution of the 17 PID classes, labelled by predominant abnormal immune features (e.g.\ T cell, B cell, Ig, Neutrophil).
@@ -309,9 +308,9 @@ A Kruskal-Wallis test (\textbf{Figure~\ref{fig:alphamissense_kw}}) found no mean
 
 \begin{figure}[ht]
 \begin{center}
-%    \includegraphics[width=0.99\textwidth]{../images/p_alphamissense_RAG1.pdf}
-    \includegraphics[width=0.8\textwidth]{../images/p_alphamissense_NFKB1.pdf}
-    \includegraphics[width=0.8\textwidth]{../images/p_alphamissense_CFTR.pdf}
+%    \includegraphics[width=0.99\textwidth]{./images/p_alphamissense_RAG1.pdf}
+    \includegraphics[width=0.8\textwidth]{./images/p_alphamissense_NFKB1.pdf}
+    \includegraphics[width=0.8\textwidth]{./images/p_alphamissense_CFTR.pdf}
 \end{center}
 \caption{\textbf{Variant observation probabilities and AlphaMissense pathogenicity scores.} 
 For each gene, the upper plot (A) displays variant observation probabilities and the lower plot (B) shows AlphaMissense-derived pathogenicity scores across all amino acid substitutions. Although AlphaMissense predicts the functional impact of every substitution, the variants most frequently observed in patients are mainly benign or of uncertain significance. This illustrates that pathogenicity prediction captures functional effect but not likelihood of occurrence, highlighting the complementary nature of these probability measures. *Axis scaling adjusted for visibility near zero; higher values indicate higher observation probability.}
@@ -452,6 +451,11 @@ The authors declare no competing interest.
 This study only used data which was previously published and publicly available, as cited in the manuscript.
 This  SwissPedHealth study, under which this work was carried out, was approved based on the advice of the ethical committee Northwest and Central Switzerland (EKNZ, AO\_2022-00018). 
 The study was conducted in accordance with the Declaration of Helsinki.
+
+\section*{Data availability}
+
+The data used in this manuscript is derived from open sources which are cited in methods. The data generated is available from the Zenodo repository: \url{https://doi.org/10.5281/zenodo.15111583}.
+The resulting data are also reproducible using the code repository \url{https://github.com/DylanLawless/var_risk_est}.
 
 \section*{Funding}
 \noindent This project was supported through the grant Swiss National Science Foundation (SNF) 320030\_201060, and NDS-2021-911 (SwissPedHealth) from the Swiss Personalized Health Network and the Strategic Focal Area `Personalized Health and Related Technologies' of the ETH Domain (Swiss Federal Institutes of Technology).
@@ -944,7 +948,7 @@ Supplemental data are presented under the same headings that correspond to their
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.99\textwidth]{../images/p_gene_summary_hist_patch3.png}
+  \includegraphics[width=0.99\textwidth]{./images/p_gene_summary_hist_patch3.png}
 \caption{\textbf{Global distribution of ClinVar clinical-significance classification scoring.} 
 (A) Number of variants per gene containing the assigned score for each ClinVar classification term (−5 to +5). 
 (B) The same data after normalisation by zero centring the average rank score.
@@ -955,11 +959,11 @@ Supplemental data are presented under the same headings that correspond to their
 \clearpage
 \subsection{Integrating observed true positives and unobserved false negatives into a single, actionable conclusion}
 
-%\input{"../images/table_scenario_1_quant_uncert_ci.tex"}
+%\input{"./images/table_scenario_1_quant_uncert_ci.tex"}
 %
-%\input{"../images/table_scenario_2_quant_uncert_ci.tex"}
+%\input{"./images/table_scenario_2_quant_uncert_ci.tex"}
 %
-%\input{"../images/table_scenario_3_quant_uncert_ci.tex"}
+%\input{"./images/table_scenario_3_quant_uncert_ci.tex"}
 
 \begin{table}[!h]
 \centering
@@ -1027,7 +1031,7 @@ Total & NA & NA & NA & NA & NA & NA & NA & 0 & 0 & 0 & NA & 0.000\\
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.99\textwidth]{../images/plot_scenario_1_quant_uncert_ci.pdf}
+  \includegraphics[width=0.99\textwidth]{./images/plot_scenario_1_quant_uncert_ci.pdf}
   \caption{
  \textbf{Quantification of present (\ac{tp}) and no missing (\ac{fn}) causal genetic variants for disease in \ac{nfkb1} (scenario 1)}.
   Only one known pathogenic variant, \texttt{p.Ser237Ter}, was observed and all previously reported pathogenic positions were successfully sequenced and confirmed as reference (true negatives).  
@@ -1038,7 +1042,7 @@ Total & NA & NA & NA & NA & NA & NA & NA & 0 & 0 & 0 & NA & 0.000\\
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.99\textwidth]{../images/plot_scenario_3_quant_uncert_ci.pdf}
+  \includegraphics[width=0.99\textwidth]{./images/plot_scenario_3_quant_uncert_ci.pdf}
   \caption{
  \textbf{Quantification of no present (\ac{tp}) in \ac{nfkb1} and only missing (\ac{fn}) causal genetic variants for disease in \ac{tnfaip3} (scenario 3)}.
 No known causal variants were observed in \ac{nfkb1}, but one representative unsequenced allele was selected from each distinct ClinVar classification and treated as a potential false negative.  
@@ -1076,7 +1080,7 @@ This case supports the validity of our integrated probability estimation framewo
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.99\textwidth]{../images/validation_studies_bayesian_adjusted_estimates.png}
+  \includegraphics[width=0.99\textwidth]{./images/validation_studies_bayesian_adjusted_estimates.png}
   \caption{\textbf{Prior probabilities compared to validation disease cohort metrics.}
   (A) Density distributions for the number of \ac{nfkb1}-related \ac{cvid} cases in the UK. 
   Our model (green) predicted 456 cases, which falls between the observed cohort count (red) of 390 and the upper extrapolated values.
@@ -1101,7 +1105,7 @@ In contrast, the nationally reported number of \ac{cf} cases was 714, as recorde
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=\textwidth]{../images/validation_studies_scatterdense_expected_prob.png}
+  \includegraphics[width=\textwidth]{./images/validation_studies_scatterdense_expected_prob.png}
   \caption{\textbf{Interpretation of probability of observing a variant classification.} 
  The result from the chosen validation genes \ac{cftr} and \ac{nfkb1} are shown. 
  Case counts are dependant on the population size and phenotype.
@@ -1119,7 +1123,7 @@ We then highlight the values for pathogenic variants specifically showing;
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.99\textwidth]{../images/all_genes_combined_bar_charts_mini.png}
+  \includegraphics[width=0.99\textwidth]{./images/all_genes_combined_bar_charts_mini.png}
   \caption{\textbf{Combined bar charts summarising the genome-wide analysis of ClinVar clinical significance for the \ac{pid} gene panel}. Panel (A) shows the overall probability of an affected birth by variant classification, and (B) displays the total expected number of cases per classification, both stratified by gene. These integrated results illustrate the variability in variant observations across genes and underpin our validation of the probability estimation framework.}
   \label{fig:all_genes_combined_bar_charts_mini}
 \end{figure}
@@ -1139,14 +1143,14 @@ Overall, we report that agreement within an order of magnitude was tolerable giv
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.6\textwidth]{../images/validation_studies_scid_gene_comparison.pdf}
+  \includegraphics[width=.6\textwidth]{./images/validation_studies_scid_gene_comparison.pdf}
   \caption{\textbf{SCID-specific gene comparison across regions.} The bar plot shows the prevalence of SCID-related cases (count divided by population) for each gene and country (or region), with numbers printed above the bars representing the actual counts in the original cohort (ranging from 0 to 11 per region and gene).}
   \label{fig:scid_gene_comparison}
 \end{figure}
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.6\textwidth]{../images/validation_studies_scid_combined_plot.pdf}
+  \includegraphics[width=.6\textwidth]{./images/validation_studies_scid_combined_plot.pdf}
   \caption{\textbf{Combined SCID-specific predictions and observed rates per 1,000,000 PID.}
     The figure presents density distributions for the predicted SCID case counts (per 1,000,000 PID) for three genes: \textit{IL2RG}, \textit{RAG1}, and \ac{dclre1c}. Country-specific rates (displayed as dotted vertical lines) are overlaid with the overall predicted distributions for pathogenic and likely pathogenic variants (solid lines with annotated medians). For \textit{IL2RG}, the low predicted value is consistent with the high deleteriousness of loss-of-function variants in this X-linked gene, while \textit{RAG1} exhibits considerably higher predicted counts, reflecting its lower penetrance in an autosomal recessive context.}
   \label{fig:scid_combined}
@@ -1162,7 +1166,7 @@ Overall, we report that agreement within an order of magnitude was tolerable giv
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=\textwidth]{../images/untangleR_ppi_network_assoc_patch1.jpg}
+  \includegraphics[width=\textwidth]{./images/untangleR_ppi_network_assoc_patch1.jpg}
   \caption{\textbf{\ac{ppi} network and score-positive-total ClinVar significance variants}.
     (A) \ac{ppi} network of disease-associated genes. Node size and colour represent the log-transformed score-positive-total, the top 15 genes/proteins with the highest probability of being observed in disease are labelled.
     (B) Distribution of score-positive-total across the major \ac{iei} disease categories.
@@ -1181,7 +1185,7 @@ Overall, we report that agreement within an order of magnitude was tolerable giv
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.75\textwidth]{../images/untangleR_ppi_network_patch2_cator.pdf}
+  \includegraphics[width=0.75\textwidth]{./images/untangleR_ppi_network_patch2_cator.pdf}
   \caption{
    \textbf{Hierarchical clustering of enrichment scores.}
     The heatmap displays standardised residuals for major disease categories (x-axis) across network clusters (y-axis). A dendrogram groups similar disease categories, and the bar plot shows the maximum absolute residual per category.  (8) \ac{cd} and (9)\ac{bmf} show the highest vales, indicating significant enrichment or depletion (residuals > |2|). Definitions in \textbf{Box \ref{box:definitions}}.
@@ -1193,7 +1197,7 @@ Overall, we report that agreement within an order of magnitude was tolerable giv
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.75\textwidth]{../images/untangleR_ppi_network_p_umap_const.pdf}
+  \includegraphics[width=0.75\textwidth]{./images/untangleR_ppi_network_p_umap_const.pdf}
   \caption{
    \textbf{Analysis of \ac{ppi} degree versus \ac{loeuf} upper rank with \ac{umap} embedding of the \ac{ppi} network.}
     The relationship between \ac{ppi} degree (size) and \ac{loeuf} upper rank (color) across gene clusters. No clear patterns are evident.
@@ -1203,7 +1207,7 @@ Overall, we report that agreement within an order of magnitude was tolerable giv
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.99\textwidth]{../images/untangleR_ppi_network_p_cor_spear_rho_sig_clust_patch3.pdf}
+  \includegraphics[width=0.99\textwidth]{./images/untangleR_ppi_network_p_cor_spear_rho_sig_clust_patch3.pdf}
   \caption{
     \textbf{Correlation between \ac{ppi} degree and \ac{loeuf} upper rank.} 
     \textbf{(A)} Ananlysis across all genes revealed a weak, significant negative correlation between \ac{ppi} degree and \ac{loeuf} upper rank. \textbf{(B)} The cluster-wise analysis showed that clusters 2 and 4 exhibited moderate to strong correlations, while other clusters display weak or non-significant relationships. \textbf{(C) and (D)} Shows the new network plots for the significantly enriched clusters based on \ac{gnomad} constraint metrics.
@@ -1213,7 +1217,7 @@ Overall, we report that agreement within an order of magnitude was tolerable giv
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.99\textwidth]{../images/fuma_merge.pdf}
+\includegraphics[width=0.99\textwidth]{./images/fuma_merge.pdf}
 \caption{\textbf{Composite Enrichment Profiles for \ac{iei} Gene Sets.} 
 We selected the top two enriched clusters (as per \textbf{Figure \ref{fig:p_cor_spear_rho_sig_clust_patch3}}) and performed functional enrichment analysis derived from known disease associations. For each gene set, the left panel displays the proportion of input genes overlapping with a curated gene set, and the right panel shows the \(-\log_{10}\) adjusted p-value from hypergeometric testing. These profiles, stratified by cluster (Cluster 2 and Cluster 4) and by gene set category (GWAScatalog and Immunologic Signatures), highlight distinct enrichment patterns that reflect differential pathogenic variant loads in the \ac{iei} gene panels.}
 \label{fig:fuma_merge}
@@ -1221,8 +1225,8 @@ We selected the top two enriched clusters (as per \textbf{Figure \ref{fig:p_cor_
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.75\textwidth]{../images/expHeat_FUMA_jobs604419_var_risk_est_cluster_2.png}
-\includegraphics[width=0.75\textwidth]{../images/expHeat_FUMA_jobs604403_var_risk_est_cluster_4.png}
+\includegraphics[width=0.75\textwidth]{./images/expHeat_FUMA_jobs604419_var_risk_est_cluster_2.png}
+\includegraphics[width=0.75\textwidth]{./images/expHeat_FUMA_jobs604403_var_risk_est_cluster_4.png}
 \caption{\textbf{Gene Expression Heatmaps for IEI Genes.} GTEx v8 data from 54 tissue types display the average expression per tissue label (log\(_2\) transformed) for the IEI gene panels. Top: Cluster 2; Bottom: Cluster 4.}
 \label{fig:expHeatmaps}
 \end{figure}
@@ -1234,8 +1238,8 @@ We selected the top two enriched clusters (as per \textbf{Figure \ref{fig:p_cor_
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.99\textwidth]{../images/plot_patch1.pdf}
- %   \includegraphics[width=0.7\textwidth]{../images/plot_patch_1_v2.pdf}
+  \includegraphics[width=0.99\textwidth]{./images/plot_patch1.pdf}
+ %   \includegraphics[width=0.7\textwidth]{./images/plot_patch_1_v2.pdf}
   \caption{ \textbf{Distribution of immunophenotypic features before and after recategorisation.}
   The original \ac{iuis} \ac{iei} descriptions contain information such as T cell-related
   ``decreased CD8, normal or decreased CD4 cells'' which we recategorise as ``low''.
@@ -1245,14 +1249,14 @@ We selected the top two enriched clusters (as per \textbf{Figure \ref{fig:p_cor_
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.99\textwidth]{../images/plot_multicat_patch_3_clust_chi.pdf}
+  \includegraphics[width=0.99\textwidth]{./images/plot_multicat_patch_3_clust_chi.pdf}
   \caption{\textbf{Heatmaps of clinical feature distributions by \ac{ppi} cluster.} The heatmaps display the count of observations for abnormality of each clinical feature (A) T cell, (B) B cell, (C) Immunoglobulin, (D) Neutrophil, in relation to the \ac{ppi} clusters, with p-values from chi-square tests annotated in the titles.}
   \label{fig:plot_multicat_patch_3_clust_chi}
 \end{figure}
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.99\textwidth]{../images/plot_multicat_performance_combined.pdf}
+  \includegraphics[width=0.99\textwidth]{./images/plot_multicat_performance_combined.pdf}
   \caption{\textbf{Performance comparison of PID classifiers.} Classification predicting \ac{ppi} cluster membership from \ac{iuis} major category, subcategory, and immunological features. (A) Overall accuracy for four rpart models
 used to predict \ac{ppi} clustering. The combined model achieves 61.4 \% accuracy, exceeding all simpler approaches. 
 Nodes were split to minimize Gini impurity, pruned by cost-complexity (cp = 0.001), and validated via 5‑fold cross‑validation. %Terminal leaves display the assigned cluster and the proportion of genes falling into each group. 
@@ -1263,7 +1267,7 @@ Nodes were split to minimize Gini impurity, pruned by cost-complexity (cp = 0.00
 
 %\begin{figure}[h]
 %  \centering
-%  \includegraphics[width=0.99\textwidth]{../images/plot_combined_model_interpret_fine.pdf}
+%  \includegraphics[width=0.99\textwidth]{./images/plot_combined_model_interpret_fine.pdf}
 %  \caption{\textbf{Model performance for fine-tuned \ac{pid} classification.} (A) Confusion matrix heatmap comparing observed and predicted \ac{ppi} clusters. (B) Variable importance plot ranking immunophenotypic features contributing to the classifier. (C) Per-class sensitivity and (D) per-class specificity bar plots. These panels collectively demonstrate the performance of the decision tree classifier in stratifying \ac{pid} genes based on immunophenotypic and \ac{ppi} features.}
 %  \label{fig:confusion_matrix}
 %\end{figure}
@@ -1275,7 +1279,7 @@ Nodes were split to minimize Gini impurity, pruned by cost-complexity (cp = 0.00
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.75\textwidth]{../images/p_alphamissense_kw.pdf}
+  \includegraphics[width=0.75\textwidth]{./images/p_alphamissense_kw.pdf}
   \caption{\textbf{Observed Disease Probability by Clinical Classification with AlphaMissense.} The figure displays the Kruskal-Wallis test results for NFKB1 and CFTR, showing no significant differences.}
   \label{fig:alphamissense_kw}
 \end{figure}
@@ -1286,7 +1290,7 @@ Nodes were split to minimize Gini impurity, pruned by cost-complexity (cp = 0.00
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.8\textwidth]{../images/var_risk_est_iei_genetics.png}
+  \includegraphics[width=.8\textwidth]{./images/var_risk_est_iei_genetics.png}
   \caption{
     \textbf{Integration of variant probabilities into the \ac{iei} genetics framework.}
     The interface summarises the condensed variant data, with pre-calculated summary statistics and dynamic links to external databases. This integration enables immediate access to detailed variant classifications and prior probabilities for each gene.
@@ -1294,9 +1298,4 @@ Nodes were split to minimize Gini impurity, pruned by cost-complexity (cp = 0.00
   \label{fig:var_risk_est_iei_genetics}
 \end{figure}
 
-
 \end{document}
-
-
-
-
